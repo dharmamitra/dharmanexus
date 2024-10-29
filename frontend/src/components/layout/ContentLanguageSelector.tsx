@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import React from "react";
 import { Link } from "@components/common/Link";
+import CircuitIcon from "@mitra/components/svg/Circuit";
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
@@ -24,6 +25,7 @@ export const ContentLanguageSelector: FC<Props> = ({ title, href, color }) => {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        color: "inherit",
         [materialTheme.breakpoints.down("sm")]: {
           justifyContent: "flex-start",
           flexDirection: "row",
@@ -34,18 +36,21 @@ export const ContentLanguageSelector: FC<Props> = ({ title, href, color }) => {
       data-testid="db-language-tile"
     >
       <Box
-        component="img"
-        src="/assets/logos/bn_tree_only.svg"
         sx={{
+          display: "grid",
+          placeItems: "center",
           height: 120,
           width: 120,
           p: 2,
           borderRadius: 2,
-          background: color,
-          filter: "drop-shadow(0px 2px 1px rgba(0,0,0,0.25))",
+          border: `${color} 3px solid`,
+          "&:hover": {
+            filter: "opacity(80%)",
+          },
         }}
-        alt={`select language: ${title}`}
-      />
+      >
+        <CircuitIcon fill={color} />
+      </Box>
       <Typography component="h2" variant="h6" sx={{ mx: 2, mt: 1 }}>
         {title}
       </Typography>

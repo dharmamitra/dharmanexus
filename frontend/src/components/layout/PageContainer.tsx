@@ -6,32 +6,11 @@ import {
   LinearProgress,
   SxProps,
 } from "@mui/material";
-import bgChn from "@public/assets/images/bg_chn_upscaled_bw.jpg";
-import bgPli from "@public/assets/images/bg_pli_upscaled_bw.jpg";
-import bgSkt from "@public/assets/images/bg_skt_upscaled_bw.jpg";
-import bgTib from "@public/assets/images/bg_tib_upscaled_bw.jpg";
-import bgWelcome from "@public/assets/images/bg_welcome_upscaled_bw.jpg";
-import { SourceLanguage } from "@utils/constants";
-import type { Property } from "csstype";
+import { DbLanguage } from "@utils/api/types";
 
 import { QueryResultsPageContent } from "./QueryResultsPageContent";
-export type BackgroundName = SourceLanguage | "welcome";
 
-const BgImageSrcs: Record<BackgroundName, string> = {
-  [SourceLanguage.TIBETAN]: bgTib.src,
-  [SourceLanguage.CHINESE]: bgChn.src,
-  [SourceLanguage.SANSKRIT]: bgSkt.src,
-  [SourceLanguage.PALI]: bgPli.src,
-  welcome: bgWelcome.src,
-};
-
-const BgImageBgSize: Record<BackgroundName, Property.BackgroundSize> = {
-  [SourceLanguage.TIBETAN]: "contain",
-  [SourceLanguage.CHINESE]: "contain",
-  [SourceLanguage.SANSKRIT]: "contain",
-  [SourceLanguage.PALI]: "contain",
-  welcome: "cover",
-};
+export type BackgroundName = DbLanguage | "welcome";
 
 interface Props extends PropsWithChildren {
   backgroundName?: BackgroundName;
@@ -62,9 +41,6 @@ export const PageContainer: FC<Props> = ({
         <Container
           maxWidth={false}
           sx={(theme) => ({
-            background: `url(${BgImageSrcs[backgroundName]})`,
-            backgroundPosition: "center",
-            backgroundSize: BgImageBgSize[backgroundName],
             opacity: 0.05,
             // @ts-expect-error MUI css variable type mismatch
             [theme.getColorSchemeSelector("dark")]: {

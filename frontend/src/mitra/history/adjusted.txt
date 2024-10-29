@@ -1,0 +1,5 @@
+ .husky/pre-commit
+ package.json
+ src/components/layout/ContentLanguageSelector.tsx
+ src/components/layout/Footer.tsx
+ yarn.lock

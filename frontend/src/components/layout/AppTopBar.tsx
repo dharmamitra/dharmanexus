@@ -2,12 +2,11 @@ import React, { memo, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { Link } from "@components/common/Link";
+import { useResultPageType } from "@components/hooks/useResultPageType";
 import LocaleSelector from "@components/layout/LocaleSelector";
 import { DatabaseMenu } from "@components/layout/TopBarDatabaseMenu";
-import {
-  GlobalSearchDesktop,
-  GlobalSearchMobile,
-} from "@features/globalSearch";
+import { GlobalSearch } from "@features/globalSearch";
+import { getDeployment } from "@mitra/utils";
 import Brightness1Icon from "@mui/icons-material/Brightness4";
 import Brightness2Icon from "@mui/icons-material/Brightness7";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
@@ -16,6 +15,20 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import { useColorScheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
+
+const logoSquarePaths: Record<Deployment, string> = {
+  dharmamitra: "/assets/logos/dm-logo-1x1.png",
+  kumarajiva: "/assets/logos/kp-logo-1x1.png",
+};
+
+const logoWidePaths: Record<Deployment, string> = {
+  dharmamitra: "/assets/logos/dm-logo-flat.png",
+  kumarajiva: "/assets/logos/kp-logo-full.png",
+};
+
+const deployment = getDeployment();
+const logoSquareSrc = logoSquarePaths[deployment];
+const logoWideSrc = logoWidePaths[deployment];
 
 interface AppBarLinkProps {
   title: string;
@@ -45,16 +58,17 @@ export const AppTopBar = memo(function AppTopBar() {
   const [isMounted, setIsMounted] = useState(false);
 
   const isHomeRoute = route === "/";
-  const isSearchRoute = route.startsWith("/search");
+  const { isSearchPage } = useResultPageType();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   return (
-    <>
+    <Box bgcolor="background.paper">
       <AppBar
         position="sticky"
+        color="transparent"
         elevation={0}
         sx={{
           zIndex: materialTheme.zIndex.drawer + 1,
@@ -62,7 +76,7 @@ export const AppTopBar = memo(function AppTopBar() {
         }}
         data-testid="app-bar"
       >
-        <Toolbar>
+        <Toolbar sx={{ py: 2 }}>
           <Box
             sx={{
               display: "flex",
@@ -91,26 +105,27 @@ export const AppTopBar = memo(function AppTopBar() {
                   },
                 }}
               >
-                <Box
-                  component="img"
-                  src="/assets/logos/bn_tree_only.svg"
-                  width={68}
-                  sx={{
-                    maxHeight: 48,
-                    minWidth: 48,
-                    [materialTheme.breakpoints.down("sm")]: {
-                      maxHeight: 36,
-                    },
-                  }}
-                  alt="logo"
-                />
-                {!isHomeRoute && (
+                {isHomeRoute ? (
                   <Box
                     component="img"
-                    src="/assets/logos/bn_text_only.svg"
-                    width={144}
+                    src={logoSquareSrc}
+                    width={68}
                     sx={{
-                      maxHeight: 24,
+                      maxHeight: 48,
+                      minWidth: 48,
+                      [materialTheme.breakpoints.down("sm")]: {
+                        maxHeight: 36,
+                      },
+                    }}
+                    alt="logo"
+                  />
+                ) : (
+                  <Box
+                    component="img"
+                    src={logoWideSrc}
+                    // width={144}
+                    sx={{
+                      maxHeight: 80,
                       [materialTheme.breakpoints.down("sm")]: {
                         display: "none",
                       },
@@ -121,7 +136,7 @@ export const AppTopBar = memo(function AppTopBar() {
               </Box>
             </Link>
 
-            {!isSearchRoute && <GlobalSearchDesktop />}
+            {!isSearchPage && <GlobalSearch />}
           </Box>
           <Box
             component="nav"
@@ -156,11 +171,6 @@ export const AppTopBar = memo(function AppTopBar() {
           <LocaleSelector />
         </Toolbar>
       </AppBar>
-      {!isSearchRoute && (
-        <aside id="mobile-search" aria-label={t("search.search")}>
-          <GlobalSearchMobile />
-        </aside>
-      )}
-    </>
+    </Box>
   );
 });
