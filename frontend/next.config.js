@@ -7,6 +7,7 @@ const SKIP_LINT = process.env.SKIP_LINT;
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
+  basePath: NODE_ENV === "production" ? "/database" : undefined,
   i18n,
   reactStrictMode: true,
   compiler: { emotion: true },

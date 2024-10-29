@@ -22,6 +22,9 @@
       ],
       "@api": [
         "src/utils/api/client.ts"
+      ],
+      "@mitra/*": [
+        "src/mitra/*"
       ]
     },
     "target": "es2017",
