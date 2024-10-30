@@ -7,7 +7,7 @@ import { getDeployment } from "@mitra/utils";
 import Brightness1Icon from "@mui/icons-material/Brightness4";
 import Brightness2Icon from "@mui/icons-material/Brightness7";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-import { Box, Button, Toolbar, IconButton, useTheme } from "@mui/material";
+import { Box, Button, IconButton, Toolbar, useTheme } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import { useColorScheme } from "@mui/material/styles";
 
