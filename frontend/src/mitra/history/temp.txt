@@ -1,4 +1,4 @@
-M frontend/content/pages/guide/de.mdx
-M frontend/content/pages/guide/en.mdx
-D frontend/content/pages/introduction/de.mdx
-D frontend/content/pages/introduction/en.mdx
+M frontend/.env
+M frontend/src/components/layout/AppTopBar.tsx
+M frontend/src/features/SidebarSuite/SidebarSuite.tsx
+M frontend/src/pages/_app.tsx

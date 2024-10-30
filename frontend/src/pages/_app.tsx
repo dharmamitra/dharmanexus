@@ -7,7 +7,7 @@ import { appWithTranslation } from "next-i18next";
 import nextI18NextConfig from "next-i18next.config";
 import { DefaultSeo } from "next-seo";
 import SEO from "next-seo.config";
-import { AppTopBar } from "@components/layout/AppTopBar";
+import { MitraAppTopBar } from "@mitra/components/layout/MitraAppTopBar";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
 import {
@@ -27,7 +27,7 @@ function MyApp(props: AppProps) {
         defaultOptions: {
           queries: { refetchOnWindowFocus: false, ...queryCacheTimeDefaults },
         },
-      }),
+      })
   );
 
   return (
@@ -44,7 +44,7 @@ function MyApp(props: AppProps) {
 
           <ThemeProvider>
             <CssBaseline />
-            <AppTopBar />
+            <MitraAppTopBar />
             <Component {...pageProps} />
           </ThemeProvider>
         </HydrationBoundary>

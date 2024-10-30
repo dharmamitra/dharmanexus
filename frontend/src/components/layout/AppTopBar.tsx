@@ -6,7 +6,6 @@ import { useResultPageType } from "@components/hooks/useResultPageType";
 import LocaleSelector from "@components/layout/LocaleSelector";
 import { DatabaseMenu } from "@components/layout/TopBarDatabaseMenu";
 import { GlobalSearch } from "@features/globalSearch";
-import { getDeployment } from "@mitra/utils";
 import Brightness1Icon from "@mui/icons-material/Brightness4";
 import Brightness2Icon from "@mui/icons-material/Brightness7";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
@@ -15,20 +14,6 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import { useColorScheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
-
-const logoSquarePaths: Record<Deployment, string> = {
-  dharmamitra: "/assets/logos/dm-logo-1x1.png",
-  kumarajiva: "/assets/logos/kp-logo-1x1.png",
-};
-
-const logoWidePaths: Record<Deployment, string> = {
-  dharmamitra: "/assets/logos/dm-logo-flat.png",
-  kumarajiva: "/assets/logos/kp-logo-full.png",
-};
-
-const deployment = getDeployment();
-const logoSquareSrc = logoSquarePaths[deployment];
-const logoWideSrc = logoWidePaths[deployment];
 
 interface AppBarLinkProps {
   title: string;
@@ -65,112 +50,108 @@ export const AppTopBar = memo(function AppTopBar() {
   }, []);
 
   return (
-    <Box bgcolor="background.paper">
-      <AppBar
-        position="sticky"
-        color="transparent"
-        elevation={0}
-        sx={{
-          zIndex: materialTheme.zIndex.drawer + 1,
-          borderBottom: `1px solid ${materialTheme.palette.background.accent}`,
-        }}
-        data-testid="app-bar"
-      >
-        <Toolbar sx={{ py: 2 }}>
-          <Box
+    <AppBar
+      position="sticky"
+      elevation={0}
+      sx={{
+        zIndex: materialTheme.zIndex.drawer + 1,
+        borderBottom: `1px solid ${materialTheme.palette.background.accent}`,
+      }}
+      data-testid="app-bar"
+    >
+      <Toolbar>
+        <Box
+          sx={{
+            display: "flex",
+            flex: 1,
+            grow: 1,
+            justifyContent: "flex-start",
+            alignItems: "center",
+          }}
+        >
+          <Link
+            color="inherit"
             sx={{
-              display: "flex",
-              flex: 1,
-              grow: 1,
-              justifyContent: "flex-start",
+              display: "inline-flex",
               alignItems: "center",
             }}
+            href="/"
+            underline="none"
+            noWrap
           >
-            <Link
-              color="inherit"
+            <Box
               sx={{
-                display: "inline-flex",
+                display: "flex",
                 alignItems: "center",
+                [materialTheme.breakpoints.up("sm")]: {
+                  pr: 1,
+                },
               }}
-              href="/"
-              underline="none"
-              noWrap
             >
               <Box
+                component="img"
+                src="/assets/logos/bn_tree_only.svg"
+                width={68}
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  [materialTheme.breakpoints.up("sm")]: {
-                    pr: 1,
+                  maxHeight: 48,
+                  minWidth: 48,
+                  [materialTheme.breakpoints.down("sm")]: {
+                    maxHeight: 36,
                   },
                 }}
-              >
-                {isHomeRoute ? (
-                  <Box
-                    component="img"
-                    src={logoSquareSrc}
-                    width={68}
-                    sx={{
-                      maxHeight: 48,
-                      minWidth: 48,
-                      [materialTheme.breakpoints.down("sm")]: {
-                        maxHeight: 36,
-                      },
-                    }}
-                    alt="logo"
-                  />
-                ) : (
-                  <Box
-                    component="img"
-                    src={logoWideSrc}
-                    // width={144}
-                    sx={{
-                      maxHeight: 80,
-                      [materialTheme.breakpoints.down("sm")]: {
-                        display: "none",
-                      },
-                    }}
-                    alt="BuddhaNexus"
-                  />
-                )}
-              </Box>
-            </Link>
+                alt="logo"
+              />
+              {!isHomeRoute && (
+                <Box
+                  component="img"
+                  src="/assets/logos/bn_text_only.svg"
+                  width={144}
+                  sx={{
+                    maxHeight: 24,
+                    [materialTheme.breakpoints.down("sm")]: {
+                      display: "none",
+                    },
+                  }}
+                  alt="BuddhaNexus"
+                />
+              )}
+            </Box>
+          </Link>
 
-            {!isSearchPage && <GlobalSearch />}
-          </Box>
-          <Box
-            component="nav"
-            sx={{
-              display: "flex",
-              overflow: "auto",
-            }}
-          >
-            <>
-              <DatabaseMenu />
-              <AppBarLink title={t("header.guide")} href="/guide" />
-            </>
-          </Box>
-          <IconButton
-            sx={{ mr: 1 }}
-            color="inherit"
-            // TODO i18n
-            aria-label="Toggle theme"
-            data-testid="theme-toggle"
-            onClick={() => setMode(mode === "light" ? "dark" : "light")}
-          >
-            {isMounted ? (
-              mode === "dark" ? (
-                <Brightness1Icon fontSize="inherit" />
-              ) : (
-                <Brightness2Icon fontSize="inherit" />
-              )
+          {!isSearchPage && <GlobalSearch />}
+        </Box>
+        <Box
+          component="nav"
+          sx={{
+            display: "flex",
+            overflow: "auto",
+          }}
+        >
+          <>
+            <DatabaseMenu />
+            <AppBarLink title={t("header.guide")} href="/guide" />
+          </>
+        </Box>
+        <IconButton
+          sx={{ mr: 1 }}
+          color="inherit"
+          // TODO i18n
+          aria-label="Toggle theme"
+          data-testid="theme-toggle"
+          onClick={() => setMode(mode === "light" ? "dark" : "light")}
+        >
+          {isMounted ? (
+            mode === "dark" ? (
+              <Brightness1Icon fontSize="inherit" />
             ) : (
-              <HourglassEmptyIcon fontSize="inherit" />
-            )}
-          </IconButton>
-          <LocaleSelector />
-        </Toolbar>
-      </AppBar>
-    </Box>
+              <Brightness2Icon fontSize="inherit" />
+            )
+          ) : (
+            <HourglassEmptyIcon fontSize="inherit" />
+          )}
+        </IconButton>
+        <LocaleSelector />
+      </Toolbar>
+    </AppBar>
   );
 });

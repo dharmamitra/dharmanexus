@@ -16,7 +16,7 @@ export function SidebarSuite() {
     (event: React.SyntheticEvent, newValue: string) => {
       setActiveTab(newValue);
     },
-    [setActiveTab],
+    [setActiveTab]
   );
 
   return (
@@ -26,6 +26,7 @@ export function SidebarSuite() {
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           width: drawerWidth,
+          border: "none",
         },
       }}
       variant="persistent"
@@ -36,6 +37,7 @@ export function SidebarSuite() {
       <aside
         id="db-results-settings-sidebar"
         aria-label="settings and info tabs"
+        style={{ borderLeft: "solid 1px var(--mui-palette-divider)" }}
       >
         <Box sx={{ width: 1 }}>
           <TabContext value={activeTab}>

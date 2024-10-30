@@ -10,7 +10,9 @@ import {
 } from "./base";
 
 const defaultPrimary = "#972e3a";
-const defaultPrimaryBg = "#f2eeee";
+const defaultPrimaryBgLight = "#f2eeee";
+const defaultPrimaryBgDark = "#151515";
+// const defaultPrimaryBgDark = "#312e2e";
 
 export const getDharmamitraDesignTokens = ({
   dbLanguage,
@@ -30,8 +32,8 @@ export const getDharmamitraDesignTokens = ({
           accent: grey[50],
           header: dbLanguage
             ? DB_LANGUAGE_COLORS_LIGHT[dbLanguage]
-            : defaultPrimaryBg,
-          card: grey[100],
+            : defaultPrimaryBgLight,
+          card: grey[200],
           inverted: grey[800],
         },
         text: {
@@ -68,13 +70,13 @@ export const getDharmamitraDesignTokens = ({
           main: "#10A60B",
         },
         background: {
-          default: "#201c22",
-          paper: defaultPrimary,
+          default: "#242222",
+          paper: "#151515",
           accent: grey[900],
           header: dbLanguage
             ? DB_LANGUAGE_COLORS_DARK.main[dbLanguage]
-            : defaultPrimary,
-          card: defaultPrimary,
+            : defaultPrimaryBgDark,
+          card: defaultPrimaryBgDark,
         },
         text: {
           primary: grey[100],
