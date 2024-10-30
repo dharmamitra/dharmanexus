@@ -1,4 +1,4 @@
-# DharamaNexus Customization
+# DharmaNexus Customization
 
 ALL backend development and most/all frontend feature/bug/+ development should be done directly on the [BuddhaNexus](https://github.com/BuddhaNexus/buddhanexus) parent project. This project is for spcific DharamNexus customization only.
 
