@@ -13,6 +13,8 @@ frontend/content/pages/history/de.mdx
 frontend/content/pages/history/en.mdx
 frontend/content/pages/institutions/de.mdx
 frontend/content/pages/institutions/en.mdx
+frontend/content/pages/introduction/de.mdx
+frontend/content/pages/introduction/en.mdx
 frontend/content/pages/people/de.mdx
 frontend/content/pages/people/en.mdx
 frontend/content/pages/presentations/de.mdx

@@ -1,3 +1,5 @@
+frontend/content/pages/guide/de.mdx
+frontend/content/pages/guide/en.mdx
 frontend/.husky/pre-commit
 frontend/package.json
 frontend/src/components/layout/ContentLanguageSelector.tsx
