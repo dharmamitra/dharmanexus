@@ -1,5 +1,8 @@
- .husky/pre-commit
- package.json
- src/components/layout/ContentLanguageSelector.tsx
- src/components/layout/Footer.tsx
- yarn.lock
+ frontend/.husky/pre-commit
+ frontend/package.json
+ README_MITRA.md
+ frontend/src/components/layout/ContentLanguageSelector.tsx
+ frontend/src/components/layout/Footer.tsx
+ frontend/yarn.lock
+frontend/.husky/pre-commit
+ README_MITRA.md

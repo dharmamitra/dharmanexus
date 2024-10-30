@@ -1,13 +1,4 @@
-D  public/assets/images/atii_logo.png
-D  public/assets/images/bg_chn_upscaled.jpeg
-D  public/assets/images/bg_chn_upscaled_bw.jpg
-D  public/assets/images/bg_pli_upscaled.jpeg
-D  public/assets/images/bg_pli_upscaled_bw.jpg
-D  public/assets/images/bg_skt_upscaled.jpeg
-D  public/assets/images/bg_skt_upscaled_bw.jpg
-D  public/assets/images/bg_tib_upscaled.jpeg
-D  public/assets/images/bg_tib_upscaled_bw.jpg
-D  public/assets/images/bg_welcome_upscaled.jpeg
-D  public/assets/images/bg_welcome_upscaled_bw.jpg
-D  src/components/layout/Copyright.tsx
-M  src/components/layout/Footer.tsx
+D  frontend/src/pages/atii/index.tsx
+D  frontend/src/pages/atii/sample-page.tsx
+ M frontend/.husky/pre-commit
+M  README_MITRA.md
