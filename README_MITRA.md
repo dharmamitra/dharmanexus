@@ -17,10 +17,10 @@ ALL backend development and most/all frontend feature/bug/+ development should b
 
 ```sh
 git checkout upstream-repo
-git pull
-# if necessary checkout a specific branch to pull into main
-git checkout main
+git pull upstream master
+git checkout dev # (or relevant branch)
 git merge upstream-repo
+# Open a PR to pull in changes to main
 ```
 
 ## Frontend Development
