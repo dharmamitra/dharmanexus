@@ -107,5 +107,5 @@
   "volta": {
     "node": "22.9.0"
   },
-  "packageManager": "yarn@4.5.0"
+  "packageManager": "yarn@4.5.1"
 }

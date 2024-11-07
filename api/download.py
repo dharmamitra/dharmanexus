@@ -45,7 +45,7 @@ def run_table_download(query, file_values):
 
     full_root_filename = get_displayname(file_values[0])
     # Writing header
-    worksheet.insert_image("D4", "buddhanexus_smaller.jpg")
+    worksheet.insert_image("D4", "dharmanexus_smaller.jpg")
     worksheet.merge_range(
         0,
         0,
@@ -302,7 +302,7 @@ def run_numbers_download(categories, segments, file_values):
 
     full_root_filename = get_displayname(file_values[0])
     # Writing header
-    worksheet.insert_image("A4", "buddhanexus_smaller.jpg")
+    worksheet.insert_image("A4", "dharmanexus_smaller.jpg")
     worksheet.merge_range(
         0,
         1,
