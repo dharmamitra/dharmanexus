@@ -1,5 +1,6 @@
 import {
   allUIComponentParamNames,
+  DEFAULT_LANGUAGE,
   DEFAULT_PARAM_VALUES,
   sortMethods,
 } from "@features/SidebarSuite/uiSettings/config";
@@ -21,7 +22,6 @@ export const nullToUndefined = <T>(value: T | null): T | undefined => {
 export const useScoreParam = () => {
   return useQueryState(allUIComponentParamNames.score, {
     ...parseAsInteger.withDefault(DEFAULT_PARAM_VALUES.score),
-    clearOnDefault: true,
   });
 };
 
@@ -29,78 +29,72 @@ export const useParLengthParam = () => {
   const { dbLanguage } = useNullableDbRouterParams();
   return useQueryState(allUIComponentParamNames.par_length, {
     ...parseAsInteger.withDefault(
-      DEFAULT_PARAM_VALUES.par_length[dbLanguage ?? "all"],
+      DEFAULT_PARAM_VALUES.par_length[dbLanguage ?? DEFAULT_LANGUAGE],
     ),
-    clearOnDefault: true,
   });
 };
 
 export const useExcludeCollectionsParam = () => {
   return useQueryState(allUIComponentParamNames.exclude_collections, {
     ...parseAsArrayOf(parseAsString).withDefault([]),
-    clearOnDefault: true,
   });
 };
 
 export const useExcludeCategoriesParam = () => {
   return useQueryState(allUIComponentParamNames.exclude_categories, {
     ...parseAsArrayOf(parseAsString).withDefault([]),
-    clearOnDefault: true,
   });
 };
 
 export const useExcludeFilesParam = () => {
   return useQueryState(allUIComponentParamNames.exclude_files, {
     ...parseAsArrayOf(parseAsString).withDefault([]),
-    clearOnDefault: true,
   });
 };
 
 export const useIncludeCollectionsParam = () => {
   return useQueryState(allUIComponentParamNames.include_collections, {
     ...parseAsArrayOf(parseAsString).withDefault([]),
-    clearOnDefault: true,
   });
 };
 
 export const useIncludeCategoriesParam = () => {
   return useQueryState(allUIComponentParamNames.include_categories, {
     ...parseAsArrayOf(parseAsString).withDefault([]),
-    clearOnDefault: true,
   });
 };
 
 export const useIncludeFilesParam = () => {
   return useQueryState(allUIComponentParamNames.include_files, {
     ...parseAsArrayOf(parseAsString).withDefault([]),
-    clearOnDefault: true,
   });
 };
 
 const parseAsDbLanguage = parseAsStringLiteral([
   ...dbLanguages,
-  DEFAULT_PARAM_VALUES.language,
+  DEFAULT_LANGUAGE,
 ]);
 
 export const useLanguageParam = () => {
   return useQueryState(allUIComponentParamNames.languages, {
     ...parseAsDbLanguage.withDefault(DEFAULT_PARAM_VALUES.language),
-    clearOnDefault: true,
   });
 };
 
 export const useLanguagesParam = () => {
   return useQueryState(allUIComponentParamNames.languages, {
-    ...parseAsArrayOf(parseAsDbLanguage).withDefault([]),
-    clearOnDefault: true,
+    ...parseAsArrayOf(parseAsDbLanguage).withDefault([DEFAULT_LANGUAGE]),
   });
 };
 
 export const useActiveSegmentParam = () => {
   return useQueryState(allUIComponentParamNames.active_segment, {
-    ...parseAsString,
-    clearOnDefault: true,
+    ...parseAsString.withDefault(DEFAULT_PARAM_VALUES.active_segment),
   });
+};
+
+export const useActiveSegmentIndexParam = () => {
+  return useQueryState("active_segment_index", parseAsInteger);
 };
 
 const parseAsSortMethod = parseAsStringLiteral(sortMethods);
@@ -108,20 +102,17 @@ const parseAsSortMethod = parseAsStringLiteral(sortMethods);
 export const useSortMethodParam = () => {
   return useQueryState(allUIComponentParamNames.sort_method, {
     ...parseAsSortMethod.withDefault(DEFAULT_PARAM_VALUES.sort_method),
-    clearOnDefault: true,
   });
 };
 
 export const useFolioParam = () => {
   return useQueryState(allUIComponentParamNames.folio, {
     ...parseAsString,
-    clearOnDefault: true,
   });
 };
 
 export const useSearchStringParam = () => {
   return useQueryState(allUIComponentParamNames.search_string, {
     ...parseAsString.withDefault(""),
-    clearOnDefault: true,
   });
 };

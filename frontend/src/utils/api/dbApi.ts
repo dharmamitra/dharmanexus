@@ -1,13 +1,13 @@
 import type { APIGetRequestQuery, APIPostRequestBody } from "@utils/api/types";
 import { DbLanguage } from "@utils/api/types";
 
+import { getParallelDownloadData } from "./endpoints/download";
 import { getGraphData } from "./endpoints/graph-view/graph";
 import { getExternalLinksData } from "./endpoints/links";
 import { getDbSourceMenuData } from "./endpoints/menus/sources";
 import { getNumbersViewCategories } from "./endpoints/numbers-view/categories";
 import { getNumbersViewData } from "./endpoints/numbers-view/numbers";
 import { getGlobalSearchData } from "./endpoints/search";
-import { getParallelDownloadData } from "./endpoints/table-view/downloads";
 import { getTableData } from "./endpoints/table-view/table";
 import { getTextViewMiddleParallelsData } from "./endpoints/text-view/middle";
 import { getTextViewParallelsData } from "./endpoints/text-view/text-parallels";
@@ -51,7 +51,7 @@ export const DbApi = {
     call: getTextViewParallelsData,
   },
   TextViewMiddle: {
-    makeQueryKey: (parallelIds: string[]) => parallelIds,
+    makeQueryKey: (parallelIds: string[]) => ["textMiddleView", parallelIds],
     call: getTextViewMiddleParallelsData,
   },
   //* MENU
@@ -80,7 +80,7 @@ export const DbApi = {
     call: getExternalLinksData,
   },
   DownloadResults: {
-    makeQueryKey: (params: APIPostRequestBody<"/table-view/download/">) => [
+    makeQueryKey: (params: APIPostRequestBody<"/download/">) => [
       "downloadData",
       params,
     ],

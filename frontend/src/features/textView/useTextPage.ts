@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useStandardViewBaseQueryParams } from "@components/hooks/groupedQueryParams";
-import { useActiveSegmentParam } from "@components/hooks/params";
 import { useDbRouterParams } from "@components/hooks/useDbRouterParams";
 import { useSetDbViewFromPath } from "@components/hooks/useDbView";
 import { useSourceFile } from "@components/hooks/useSourceFile";
+import { DEFAULT_PARAM_VALUES } from "@features/SidebarSuite/uiSettings/config";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { DbApi } from "@utils/api/dbApi";
 import { ParsedTextViewParallels } from "@utils/api/endpoints/text-view/text-parallels";
@@ -26,6 +27,7 @@ interface UseTextPageReturn {
   isFetchingNextPage: boolean;
   isFetchingPreviousPage: boolean;
   dbLanguage: DbLanguage;
+  error: Error | null;
 }
 
 export function useTextPage(): UseTextPageReturn {
@@ -35,7 +37,13 @@ export function useTextPage(): UseTextPageReturn {
   useSetDbViewFromPath();
 
   const requestBodyBase = useStandardViewBaseQueryParams();
-  const [active_segment] = useActiveSegmentParam();
+
+  const searchParams = useSearchParams();
+  const active_segment =
+    searchParams.get("active_segment") ?? DEFAULT_PARAM_VALUES.active_segment;
+
+  const initialPageParam =
+    active_segment === DEFAULT_PARAM_VALUES.active_segment ? 0 : undefined;
 
   const [firstItemIndex, setFirstItemIndex] = useState(START_INDEX);
 
@@ -43,8 +51,8 @@ export function useTextPage(): UseTextPageReturn {
   const paginationState = useRef<PaginationState>([0, 0]);
 
   const hasSegmentBeenSelected = useCallback(
-    (segmentId: string | null): boolean =>
-      segmentId !== null &&
+    (segmentId: string): boolean =>
+      segmentId !== DEFAULT_PARAM_VALUES.active_segment &&
       Boolean(previouslySelectedSegmentsMap.current[segmentId]),
     [],
   );
@@ -58,13 +66,14 @@ export function useTextPage(): UseTextPageReturn {
     isFetchingNextPage,
     isFetching,
     isError,
+    error,
   } = useInfiniteQuery({
     enabled: Boolean(fileName),
     placeholderData: keepPreviousData,
-    initialPageParam: active_segment ? undefined : 0,
+    initialPageParam,
     queryKey: DbApi.TextView.makeQueryKey({
       ...requestBodyBase,
-      active_segment: active_segment ?? "",
+      active_segment,
     }),
     queryFn: ({ pageParam }) => {
       // We pass the active_segment, but only on the first page load :/
@@ -80,13 +89,13 @@ export function useTextPage(): UseTextPageReturn {
       // if the `active_segment` param was already sent for this segment,
       // don't send it anymore.
       const activeSegmentParam = hasSegmentBeenSelected(active_segment)
-        ? undefined
+        ? DEFAULT_PARAM_VALUES.active_segment
         : active_segment;
 
       return DbApi.TextView.call({
         ...requestBodyBase,
         page: pageParam ?? 0,
-        active_segment: activeSegmentParam ?? "",
+        active_segment: activeSegmentParam,
       });
     },
 
@@ -110,6 +119,7 @@ export function useTextPage(): UseTextPageReturn {
   // see queryFn comment above
   useEffect(
     function updatePreviouslySelectedSegmentsMap() {
+      // console.log("useTextPage", active_segment);
       if (isSuccess && active_segment)
         previouslySelectedSegmentsMap.current[active_segment] = true;
     },
@@ -171,5 +181,6 @@ export function useTextPage(): UseTextPageReturn {
     isFetchingNextPage,
     isFetchingPreviousPage,
     dbLanguage,
+    error,
   };
 }
