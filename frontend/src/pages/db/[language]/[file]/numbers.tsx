@@ -7,15 +7,14 @@ import {
 // import { getI18NextStaticProps } from "@utils/nextJsHelpers";
 // import merge from "lodash/merge";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import LoadingSpinner from "@components/common/LoadingSpinner";
 // import { prefetchDbResultsPageData } from "@utils/api/apiQueryUtils";
 // export { getDbViewFileStaticPaths as getStaticPaths } from "@utils/nextJsHelpers";
 import { ResultQueryError } from "@components/db/ResultQueryError";
 import { useStandardViewBaseQueryParams } from "@components/hooks/groupedQueryParams";
 import { useSortMethodParam } from "@components/hooks/params";
-import { useDbRouterParams } from "@components/hooks/useDbRouterParams";
+import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { useSetDbViewFromPath } from "@components/hooks/useDbView";
-import { useSourceFile } from "@components/hooks/useSourceFile";
-import { CenteredProgress } from "@components/layout/CenteredProgress";
 import { PageContainer } from "@components/layout/PageContainer";
 import NumbersTable from "@features/numbersView/NumbersTable";
 import { DbSourceBrowserDrawer } from "@features/sourceTextBrowserDrawer/sourceTextBrowserDrawer";
@@ -28,8 +27,7 @@ import {
 import { DbApi } from "@utils/api/dbApi";
 
 export default function NumbersPage() {
-  const { dbLanguage, fileName } = useDbRouterParams();
-  const { isFallback } = useSourceFile();
+  const { dbLanguage, fileName, isFallback } = useDbPageRouterParams();
 
   useSetDbViewFromPath();
 
@@ -111,7 +109,7 @@ export default function NumbersPage() {
         backgroundName={dbLanguage}
         isQueryResultsPage
       >
-        <CenteredProgress />
+        <LoadingSpinner />
       </PageContainer>
     );
   }
@@ -130,7 +128,6 @@ export default function NumbersPage() {
         isFetching={isFetching}
         isLoading={isLoading}
         language={dbLanguage}
-        fileName={fileName}
       />
       <DbSourceBrowserDrawer />
     </PageContainer>

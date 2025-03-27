@@ -13,7 +13,7 @@ import {
   handleTreeChange,
   isSearchMatch,
 } from "@components/db/SearchableDbSourceTree/utils";
-import { useDbRouterParams } from "@components/hooks/useDbRouterParams";
+import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { useSetAtom } from "jotai";
 
 const DbSourceBrowserTree = memo(function DbSourceBrowserTree({
@@ -23,7 +23,7 @@ const DbSourceBrowserTree = memo(function DbSourceBrowserTree({
   searchTerm,
 }: DbSourceTreeBaseProps) {
   const router = useRouter();
-  const { fileName } = useDbRouterParams();
+  const { fileName } = useDbPageRouterParams();
 
   const setActiveTree = useSetAtom(activeDbSourceTreeAtom);
   const setBreadcrumbs = useSetAtom(activeDbSourceTreeBreadcrumbsAtom);
@@ -43,7 +43,7 @@ const DbSourceBrowserTree = memo(function DbSourceBrowserTree({
       disableDrop={true}
       dndRootElement={null}
       disableEdit={true}
-      height={height}
+      height={height - 60} // 60 offsets menu head
       width={width}
       rowHeight={64}
       padding={12}

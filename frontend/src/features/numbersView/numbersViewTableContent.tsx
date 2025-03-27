@@ -1,6 +1,7 @@
 import React from "react";
 import { TableComponents } from "react-virtuoso";
 import { Link } from "@components/common/Link";
+import { createURLToSegment } from "@features/textView/utils";
 import {
   Paper,
   Skeleton,
@@ -45,19 +46,19 @@ export const createTableRows = (
 interface CreateTableColumnProps {
   categories: APIGetResponse<"/numbers-view/categories/">;
   language: DbLanguage;
-  fileName: string;
 }
+
 export const createTableColumns = ({
   categories,
   language,
-  fileName,
 }: CreateTableColumnProps): ColumnDef<NumbersSegment>[] => [
   {
     accessorKey: "segment",
     header: () => (
       <div
         style={{
-          width: "150px",
+          // sets width for whole column
+          minWidth: "150px",
         }}
       >
         <Typography textTransform="uppercase">segment</Typography>
@@ -66,12 +67,9 @@ export const createTableColumns = ({
     cell: (info) => {
       const segmentnr = info.getValue<string>();
       return (
-        <Typography sx={{ fontWeight: 500 }}>
+        <Typography sx={{ fontWeight: 500, lineHeight: 1.25 }}>
           <Link
-            // TODO: make sure this links to the correct segment
-            href={`/db/${language}/${fileName}/text?active_segment=${segmentnr}`}
-            target="_blank"
-            rel="noreferrer noopenner"
+            href={createURLToSegment({ segmentNumber: segmentnr, language })}
           >
             {segmentnr}
           </Link>
@@ -101,11 +99,14 @@ export const createTableColumns = ({
           }}
         >
           {parallels.map((parallel, i) => {
-            const {
-              displayName,
-              fileName: parallelFileName,
-              segmentnr,
-            } = parallel || {};
+            const { displayName, segmentnr } = parallel || {};
+
+            const segmentNumber = segmentnr.split("–")[0] ?? segmentnr;
+
+            const urlToSegment = createURLToSegment({
+              segmentNumber,
+              language,
+            });
 
             return (
               <Tooltip
@@ -117,14 +118,8 @@ export const createTableColumns = ({
                 placement="top"
                 enterDelay={1200}
               >
-                <Typography>
-                  <Link
-                    // TODO: make sure this links to the correct segment
-                    href={`/db/${language}/${parallelFileName}/text?active_segment=${segmentnr}`}
-                    color="text.primary"
-                    target="_blank"
-                    rel="noreferrer noopenner"
-                  >
+                <Typography sx={{ lineHeight: 1.25 }}>
+                  <Link href={urlToSegment} color="text.primary">
                     {segmentnr}
                   </Link>
                 </Typography>

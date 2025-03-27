@@ -2,7 +2,7 @@ import React from "react";
 import type { GetStaticProps } from "next";
 import Image from "next/image";
 import { useTranslation } from "next-i18next";
-import { ContentLanguageSelector } from "@components/layout/ContentLanguageSelector";
+import { DbLanguageLinkBox } from "@components/layout/DbLanguageLinkBox";
 import { Footer } from "@components/layout/Footer";
 import { PageContainer } from "@components/layout/PageContainer";
 import { sourceSerif } from "@components/theme";
@@ -95,22 +95,22 @@ export default function Home() {
             },
           }}
         >
-          <ContentLanguageSelector
+          <DbLanguageLinkBox
             title="Pāli"
             href={dbLanguagePaths.pa}
             color={materialTheme.palette.common.pali}
           />
-          <ContentLanguageSelector
+          <DbLanguageLinkBox
             title="Sanskrit"
             href={dbLanguagePaths.sa}
             color={materialTheme.palette.common.sanskrit}
           />
-          <ContentLanguageSelector
+          <DbLanguageLinkBox
             title="Tibetan"
             href={dbLanguagePaths.bo}
             color={materialTheme.palette.common.tibetan}
           />
-          <ContentLanguageSelector
+          <DbLanguageLinkBox
             title="Chinese"
             href={dbLanguagePaths.zh}
             color={materialTheme.palette.common.chinese}
