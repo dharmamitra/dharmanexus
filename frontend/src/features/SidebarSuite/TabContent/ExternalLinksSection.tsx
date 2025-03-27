@@ -2,8 +2,8 @@ import React from "react";
 import type { StaticImageData } from "next/image";
 import Image from "next/image";
 import { useTranslation } from "next-i18next";
-import { useDbRouterParams } from "@components/hooks/useDbRouterParams";
-import { SourceLink } from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
+import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
+import { ExternalSourceLink } from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
 import PanelHeading from "@features/SidebarSuite/common/PanelHeading";
 import { List, ListItem } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -49,7 +49,7 @@ function CBCIcon({ fill }: { fill: string }) {
 }
 
 export const ExternalLinksSection = () => {
-  const { fileName } = useDbRouterParams();
+  const { fileName } = useDbPageRouterParams();
   const { t } = useTranslation("settings");
   const materialTheme = useTheme();
 
@@ -87,7 +87,7 @@ export const ExternalLinksSection = () => {
           {Object.entries(data).map(([key, value]) =>
             !value || value === "False" ? null : (
               <ListItem key={key} sx={{ width: "inherit", pr: 0 }}>
-                <SourceLink
+                <ExternalSourceLink
                   href={value}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -98,7 +98,7 @@ export const ExternalLinksSection = () => {
                   ) : (
                     <Image src={logos[key]!} alt={`${key} logo`} height={32} />
                   )}
-                </SourceLink>
+                </ExternalSourceLink>
               </ListItem>
             ),
           )}

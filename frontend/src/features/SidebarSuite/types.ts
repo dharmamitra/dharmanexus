@@ -5,33 +5,6 @@ export type AppResultPageView = DbViewEnum | "search";
 
 type APIRequestPropsName = keyof AllAPIRequestProps;
 
-// `AllAPIRequestPropModel` is an `at a glance` ref that catches any model changes pulled from the API
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const AllAPIRequestPropModel: AllAPIRequestProps = {
-  filters: {
-    score: 0,
-    par_length: 0,
-    exclude_collections: [],
-    exclude_categories: [],
-    exclude_files: [],
-    include_collections: [],
-    include_categories: [],
-    include_files: [],
-    language: "all",
-    languages: ["all"],
-  },
-  active_segment: "none",
-  sort_method: "position",
-  folio: "",
-  page: 0,
-  download_data: "table",
-  filename: "",
-  language: "pa",
-  parallel_ids: [],
-  search_string: "",
-  segmentnr: "",
-};
-
 /**
  *
  *
@@ -39,27 +12,30 @@ const AllAPIRequestPropModel: AllAPIRequestProps = {
  *
  */
 
-export type WorkingAPIFilters = NonNullable<AllAPIRequestProps["filters"]>;
+type FeStateParams =
+  | "active_segment_index"
+  | "collection"
+  | "hit_collections"
+  | "left_pane_active_match"
+  | "right_pane_active_match"
+  | "right_pane_active_segment"
+  | "right_pane_active_segment_index";
 
-export type APIFilterName = keyof WorkingAPIFilters;
+export type APIRequestFilters = NonNullable<AllAPIRequestProps["filters"]>;
+
+export type APIRequestFilterName = keyof APIRequestFilters;
 
 export type IndividualFilterName = Extract<
-  APIFilterName,
+  APIRequestFilterName,
   "languages" | "score" | "par_length"
 >;
 
-export type DbSourceFilters = Omit<WorkingAPIFilters, IndividualFilterName>;
+export type DbSourceFilters = Omit<APIRequestFilters, IndividualFilterName>;
 
 export type DbSourceFilterName = keyof DbSourceFilters;
 
-export type RequestFilters = WorkingAPIFilters & {
-  language: APISchemas["Languages"]; // TODO: DUE TO BE DEFINED ON API SO SHOULD BE REMOVED WHEN AVAILABLE.
-};
-
-export type RequestFilterName = keyof RequestFilters;
-
 export type FilterUISettings = Omit<
-  WorkingAPIFilters,
+  APIRequestFilters,
   | "exclude_categories"
   | "exclude_collections"
   | "exclude_files"
@@ -69,7 +45,6 @@ export type FilterUISettings = Omit<
 > & {
   exclude_sources: string[];
   include_sources: string[];
-  language: APISchemas["Languages"]; // TODO: DUE TO BE DEFINED ON API SO SHOULD BE REMOVED WHEN AVAILABLE.
 };
 
 export type RequestFilterUISettingName = keyof FilterUISettings;
@@ -125,19 +100,16 @@ export type Script = "Unicode" | "Wylie";
  *
  */
 
-export type RequestUtilityUISettingName = Extract<
+export type RequestUtilityUIOptionName = Extract<
   APIRequestPropsName,
   "download_data"
 >;
 
-export type LocalUtilityUISettingName =
-  | "copyQueryTitle"
-  | "copyQueryLink"
-  | "emailQueryLink";
+export type LocalUtilityUIOptionName = "copyResultInfo" | "emailResultInfo";
 
-export type UtilityUISettingName =
-  | RequestUtilityUISettingName
-  | LocalUtilityUISettingName;
+export type UtilityUIOptionName =
+  | RequestUtilityUIOptionName
+  | LocalUtilityUIOptionName;
 
 /**
  *
@@ -147,10 +119,11 @@ export type UtilityUISettingName =
  */
 
 export type UIComponentParamName =
+  | FeStateParams
   | APIRequestPropsName
-  | RequestFilterName
+  | APIRequestFilterName
   | DisplayUISettingName
-  | UtilityUISettingName;
+  | UtilityUIOptionName;
 
 export type AllUIComponentParamNames = Record<
   UIComponentParamName,

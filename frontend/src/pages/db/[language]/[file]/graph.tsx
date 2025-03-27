@@ -9,6 +9,7 @@ import { useTranslation } from "next-i18next";
 // import merge from "lodash/merge";
 // export { getDbViewFileStaticPaths as getStaticPaths } from "@utils/nextJsHelpers";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { InfiniteLoadingSpinner } from "@components/common/LoadingSpinner";
 import { ResultQueryError } from "@components/db/ResultQueryError";
 import {
   nullToUndefined,
@@ -16,10 +17,8 @@ import {
   useParLengthParam,
   useScoreParam,
 } from "@components/hooks/params";
-import { useDbRouterParams } from "@components/hooks/useDbRouterParams";
+import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { useSetDbViewFromPath } from "@components/hooks/useDbView";
-import { useSourceFile } from "@components/hooks/useSourceFile";
-import { CenteredProgress } from "@components/layout/CenteredProgress";
 import { PageContainer } from "@components/layout/PageContainer";
 import { HistogramDataChart } from "@features/graphView/HistogramDataChart";
 import { PieDataChart } from "@features/graphView/PieDataChart";
@@ -44,8 +43,11 @@ const GraphContainer: React.FC<{ children: React.ReactNode; sx?: SxProps }> = ({
 );
 
 export default function GraphPage() {
-  const { dbLanguage, fileName: filename } = useDbRouterParams();
-  const { isFallback } = useSourceFile();
+  const {
+    dbLanguage,
+    fileName: filename,
+    isFallback,
+  } = useDbPageRouterParams();
 
   useSetDbViewFromPath();
 
@@ -92,7 +94,7 @@ export default function GraphPage() {
         backgroundName={dbLanguage}
         isQueryResultsPage
       >
-        <CenteredProgress />
+        <InfiniteLoadingSpinner />
       </PageContainer>
     );
   }

@@ -75,6 +75,8 @@ class LoadSegmentsBase:
 
     def _init_metadata(self):
         df = pd.read_json(METADATA_URLS[self.LANG])
+        df["filename"] = df["filename"].apply(get_filename_from_segmentnr)
+        df = df.drop_duplicates(subset="filename")
         return df.set_index("filename").to_dict(orient="index")
 
     def _load_segments(self, segments_df, db) -> None:
@@ -112,8 +114,11 @@ class LoadSegmentsBase:
         segmentnrs = sliding_window(file_df["segmentnr"].tolist(), 3)
         originals = sliding_window(file_df["original"].tolist(), 3)
         stems = sliding_window(file_df["analyzed"].tolist(), 3)
+        collections = file_df["collection"].tolist()
         search_index_entries = []
-        for segnr, original, stem in zip(segmentnrs, originals, stems):
+        for segnr, original, stem, collection in zip(
+            segmentnrs, originals, stems, collections
+        ):
             if self.LANG == "chn":
                 original = "".join(original)
                 stem = "".join(stem)
@@ -129,6 +134,7 @@ class LoadSegmentsBase:
                     "original": original,
                     "analyzed": stem,
                     "category": category,
+                    "collection": collection,
                     "lang": self.LANG,
                     "filename": get_filename_from_segmentnr(segnr[1]),
                 }
@@ -138,11 +144,12 @@ class LoadSegmentsBase:
         db.collection(self.SEARCH_COLLECTION_NAME).insert_many(search_index_entries)
 
         db.collection(self.SEARCH_COLLECTION_NAME).add_hash_index(
-            fields=["segmentnr", "lang", "filename", "category"], unique=False
+            fields=["segmentnr", "lang", "filename", "category", "collection"],
+            unique=False,
         )
 
     def _process_file(self, file):
-        metadata_reference_filename = file.replace(".json", "")
+        metadata_reference_filename = get_filename_from_segmentnr(file)
         if metadata_reference_filename not in self.metadata:
             print(f"ERROR: file not in metadata: { file }")
             print(f"metadata_reference_filename: {metadata_reference_filename}")
@@ -153,6 +160,7 @@ class LoadSegmentsBase:
             file_df = pd.read_json(os.path.join(self.DATA_PATH, file))
             file_df["_key"] = file_df["segmentnr"]
             file_df["lang"] = self.LANG
+            file_df["folio"] = file_df["folio"].astype(str)
             file_df["filename"] = metadata_reference_filename
             file_df["category"] = self.metadata[metadata_reference_filename]["category"]
             file_df["collection"] = self.metadata[metadata_reference_filename][
@@ -236,6 +244,7 @@ class LoadSegmentsBase:
         # Prepare data for bulk insert
         segments_pages_to_insert = []
         files_to_update = []
+        files_to_insert = []
 
         for (
             filename,
@@ -262,7 +271,7 @@ class LoadSegmentsBase:
 
             else:
                 print(f"Could not find file {filename} in db.")
-                files_to_update.append(
+                files_to_insert.append(
                     {
                         "_key": filename,
                         "filename": filename,
@@ -276,6 +285,8 @@ class LoadSegmentsBase:
         # Bulk insert and update
         if segments_pages_to_insert:
             collection_segments_pages.insert_many(segments_pages_to_insert)
+        # if files_to_insert:
+        #    collection_files.insert_many(files_to_insert)
 
         for file in files_to_update:
             collection_files.update(file)

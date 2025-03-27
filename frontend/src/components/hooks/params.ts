@@ -76,7 +76,7 @@ const parseAsDbLanguage = parseAsStringLiteral([
 ]);
 
 export const useLanguageParam = () => {
-  return useQueryState(allUIComponentParamNames.languages, {
+  return useQueryState(allUIComponentParamNames.language, {
     ...parseAsDbLanguage.withDefault(DEFAULT_PARAM_VALUES.language),
   });
 };
@@ -90,11 +90,43 @@ export const useLanguagesParam = () => {
 export const useActiveSegmentParam = () => {
   return useQueryState(allUIComponentParamNames.active_segment, {
     ...parseAsString.withDefault(DEFAULT_PARAM_VALUES.active_segment),
+    history: "push",
   });
 };
 
 export const useActiveSegmentIndexParam = () => {
-  return useQueryState("active_segment_index", parseAsInteger);
+  return useQueryState(
+    allUIComponentParamNames.active_segment_index,
+    parseAsInteger,
+  );
+};
+
+export const useRightPaneActiveSegmentParam = () => {
+  return useQueryState(allUIComponentParamNames.right_pane_active_segment, {
+    ...parseAsString.withDefault(DEFAULT_PARAM_VALUES.active_segment),
+    history: "push",
+  });
+};
+
+export const useRightPaneActiveSegmentIndexParam = () => {
+  return useQueryState(
+    allUIComponentParamNames.right_pane_active_segment_index,
+    parseAsInteger,
+  );
+};
+
+export const useLeftPaneActiveMatchParam = () => {
+  return useQueryState(
+    allUIComponentParamNames.active_match_id,
+    parseAsString.withDefault(DEFAULT_PARAM_VALUES.active_match),
+  );
+};
+
+export const useRightPaneActiveMatchParam = () => {
+  return useQueryState(
+    allUIComponentParamNames.right_pane_active_match,
+    parseAsString.withDefault(DEFAULT_PARAM_VALUES.active_match),
+  );
 };
 
 const parseAsSortMethod = parseAsStringLiteral(sortMethods);
@@ -114,5 +146,20 @@ export const useFolioParam = () => {
 export const useSearchStringParam = () => {
   return useQueryState(allUIComponentParamNames.search_string, {
     ...parseAsString.withDefault(""),
+    history: "push",
+  });
+};
+
+// for visual view
+export const useVisualCollectionStringParam = () => {
+  return useQueryState(allUIComponentParamNames.collection, {
+    ...parseAsString.withDefault(""),
+    history: "push",
+  });
+};
+export const useVisualHitCollectionsStringParam = () => {
+  return useQueryState(allUIComponentParamNames.hit_collections, {
+    ...parseAsArrayOf(parseAsString).withDefault([]),
+    history: "push",
   });
 };

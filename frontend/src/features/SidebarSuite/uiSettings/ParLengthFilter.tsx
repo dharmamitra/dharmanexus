@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { useParLengthParam } from "@components/hooks/params";
-import { useDbRouterParams } from "@components/hooks/useDbRouterParams";
+import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { MIN_PAR_LENGTH_VALUES } from "@features/SidebarSuite/uiSettings/config";
 import { Box, FormLabel, Slider, TextField } from "@mui/material";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 
 function valueToString(value: number) {
   return `${value}`;
@@ -26,7 +26,7 @@ function normalizeValue(value: number, min: number) {
 export default function ParLengthFilter() {
   const { t } = useTranslation("settings");
 
-  const { dbLanguage } = useDbRouterParams();
+  const { dbLanguage } = useDbPageRouterParams();
 
   const [parLengthParam, setParLengthParam] = useParLengthParam();
   const [parLengthValue, setparLengthValue] = useState(parLengthParam);
@@ -74,7 +74,7 @@ export default function ParLengthFilter() {
         value={parLengthValue}
         type="number"
         inputProps={{
-          min: 0,
+          min: minValue,
           max: 4000,
           type: "number",
           "aria-labelledby": "min-match-input-label",
@@ -86,7 +86,7 @@ export default function ParLengthFilter() {
           value={parLengthValue}
           aria-labelledby="min-match-input-label"
           getAriaValueText={valueToString}
-          min={0}
+          min={minValue}
           max={4000}
           marks={marks}
           onChange={(_, value) => handleChange(Number(value))}

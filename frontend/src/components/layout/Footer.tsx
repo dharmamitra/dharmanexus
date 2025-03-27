@@ -73,6 +73,7 @@ export const Footer = () => {
         justifyContent="space-evenly"
         rowSpacing={4}
         sx={{
+          my: 1,
           borderTop: (theme) => `1px solid ${theme.palette.divider}`,
           textAlign: {
             xs: "center",
@@ -99,7 +100,7 @@ export const Footer = () => {
                 <Container
                   key={item.title}
                   component="li"
-                  sx={{ mt: { xs: 1 } }}
+                  sx={{ mt: { xs: 1 }, paddingLeft: { sm: 0 } }}
                 >
                   <Link href={item.slug}>{item.title}</Link>
                 </Container>

@@ -8,11 +8,13 @@ class TextParallelsInput(BaseModel):
     folio: str = ""
     active_segment: Optional[str] = "none"
     filters: Optional[Filters]
+    active_match_id: Optional[str] = None
     page: int = 0
 
 
 class FullMatchText(FullText):
-    matches: list = []
+    matches: List[str]
+    is_active_match: bool = False
 
 
 class TextItem(BaseModel):
@@ -39,11 +41,11 @@ par_fulltext can then be made un-optional
 
 
 class Segment(BaseModel):
+    id: str
     par_segnr_range: str
+    par_segnr: str
     display_name: Union[str, None] = None
     tgt_lang: str
-    par_offset_beg: Optional[int]
-    par_offset_end: Optional[int]
     par_segtext: list = []
     filename: str
     score: int
