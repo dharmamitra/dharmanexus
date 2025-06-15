@@ -18,7 +18,7 @@ import { getI18NextStaticProps } from "@utils/nextJsHelpers";
 import merge from "lodash/merge";
 
 const logoPaths: Record<Deployment, string> = {
-  dharmamitra: "/assets/logos/dm-logo-full.png",
+  dharmamitra: "/assets/logos/dm-logo-full-no-tagline.png",
   kumarajiva: "/assets/logos/kp-logo-full.png",
 };
 const logoDimensions: Record<Deployment, { width: number; height: number }> = {
