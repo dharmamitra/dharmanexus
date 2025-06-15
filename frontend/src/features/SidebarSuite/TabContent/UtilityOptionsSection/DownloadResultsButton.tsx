@@ -24,7 +24,7 @@ function createDownload(blob: Blob, view: string, name: string) {
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `BuddhaNexus_${view}_results__${name}__${new Date()
+  a.download = `DharmaNexus_${view}_results__${name}__${new Date()
     .toISOString()
     .replace(/\.\w+$/, "")
     .replaceAll(":", "")}.xlsx`;

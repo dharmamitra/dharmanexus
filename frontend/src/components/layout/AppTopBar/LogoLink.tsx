@@ -60,7 +60,7 @@ export const LogoLink = ({ showText = true }: LogoLinkProps) => {
                 display: "none",
               },
             }}
-            alt="BuddhaNexus"
+            alt="DharmaNexus"
           />
         )}
       </Box>

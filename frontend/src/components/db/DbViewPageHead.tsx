@@ -36,7 +36,7 @@ export const DbViewPageHead = () => {
   return (
     <>
       <NextSeo
-        title={`BuddhaNexus | ${displayId} :: ${title} ${startCase(dbView)} View`}
+        title={`DharmaNexus | ${displayId} :: ${title} ${startCase(dbView)} View`}
       />
 
       <QueryPageTopStack title={title} subtitle={displayId} />

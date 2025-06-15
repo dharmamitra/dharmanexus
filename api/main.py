@@ -1,5 +1,5 @@
 """
-This file contains all FastAPI endpoints for Buddhanexus.
+This file contains all FastAPI endpoints for DharmaNexus.
 """
 
 import os
@@ -26,7 +26,7 @@ from .endpoints import (
 )
 
 API_PREFIX = "/api-db" if os.environ["PROD"] == "1" else "/api-db"
-APP = FastAPI(title="BuddhaNexus Backend", version="0.2.1", openapi_prefix=API_PREFIX)
+APP = FastAPI(title="DharmaNexus Backend", version="0.2.1", openapi_prefix=API_PREFIX)
 APP.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]
 )
@@ -84,7 +84,7 @@ async def startup():
     )
     FastAPICache.init(
         backend=RedisBackend(redis),
-        prefix="buddhanexus-cache",
+        prefix="dharmanexus-cache",
         key_builder=make_cache_key_builder(),
         coder=CustomJsonCoder(),
     )
