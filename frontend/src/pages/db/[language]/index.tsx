@@ -48,7 +48,6 @@ export default function DbIndexPage() {
         </Box>
       </Paper>
 
-      <Footer />
     </PageContainer>
   );
 }

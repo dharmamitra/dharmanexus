@@ -49,6 +49,7 @@ export default function Home() {
           display: "grid",
           placeItems: "center",
           p: 4,
+          mt: 8,
           [materialTheme.breakpoints.down("sm")]: {
             p: 3,
             m: 2,
@@ -117,7 +118,6 @@ export default function Home() {
           />
         </Box>
       </Paper>
-      <Footer />
     </PageContainer>
   );
 }

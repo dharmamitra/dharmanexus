@@ -3,7 +3,6 @@ import { useTranslation } from "next-i18next";
 import { MDXRemote } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import { Link } from "@components/common/Link";
-import { Footer } from "@components/layout/Footer";
 import { PageContainer } from "@components/layout/PageContainer";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Paper, Typography } from "@mui/material";
@@ -67,7 +66,6 @@ export default function PostPage({
           />
         </article>
       </Paper>
-      <Footer />
     </PageContainer>
   );
 }

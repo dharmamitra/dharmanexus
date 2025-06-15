@@ -1,5 +1,4 @@
 import React from "react";
-import { Footer } from "@components/layout/Footer";
 import { PageContainer } from "@components/layout/PageContainer";
 import { Paper } from "@mui/material";
 
@@ -12,6 +11,5 @@ export const StaticPageWrapper: React.FC = ({
         {children}
       </Paper>
     </PageContainer>
-    <Footer />
   </>
 );

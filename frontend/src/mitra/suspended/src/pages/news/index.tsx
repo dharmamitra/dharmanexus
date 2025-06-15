@@ -1,7 +1,6 @@
 import type { GetStaticProps } from "next";
 import { useTranslation } from "next-i18next";
 import { Link } from "@components/common/Link";
-import { Footer } from "@components/layout/Footer";
 import { PageContainer } from "@components/layout/PageContainer";
 import { Paper, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -77,7 +76,6 @@ export default function NewsPage({
         </Typography>
         <PostArchive posts={allPosts} locale={locale} />
       </Paper>
-      <Footer />
     </PageContainer>
   );
 }

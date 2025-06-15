@@ -1,7 +1,6 @@
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
-import { Footer } from "@components/layout/Footer";
 import { PageContainer } from "@components/layout/PageContainer";
 import { Paper, Typography } from "@mui/material";
 import {
@@ -46,7 +45,6 @@ export default function Page({
           frontmatter={content.frontmatter}
         />
       </Paper>
-      <Footer />
     </PageContainer>
   );
 }
