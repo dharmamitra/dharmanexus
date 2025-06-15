@@ -1,11 +1,13 @@
 {
   "global": {
-    "siteTitle": "BuddhaNexus",
+    "siteTitle": "DharmaNexus",
     "language": "Language"
   },
   "header": {
     "guide": "Guide",
-    "database": "Database"
+    "database": "Database",
+    "toggleTheme": "Toggle theme",
+    "visual": "Sankey Charts"
   },
   "language": {
     "all": "All",
@@ -39,6 +41,14 @@
     "clearSelectedSegment": "Clear selected segment",
     "segmentMatches": "Segment Matches"
   },
+  "visual": {
+    "openVisualCharts": "Open Sankey Chart",
+    "visualInfoHeader": "Sankey Chart",
+    "visualInfo1": "Select the Inquiry Collection, Category or Text and Hit Collection and/or Category.",
+    "visualInfo2": "More than one Hit Collection and/or Category can be selected.",
+    "inquiryCollectionLabel": "Inquiry Text(s)",
+    "hitCollectionsLabel": "Hit Text(s)"
+  },
   "news": {
     "title": "News",
     "readMore": "Read more",
@@ -51,6 +61,7 @@
     "genericErrorTitle": "Something went wrong.",
     "genericErrorDescription": "Please contact us if the issue persists.",
     "fetchError": "Error fetching result data",
+    "dbSrcMenuError": "Error fetching database source menu. Database language is invalid.",
     "queryWarning": "Unable to display results. Please use the filters to adjust your query.",
     "noFile": "No file selected.",
     "fileUndefined": "File undefined.",
@@ -73,14 +84,15 @@
     "openSearch": "Open search box",
     "closeSearch": "Close search box",
     "noResultsHeading": "No results found",
-    "noResultsTip": "Try search for an exact term with whole words, correct punctuation and diacretical marks where relevant:"
+    "noResultsTip": "Try adjusting your search. Making sure you use an exact search term with whole words, correct punctuation and diacretical marks where relevant may help."
   },
   "graph": {
     "histogramDataTitle": "Distribution of the top files that have matches with the Inquiry Text:",
-    "histogramDataSubtitle": "The histogram displays the distribution of the top files that have matches with the Inquiry Text based on the accumulated length of the matches. A maximum of 50 Hit Texts are shown.",
+    "histogramDataSubtitle": "The distribution chart displays the distribution of the top files that have matches with the Inquiry Text based on the accumulated length of the approximate matches. A maximum of 50 Hit Texts are shown.",
     "pieDataTitle": "Distribution of all the matches found with the current filters across the various collections and their subsections.",
     "pieDataSubtitle": "The distribution is weighted by length of matches found:",
     "collection": "Collection",
     "matchLengths": "Match Lengths"
-  }
+  },
+  "toggleTheme": "Toggle theme"
 }

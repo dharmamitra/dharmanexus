@@ -2,15 +2,15 @@ import { DbLanguage } from "@utils/api/types";
 import { exhaustiveStringTuple } from "@utils/helpers";
 import {
   AllUIComponentParamNames,
+  APIRequestFilterName,
   DBSourceFilePageFilterUISettingName,
   DisplayUISettingName,
-  RequestFilterName,
   SearchPageFilterUISettingName,
   SortMethod,
-  UtilityUISettingName,
+  UtilityUIOptionName,
 } from "src/features/SidebarSuite/types";
 
-export const allRequestFilters = exhaustiveStringTuple<RequestFilterName>()(
+export const allRequestFilters = exhaustiveStringTuple<APIRequestFilterName>()(
   "languages",
   "include_files",
   "exclude_files",
@@ -24,7 +24,6 @@ export const allRequestFilters = exhaustiveStringTuple<RequestFilterName>()(
 );
 
 // order sets appearance in sidebar
-
 export const dbSourceFileRequestFilters =
   exhaustiveStringTuple<DBSourceFilePageFilterUISettingName>()(
     "score",
@@ -55,11 +54,10 @@ export const sortMethods = exhaustiveStringTuple<SortMethod>()(
   "length2",
 );
 
-export const utilityUISettings = exhaustiveStringTuple<UtilityUISettingName>()(
+export const utilityUISettings = exhaustiveStringTuple<UtilityUIOptionName>()(
   "download_data",
-  "copyQueryTitle",
-  "copyQueryLink",
-  "emailQueryLink",
+  "copyResultInfo",
+  "emailResultInfo",
 );
 
 export const allUIComponentParamNames: AllUIComponentParamNames = {
@@ -78,16 +76,23 @@ export const allUIComponentParamNames: AllUIComponentParamNames = {
   script: "script",
   showSegmentNrs: "showSegmentNrs",
   download_data: "download_data",
-  copyQueryTitle: "copyQueryTitle",
-  copyQueryLink: "copyQueryLink",
-  emailQueryLink: "emailQueryLink",
+  copyResultInfo: "copyResultInfo",
+  emailResultInfo: "emailResultInfo",
   active_segment: "active_segment",
+  active_segment_index: "active_segment_index",
+  right_pane_active_segment: "right_pane_active_segment",
+  right_pane_active_segment_index: "right_pane_active_segment_index",
   page: "page",
   filename: "filename",
   parallel_ids: "parallel_ids",
   search_string: "search_string",
   segmentnr: "segmentnr",
   filters: "filters",
+  collection: "collection",
+  hit_collections: "hit_collections",
+  active_match_id: "active_match_id",
+  left_pane_active_match: "left_pane_active_match",
+  right_pane_active_match: "right_pane_active_match",
 };
 
 export const DEFAULT_LANGUAGE = "all";
@@ -104,6 +109,7 @@ export const DEFAULT_PARAM_VALUES = {
   sort_method: "position",
   language: DEFAULT_LANGUAGE,
   active_segment: "none",
+  active_match: "",
 } as const;
 
 export const MIN_PAR_LENGTH_VALUES: Record<DbLanguage, number> = {

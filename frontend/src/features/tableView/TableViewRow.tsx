@@ -24,12 +24,15 @@ export const TableViewRow = ({
 }) => {
   const { parallelStackDirection, parallelArrowTransform } =
     useSettingsDrawer();
+
+  const [rootSegmentNumber] = rootSegmentNumberRange.split("–");
+  const [parallelSegmentNumber] = parallelSegmentNumberRange.split("–");
   return (
     <>
       <Stack
         direction={parallelStackDirection}
         spacing={2}
-        sx={{ my: 2, py: 1, justifyContent: "center", alignItems: "center" }}
+        sx={{ my: 2, py: 1, alignItems: "center" }}
       >
         {/* ROOT SEGMENT */}
         <ParallelSegment
@@ -37,7 +40,9 @@ export const TableViewRow = ({
           language={targetLanguage}
           length={rootLength}
           text={rootFullText}
+          textSegmentNumber={rootSegmentNumber ?? ""}
           textSegmentNumberRange={rootSegmentNumberRange}
+          isRowItem
         />
 
         <ArrowDownwardIcon sx={{ transform: parallelArrowTransform }} />
@@ -49,7 +54,9 @@ export const TableViewRow = ({
           length={parallelLength}
           text={parallelFullText}
           score={score}
+          textSegmentNumber={parallelSegmentNumber ?? ""}
           textSegmentNumberRange={parallelSegmentNumberRange}
+          isRowItem
         />
       </Stack>
       <Divider />

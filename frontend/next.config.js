@@ -15,6 +15,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: SKIP_LINT === "true",
   },
+  basePath: NODE_ENV === "production" ? '/nexus' : undefined,
   // todo: remove after turbopack is stable
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   webpack(config, { isServer }) {
@@ -57,4 +58,8 @@ const withMDX = nextMDX({
   options: { providerImportSource: "@mdx-js/react" },
 });
 
-module.exports = withMDX(nextConfig);
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+module.exports = withBundleAnalyzer(withMDX(nextConfig));

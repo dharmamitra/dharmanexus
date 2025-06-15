@@ -4,7 +4,7 @@ import {
   DbSourceTreeNode,
   DbSourceTreeNodeDataType,
 } from "@components/db/SearchableDbSourceTree/types";
-import type { ParsedStructuredDbSourceMenuData } from "@utils/api/endpoints/menus/sources";
+import type { ParsedStructuredDbSourceMenuData } from "@utils/api/endpoints/menudata";
 
 export function transformDataForTreeView(
   data: ParsedStructuredDbSourceMenuData,
@@ -24,8 +24,14 @@ export function transformDataForTreeView(
       dataType: DbSourceTreeNodeDataType.CATEGORY,
       searchField: `${displayName}/${name}`,
       children: files.map(
-        ({ fileName, displayName: fileDisplayName, searchField }) => ({
+        ({
+          fileName,
+          displayName: fileDisplayName,
+          searchField,
+          displayId,
+        }) => ({
           id: fileName,
+          displayId,
           name: fileDisplayName,
           fileName,
           dataType: DbSourceTreeNodeDataType.TEXT,
@@ -91,5 +97,5 @@ export function isSearchMatch(searchField: string, searchTerm: string) {
 export function isDbSourceTreeLeafNodeData(
   node: DbSourceTreeNode | DbSourceTreeLeafNode,
 ): node is DbSourceTreeLeafNode {
-  return (node as DbSourceTreeLeafNode).fileName !== undefined;
+  return node.fileName !== undefined;
 }

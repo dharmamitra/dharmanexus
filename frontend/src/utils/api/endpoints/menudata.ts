@@ -7,12 +7,15 @@ function parseStructuredDbSourceMenuData(data: APIGetResponse<"/menudata/">) {
     collection,
     categories: categories.map(
       ({ files, categorydisplayname, category: categoryName }) => ({
-        files: files.map(({ displayName, filename, search_field }) => ({
-          displayName,
-          searchField: search_field,
-          fileName: filename,
-          category: categoryName,
-        })),
+        files: files.map(
+          ({ displayName, filename, search_field, textname }) => ({
+            displayName,
+            displayId: textname,
+            searchField: search_field,
+            fileName: filename,
+            category: categoryName,
+          }),
+        ),
         name: categoryName,
         displayName: categorydisplayname,
       }),

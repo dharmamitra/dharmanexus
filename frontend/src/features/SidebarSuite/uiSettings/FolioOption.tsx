@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { useFolioParam } from "@components/hooks/params";
-import { useDbRouterParams } from "@components/hooks/useDbRouterParams";
+import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import {
   CircularProgress,
   FormControl,
@@ -13,7 +13,6 @@ import {
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import { DbApi } from "@utils/api/dbApi";
-import type { ParsedFolio } from "@utils/api/endpoints/utils/folios";
 
 function SelectorFrame({
   children,
@@ -56,7 +55,7 @@ function Loading({ showAll, label }: { showAll: string; label: string }) {
 // TODO: add handling for functionality change for different views (jump to / only show)
 export default function FolioOption() {
   const { t } = useTranslation("settings");
-  const { fileName } = useDbRouterParams();
+  const { fileName } = useDbPageRouterParams();
 
   const { data, isLoading } = useQuery({
     queryKey: DbApi.FolioData.makeQueryKey(fileName),
@@ -97,15 +96,13 @@ export default function FolioOption() {
         <MenuItem value={showAll}>
           <em>{showAll}</em>
         </MenuItem>
-        {data &&
-          data.length > 1 &&
-          data.map((folio: ParsedFolio) => {
-            return (
-              <MenuItem key={folio.segmentNr} value={folio.number}>
-                {folio.number}
-              </MenuItem>
-            );
-          })}
+        {data?.map((folio) => {
+          return (
+            <MenuItem key={folio} value={folio}>
+              {folio}
+            </MenuItem>
+          );
+        })}
       </Select>
     </SelectorFrame>
   );

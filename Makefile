@@ -4,12 +4,14 @@ COMPOSEPROD := $(COMPOSE) -f docker-compose.prod.yml
 SERVICES := dataloader arangodb fastapi frontend
 
 run-dev:
+	$(COMPOSE) down --rmi all frontend
 	$(COMPOSE) up $(SERVICES)
 
 run-dev-no-logs:
 	$(COMPOSE) up -d $(SERVICES)
 
 run-prod:
+	@$(COMPOSEPROD) down --rmi all frontend
 	@$(COMPOSEPROD) up $(SERVICES)
 
 run-prod-no-logs:
@@ -29,6 +31,10 @@ rebuild:
 # Destroy containers and images, including database data
 clean-all:
 	$(COMPOSE) down --rmi local --volumes
+
+# Clear Redis cache
+clear-cache:
+	@docker exec -t buddhanexus-redis-1 redis-cli FLUSHALL
 
 # Initialize database and create empty collections
 create-db:
@@ -55,31 +61,27 @@ clean-db:
 # @Vladimir this is all you need for now, use 'make run-dev' to start the docker image and then run 'make load-tibetan-data'. If you want to remove data, run 'make clean-db'
 load-tibetan-data:
 	@docker exec -t dataloader bash -c "invoke create-collections"
-	@docker exec -t dataloader bash -c "invoke load-metadata"
 	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=bo"
-	#@docker exec -t dataloader bash -c "invoke load-parallels --lang=bo"
-	#@docker exec -t dataloader bash -c "invoke load-global-stats --lang=bo"
+	@docker exec -t dataloader bash -c "invoke load-parallels --lang=bo"
+	@docker exec -t dataloader bash -c "invoke load-global-stats --lang=bo"
 
 load-pali-data:
 	@docker exec -t dataloader bash -c "invoke create-collections"
-	@docker exec -t dataloader bash -c "invoke load-metadata"
 	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=pa"
-	#@docker exec -t dataloader bash -c "invoke load-parallels --lang=pa"
-	#@docker exec -t dataloader bash -c "invoke load-global-stats --lang=pa"
+	@docker exec -t dataloader bash -c "invoke load-parallels --lang=pa"
+	@docker exec -t dataloader bash -c "invoke load-global-stats --lang=pa"
 
 load-chinese-data:
 	@docker exec -t dataloader bash -c "invoke create-collections"
-	@docker exec -t dataloader bash -c "invoke load-metadata"
 	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=zh"
-	#@docker exec -t dataloader bash -c "invoke load-parallels --lang=zh"
-	#@docker exec -t dataloader bash -c "invoke load-global-stats --lang=zh"
+	@docker exec -t dataloader bash -c "invoke load-parallels --lang=zh"
+	@docker exec -t dataloader bash -c "invoke load-global-stats --lang=zh"
 
 load-sanskrit-data:
-	@docker exec -t dataloader bash -c "invoke create-collections"
-	@docker exec -t dataloader bash -c "invoke load-metadata"
-	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=sa"
-	#@docker exec -t dataloader bash -c "invoke load-parallels --lang=sa"
-	#@docker exec -t dataloader bash -c "invoke load-global-stats --lang=sa"
+	#@docker exec -t dataloader bash -c "invoke create-collections"
+	#@docker exec -t dataloader bash -c "invoke load-text-segments --lang=sa"
+	@docker exec -t dataloader bash -c "invoke load-parallels --lang=sa"
+	@docker exec -t dataloader bash -c "invoke load-global-stats --lang=sa"
 
 clean-tibetan-data:
 	@docker exec -t dataloader bash -c "invoke clean-text-segments --lang=bo"
@@ -115,3 +117,16 @@ lint-dataloader:
 
 lint-api:
 	@docker exec -t fastapi bash -c 'pylint ./api/*.py'
+
+clean-frontend:
+	$(COMPOSEPROD) down --rmi all frontend
+
+run-frontend-dev:
+	$(COMPOSE) up frontend
+
+run-frontend:
+	$(COMPOSEPROD) up frontend
+
+
+run-tests:
+	$(COMPOSE) run tests pytest -v

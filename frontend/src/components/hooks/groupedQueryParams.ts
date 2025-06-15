@@ -1,3 +1,4 @@
+import React from "react";
 import {
   nullToUndefined,
   useExcludeCategoriesParam,
@@ -12,7 +13,7 @@ import {
   useParLengthParam,
   useScoreParam,
 } from "@components/hooks/params";
-import { useDbRouterParams } from "@components/hooks/useDbRouterParams";
+import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { AllAPIRequestProps } from "@utils/api/types";
 
 export const useDbQueryFilters = () => {
@@ -49,7 +50,7 @@ export const useStandardViewBaseQueryParams = () => {
    * table & numbers: + sort_method
    */
 
-  const { fileName: filename } = useDbRouterParams();
+  const { fileName: filename } = useDbPageRouterParams();
   const [folio] = useFolioParam();
 
   return {
@@ -57,4 +58,33 @@ export const useStandardViewBaseQueryParams = () => {
     folio: nullToUndefined(folio) ?? "",
     filters: useDbQueryFilters(),
   };
+};
+
+export const useClearDbSourceFilterQueryParams = () => {
+  const [, setExcludeCollections] = useExcludeCollectionsParam();
+  const [, setExcludeCategories] = useExcludeCategoriesParam();
+  const [, setExcludeFiles] = useExcludeFilesParam();
+  const [, setIncludeCollections] = useIncludeCollectionsParam();
+  const [, setIncludeCategories] = useIncludeCategoriesParam();
+  const [, setIncludeFiles] = useIncludeFilesParam();
+
+  const handleClearDbSourceFilterParams = React.useCallback(async () => {
+    await Promise.all([
+      setExcludeCollections(null),
+      setExcludeCategories(null),
+      setExcludeFiles(null),
+      setIncludeCollections(null),
+      setIncludeCategories(null),
+      setIncludeFiles(null),
+    ]);
+  }, [
+    setExcludeCollections,
+    setExcludeCategories,
+    setExcludeFiles,
+    setIncludeCollections,
+    setIncludeCategories,
+    setIncludeFiles,
+  ]);
+
+  return handleClearDbSourceFilterParams;
 };

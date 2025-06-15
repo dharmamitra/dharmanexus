@@ -1,5 +1,5 @@
-# buddhanexus
-Backend for the Buddhanexus project.
+# DharmaNexus
+Backend for the DharmaNexus project.
 
 Includes:
 - API (using [fastapi](https://fastapi.tiangolo.com/))
@@ -23,7 +23,7 @@ The frontend README can be found inside `./frontend/README.md`. The rest of this
 Clone the project repository:
 
 ```shell
-git clone ThisRepository && cd buddhanexus
+git clone ThisRepository && cd DharmaNexus
 ```
 (substitute ThisRepository with the corect filepath)
 
