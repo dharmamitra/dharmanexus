@@ -1,7 +1,6 @@
 import React from "react";
 import type { GetStaticProps } from "next";
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
-import { Footer } from "@components/layout/Footer";
 import { PageContainer } from "@components/layout/PageContainer";
 import { Box, Paper, Typography } from "@mui/material";
 import { getI18NextStaticProps } from "@utils/nextJsHelpers";
@@ -47,7 +46,6 @@ export default function DbIndexPage() {
           />
         </Box>
       </Paper>
-
     </PageContainer>
   );
 }

@@ -11,7 +11,6 @@ interface Props {
   color: string;
 }
 
-
 export const DbLanguageLinkBox: FC<Props> = ({ title, href, color }) => {
   const materialTheme = useTheme();
 

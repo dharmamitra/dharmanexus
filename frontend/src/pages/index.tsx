@@ -3,7 +3,6 @@ import type { GetStaticProps } from "next";
 import Image from "next/image";
 import { useTranslation } from "next-i18next";
 import { DbLanguageLinkBox } from "@components/layout/DbLanguageLinkBox";
-import { Footer } from "@components/layout/Footer";
 import { PageContainer } from "@components/layout/PageContainer";
 import { sourceSerif } from "@components/theme";
 import { getDeployment } from "@mitra/utils";
