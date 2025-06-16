@@ -8,18 +8,20 @@ import { dbLanguages } from "@utils/api/constants";
 import { DEFAULT_DB_VIEW } from "@utils/constants";
 import { getValidDbLanguage } from "@utils/validators";
 import { useAtom } from "jotai";
-import {
-  bindMenu,
-  bindTrigger,
-  usePopupState,
-} from "material-ui-popup-state/hooks";
 
 export const DatabaseMenu = () => {
-  const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
   const { t } = useTranslation();
   const router = useRouter();
-
   const [currentView, setCurrentView] = useAtom(currentDbViewAtom);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleLanguageChange = React.useCallback(
     async (language: string) => {
@@ -28,23 +30,33 @@ export const DatabaseMenu = () => {
         setCurrentView(DEFAULT_DB_VIEW);
       }
       await router.push(`/db/${language}`);
+      handleClose();
     },
     [router, currentView, setCurrentView],
   );
 
   return (
     <>
-      <Button variant="text" color="inherit" {...bindTrigger(popupState)}>
+      <Button
+        variant="text"
+        color="inherit"
+        onClick={handleClick}
+        aria-controls="database-menu"
+        aria-haspopup="true"
+      >
         {t("header.database")}
       </Button>
-      <Menu {...bindMenu(popupState)}>
+      <Menu
+        id="database-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
         {dbLanguages.map((language) => (
           <MenuItem
             key={language}
-            onClick={async () => {
-              popupState.close();
-              await handleLanguageChange(language);
-            }}
+            onClick={() => handleLanguageChange(language)}
           >
             {t(`language.${language}`)}
           </MenuItem>

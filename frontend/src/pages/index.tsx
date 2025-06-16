@@ -86,13 +86,15 @@ export default function Home() {
         </Typography>
 
         <Box
+          component="ul"
           sx={{
+            listStyle: "none",
+            p: 0,
+            m: 0,
+            mt: 3,
             display: "flex",
-            my: 2,
-            flexWrap: "wrap",
-            [materialTheme.breakpoints.down("sm")]: {
-              flexDirection: "column",
-            },
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <DbLanguageLinkBox
