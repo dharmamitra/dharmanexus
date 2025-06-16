@@ -21,7 +21,7 @@ const logoPaths: Record<Deployment, string> = {
   kumarajiva: "/assets/logos/kp-logo-full.png",
 };
 const logoDimensions: Record<Deployment, { width: number; height: number }> = {
-  dharmamitra: { width: 397, height: 216 },
+  dharmamitra: { width: 397, height: 334 },
   kumarajiva: { width: 392, height: 216 },
 };
 
