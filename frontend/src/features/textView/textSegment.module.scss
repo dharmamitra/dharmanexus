@@ -13,9 +13,8 @@
 
   transition: background, color 150ms ease-out;
 
-  &__button:hover {
+  &__button:hover {   
     cursor: pointer;
-    text-decoration: underline;
   }
 
   &--noMatches {
@@ -27,14 +26,6 @@
     filter: invert(1);
   }
 
-  &--selected {
-    font-weight: 900;
-  }
-
-  &--part-selected {
-    font-weight: 800;
-    text-decoration: underline;
-  }
 
   &--parallel-hovered {
     background: var(--mui-palette-common-black) !important;
