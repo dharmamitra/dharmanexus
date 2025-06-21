@@ -21,7 +21,6 @@ export const getDeployment = () => {
   return deployment;
 };
 
-
 export const getBasePath = () => {
   const deployment = getDeployment();
 

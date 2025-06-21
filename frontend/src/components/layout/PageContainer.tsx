@@ -7,9 +7,8 @@ import {
   SxProps,
 } from "@mui/material";
 import { DbLanguage } from "@utils/api/types";
-import Footer from "./Footer";
-import { grey } from "@mui/material/colors";
 
+import Footer from "./Footer";
 import { QueryResultsPageContent } from "./QueryResultsPageContent";
 
 export type BackgroundName = DbLanguage | "welcome";

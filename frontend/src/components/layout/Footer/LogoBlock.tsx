@@ -1,25 +1,24 @@
-import Image from "next/image"
-import { Box, Link } from "@mui/material"
-
+import Image from "next/image";
 import { getBasePath } from "@mitra/utils";
+import { Box, Link } from "@mui/material";
 
 const dharmamitraLogo = {
-  src: getBasePath() + "/assets/logos/dm-logo-full-no-tagline.png",
+  src: `${getBasePath()}/assets/logos/dm-logo-full-no-tagline.png`,
   width: 334,
   height: 334,
-}
+};
 
 const tsadraLogo = {
-  src: getBasePath() + "/assets/logos/tsadra.png",
+  src: `${getBasePath()}/assets/logos/tsadra.png`,
   width: 180,
   height: 140,
-}
+};
 
 const linkStyles = {
   display: "flex",
   alignItems: "flex-end",
   textDecoration: "none",
-} as const
+} as const;
 
 const MitraLogoImage = () => {
   return (
@@ -34,21 +33,19 @@ const MitraLogoImage = () => {
         src={dharmamitraLogo.src}
         alt="Mitra Logo"
         sizes="(max-width: 1200px) 264px, (max-width: 1536px) 324px, 334px"
-        priority
         width={dharmamitraLogo.width}
         height={dharmamitraLogo.height}
         style={{
           width: "100%",
           height: "auto",
         }}
+        priority
       />
     </Box>
-  )
-}
-
+  );
+};
 
 export default function LogoBlockComponent() {
-
   return (
     <Box
       sx={{
@@ -61,7 +58,12 @@ export default function LogoBlockComponent() {
         gap: 0,
       }}
     >
-      <Link href="https://dharmamitra.org/" sx={linkStyles} target="_blank" rel="noopener noreferrer">
+      <Link
+        href="https://dharmamitra.org/"
+        sx={linkStyles}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <MitraLogoImage />
       </Link>
 
@@ -89,6 +91,5 @@ export default function LogoBlockComponent() {
         />
       </Link>
     </Box>
-  )
-
+  );
 }

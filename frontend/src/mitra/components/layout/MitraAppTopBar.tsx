@@ -3,20 +3,13 @@ import { useTranslation } from "next-i18next";
 import { Link } from "@components/common/Link";
 import LocaleSelector from "@components/layout/LocaleSelector";
 import { DatabaseMenu } from "@components/layout/TopBarDatabaseMenu";
-import { getDeployment } from "@mitra/utils";
+import { getBasePath, getDeployment } from "@mitra/utils";
 import Brightness1Icon from "@mui/icons-material/Brightness4";
 import Brightness2Icon from "@mui/icons-material/Brightness7";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-import {
-  Box,
-  Button,
-  IconButton,
-  Toolbar,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, IconButton, Toolbar, useTheme } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import { useColorScheme } from "@mui/material/styles";
-import { getBasePath } from "@mitra/utils";
 
 const logoWidePaths: Record<Deployment, string> = {
   dharmamitra: "/assets/logos/dn-logo-title.png",

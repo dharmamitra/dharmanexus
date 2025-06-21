@@ -5,7 +5,7 @@ import { useTranslation } from "next-i18next";
 import { DbLanguageLinkBox } from "@components/layout/DbLanguageLinkBox";
 import { PageContainer } from "@components/layout/PageContainer";
 import { sourceSerif } from "@components/theme";
-import { getDeployment, getBasePath } from "@mitra/utils";
+import { getBasePath, getDeployment } from "@mitra/utils";
 import { Paper } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
@@ -17,8 +17,8 @@ import { getI18NextStaticProps } from "@utils/nextJsHelpers";
 import merge from "lodash/merge";
 
 const logoPaths: Record<Deployment, string> = {
-  dharmamitra: getBasePath() + "/assets/logos/dn-logo-full.png",
-  kumarajiva: getBasePath() + "/assets/logos/kp-logo-full.png",
+  dharmamitra: `${getBasePath()}/assets/logos/dn-logo-full.png`,
+  kumarajiva: `${getBasePath()}/assets/logos/kp-logo-full.png`,
 };
 
 const logoDimensions: Record<Deployment, { width: number; height: number }> = {
@@ -82,7 +82,11 @@ export default function Home() {
         <Typography
           align="center"
           variant="body1"
-          sx={{ fontFamily: sourceSerif.style.fontFamily, maxWidth: "520px", mx: "auto" }}
+          sx={{
+            fontFamily: sourceSerif.style.fontFamily,
+            maxWidth: "520px",
+            mx: "auto",
+          }}
         >
           {t("home:intro")}
         </Typography>

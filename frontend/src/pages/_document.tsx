@@ -2,6 +2,7 @@ import React from "react";
 import type { DocumentContext, DocumentProps } from "next/document";
 import { Head, Html, Main, NextScript } from "next/document";
 import i18nextConfig from "next-i18next.config";
+import { getBasePath } from "@mitra/utils";
 // https://mui.com/material-ui/integrations/nextjs/#pages-router
 import {
   documentGetInitialProps,
@@ -9,7 +10,6 @@ import {
   DocumentHeadTagsProps,
 } from "@mui/material-nextjs/v14-pagesRouter";
 import InitColorSchemeScript from "@mui/system/InitColorSchemeScript";
-import { getBasePath } from "@mitra/utils";
 
 const makePublicPath = (path: string) => {
   return getBasePath() + path;
