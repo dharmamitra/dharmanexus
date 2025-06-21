@@ -39,7 +39,7 @@ const FallbackMission = () => {
         <Typography variant="body2" textAlign="center">
           {"Developed by "}
           <Link href="https://dharmamitra.org/" target="_blank" rel="noopener noreferrer">
-            Dharmamitra
+            DharmaMitra
           </Link>
           {" in collaboration with the "}
           <Link href="https://tsadra.org/" target="_blank" rel="noopener noreferrer">

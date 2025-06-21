@@ -9,12 +9,10 @@ import {
   DocumentHeadTagsProps,
 } from "@mui/material-nextjs/v14-pagesRouter";
 import InitColorSchemeScript from "@mui/system/InitColorSchemeScript";
+import { getBasePath } from "@mitra/utils";
 
 const makePublicPath = (path: string) => {
-  // TODO: add basePath to .env
-  const { NODE_ENV } = process.env;
-  const basePath = NODE_ENV === "production" ? "/nexus" : undefined;
-  return basePath ? basePath + path : path;
+  return getBasePath() + path;
 };
 
 export default function MyDocument(
