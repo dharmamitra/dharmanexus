@@ -117,9 +117,10 @@ export const MitraAppTopBar = memo(function MitraAppTopBar() {
           >
             <Typography
               variant="h6"
+              component="div"
               sx={{
                 fontWeight: 600,
-                color: "#11305d",
+                color: "primary.main",
                 [materialTheme.breakpoints.down("sm")]: {
                   fontSize: "1rem",
                 },
