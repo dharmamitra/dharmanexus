@@ -20,3 +20,10 @@ export const getDeployment = () => {
 
   return deployment;
 };
+
+
+export const getBasePath = () => {
+  const deployment = getDeployment();
+
+  return deployment === "dharmamitra" ? "/nexus" : "/kumarajiva-nexus";
+};

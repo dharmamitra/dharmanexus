@@ -7,6 +7,8 @@ import {
   SxProps,
 } from "@mui/material";
 import { DbLanguage } from "@utils/api/types";
+import Footer from "./Footer";
+import { grey } from "@mui/material/colors";
 
 import { QueryResultsPageContent } from "./QueryResultsPageContent";
 
@@ -68,6 +70,11 @@ export const PageContainer: FC<Props> = ({
           {isLoading ? <LinearProgress /> : <Box sx={{ height: 4 }} />}
         </>
       )}
+
+      <Footer />
+      <Box sx={{ mt: 6, bgcolor: "grey.200" }}>
+
+      </Box>
     </>
   );
 };

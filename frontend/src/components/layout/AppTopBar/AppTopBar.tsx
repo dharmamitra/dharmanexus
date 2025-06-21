@@ -33,7 +33,7 @@ export const AppTopBar = memo(function AppTopBar() {
       elevation={0}
       sx={{
         zIndex: materialTheme.zIndex.drawer + 1,
-        borderBottom: `1px solid ${materialTheme.palette.background.accent}`,
+        borderBottom: `1px solid ${materialTheme.palette.background.grey}`,
       }}
       data-testid="app-bar"
     >

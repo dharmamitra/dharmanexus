@@ -12,14 +12,14 @@ import {
   Button,
   IconButton,
   Toolbar,
-  Typography,
   useTheme,
 } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import { useColorScheme } from "@mui/material/styles";
+import { getBasePath } from "@mitra/utils";
 
 const logoWidePaths: Record<Deployment, string> = {
-  dharmamitra: "/assets/logos/dm-logo-flat.png",
+  dharmamitra: "/assets/logos/dn-logo-title.png",
   kumarajiva: "/assets/logos/kp-logo-full.png",
 };
 
@@ -83,52 +83,23 @@ export const MitraAppTopBar = memo(function MitraAppTopBar() {
                 display: "inline-flex",
                 alignItems: "center",
               }}
-              href="https://dharmamitra.org"
+              href="/"
               underline="none"
-              noWrap
             >
               <Box
                 component="img"
-                src={logoWideSrc}
+                src={getBasePath() + logoWideSrc}
                 sx={{
-                  height: 48,
+                  height: 24,
                   width: "auto",
                   [materialTheme.breakpoints.down("sm")]: {
-                    height: 36,
+                    height: 20,
                   },
                 }}
                 alt="logo"
               />
             </Link>
           </Box>
-
-          <Link
-            href="/"
-            sx={{
-              textDecoration: "none",
-              "&:hover": {
-                opacity: 0.9,
-              },
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{
-                fontWeight: 600,
-                color: "primary.main",
-                [materialTheme.breakpoints.down("sm")]: {
-                  fontSize: "1rem",
-                },
-              }}
-            >
-              DharmaNexus
-            </Typography>
-          </Link>
 
           <Box
             component="nav"

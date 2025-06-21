@@ -7,7 +7,7 @@ const SKIP_LINT = process.env.SKIP_LINT;
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
-  basePath: NODE_ENV === "production" ? "/database" : undefined,
+  basePath: '/nexus',
   i18n,
   reactStrictMode: true,
   compiler: { emotion: true },
@@ -15,7 +15,6 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: SKIP_LINT === "true",
   },
-  basePath: NODE_ENV === "production" ? '/nexus' : undefined,
   // todo: remove after turbopack is stable
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   webpack(config, { isServer }) {
