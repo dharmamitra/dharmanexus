@@ -17,19 +17,19 @@ export const DbLanguageLinkBox: FC<Props> = ({ title, href, color }) => {
         display: "block",
         color: "inherit",
         textDecoration: "none",
-        "&:hover": { 
-          textDecoration: "underline"
+        "&:hover": {
+          textDecoration: "underline",
         },
       }}
       data-testid="db-language-tile"
     >
-      <Typography 
-        component="li" 
-        variant="h6" 
-        sx={{ 
-          color: color,
+      <Typography
+        component="li"
+        variant="h6"
+        sx={{
+          color,
           fontWeight: 500,
-          mb: 1
+          mb: 1,
         }}
       >
         {title}

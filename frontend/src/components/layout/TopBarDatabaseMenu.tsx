@@ -40,17 +40,17 @@ export const DatabaseMenu = () => {
       <Button
         variant="text"
         color="inherit"
-        onClick={handleClick}
         aria-controls="database-menu"
         aria-haspopup="true"
+        onClick={handleClick}
       >
         {t("header.database")}
       </Button>
       <Menu
         id="database-menu"
         anchorEl={anchorEl}
-        keepMounted
         open={Boolean(anchorEl)}
+        keepMounted
         onClose={handleClose}
       >
         {dbLanguages.map((language) => (

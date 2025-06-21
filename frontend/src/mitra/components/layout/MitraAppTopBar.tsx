@@ -7,14 +7,16 @@ import { getDeployment } from "@mitra/utils";
 import Brightness1Icon from "@mui/icons-material/Brightness4";
 import Brightness2Icon from "@mui/icons-material/Brightness7";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-import { Box, Button, IconButton, Toolbar, useTheme, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Toolbar,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import { useColorScheme } from "@mui/material/styles";
-
-const logoSquarePaths: Record<Deployment, string> = {
-  dharmamitra: "/assets/logos/dm-logo-1x1.png",
-  kumarajiva: "/assets/logos/kp-logo-1x1.png",
-};
 
 const logoWidePaths: Record<Deployment, string> = {
   dharmamitra: "/assets/logos/dm-logo-flat.png",
@@ -22,7 +24,6 @@ const logoWidePaths: Record<Deployment, string> = {
 };
 
 const deployment = getDeployment();
-const logoSquareSrc = logoSquarePaths[deployment];
 const logoWideSrc = logoWidePaths[deployment];
 
 // TODO: multi deployment config if needed
@@ -106,12 +107,12 @@ export const MitraAppTopBar = memo(function MitraAppTopBar() {
             sx={{
               textDecoration: "none",
               "&:hover": {
-                opacity: 0.9
+                opacity: 0.9,
               },
               position: "absolute",
               left: "50%",
               top: "50%",
-              transform: "translate(-50%, -50%)"
+              transform: "translate(-50%, -50%)",
             }}
           >
             <Typography
