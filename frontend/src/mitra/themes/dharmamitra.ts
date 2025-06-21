@@ -9,10 +9,10 @@ import {
   DB_LANGUAGE_COLORS_LIGHT,
 } from "./base";
 
-const defaultPrimary = "#972e3a";
+const defaultPrimary = "#11305d";
+const defaultPrimaryDark = "#becfe7";
 const defaultPrimaryBgLight = "#f2eeee";
 const defaultPrimaryBgDark = "#151515";
-// const defaultPrimaryBgDark = "#312e2e";
 
 export const getDharmamitraDesignTokens = ({
   dbLanguage,
@@ -22,14 +22,13 @@ export const getDharmamitraDesignTokens = ({
       palette: {
         common: commonPaletteColors,
         primary: {
-          main: dbLanguage
-            ? DB_LANGUAGE_COLORS_LIGHT[dbLanguage]
-            : defaultPrimary,
+          main: defaultPrimary,
         },
         background: {
           default: "#f7f7f7",
           paper: "#ffffff",
-          accent: grey[50],
+          grey: grey[50],
+          accent: defaultPrimaryBgLight,
           header: dbLanguage
             ? DB_LANGUAGE_COLORS_LIGHT[dbLanguage]
             : defaultPrimaryBgLight,
@@ -49,9 +48,7 @@ export const getDharmamitraDesignTokens = ({
       palette: {
         common: commonPaletteColors,
         primary: {
-          main: dbLanguage
-            ? DB_LANGUAGE_COLORS_DARK.accent[dbLanguage]
-            : "#E1BD97",
+          main: defaultPrimaryDark,
           contrastText: "#fff",
         },
         secondary: {
@@ -72,7 +69,8 @@ export const getDharmamitraDesignTokens = ({
         background: {
           default: "#242222",
           paper: "#151515",
-          accent: grey[900],
+          grey: grey[900],
+          accent: defaultPrimaryBgDark,
           header: dbLanguage
             ? DB_LANGUAGE_COLORS_DARK.main[dbLanguage]
             : defaultPrimaryBgDark,

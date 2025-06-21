@@ -3,7 +3,7 @@ import { useTranslation } from "next-i18next";
 import { Link } from "@components/common/Link";
 import LocaleSelector from "@components/layout/LocaleSelector";
 import { DatabaseMenu } from "@components/layout/TopBarDatabaseMenu";
-import { getDeployment } from "@mitra/utils";
+import { getBasePath, getDeployment } from "@mitra/utils";
 import Brightness1Icon from "@mui/icons-material/Brightness4";
 import Brightness2Icon from "@mui/icons-material/Brightness7";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
@@ -11,19 +11,13 @@ import { Box, Button, IconButton, Toolbar, useTheme } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import { useColorScheme } from "@mui/material/styles";
 
-const logoSquarePaths: Record<Deployment, string> = {
-  dharmamitra: "/assets/logos/dm-logo-1x1.png",
-  kumarajiva: "/assets/logos/kp-logo-1x1.png",
+const logoWidePaths: Record<Deployment, string> = {
+  dharmamitra: "/assets/logos/dn-logo-title.png",
+  kumarajiva: "/assets/logos/kp-logo-full.png",
 };
 
-// const logoWidePaths: Record<Deployment, string> = {
-//   dharmamitra: "/assets/logos/dm-logo-flat.png",
-//   kumarajiva: "/assets/logos/kp-logo-full.png",
-// };
-
 const deployment = getDeployment();
-const logoSquareSrc = logoSquarePaths[deployment];
-// const logoWideSrc = logoWidePaths[deployment];
+const logoWideSrc = logoWidePaths[deployment];
 
 // TODO: multi deployment config if needed
 const SEARCH_URL = `${process.env.NEXT_PUBLIC_MITRA_SEARCH_URL}`;
@@ -84,31 +78,19 @@ export const MitraAppTopBar = memo(function MitraAppTopBar() {
               }}
               href="/"
               underline="none"
-              noWrap
             >
               <Box
+                component="img"
+                src={getBasePath() + logoWideSrc}
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  [materialTheme.breakpoints.up("sm")]: {
-                    pr: 1,
+                  height: 24,
+                  width: "auto",
+                  [materialTheme.breakpoints.down("sm")]: {
+                    height: 20,
                   },
                 }}
-              >
-                <Box
-                  component="img"
-                  src={logoSquareSrc}
-                  width={68}
-                  sx={{
-                    maxHeight: 48,
-                    minWidth: 48,
-                    [materialTheme.breakpoints.down("sm")]: {
-                      maxHeight: 36,
-                    },
-                  }}
-                  alt="logo"
-                />
-              </Box>
+                alt="logo"
+              />
             </Link>
           </Box>
 

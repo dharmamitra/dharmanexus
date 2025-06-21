@@ -2,6 +2,7 @@ import React from "react";
 import type { DocumentContext, DocumentProps } from "next/document";
 import { Head, Html, Main, NextScript } from "next/document";
 import i18nextConfig from "next-i18next.config";
+import { getBasePath } from "@mitra/utils";
 // https://mui.com/material-ui/integrations/nextjs/#pages-router
 import {
   documentGetInitialProps,
@@ -11,10 +12,7 @@ import {
 import InitColorSchemeScript from "@mui/system/InitColorSchemeScript";
 
 const makePublicPath = (path: string) => {
-  // TODO: add basePath to .env
-  const { NODE_ENV } = process.env;
-  const basePath = NODE_ENV === "production" ? "/nexus" : undefined;
-  return basePath ? basePath + path : path;
+  return getBasePath() + path;
 };
 
 export default function MyDocument(

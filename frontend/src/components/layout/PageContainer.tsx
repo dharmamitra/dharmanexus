@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { DbLanguage } from "@utils/api/types";
 
+import Footer from "./Footer";
 import { QueryResultsPageContent } from "./QueryResultsPageContent";
 
 export type BackgroundName = DbLanguage | "welcome";
@@ -66,6 +67,7 @@ export const PageContainer: FC<Props> = ({
             {children}
           </Container>
           {isLoading ? <LinearProgress /> : <Box sx={{ height: 4 }} />}
+          <Footer />
         </>
       )}
     </>

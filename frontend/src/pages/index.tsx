@@ -5,7 +5,7 @@ import { useTranslation } from "next-i18next";
 import { DbLanguageLinkBox } from "@components/layout/DbLanguageLinkBox";
 import { PageContainer } from "@components/layout/PageContainer";
 import { sourceSerif } from "@components/theme";
-import { getDeployment } from "@mitra/utils";
+import { getBasePath, getDeployment } from "@mitra/utils";
 import { Paper } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
@@ -17,11 +17,12 @@ import { getI18NextStaticProps } from "@utils/nextJsHelpers";
 import merge from "lodash/merge";
 
 const logoPaths: Record<Deployment, string> = {
-  dharmamitra: "/assets/logos/dm-logo-full-no-tagline.png",
-  kumarajiva: "/assets/logos/kp-logo-full.png",
+  dharmamitra: `${getBasePath()}/assets/logos/dn-logo-full.png`,
+  kumarajiva: `${getBasePath()}/assets/logos/kp-logo-full.png`,
 };
+
 const logoDimensions: Record<Deployment, { width: number; height: number }> = {
-  dharmamitra: { width: 397, height: 216 },
+  dharmamitra: { width: 397, height: 334 },
   kumarajiva: { width: 392, height: 216 },
 };
 
@@ -53,8 +54,8 @@ export default function Home() {
             p: 3,
             m: 2,
           },
-          backgroundColor: materialTheme.palette.background.header,
-          borderBottom: `1px solid ${materialTheme.palette.background.accent}`,
+          backgroundColor: materialTheme.palette.background.accent,
+          borderBottom: `1px solid ${materialTheme.palette.background.grey}`,
           borderRadiusTopLeft: 1,
           borderRadiusTopRights: 1,
         }}
@@ -64,7 +65,8 @@ export default function Home() {
       <Paper
         elevation={1}
         sx={{
-          p: 4,
+          py: { xs: 4, md: 8 },
+          px: 4,
           mt: 0,
           mb: 4,
           [materialTheme.breakpoints.down("sm")]: {
@@ -80,19 +82,27 @@ export default function Home() {
         <Typography
           align="center"
           variant="body1"
-          sx={{ fontFamily: sourceSerif.style.fontFamily }}
+          sx={{
+            fontFamily: sourceSerif.style.fontFamily,
+            maxWidth: "520px",
+            mx: "auto",
+          }}
         >
           {t("home:intro")}
         </Typography>
 
         <Box
+          component="ul"
           sx={{
+            listStyle: "none",
+            p: 0,
+            m: 0,
+            mt: 3,
             display: "flex",
-            my: 2,
+            flexDirection: "row",
             flexWrap: "wrap",
-            [materialTheme.breakpoints.down("sm")]: {
-              flexDirection: "column",
-            },
+            justifyContent: "center",
+            alignItems: "flex-start",
           }}
         >
           <DbLanguageLinkBox

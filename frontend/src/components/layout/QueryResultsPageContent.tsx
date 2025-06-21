@@ -43,7 +43,10 @@ export const QueryResultsPageContent: FC<Props> = ({
     <>
       {isInitialized ? (
         <Main open={isSettingsOpen}>
-          <Container maxWidth={maxWidth} sx={containerStyles}>
+          <Container
+            maxWidth={maxWidth}
+            sx={{ minHeight: "calc(100vh - 100px)", ...containerStyles }}
+          >
             {isDbFilePage ? <DbViewPageHead /> : null}
             {children}
           </Container>
