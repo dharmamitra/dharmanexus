@@ -81,7 +81,7 @@ export default function Home() {
         <Typography
           align="center"
           variant="body1"
-          sx={{ fontFamily: sourceSerif.style.fontFamily }}
+          sx={{ fontFamily: sourceSerif.style.fontFamily, maxWidth: "520px", mx: "auto" }}
         >
           {t("home:intro")}
         </Typography>
@@ -94,8 +94,10 @@ export default function Home() {
             m: 0,
             mt: 3,
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "flex-start",
           }}
         >
           <DbLanguageLinkBox
