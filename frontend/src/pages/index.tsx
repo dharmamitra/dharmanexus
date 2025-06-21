@@ -65,7 +65,8 @@ export default function Home() {
       <Paper
         elevation={1}
         sx={{
-          p: 4,
+          py: { xs: 4, md: 8 },
+          px: 4,
           mt: 0,
           mb: 4,
           [materialTheme.breakpoints.down("sm")]: {
