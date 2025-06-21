@@ -68,13 +68,9 @@ export const PageContainer: FC<Props> = ({
             {children}
           </Container>
           {isLoading ? <LinearProgress /> : <Box sx={{ height: 4 }} />}
+          <Footer />
         </>
       )}
-
-      <Footer />
-      <Box sx={{ mt: 6, bgcolor: "grey.200" }}>
-
-      </Box>
     </>
   );
 };
