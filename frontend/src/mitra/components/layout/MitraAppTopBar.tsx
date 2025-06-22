@@ -1,18 +1,25 @@
 import React, { memo, useEffect, useState } from "react";
-import { useTranslation } from "next-i18next";
 import Image from "next/image";
+import { useTranslation } from "next-i18next";
 import { Link } from "@components/common/Link";
 import LocaleSelector from "@components/layout/LocaleSelector";
 import { DatabaseMenu } from "@components/layout/TopBarDatabaseMenu";
+import { MITRA_URL } from "@mitra/constants";
 import { getBasePath, getDeployment } from "@mitra/utils";
 import Brightness1Icon from "@mui/icons-material/Brightness4";
 import Brightness2Icon from "@mui/icons-material/Brightness7";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-import { Box, Button, IconButton, Toolbar, useTheme, Link as MuiLink } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Link as MuiLink,
+  Toolbar,
+  useTheme,
+} from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import { useColorScheme } from "@mui/material/styles";
 import imgMitraLogo from "@public/assets/logos/dm-logo-flat.png";
-import { MITRA_URL } from "@mitra/constants";
 
 const logoWidePaths: Record<Deployment, string> = {
   dharmamitra: "/assets/logos/dn-logo-title.png",
@@ -73,7 +80,12 @@ export const MitraAppTopBar = memo(function MitraAppTopBar() {
               href={MITRA_URL}
               underline="none"
             >
-              <Image src={imgMitraLogo.src} alt="DharmaMitra logo" width={80} height={24} />
+              <Image
+                src={imgMitraLogo.src}
+                alt="DharmaMitra logo"
+                width={80}
+                height={24}
+              />
             </MuiLink>
 
             <Box
