@@ -15,11 +15,11 @@ import {
 } from "@components/db/SearchableDbSourceTree";
 
 export default function DbIndexPage() {
-  const { dbLanguageName, dbLanguage } = useDbPageRouterParams();
+  const { dbLanguageName } = useDbPageRouterParams();
   const { observe, height, width } = useDimensions();
 
   return (
-    <PageContainer backgroundName={dbLanguage}>
+    <PageContainer>
       <Paper
         elevation={1}
         sx={{

@@ -88,11 +88,7 @@ export default function NumbersPage() {
 
   if (isError) {
     return (
-      <PageContainer
-        maxWidth={false}
-        backgroundName={dbLanguage}
-        isQueryResultsPage
-      >
+      <PageContainer maxWidth={false} isQueryResultsPage>
         <ResultQueryError
           errorMessage={tableContentError?.message ?? headersError?.message}
         />
@@ -104,22 +100,14 @@ export default function NumbersPage() {
 
   if (isFallback || isLoading) {
     return (
-      <PageContainer
-        maxWidth={false}
-        backgroundName={dbLanguage}
-        isQueryResultsPage
-      >
+      <PageContainer maxWidth={false} isQueryResultsPage>
         <LoadingSpinner />
       </PageContainer>
     );
   }
 
   return (
-    <PageContainer
-      maxWidth={false}
-      backgroundName={dbLanguage}
-      isQueryResultsPage
-    >
+    <PageContainer maxWidth={false} isQueryResultsPage>
       <NumbersTable
         categories={headerCollections ?? []}
         data={allFetchedPages.data}
