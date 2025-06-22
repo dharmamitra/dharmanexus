@@ -107,7 +107,7 @@ export const MitraAppTopBar = memo(function MitraAppTopBar() {
               {t("search.search")}
             </Button>
 
-            <AppBarLink title={t("header.guide")} href="/guide" />
+            <AppBarLink title={t("header.about")} href="/about" />
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center", ml: 1 }}>
