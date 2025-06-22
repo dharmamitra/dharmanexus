@@ -6,15 +6,11 @@ import {
   LinearProgress,
   SxProps,
 } from "@mui/material";
-import { DbLanguage } from "@utils/api/types";
 
 import Footer from "./Footer";
 import { QueryResultsPageContent } from "./QueryResultsPageContent";
 
-export type BackgroundName = DbLanguage | "welcome";
-
 interface Props extends PropsWithChildren {
-  backgroundName?: BackgroundName;
   maxWidth?: Breakpoint | false;
   isQueryResultsPage?: boolean;
   isLoading?: boolean;
@@ -22,7 +18,6 @@ interface Props extends PropsWithChildren {
 
 export const PageContainer: FC<Props> = ({
   children,
-  backgroundName,
   maxWidth = "md",
   isQueryResultsPage,
   isLoading,
@@ -38,22 +33,6 @@ export const PageContainer: FC<Props> = ({
 
   return (
     <>
-      {backgroundName && (
-        <Container
-          maxWidth={false}
-          sx={(theme) => ({
-            opacity: 0.05,
-            // @ts-expect-error MUI css variable type mismatch
-            [theme.getColorSchemeSelector("dark")]: {
-              opacity: 0.02,
-            },
-            height: "100%",
-            minWidth: "100vw",
-            position: "fixed",
-            zIndex: -1,
-          })}
-        />
-      )}
       {isQueryResultsPage ? (
         <QueryResultsPageContent
           maxWidth={maxWidth}
@@ -63,10 +42,16 @@ export const PageContainer: FC<Props> = ({
         </QueryResultsPageContent>
       ) : (
         <>
-          <Container component="main" maxWidth={maxWidth} sx={containerStyles}>
-            {children}
-          </Container>
-          {isLoading ? <LinearProgress /> : <Box sx={{ height: 4 }} />}
+          <div>
+            <Container
+              component="main"
+              maxWidth={maxWidth}
+              sx={containerStyles}
+            >
+              {children}
+            </Container>
+            {isLoading ? <LinearProgress /> : <Box sx={{ height: 4 }} />}
+          </div>
           <Footer />
         </>
       )}
