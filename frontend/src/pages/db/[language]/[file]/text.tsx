@@ -8,22 +8,18 @@ import { DbSourceBrowserDrawer } from "@features/sourceTextBrowserDrawer/sourceT
 import { TextView } from "@features/textView/TextView";
 
 export default function TextPage() {
-  const { dbLanguage, isFallback } = useDbPageRouterParams();
+  const { isFallback } = useDbPageRouterParams();
 
   if (isFallback) {
     return (
-      <PageContainer
-        maxWidth="xl"
-        backgroundName={dbLanguage}
-        isQueryResultsPage
-      >
+      <PageContainer maxWidth="xl" isQueryResultsPage>
         <InfiniteLoadingSpinner />
       </PageContainer>
     );
   }
 
   return (
-    <PageContainer maxWidth="xl" backgroundName={dbLanguage} isQueryResultsPage>
+    <PageContainer maxWidth="xl" isQueryResultsPage>
       <TextView />
       <DbSourceBrowserDrawer />
     </PageContainer>

@@ -1,15 +1,25 @@
 import React, { memo, useEffect, useState } from "react";
+import Image from "next/image";
 import { useTranslation } from "next-i18next";
 import { Link } from "@components/common/Link";
 import LocaleSelector from "@components/layout/LocaleSelector";
 import { DatabaseMenu } from "@components/layout/TopBarDatabaseMenu";
+import { MITRA_URL } from "@mitra/constants";
 import { getBasePath, getDeployment } from "@mitra/utils";
 import Brightness1Icon from "@mui/icons-material/Brightness4";
 import Brightness2Icon from "@mui/icons-material/Brightness7";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-import { Box, Button, IconButton, Toolbar, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Link as MuiLink,
+  Toolbar,
+  useTheme,
+} from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import { useColorScheme } from "@mui/material/styles";
+import imgMitraLogo from "@public/assets/logos/dm-logo-flat.png";
 
 const logoWidePaths: Record<Deployment, string> = {
   dharmamitra: "/assets/logos/dn-logo-title.png",
@@ -60,76 +70,95 @@ export const MitraAppTopBar = memo(function MitraAppTopBar() {
         }}
         data-testid="app-bar"
       >
-        <Toolbar>
-          <Box
-            sx={{
-              display: "flex",
-              flex: 1,
-              grow: 1,
-              justifyContent: "flex-start",
-              alignItems: "center",
-            }}
-          >
-            <Link
-              color="inherit"
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box>
+            <MuiLink
               sx={{
-                display: "inline-flex",
-                alignItems: "center",
+                display: "block",
+                height: "28px",
               }}
-              href="/"
+              href={MITRA_URL}
               underline="none"
             >
-              <Box
-                component="img"
-                src={getBasePath() + logoWideSrc}
-                sx={{
-                  height: 24,
-                  width: "auto",
-                  [materialTheme.breakpoints.down("sm")]: {
-                    height: 20,
-                  },
-                }}
-                alt="logo"
+              <Image
+                src={imgMitraLogo.src}
+                alt="DharmaMitra logo"
+                width={80}
+                height={24}
               />
-            </Link>
-          </Box>
+            </MuiLink>
 
-          <Box
-            component="nav"
-            sx={{
-              display: "flex",
-              gap: 0.75,
-            }}
-          >
-            <DatabaseMenu />
-
-            <Button variant="text" color="inherit" href={SEARCH_URL}>
-              {t("search.search")}
-            </Button>
-
-            <AppBarLink title={t("header.guide")} href="/guide" />
-          </Box>
-
-          <Box sx={{ display: "flex", alignItems: "center", ml: 1 }}>
-            <IconButton
-              color="inherit"
-              // TODO i18n
-              aria-label="Toggle theme"
-              data-testid="theme-toggle"
-              onClick={() => setMode(mode === "light" ? "dark" : "light")}
+            <Box
+              sx={{
+                display: "flex",
+                flex: 1,
+                grow: 1,
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
             >
-              {isMounted ? (
-                mode === "dark" ? (
-                  <Brightness1Icon fontSize="inherit" />
-                ) : (
-                  <Brightness2Icon fontSize="inherit" />
-                )
-              ) : (
-                <HourglassEmptyIcon fontSize="inherit" />
-              )}
-            </IconButton>
+              <Link
+                color="inherit"
+                sx={{
+                  display: "block",
+                }}
+                href="/"
+                underline="none"
+              >
+                <Box
+                  component="img"
+                  src={getBasePath() + logoWideSrc}
+                  sx={{
+                    height: 24,
+                    width: "auto",
+                    [materialTheme.breakpoints.down("sm")]: {
+                      height: 20,
+                    },
+                  }}
+                  alt="logo"
+                />
+              </Link>
+            </Box>
+          </Box>
 
-            <LocaleSelector />
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              component="nav"
+              sx={{
+                display: "flex",
+                gap: 0.75,
+              }}
+            >
+              <DatabaseMenu />
+
+              <Button variant="text" color="inherit" href={SEARCH_URL}>
+                {t("search.search")}
+              </Button>
+
+              <AppBarLink title={t("header.about")} href="/about" />
+            </Box>
+
+            <Box sx={{ display: "flex", alignItems: "center", ml: 1 }}>
+              <IconButton
+                color="inherit"
+                // TODO i18n
+                aria-label="Toggle theme"
+                data-testid="theme-toggle"
+                onClick={() => setMode(mode === "light" ? "dark" : "light")}
+              >
+                {isMounted ? (
+                  mode === "dark" ? (
+                    <Brightness1Icon fontSize="inherit" />
+                  ) : (
+                    <Brightness2Icon fontSize="inherit" />
+                  )
+                ) : (
+                  <HourglassEmptyIcon fontSize="inherit" />
+                )}
+              </IconButton>
+
+              <LocaleSelector />
+            </Box>
           </Box>
         </Toolbar>
       </AppBar>

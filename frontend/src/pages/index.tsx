@@ -43,7 +43,7 @@ export default function Home() {
   const materialTheme = useTheme();
 
   return (
-    <PageContainer backgroundName="welcome">
+    <PageContainer>
       <Box
         sx={{
           display: "grid",

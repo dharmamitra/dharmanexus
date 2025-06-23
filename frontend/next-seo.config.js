@@ -1,4 +1,4 @@
 export default {
   title: "DharmaNexus",
-  description: "DharmaNexus description placeholder",
+  description: "An interactive database for exploring intertextuality in Buddhist texts",
 };
