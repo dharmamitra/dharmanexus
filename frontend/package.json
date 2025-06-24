@@ -14,7 +14,7 @@
     "postinstall": "husky",
     "api:ts": "openapi-typescript && eslint ./src/codegen/api/*.ts --fix",
     "mitra:history": "sh src/mitra/history/update_history.sh",
-    "prepare": "husky install",
+    "prepare": "husky install && git config core.hooksPath frontend/.husky",
     "analyzeBundle": "ANALYZE=true yarn build"
   },
   "browser": {
