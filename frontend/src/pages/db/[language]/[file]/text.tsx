@@ -9,7 +9,6 @@ import { TextView } from "@features/textView/TextView";
 
 export default function TextPage() {
   const { isFallback } = useDbPageRouterParams();
-  const unusedVar = 1;
 
   if (isFallback) {
     return (
