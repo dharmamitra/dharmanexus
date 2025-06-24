@@ -1,3 +1,9 @@
+#!/bin/sh
+
+# Fail fast if any command fails
+set -e
+
+cd frontend
+
 npx lint-staged
 yarn test:ts
-# yarn mitra:history
