@@ -4,9 +4,16 @@
     "language": "སྐད་ཡིག"
   },
   "header": {
+<<<<<<< HEAD
     "database": "Database",
     "guide": "Guide",
     "toggleTheme": "Toggle theme"
+=======
+    "about": "ལམ་སྟོན།",
+    "database": "གྲངས་མཛོད།",
+    "toggleTheme": "Toggle theme",
+    "visual": "Sankey Charts"
+>>>>>>> main
   },
   "language": {
     "all": "ཆ་ཚང་།",

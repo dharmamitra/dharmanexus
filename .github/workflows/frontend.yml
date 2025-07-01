@@ -1,6 +1,6 @@
-name: Build Frontend project
+name: Build frontend project
 
-on: [ push, pull_request ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -19,5 +19,7 @@ jobs:
         run: yarn
       - name: Run TypeScript compiler
         run: tsc
-      - name: Run ESLint
-        run: yarn eslint .
+      - name: Run lint and tests
+        run: yarn eslint . && yarn test:ts
+      - name: Build project
+        run: yarn build:compile

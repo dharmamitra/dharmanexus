@@ -43,11 +43,7 @@ const GraphContainer: React.FC<{ children: React.ReactNode; sx?: SxProps }> = ({
 );
 
 export default function GraphPage() {
-  const {
-    dbLanguage,
-    fileName: filename,
-    isFallback,
-  } = useDbPageRouterParams();
+  const { fileName: filename, isFallback } = useDbPageRouterParams();
 
   useSetDbViewFromPath();
 
@@ -77,11 +73,7 @@ export default function GraphPage() {
 
   if (isError) {
     return (
-      <PageContainer
-        maxWidth="xl"
-        backgroundName={dbLanguage}
-        isQueryResultsPage
-      >
+      <PageContainer maxWidth="xl" isQueryResultsPage>
         <ResultQueryError errorMessage={error?.message} />
       </PageContainer>
     );
@@ -89,18 +81,14 @@ export default function GraphPage() {
 
   if (isLoading || isFallback) {
     return (
-      <PageContainer
-        maxWidth="xl"
-        backgroundName={dbLanguage}
-        isQueryResultsPage
-      >
+      <PageContainer maxWidth="xl" isQueryResultsPage>
         <InfiniteLoadingSpinner />
       </PageContainer>
     );
   }
 
   return (
-    <PageContainer maxWidth="xl" backgroundName={dbLanguage} isQueryResultsPage>
+    <PageContainer maxWidth="xl" isQueryResultsPage>
       <Box
         sx={{
           display: "flex",

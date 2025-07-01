@@ -27,7 +27,7 @@ import { DbApi } from "@utils/api/dbApi";
 
 // TODO: investigate why there is a full page rerender when switching to table view (but not text view).
 export default function TablePage() {
-  const { isFallback, dbLanguage } = useDbPageRouterParams();
+  const { isFallback } = useDbPageRouterParams();
 
   useSetDbViewFromPath();
 
@@ -61,11 +61,7 @@ export default function TablePage() {
 
   if (isError) {
     return (
-      <PageContainer
-        maxWidth="xl"
-        backgroundName={dbLanguage}
-        isQueryResultsPage
-      >
+      <PageContainer maxWidth="xl" isQueryResultsPage>
         <ResultQueryError errorMessage={error?.message} />
       </PageContainer>
     );
@@ -73,18 +69,14 @@ export default function TablePage() {
 
   if (isFallback || isLoading) {
     return (
-      <PageContainer
-        maxWidth="xl"
-        backgroundName={dbLanguage}
-        isQueryResultsPage
-      >
+      <PageContainer maxWidth="xl" isQueryResultsPage>
         <InfiniteLoadingSpinner />
       </PageContainer>
     );
   }
 
   return (
-    <PageContainer maxWidth="xl" backgroundName={dbLanguage} isQueryResultsPage>
+    <PageContainer maxWidth="xl" isQueryResultsPage>
       <TableView
         data={allData}
         onEndReached={fetchNextPage}

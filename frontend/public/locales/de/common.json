@@ -4,6 +4,10 @@
     "language": "Sprache"
   },
   "header": {
+<<<<<<< HEAD
+=======
+    "about": "Über",
+>>>>>>> main
     "database": "Datenbank",
     "guide": "Anleitung",
     "toggleTheme": "Theme wechseln"
