@@ -75,7 +75,7 @@ load-chinese-data:
 	@docker exec -t dataloader bash -c "invoke load-parallels --lang=zh"
 
 load-sanskrit-data:
-	@docker exec -t dataloader bash -c "invoke create-collections"
+	#@docker exec -t dataloader bash -c "invoke create-collections"
 	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=sa"
 	#@docker exec -t dataloader bash -c "invoke load-parallels --lang=sa"
 
