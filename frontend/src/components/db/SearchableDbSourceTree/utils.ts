@@ -15,7 +15,7 @@ export function transformDataForTreeView(
    * */
   return data.map((collection) => ({
     id: collection.collection,
-    name: collection.collection,
+    name: collection.collectiondisplayname,
     searchField: collection.collection,
     dataType: DbSourceTreeNodeDataType.COLLECTION,
     children: collection.categories.map(({ name, displayName, files }) => ({

@@ -4,10 +4,9 @@
     "language": "སྐད་ཡིག"
   },
   "header": {
-    "guide": "ལམ་སྟོན།",
-    "database": "གྲངས་མཛོད།",
-    "toggleTheme": "Toggle theme",
-    "visual": "Sankey Charts"
+    "database": "Database",
+    "guide": "Guide",
+    "toggleTheme": "Toggle theme"
   },
   "language": {
     "all": "ཆ་ཚང་།",
@@ -38,21 +37,13 @@
     "length": "རིང་ཚད།",
     "score": "གྲུབ་འབྲས།",
     "matches": "འདྲ་མཚུངས།",
-    "clearSelectedSegment": "འདེམས་པའི་ཚན་པ་བསུབ།",
-    "segmentMatches": "ཚན་པ་འདྲ་མཚུངས།"
-  },
-  "visual": {
-    "openVisualCharts": "Open Sankey Chart",
-    "visualInfoHeader": "Sankey Chart",
-    "visualInfo1": "Select the Inquiry Collection, Category or Text and Hit Collection and/or Category.",
-    "visualInfo2": "More than one Hit Collection and/or Category can be selected.",
-    "inquiryCollectionLabel": "Inquiry Text(s)",
-    "hitCollectionsLabel": "Hit Text(s)"
+    "clearSelectedSegment": "Clear selected segment",
+    "segmentMatches": "Segment Matches"
   },
   "news": {
-    "title": "གསར་འགྱུར།",
-    "readMore": "མང་དུ་ཀློགས།",
-    "backToNews": "གསར་འགྱུར་ལ་ཕྱིར་ལོག་བྱོས།"
+    "title": "News",
+    "readMore": "Read more",
+    "backToNews": "Back to News"
   },
   "textBrowser": {
     "mainPrompt": "ཡི་གེ་ {{ languageName }} མིག་བཤེར་རྒྱག་པ།"

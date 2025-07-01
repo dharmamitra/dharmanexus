@@ -82,6 +82,60 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/visual-view/": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Get Visual Graph Data
+     * @description Endpoint for visual view.
+     *
+     *     **Input is:**
+     *
+     *     *inquiry*: A string with the required inquiry collection ("Suttas-Early-1"), category ("dn") or file ("PA_dn_1")
+     *
+     *     *hit*: And array with the required hit collection(s) ["Suttas-Early-1","Vinaya"]
+     *
+     *     *language*: pa, sa, bo or zh
+     *
+     *     **Output is f.i.:**
+     *
+     *     ```
+     *     {
+     *         "totalpages": 4,
+     *         "graphdata": [
+     *                 [
+     *                   "Khuddakapāṭha (kp)",
+     *                   "Dīghanikāya_(dn)",
+     *                   1094
+     *                 ],
+     *                 [
+     *                   "Khuddakapāṭha (kp)",
+     *                   "Majjhimanikāya_(mn)"
+     *                   5042
+     *                 ],
+     *
+     *                 ...
+     *
+     *                 ]
+     *               ]
+     *     }
+     *     ```
+     *
+     *     Note that if a collection or file is selected, the total number of pages is always 1.
+     */
+    post: operations["get_visual_graph_data_visual_view__post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/download/": {
     parameters: {
       query?: never;
@@ -756,6 +810,31 @@ export interface components {
       /** Error Type */
       type: string;
     };
+    /** VisualViewData */
+    VisualViewData: {
+      /**
+       * Totalpages
+       * @default 1
+       */
+      totalpages: number;
+      /** Graphdata */
+      graphdata: (string | number)[][];
+    };
+    /** VisualViewInput */
+    VisualViewInput: {
+      /** Inquiry */
+      inquiry: string;
+      /** Hit */
+      hit: string[];
+      language: components["schemas"]["Languages"];
+      /**
+       * Page
+       * @default 0
+       */
+      page: number;
+    };
+    /** VisualViewOutput */
+    VisualViewOutput: components["schemas"]["VisualViewData"];
     /** Segment */
     api__endpoints__models__numbers_view_models__Segment: {
       /** Segmentnr */
@@ -868,6 +947,35 @@ export interface operations {
         headers: Record<string, unknown>;
         content: {
           "application/json": components["schemas"]["GraphViewOutput"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: Record<string, unknown>;
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  get_visual_graph_data_visual_view__post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["VisualViewInput"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: Record<string, unknown>;
+        content: {
+          "application/json": components["schemas"]["VisualViewOutput"];
         };
       };
       /** @description Validation Error */

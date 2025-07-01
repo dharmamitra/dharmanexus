@@ -4,8 +4,8 @@ Contains all database queries for various utils.
 """
 
 QUERY_FOLIOS = """
-FOR file in files
-    FILTER file._key == @filename
+FOR file IN files
+    FILTER file.filename == @filename
     RETURN file.folios
 """
 
@@ -52,6 +52,6 @@ FOR file IN files
 
 QUERY_LINK = """
 FOR file IN files
-    FILTER file._key == @filename
-    RETURN [file.link, file.link2]
+    FILTER file.filename == @filename
+    RETURN file.external_links
 """

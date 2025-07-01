@@ -5,8 +5,8 @@ This file contains the code to load the complete metadata from the metadata file
 import pandas as pd
 from typing import List
 from arango.database import StandardDatabase
-from dataloader_constants import COLLECTION_FILES, COLLECTION_CATEGORY_NAMES
-from shared.utils import get_language_from_filename, get_filename_from_segmentnr
+from dataloader_constants import COLLECTION_FILES, COLLECTION_CATEGORY_NAMES, COLLECTION_COLLECTION_NAMES
+from shared.utils import get_language_from_filename, get_filename_from_segmentnr, normalize_filename_for_key
 
 
 def load_metadata_from_files(paths: List[str], db: StandardDatabase) -> None:
@@ -46,7 +46,7 @@ def load_metadata_from_files(paths: List[str], db: StandardDatabase) -> None:
                 ]
             ]  # metadata might contain more data; we are only interested in these columns
             # set link and link2 to empty string if they are NaN
-            df["_key"] = df["filename"]
+            df["_key"] = df["filename"].apply(normalize_filename_for_key)
             df["link"] = df["link"].fillna("")
             df["link2"] = df["link2"].fillna("")
             df["lang"] = df["filename"].apply(get_language_from_filename)
@@ -81,6 +81,7 @@ def load_category_names(paths: List[str], db: StandardDatabase) -> None:
             df = pd.read_json(path)
             basename = path.split("/")[-1]
             df["lang"] = get_language_from_filename(basename)
+            df["position"] = df.index  # Add position to preserve order
             collection.import_bulk(df.to_dict("records"))
             print(f"Loaded {len(df)} category names from {path}.")
 
@@ -88,4 +89,30 @@ def load_category_names(paths: List[str], db: StandardDatabase) -> None:
             print(f"Error loading category names from {path}: {str(e)}")
 
     collection.add_hash_index(fields=["category"], unique=False)
+    collection.add_hash_index(fields=["lang"], unique=False)
+
+
+def load_collection_names(paths: List[str], db: StandardDatabase) -> None:
+    """
+    Load collection names from JSON files into the database.
+
+    Args:
+    paths (List[str]): List of file paths to load collection names from.
+    db (StandardDatabase): Database instance to load data into.
+    """
+    collection = db.collection(COLLECTION_COLLECTION_NAMES)
+
+    for path in paths:
+        try:
+            df = pd.read_json(path)
+            basename = path.split("/")[-1]
+            df["lang"] = get_language_from_filename(basename)
+            df["position"] = df.index  # Add position to preserve order
+            collection.import_bulk(df.to_dict("records"))
+            print(f"Loaded {len(df)} collection names from {path}.")
+
+        except Exception as e:
+            print(f"Error loading collection names from {path}: {str(e)}")
+
+    collection.add_hash_index(fields=["collection"], unique=False)
     collection.add_hash_index(fields=["lang"], unique=False)

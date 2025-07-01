@@ -25,4 +25,6 @@ const _allAPIRequestPropModel: AllAPIRequestProps = {
   parallel_ids: [],
   search_string: "",
   segmentnr: "",
+  inquiry: "",
+  hit: [],
 };

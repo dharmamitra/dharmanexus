@@ -4,10 +4,9 @@
     "language": "Sprache"
   },
   "header": {
-    "guide": "Richtlinien",
     "database": "Datenbank",
-    "toggleTheme": "Toggle theme",
-    "visual": "Sankey-Diagramme"
+    "guide": "Anleitung",
+    "toggleTheme": "Theme wechseln"
   },
   "language": {
     "all": "Alle",
@@ -39,20 +38,12 @@
     "score": "Punktzahl",
     "matches": "Übereinstimmungen",
     "clearSelectedSegment": "Ausgewähltes Segment löschen",
-    "segmentMatches": "Segmentübereinstimmungen"
-  },
-  "visual": {
-    "openVisualCharts": "Sankey-Diagramm öffnen",
-    "visualInfoHeader": "Sankey-Diagramm",
-    "visualInfo1": "Wählen Sie eine Abfragesammlung, eine Kategorie oder einen Text und eine Treffersammlung und/oder Kategorie aus.",
-    "visualInfo2": "Es kann mehr als eine Treffersammlung und/oder Kategorie ausgewählt werden.",
-    "inquiryCollectionLabel": "Abfragetext(e)",
-    "hitCollectionsLabel": "Treffertext(e)"
+    "segmentMatches": "Segment-Übereinstimmungen"
   },
   "news": {
-    "title": "Nachrichten",
+    "title": "Neuigkeiten",
     "readMore": "Weiterlesen",
-    "backToNews": "Zurück zu Neuigkeiten"
+    "backToNews": "Zurück zu den Neuigkeiten"
   },
   "textBrowser": {
     "label": "Quelltext-Browser"

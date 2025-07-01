@@ -212,19 +212,3 @@ def calculate_color_maps_middle_view(data):
     return data
 
 
-def calculate_color_maps_search(data):
-    """takes the search results and calculates the color maps for the search"""
-    for entry in data:
-        text = entry["original"]
-        colormap = [0] * len(text)
-        beg = entry["offset_beg"]
-        end = entry["offset_end"]
-        colormap[beg:end] = [1] * (end - beg)
-        entry["segtext"] = create_segmented_text_color_only(text, colormap)
-        del entry["offset_beg"]
-        del entry["offset_end"]
-        del entry["original"]
-        del entry["stemmed"]
-        del entry["centeredness"]
-        del entry["distance"]
-    return data

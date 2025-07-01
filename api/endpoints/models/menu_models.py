@@ -21,6 +21,8 @@ class Category(CategoryBase):
 
 class CollectionBase(BaseModel):
     collection: str
+    collectiondisplayname: str
+    collectionsearchfield: str
 
 
 class Collection(CollectionBase):

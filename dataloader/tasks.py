@@ -17,6 +17,7 @@ from dataloader_constants import (
     DEFAULT_LANGS,
     METADATA_URLS,
     CATEGORY_NAMES_URLS,
+    COLLECTION_NAMES_URLS,
 )
 
 from load_segments import (
@@ -26,27 +27,19 @@ from load_segments import (
     LoadSegmentsChinese,
 )
 
-from global_search import (
-    create_analyzers,
-    create_search_views,
-)
-
 from load_parallels import (
     load_parallels_for_language,
     load_sorted_parallels_for_language,
     clean_parallels_for_language,
 )
 
-from load_stats import load_global_stats_for_language
 from utils import get_database, get_system_database
 
 from clean_database import (
-    clean_search_index_db,
     clean_all_collections_db,
-    clean_global_stats_db,
 )
 
-from load_metadata import load_metadata_from_files, load_category_names
+from load_metadata import load_metadata_from_files, load_category_names, load_collection_names
 
 SEGMENT_LOADERS = {
     LANG_PALI: LoadSegmentsPali,
@@ -99,6 +92,7 @@ def load_metadata(c):
     db = get_database()
     load_metadata_from_files(METADATA_URLS.values(), db)
     load_category_names(CATEGORY_NAMES_URLS.values(), db)
+    load_collection_names(COLLECTION_NAMES_URLS.values(), db)
 
 
 @task
@@ -126,23 +120,6 @@ def load_text_segments(c, lang=DEFAULT_LANGS, threaded=True):
             loader = SegmentLoaderClass()
             loader.load(number_of_threads=number_of_threads)
     print("Segment data loading completed.")
-
-
-@task
-def create_search_views(c, lang=DEFAULT_LANGS):
-    """
-    Create analyzers and search views for the specified languages
-
-    :param c: invoke.py context object
-    :param lang: Language(s) to create search views for
-    """
-    db = get_database()
-    if lang != DEFAULT_LANGS:
-        lang = ["".join(lang)]
-    print("Creating analyzers and search views...")
-    create_analyzers(db)
-    create_search_views(db, lang)
-    print("Analyzers and search views created.")
 
 
 @task
@@ -189,31 +166,6 @@ def clean_parallels(c, lang=DEFAULT_LANGS):
     for l in lang:
         clean_parallels_for_language(l, db)
         print("Parallel data cleaned for language ", l)
-
-
-@task
-def load_global_stats(c, root_url=DEFAULT_MATCH_URL, lang=DEFAULT_LANGS):
-    db = get_database()
-    if lang != DEFAULT_LANGS:
-        lang = ["".join(lang)]
-    for l in lang:
-        print("Loading global stats for language: ", l)
-        load_global_stats_for_language(root_url, l, db)
-        print("Global stats loaded for language ", l)
-
-
-@task
-def clean_global_stats(c):
-    clean_global_stats_db()
-
-
-@task
-def clean_search_index(c):
-    """
-    Clear all the search index views and collections.
-    :param c: invoke.py context object
-    """
-    clean_search_index_db()
 
 
 @task

@@ -57,7 +57,7 @@ export default function TablePage() {
     [data],
   );
 
-  // todo: refactor to reuse PageContainer like in the visual view
+  // todo: refactor to reuse PageContainer
 
   if (isError) {
     return (

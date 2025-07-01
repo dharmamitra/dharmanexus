@@ -149,17 +149,3 @@ export const useSearchStringParam = () => {
     history: "push",
   });
 };
-
-// for visual view
-export const useVisualCollectionStringParam = () => {
-  return useQueryState(allUIComponentParamNames.collection, {
-    ...parseAsString.withDefault(""),
-    history: "push",
-  });
-};
-export const useVisualHitCollectionsStringParam = () => {
-  return useQueryState(allUIComponentParamNames.hit_collections, {
-    ...parseAsArrayOf(parseAsString).withDefault([]),
-    history: "push",
-  });
-};

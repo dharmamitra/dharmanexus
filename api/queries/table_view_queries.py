@@ -3,8 +3,8 @@ Contains all database queries related to table view.
 """
 
 QUERY_TABLE_VIEW = """
-FOR f IN parallels_sorted_file
-    FILTER f._key == @filename
+FOR f IN files
+    FILTER f.filename == @filename
     FOR current_parallel in f.@sortkey
         FOR p in parallels
             FILTER p._key == current_parallel
@@ -73,8 +73,8 @@ FOR f IN parallels_sorted_file
 """
 
 QUERY_TABLE_DOWNLOAD = """
-FOR f IN parallels_sorted_file
-    FILTER f._key == @filename
+FOR f IN files
+    FILTER f.filename == @filename
     FOR current_parallel in f.@sortkey
         FOR p in parallels
             FILTER p._key == current_parallel
@@ -112,7 +112,7 @@ FOR f IN parallels_sorted_file
             LET filename = REGEX_REPLACE(p.par_segnr[0],":.*","")
             let displayname = (
                 FOR file IN files
-                    FILTER file._key == filename
+                    FILTER file.filename == filename
                     return [file.displayName, file.textname]
             )
             LIMIT 2500

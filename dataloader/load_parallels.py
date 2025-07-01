@@ -19,6 +19,7 @@ from dataloader_constants import (
 from shared.utils import (
     get_cat_from_segmentnr,
     get_filename_from_segmentnr,
+    normalize_filename_for_key,
 )
 
 
@@ -154,7 +155,7 @@ def load_sorted_parallels_file(path, lang, db_collection):
     if not should_download_file(file["filename"]):
         return
     filename = get_filename_from_segmentnr(file["filename"])
-    file["_key"] = filename
+    file["_key"] = normalize_filename_for_key(filename)
     file["lang"] = lang
     batch.append(file)
 
