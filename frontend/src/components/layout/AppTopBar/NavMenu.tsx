@@ -16,12 +16,8 @@ const Desktop = () => {
   return (
     <Box component="nav" sx={{ display: { xs: "none", sm: "flex" } }}>
       <DbLanguageMenu type="database" />
-<<<<<<< HEAD
-      <NavLink title={t("header.guide")} href="/guide" />
-=======
-      <DbLanguageMenu type="visual" />
       <NavLink title={t("header.about")} href="/about" />
->>>>>>> main
+      <NavLink title={t("header.guide")} href="/guide" />
     </Box>
   );
 };
