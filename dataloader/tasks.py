@@ -152,9 +152,9 @@ def load_parallels(c, root_url=DEFAULT_MATCH_URL, lang=DEFAULT_LANGS, threaded=T
     db = get_database()
     for clang in lang:
         print("LANG: ", clang)
-        #load_parallels_for_language(
-        #    root_url, clang, db, thread_count if threaded else 1
-        #)
+        load_parallels_for_language(
+            root_url, clang, db, thread_count if threaded else 1
+        )
         load_sorted_parallels_for_language(root_url, clang, db)
 
 
