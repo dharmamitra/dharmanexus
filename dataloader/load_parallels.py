@@ -23,6 +23,23 @@ from shared.utils import (
 )
 
 
+def ensure_utf8_strings(obj):
+    """
+    Recursively convert all string values in an object to ensure they are proper UTF-8.
+    This handles cases where strings might contain Unicode escape sequences.
+    """
+    if isinstance(obj, dict):
+        return {k: ensure_utf8_strings(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [ensure_utf8_strings(item) for item in obj]
+    elif isinstance(obj, str):
+        # Ensure the string is properly decoded and encoded as UTF-8
+        # This will convert any Unicode escape sequences to proper UTF-8
+        return obj.encode('utf-8').decode('utf-8')
+    else:
+        return obj
+
+
 def load_parallels(parallels, db: StandardDatabase) -> None:
     """
     Given an array of parallel objects, load them all into the `parallels` collection
@@ -57,6 +74,10 @@ def load_parallels(parallels, db: StandardDatabase) -> None:
         del parallel["par_string"]
         del parallel["root_string"]
         parallel["root_filename"] = root_filename
+        
+        # Ensure all strings are properly UTF-8 encoded
+        parallel = ensure_utf8_strings(parallel)
+        
         parallels_to_be_inserted.append(parallel)
 
     chunksize = 1000
@@ -77,7 +98,15 @@ def process_file(path, _):
         for line in f:
             line = line.strip()
             if line:  # Skip empty lines
-                parallels.append(json.loads(line))
+                try:
+                    # json.loads should automatically handle Unicode escape sequences
+                    parallel = json.loads(line)
+                    # Double-check that strings are properly UTF-8
+                    parallel = ensure_utf8_strings(parallel)
+                    parallels.append(parallel)
+                except json.JSONDecodeError as e:
+                    print(f"JSON decode error in file {path}: {e}")
+                    continue
     
     print(f"Validating {path}")
     if validate_dict_list(path, Match, parallels):
@@ -145,7 +174,14 @@ def clean_parallels_for_language(lang, db):
 
 def load_sorted_parallels_file(path, lang, db_collection):
     print("Loading sorted parallels for file: ", path)
-    file= json.load(gzip.open(path, "rt", encoding="utf-8"))
+    try:
+        file = json.load(gzip.open(path, "rt", encoding="utf-8"))
+        # Ensure all strings are properly UTF-8 encoded
+        file = ensure_utf8_strings(file)
+    except json.JSONDecodeError as e:
+        print(f"JSON decode error in file {path}: {e}")
+        return
+    
     batch_size = 100
     batch = []
 
@@ -197,3 +233,44 @@ def load_sorted_parallels_for_language(folder, lang, db):
     db_collection.add_hash_index(fields=["filename", "lang"])
 
     print("Done sorted parallels for language: ", lang)
+
+
+def test_utf8_conversion():
+    """
+    Test function to verify that UTF-8 conversion is working correctly.
+    Run this to check if Unicode escape sequences are being properly converted.
+    """
+    test_data = {
+        "id": "SA_T02_Abhay\u0101karagupta_Buddhakap\u0101latantra-Abhayapaddhati_Chog_2009:1896_SA_T02_n2934u:281",
+        "root_segnr": ["SA_T02_Abhay\u0101karagupta_Buddhakap\u0101latantra-Abhayapaddhati_Chog_2009:1896"]
+    }
+    
+    print("Original data:")
+    print(f"  id: {test_data['id']}")
+    print(f"  root_segnr: {test_data['root_segnr']}")
+    
+    converted = ensure_utf8_strings(test_data)
+    
+    print("\nConverted data:")
+    print(f"  id: {converted['id']}")
+    print(f"  root_segnr: {converted['root_segnr']}")
+    
+    # Check if the conversion worked
+    original_str = test_data['id']
+    converted_str = converted['id']
+    
+    print(f"\nOriginal string length: {len(original_str)}")
+    print(f"Converted string length: {len(converted_str)}")
+    print(f"Strings are equal: {original_str == converted_str}")
+    
+    # The converted string should contain the actual Unicode character, not the escape sequence
+    if '\u0101' in converted_str:
+        print("WARNING: Unicode escape sequence still present in converted string!")
+    else:
+        print("SUCCESS: Unicode escape sequences properly converted to UTF-8!")
+
+
+if __name__ == "__main__":
+    # Uncomment the line below to test UTF-8 conversion
+    # test_utf8_conversion()
+    pass
