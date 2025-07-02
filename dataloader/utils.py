@@ -89,9 +89,7 @@ def should_download_file(filename: str) -> bool:
     Limit source file set size to speed up loading process
     Can be controlled with the `LIMIT` environment variable.
     """
-    if "SA_T02_Abhayākaragupta" in filename:
-        return True
-    return False
+    return True
 
 
 def check_if_collection_exists(db, collection_name):
