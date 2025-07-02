@@ -132,7 +132,7 @@ export const MitraAppTopBar = memo(function MitraAppTopBar() {
               <DatabaseMenu />
 
               <Button variant="text" color="inherit" href={SEARCH_URL}>
-                {t("search.search")}
+                {t("header.search")}
               </Button>
 
               <AppBarLink title={t("header.about")} href="/about" />
