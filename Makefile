@@ -99,6 +99,10 @@ clean-sanskrit-data:
 	@docker exec -t dataloader bash -c "invoke clean-text-segments --lang=sa"
 	@docker exec -t dataloader bash -c "invoke clean-parallels --lang=sa"
 
+clean-all-parallels:
+	@docker exec -t dataloader bash -c "invoke clean-all-parallels"
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
+
 list-tasks:
 	@docker exec -t dataloader bash -c "invoke --list"
 
