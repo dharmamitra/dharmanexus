@@ -34,7 +34,7 @@ FOR file IN files
                         FILTER LENGTH(@filter_include_collections) == 0 OR p.par_collection IN @filter_include_collections
                         FILTER LENGTH(@filter_exclude_collections) == 0 OR p.par_collection NOT IN @filter_exclude_collections
                         FILTER "all" IN @multi_lingual OR POSITION(@multi_lingual, p.tgt_lang)
-                        RETURN p.id
+                        RETURN p._key
                 )
                 RETURN {
                     segnr: segment.segmentnr,
@@ -51,7 +51,7 @@ FOR file IN files
     LET parallels = (
         FOR parallel_id IN parallel_ids
             FOR p IN parallels
-                FILTER p.parallel_id == parallel_id
+                FILTER p._key == parallel_id
                 FILTER p.score * 100 >= @score
                 FILTER p.par_length >= @parlength
                 FILTER LENGTH(@filter_include_files) == 0 OR p.par_filename IN @filter_include_files
@@ -80,7 +80,7 @@ FOR file IN files
 QUERY_PARALLELS_FOR_MIDDLE_TEXT = """
 LET parallels = (
     FOR p IN parallels
-        FILTER p.parallel_id IN @parallel_ids
+        FILTER p._key IN @parallel_ids
 
         // Get segment texts in a single subquery
         LET par_segtext = (
