@@ -26,6 +26,11 @@ async def get_parallels_for_middle(input: TextViewMiddleInput) -> Any:
         text_view_queries.QUERY_PARALLELS_FOR_MIDDLE_TEXT,
         bind_vars={"parallel_ids": input.parallel_ids},
     )
+    
+    # Handle case where no data is returned
+    if not query_result.result:
+        return []
+    
     return calculate_color_maps_middle_view(query_result.result[0])
 
 
@@ -49,6 +54,9 @@ async def get_file_text_segments_and_parallels(input: TextParallelsInput) -> Any
             text_view_queries.QUERY_GET_MATCH_BY_ID,
             bind_vars={"active_match_id": input.active_match_id},
         )
+        if not query_result.result:
+            # If no match found, return empty response
+            return {"page": page, "total_pages": 0, "items": []}
         active_match = query_result.result[0]
         page = get_page_for_segment(active_match["par_segnr"][0])
         filename = get_filename_from_segmentnr(active_match["par_segnr"][0])
@@ -57,7 +65,13 @@ async def get_file_text_segments_and_parallels(input: TextParallelsInput) -> Any
         bind_vars={
             "filename": filename,
         },
-    ).result[0]
+    ).result
+    
+    # Handle case where file is not found or has no segment_pages
+    if not number_of_total_pages:
+        return {"page": page, "total_pages": 0, "items": []}
+    
+    number_of_total_pages = number_of_total_pages[0]
     if page >= number_of_total_pages:
         return {"page": page, "total_pages": number_of_total_pages, "items": []}
     current_bind_vars = {
@@ -78,6 +92,11 @@ async def get_file_text_segments_and_parallels(input: TextParallelsInput) -> Any
         text_view_queries.QUERY_TEXT_AND_PARALLELS,
         bind_vars=current_bind_vars,
     )
+    
+    # Handle case where no data is returned
+    if not text_segments_query_result.result:
+        return {"page": page, "total_pages": number_of_total_pages, "items": []}
+    
     data_with_colormaps = calculate_color_maps_text_view(
         text_segments_query_result.result[0],
         active_match=active_match,

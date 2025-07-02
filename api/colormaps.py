@@ -181,6 +181,10 @@ def trim_segmented_text(segmented_text, language="en"):
 
 def calculate_color_maps_text_view(data, active_match=None):
     """calculates the color maps for the text view"""
+    # Safety check for missing or invalid data structure
+    if not data or "textleft" not in data or "parallel_ids" not in data or "parallels" not in data:
+        return []
+    
     textleft = data["textleft"]
     parallels_dict = dict(zip(data["parallel_ids"], data["parallels"]))
     active_flag = False
@@ -292,6 +296,10 @@ def calculate_color_maps_table_view(data):
 
 def calculate_color_maps_middle_view(data):
     """same procdeure as table-view but we ommit the inquiry text data"""
+    # Safety check for empty or invalid data
+    if not data:
+        return []
+    
     for entry in data:
         # it is _not_ nice that we need to test for the length of these elements;
         # it should be dealt with at data-loader level...
