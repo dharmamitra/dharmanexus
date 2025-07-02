@@ -164,40 +164,48 @@ class LoadSegmentsBase:
         successful_texts = sum(1 for r in results if r)
         print(f"Successfully processed {successful_texts}/{len(text_groups)} texts")
 
-        # Add indexes after all processing for better performance
+        # Add optimized indexes after all processing for better performance
         print("Adding database indexes...")
+        
+        # Optimized composite index for segments collection - covers most common query patterns
         db.collection(COLLECTION_SEGMENTS).add_hash_index(
-            fields=["segmentnr", "lang", "filename", "category", "collection", "folio"],
+            fields=["lang", "filename", "segmentnr"],
             unique=False,
         )
-        # add hash index on segmentnr etc. separate from the other index
-        db.collection(COLLECTION_SEGMENTS).add_hash_index(
-            fields=["segmentnr"],
-            unique=True,
-        )
-        # now lang 
-        db.collection(COLLECTION_SEGMENTS).add_hash_index(
-            fields=["lang"],
-            unique=False,
-        )
-        # now filename
-        db.collection(COLLECTION_SEGMENTS).add_hash_index(
-            fields=["filename"],
-            unique=False,
-        )
-        # now category
+        
+        # Individual indexes for specific lookups
         db.collection(COLLECTION_SEGMENTS).add_hash_index(
             fields=["category"],
             unique=False,
         )
-        # now collection
+        db.collection(COLLECTION_SEGMENTS).add_hash_index(
+            fields=["filename"],
+            unique=False,
+        )
+        db.collection(COLLECTION_SEGMENTS).add_hash_index(            
+            fields=["lang"],
+            unique=False,
+        )
+        db.collection(COLLECTION_SEGMENTS).add_hash_index(
+            fields=["segmentnr"],
+            unique=False,
+        )
+        db.collection(COLLECTION_SEGMENTS).add_hash_index(
+            fields=["segmentnr"],
+            unique=False,
+        )
         db.collection(COLLECTION_SEGMENTS).add_hash_index(
             fields=["collection"],
             unique=False,
         )
-        # now folio
         db.collection(COLLECTION_SEGMENTS).add_hash_index(
             fields=["folio"],
+            unique=False,
+        )
+        
+        # Add hash index on segmentnr for segments_pages collection for fast lookups
+        db.collection(COLLECTION_SEGMENTS_PAGES).add_hash_index(
+            fields=["segmentnr"],
             unique=False,
         )
         
