@@ -7,7 +7,7 @@ FOR f IN files
     FILTER f.filename == @filename
     FOR current_parallel in f.@sortkey
         FOR p in parallels
-            FILTER p._key == current_parallel
+            FILTER p.id == current_parallel
             LET folios = (
                 FOR segmentnr IN p.root_segnr
                     FOR segment IN segments
@@ -77,7 +77,7 @@ FOR f IN files
     FILTER f.filename == @filename
     FOR current_parallel in f.@sortkey
         FOR p in parallels
-            FILTER p._key == current_parallel
+            FILTER p.id == current_parallel
             LET folios = (
                 FOR segnr IN p.root_segnr
                     FOR segment IN segments
