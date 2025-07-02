@@ -170,7 +170,37 @@ class LoadSegmentsBase:
             fields=["segmentnr", "lang", "filename", "category", "collection", "folio"],
             unique=False,
         )
-
+        # add hash index on segmentnr etc. separate from the other index
+        db.collection(COLLECTION_SEGMENTS).add_hash_index(
+            fields=["segmentnr"],
+            unique=True,
+        )
+        # now lang 
+        db.collection(COLLECTION_SEGMENTS).add_hash_index(
+            fields=["lang"],
+            unique=False,
+        )
+        # now filename
+        db.collection(COLLECTION_SEGMENTS).add_hash_index(
+            fields=["filename"],
+            unique=False,
+        )
+        # now category
+        db.collection(COLLECTION_SEGMENTS).add_hash_index(
+            fields=["category"],
+            unique=False,
+        )
+        # now collection
+        db.collection(COLLECTION_SEGMENTS).add_hash_index(
+            fields=["collection"],
+            unique=False,
+        )
+        # now folio
+        db.collection(COLLECTION_SEGMENTS).add_hash_index(
+            fields=["folio"],
+            unique=False,
+        )
+        
         print("DONE LOADING SEGMENT DATA")
 
     def _process_and_insert_text_group(self, text_key, files_in_text):

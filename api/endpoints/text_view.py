@@ -12,6 +12,7 @@ from .models.text_view_models import (
     TextViewMiddleOutput,
 )
 from ..cache_config import cached_endpoint, CACHE_TIMES
+import time
 
 router = APIRouter()
 
@@ -40,6 +41,8 @@ async def get_file_text_segments_and_parallels(input: TextParallelsInput) -> Any
     """
     Endpoint for text view. Returns preformatted text segments and ids of the corresponding parallels.
     """
+    start_time = time.time()
+    
     filename = input.filename
     parallel_ids_type = "parallel_ids"
     page = input.page
@@ -56,6 +59,7 @@ async def get_file_text_segments_and_parallels(input: TextParallelsInput) -> Any
         )
         if not query_result.result:
             # If no match found, return empty response
+            end_time = time.time()
             return {"page": page, "total_pages": 0, "items": []}
         active_match = query_result.result[0]
         page = get_page_for_segment(active_match["par_segnr"][0])
@@ -66,13 +70,13 @@ async def get_file_text_segments_and_parallels(input: TextParallelsInput) -> Any
             "filename": filename,
         },
     ).result
-    
     # Handle case where file is not found or has no segment_pages
     if not number_of_total_pages:
+        end_time = time.time()
         return {"page": page, "total_pages": 0, "items": []}
-    
     number_of_total_pages = number_of_total_pages[0]
     if page >= number_of_total_pages:
+        end_time = time.time()
         return {"page": page, "total_pages": number_of_total_pages, "items": []}
     current_bind_vars = {
         "filename": filename,
@@ -87,21 +91,19 @@ async def get_file_text_segments_and_parallels(input: TextParallelsInput) -> Any
         "filter_exclude_categories": input.filters.exclude_categories,
         "filter_exclude_collections": input.filters.exclude_collections,
     }
-
     text_segments_query_result = execute_query(
         text_view_queries.QUERY_TEXT_AND_PARALLELS,
         bind_vars=current_bind_vars,
     )
-    
     # Handle case where no data is returned
     if not text_segments_query_result.result:
+        end_time = time.time()
         return {"page": page, "total_pages": number_of_total_pages, "items": []}
-    
     data_with_colormaps = calculate_color_maps_text_view(
         text_segments_query_result.result[0],
         active_match=active_match,
     )
-
+    end_time = time.time()
     return {
         "page": page,
         "total_pages": number_of_total_pages,

@@ -137,7 +137,11 @@ def load_parallels_for_language(folder, lang, db, number_of_threads):
     # add index for root_segnr on all list items
     db_collection.add_hash_index(fields=["root_segnr[*]"], unique=False)
     db_collection.add_hash_index(fields=["par_segnr[*]"], unique=False)
-
+    db_collection.add_hash_index(fields=["root_filename"], unique=False)
+    db_collection.add_hash_index(fields=["root_segnr[*]"], unique=False)
+    db_collection.add_hash_index(fields=["par_segnr[*]"], unique=False)
+    db_collection.add_hash_index(fields=["root_filename"], unique=False)
+    
     pool.close()
     pool.join()
 
