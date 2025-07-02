@@ -19,6 +19,8 @@ def get_filename_from_segmentnr(segnr):
     segnr = segnr.replace(".json", "")
     if "ZH_" in segnr:
         segnr = re.sub("_[0-9]+:", ":", segnr)
+        if re.match(r".*_[0-9]{3}$", segnr):
+            segnr = re.sub("_[0-9]{3}$", "", segnr)
     else:
         segnr = re.sub(r"\$[0-9]+", "", segnr)
     return segnr.split(":")[0]
