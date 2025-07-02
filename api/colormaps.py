@@ -76,6 +76,109 @@ def abbreviate(text):
     return newtext
 
 
+def trim_long_text(text, language="en"):
+    """Trims long text to show beginning and end with ellipsis in the middle.
+    
+    Args:
+        text: The text to trim (can be plain text or segmented text)
+        language: Language code to determine max length (zh=100, others=1000)
+    
+    Returns:
+        Trimmed text with ellipsis in the middle
+    """
+    # Check if text is segmented (list of dicts) or plain text
+    if isinstance(text, list):
+        return trim_segmented_text(text, language)
+    
+    max_length = 100 if language == "zh" else 1000
+    half_length = 500 if language == "zh" else 500
+    
+    if len(text) <= max_length:
+        return text
+    
+    # Use a creative unicode ellipsis: ⋯ (horizontal ellipsis)
+    ellipsis = " ⋯ "
+    available_length = max_length - len(ellipsis)
+    
+    # Calculate how much text to show at beginning and end
+    first_part_length = min(half_length, available_length // 2)
+    last_part_length = available_length - first_part_length
+    
+    first_part = text[:first_part_length]
+    last_part = text[-last_part_length:]
+    
+    return first_part + ellipsis + last_part
+
+
+def trim_segmented_text(segmented_text, language="en"):
+    """Trims segmented text while preserving color information.
+    
+    Args:
+        segmented_text: List of dicts with 'text' and 'highlightColor' keys
+        language: Language code to determine max length (zh=100, others=1000)
+    
+    Returns:
+        Trimmed segmented text with ellipsis in the middle
+    """
+    max_length = 100 if language == "zh" else 1000
+    half_length = 500 if language == "zh" else 500
+    
+    # Calculate total text length
+    total_length = sum(len(segment["text"]) for segment in segmented_text)
+    
+    if total_length <= max_length:
+        return segmented_text
+    
+    # Use a creative unicode ellipsis: ⋯ (horizontal ellipsis)
+    ellipsis = " ⋯ "
+    available_length = max_length - len(ellipsis)
+    
+    # Calculate how much text to show at beginning and end
+    first_part_length = min(half_length, available_length // 2)
+    last_part_length = available_length - first_part_length
+    
+    # Build first part
+    first_part = []
+    current_length = 0
+    for segment in segmented_text:
+        if current_length >= first_part_length:
+            break
+        remaining_needed = first_part_length - current_length
+        if len(segment["text"]) <= remaining_needed:
+            first_part.append(segment)
+            current_length += len(segment["text"])
+        else:
+            # Need to split this segment
+            first_part.append({
+                "text": segment["text"][:remaining_needed],
+                "highlightColor": segment["highlightColor"]
+            })
+            break
+    
+    # Build last part
+    last_part = []
+    current_length = 0
+    for segment in reversed(segmented_text):
+        if current_length >= last_part_length:
+            break
+        remaining_needed = last_part_length - current_length
+        if len(segment["text"]) <= remaining_needed:
+            last_part.insert(0, segment)
+            current_length += len(segment["text"])
+        else:
+            # Need to split this segment
+            last_part.insert(0, {
+                "text": segment["text"][-remaining_needed:],
+                "highlightColor": segment["highlightColor"]
+            })
+            break
+    
+    # Create ellipsis segment with neutral color (assuming 0 is neutral)
+    ellipsis_segment = {"text": ellipsis, "highlightColor": 0}
+    
+    return first_part + [ellipsis_segment] + last_part
+
+
 def calculate_color_maps_text_view(data, active_match=None):
     """calculates the color maps for the text view"""
     textleft = data["textleft"]
@@ -155,6 +258,8 @@ def calculate_color_maps_table_view(data):
         root_start = entry["root_offset_beg"]
         root_colormap[root_start:root_end] = [1] * (root_end - root_start)
         root_fulltext = create_segmented_text_color_only(root_fulltext, root_colormap)
+        # Trim long text for display
+        root_fulltext = trim_long_text(root_fulltext, entry["src_lang"])
         entry["root_fulltext"] = root_fulltext
 
         par_fulltext = join_element_par.join(entry["par_segment"])
@@ -166,6 +271,8 @@ def calculate_color_maps_table_view(data):
         par_start = entry["par_offset_beg"]
         par_colormap[par_start:par_end] = [1] * (par_end - par_start)
         par_fulltext = create_segmented_text_color_only(par_fulltext, par_colormap)
+        # Trim long text for display
+        par_fulltext = trim_long_text(par_fulltext, entry["tgt_lang"])
         entry["par_fulltext"] = par_fulltext
         entry["par_segnr_range"] = shorten_segment_names(entry["par_segnr"])
         entry["root_segnr_range"] = shorten_segment_names(entry["root_segnr"])
@@ -201,6 +308,8 @@ def calculate_color_maps_middle_view(data):
             par_start = entry["par_offset_beg"]
             par_colormap[par_start:par_end] = [1] * (par_end - par_start)
             par_fulltext = create_segmented_text_color_only(par_fulltext, par_colormap)
+            # Trim long text for display
+            par_fulltext = trim_long_text(par_fulltext, entry["tgt_lang"])
             entry["par_fulltext"] = par_fulltext
             entry["score"] = prettify_score(entry["score"])
             entry["par_segnr_range"] = shorten_segment_names(entry["par_segnr"])

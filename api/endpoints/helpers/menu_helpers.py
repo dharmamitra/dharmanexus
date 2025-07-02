@@ -7,28 +7,15 @@ from natsort import natsorted
 def create_searchfield(result):
     """Create search field, handling null values gracefully"""
     def safe_str(value):
-        if value is None:
-            print(f"Warning: Null value encountered in create_searchfield")
         return str(value) if value is not None else ""
     
     def safe_unidecode(value):
-        if value is None:
-            print(f"Warning: Null value encountered in create_searchfield unidecode")
         return unidecode.unidecode(str(value)).lower() if value is not None else ""
     
     display_name = result.get("displayName")
     category_display_name = result.get("category_display_name")
     collection_display_name = result.get("collection_display_name")
     textname = result.get("textname")
-    
-    if display_name is None:
-        print(f"Warning: displayName is null in create_searchfield for result: {result}")
-    if category_display_name is None:
-        print(f"Warning: category_display_name is null in create_searchfield for result: {result}")
-    if collection_display_name is None:
-        print(f"Warning: collection_display_name is null in create_searchfield for result: {result}")
-    if textname is None:
-        print(f"Warning: textname is null in create_searchfield for result: {result}")
     
     display_name = safe_str(display_name)
     category_display_name = safe_str(category_display_name)
@@ -55,22 +42,13 @@ def create_searchfield(result):
 def create_cat_searchfield(result):
     """Create category search field, handling null values gracefully"""
     def safe_str(value):
-        if value is None:
-            print(f"Warning: Null value encountered in create_cat_searchfield")
         return str(value) if value is not None else ""
     
     def safe_unidecode(value):
-        if value is None:
-            print(f"Warning: Null value encountered in create_cat_searchfield unidecode")
         return unidecode.unidecode(str(value)).lower() if value is not None else ""
     
     category_display_name = result.get("category_display_name")
     category = result.get("category")
-    
-    if category_display_name is None:
-        print(f"Warning: category_display_name is null in create_cat_searchfield for result: {result}")
-    if category is None:
-        print(f"Warning: category is null in create_cat_searchfield for result: {result}")
     
     category_display_name = safe_str(category_display_name)
     category = safe_str(category)
@@ -87,22 +65,13 @@ def create_cat_searchfield(result):
 def create_col_searchfield(result):
     """Create collection search field, handling null values gracefully"""
     def safe_str(value):
-        if value is None:
-            print(f"Warning: Null value encountered in create_col_searchfield")
         return str(value) if value is not None else ""
     
     def safe_unidecode(value):
-        if value is None:
-            print(f"Warning: Null value encountered in create_col_searchfield unidecode")
         return unidecode.unidecode(str(value)).lower() if value is not None else ""
     
     collection_display_name = result.get("collection_display_name")
     collection = result.get("collection")
-    
-    if collection_display_name is None:
-        print(f"Warning: collection_display_name is null in create_col_searchfield for result: {result}")
-    if collection is None:
-        print(f"Warning: collection is null in create_col_searchfield for result: {result}")
     
     collection_display_name = safe_str(collection_display_name)
     collection = safe_str(collection)
@@ -123,31 +92,17 @@ def structure_menu_data(query_result, language):
         # Check for null values in critical fields
         collection = file.get("collection")
         category = file.get("category")
-        
-        if collection is None:
-            print(f"Warning: collection is null for file: {file}")
-        if category is None:
-            print(f"Warning: category is null for file: {file}")
             
         # Skip files with missing critical data
         if not collection or not category:
-            print(f"Skipping file with missing collection or category: {file}")
             continue
             
         # Check for null values in required fields
         filename = file.get("filename")
         textname = file.get("textname") 
         display_name = file.get("displayName")
-        
-        if filename is None:
-            print(f"Warning: filename is null for file: {file}")
-        if textname is None:
-            print(f"Warning: textname is null for file: {file}")
-        if display_name is None:
-            print(f"Warning: displayName is null for file: {file}")
             
         if not filename or not textname or not display_name:
-            print(f"Skipping file with missing required fields - filename: '{filename}', textname: '{textname}', displayName: '{display_name}': {file}")
             continue
         
         # Check for null values in optional fields and warn
@@ -155,15 +110,6 @@ def structure_menu_data(query_result, language):
         collection_display_name = file.get("collection_display_name")
         category_position = file.get("category_position")
         collection_position = file.get("collection_position")
-        
-        if category_display_name is None:
-            print(f"Warning: category_display_name is null for file: {file}, using fallback")
-        if collection_display_name is None:
-            print(f"Warning: collection_display_name is null for file: {file}, using fallback")
-        if category_position is None:
-            print(f"Warning: category_position is null for file: {file}, using default")
-        if collection_position is None:
-            print(f"Warning: collection_position is null for file: {file}, using default")
             
         # Set fallback values
         category_display_name = category_display_name if category_display_name is not None else category
