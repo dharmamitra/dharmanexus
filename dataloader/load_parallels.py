@@ -132,6 +132,8 @@ def load_parallels_for_language(folder, lang, db, number_of_threads):
         ],
         unique=False,
     )
+    # Add a single-field hash index for fast lookup by parallel_id
+    db_collection.add_hash_index(fields=["parallel_id"], unique=False)
     # add index for root_segnr on all list items
     db_collection.add_hash_index(fields=["root_segnr[*]"], unique=False)
     db_collection.add_hash_index(fields=["par_segnr[*]"], unique=False)
