@@ -3518,6 +3518,7 @@ __metadata:
     "@mui/material": "npm:^5.16.14"
     "@mui/material-nextjs": "npm:^5.16.14"
     "@mui/styles": "npm:^5.16.14"
+    "@mui/system": "npm:^5.16.14"
     "@mui/utils": "npm:^6.4.1"
     "@next/bundle-analyzer": "npm:^15.1.6"
     "@next/mdx": "npm:15.1.6"

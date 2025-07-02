@@ -35,6 +35,7 @@
     "@mui/material": "^5.16.14",
     "@mui/material-nextjs": "^5.16.14",
     "@mui/styles": "^5.16.14",
+    "@mui/system": "^5.16.14",
     "@mui/utils": "^6.4.1",
     "@next/bundle-analyzer": "^15.1.6",
     "@next/mdx": "15.1.6",
