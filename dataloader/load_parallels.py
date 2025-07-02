@@ -59,7 +59,6 @@ def load_parallels(parallels, db: StandardDatabase) -> None:
         del parallel["par_string"]
         del parallel["root_string"]
         parallel["root_filename"] = root_filename
-        print(f"Processing parallel: {parallel}")
         parallels_to_be_inserted.append(parallel)
 
     chunksize = 1000
