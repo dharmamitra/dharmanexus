@@ -53,7 +53,6 @@ def load_parallels(parallels, db: StandardDatabase) -> None:
             parallel["par_collection"] = files_lookup[par_filename]
         parallel["par_filename"] = par_filename
         # here we delete some things that we don't need in the DB:
-        del parallel["id"]
         del parallel["par_segtext"]
         del parallel["root_segtext"]
         del parallel["par_string"]
@@ -123,6 +122,7 @@ def load_parallels_for_language(folder, lang, db, number_of_threads):
 
     db_collection.add_hash_index(
         fields=[
+            "id",
             "root_filename",
             "par_filename",
             "root_category",
