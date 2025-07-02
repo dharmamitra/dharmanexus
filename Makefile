@@ -63,21 +63,25 @@ load-tibetan-data:
 	@docker exec -t dataloader bash -c "invoke create-collections"
 	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=bo"
 	#@docker exec -t dataloader bash -c "invoke load-parallels --lang=bo"
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
 
 load-pali-data:
 	@docker exec -t dataloader bash -c "invoke create-collections"
 	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=pa"
 	@docker exec -t dataloader bash -c "invoke load-parallels --lang=pa"
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
 
 load-chinese-data:
 	@docker exec -t dataloader bash -c "invoke create-collections"
 	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=zh"
 	@docker exec -t dataloader bash -c "invoke load-parallels --lang=zh"
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
 
 load-sanskrit-data:
 	#@docker exec -t dataloader bash -c "invoke create-collections"
 	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=sa"
-	#@docker exec -t dataloader bash -c "invoke load-parallels --lang=sa"
+	@docker exec -t dataloader bash -c "invoke load-parallels --lang=sa"
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
 
 clean-tibetan-data:
 	@docker exec -t dataloader bash -c "invoke clean-text-segments --lang=bo"
