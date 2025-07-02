@@ -10,7 +10,7 @@ FOR file IN files
 
 QUERY_GET_MATCH_BY_ID = """
 FOR p IN parallels
-    FILTER p.parallel_id == @active_match_id
+    FILTER p._key == @active_match_id
     RETURN p
 """
 
@@ -66,7 +66,7 @@ FOR file IN files
                     root_offset_beg: p.root_offset_beg,
                     root_offset_end: p.root_offset_end,
                     root_segnr: p.root_segnr,
-                    id: p.parallel_id
+                    id: p._key
                 }
     )
 
@@ -92,13 +92,13 @@ LET parallels = (
         // Get file display name in a single subquery
         LET par_full_name = FIRST(
             FOR file IN files
-                FILTER file.filename == p.par_filename
+                FILTER file._key == p.par_filename
                 RETURN file.displayName
         )
 
         // Return processed parallel data
         RETURN {
-            id: p.parallel_id,
+            id: p._key,
             par_segnr: p.par_segnr,
             display_name: par_full_name,
             tgt_lang: p.tgt_lang,
