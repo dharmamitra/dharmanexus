@@ -46,6 +46,7 @@ def load_metadata_from_files(paths: List[str], db: StandardDatabase) -> None:
                 ]
             ]  # metadata might contain more data; we are only interested in these columns
             # set link and link2 to empty string if they are NaN
+            df['filename'] = df['filename'].apply(get_filename_from_segmentnr)
             df["_key"] = df["filename"].apply(normalize_filename_for_key)
             df["link"] = df["link"].fillna("")
             df["link2"] = df["link2"].fillna("")

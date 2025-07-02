@@ -43,7 +43,7 @@ def load_parallels(parallels, db: StandardDatabase) -> None:
         category_parallel = get_cat_from_segmentnr(parallel["par_segnr"][0])
         root_filename = get_filename_from_segmentnr(parallel["root_segnr"][0])
         par_filename = get_filename_from_segmentnr(parallel["par_segnr"][0])
-        parallel["_id"] = parallel["id"]
+        parallel["parallel_id"] = parallel["id"]
         parallel["_key"] = normalize_filename_for_key(parallel["id"])
         parallel["root_category"] = category_root
         parallel["par_category"] = category_parallel
@@ -122,7 +122,7 @@ def load_parallels_for_language(folder, lang, db, number_of_threads):
 
     db_collection.add_hash_index(
         fields=[
-            "id",
+            "parallel_id",
             "root_filename",
             "par_filename",
             "root_category",
@@ -206,6 +206,47 @@ def load_sorted_parallels_for_language(folder, lang, db):
     db_collection.add_hash_index(fields=["filename", "lang"])
 
     print("Done sorted parallels for language: ", lang)
+
+
+def clean_all_parallels_collections(db):
+    """
+    Remove and recreate all parallels-related collections completely.
+    
+    :param db: ArangoDB connection object
+    """
+    print("Removing all parallels collections...")
+    
+    # Remove parallels collection
+    try:
+        db.delete_collection(COLLECTION_PARALLELS)
+        print(f"Deleted collection: {COLLECTION_PARALLELS}")
+    except Exception as e:
+        print(f"Error deleting {COLLECTION_PARALLELS}: {e}")
+    
+    # Remove parallels_sorted_file collection
+    try:
+        db.delete_collection(COLLECTION_PARALLELS_SORTED_BY_FILE)
+        print(f"Deleted collection: {COLLECTION_PARALLELS_SORTED_BY_FILE}")
+    except Exception as e:
+        print(f"Error deleting {COLLECTION_PARALLELS_SORTED_BY_FILE}: {e}")
+    
+    print("Recreating empty parallels collections...")
+    
+    # Recreate parallels collection
+    try:
+        db.create_collection(COLLECTION_PARALLELS)
+        print(f"Recreated collection: {COLLECTION_PARALLELS}")
+    except Exception as e:
+        print(f"Error creating {COLLECTION_PARALLELS}: {e}")
+    
+    # Recreate parallels_sorted_file collection
+    try:
+        db.create_collection(COLLECTION_PARALLELS_SORTED_BY_FILE)
+        print(f"Recreated collection: {COLLECTION_PARALLELS_SORTED_BY_FILE}")
+    except Exception as e:
+        print(f"Error creating {COLLECTION_PARALLELS_SORTED_BY_FILE}: {e}")
+    
+    print("All parallels collections have been removed and recreated as empty collections.")
 
 
 if __name__ == "__main__":

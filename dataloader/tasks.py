@@ -31,6 +31,7 @@ from load_parallels import (
     load_parallels_for_language,
     load_sorted_parallels_for_language,
     clean_parallels_for_language,
+    clean_all_parallels_collections,
 )
 
 from utils import get_database, get_system_database
@@ -176,3 +177,16 @@ def clean_all_collections(c):
     :param c: invoke.py context object
     """
     clean_all_collections_db()
+
+
+@task
+def clean_all_parallels(c):
+    """
+    Remove and recreate all parallels-related collections completely.
+    This will delete the entire parallels and parallels_sorted_file collections
+    and recreate them as empty collections.
+
+    :param c: invoke.py context object
+    """
+    db = get_database()
+    clean_all_parallels_collections(db)
