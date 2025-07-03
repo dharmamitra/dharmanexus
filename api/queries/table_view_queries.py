@@ -3,11 +3,11 @@ Contains all database queries related to table view.
 """
 
 QUERY_TABLE_VIEW = """
-FOR f IN files
+FOR f IN parallels_sorted_file
     FILTER f.filename == @filename
-    FOR current_parallel in f.@sortkey
+    FOR current_parallel in f.sorted_lists.@sortkey
         FOR p in parallels
-            FILTER p.id == current_parallel
+            FILTER p.parallel_id == current_parallel
             LET folios = (
                 FOR segmentnr IN p.root_segnr
                     FOR segment IN segments
@@ -73,11 +73,11 @@ FOR f IN files
 """
 
 QUERY_TABLE_DOWNLOAD = """
-FOR f IN files
+FOR f IN parallels_sorted_file
     FILTER f.filename == @filename
-    FOR current_parallel in f.@sortkey
+    FOR current_parallel in f.sorted_lists.@sortkey
         FOR p in parallels
-            FILTER p.id == current_parallel
+            FILTER p.parallel_id == current_parallel
             LET folios = (
                 FOR segnr IN p.root_segnr
                     FOR segment IN segments
