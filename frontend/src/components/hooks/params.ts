@@ -75,12 +75,6 @@ const parseAsDbLanguage = parseAsStringLiteral([
   DEFAULT_LANGUAGE,
 ]);
 
-export const useLanguageParam = () => {
-  return useQueryState(allUIComponentParamNames.language, {
-    ...parseAsDbLanguage.withDefault(DEFAULT_PARAM_VALUES.language),
-  });
-};
-
 export const useLanguagesParam = () => {
   return useQueryState(allUIComponentParamNames.languages, {
     ...parseAsArrayOf(parseAsDbLanguage).withDefault([DEFAULT_LANGUAGE]),
@@ -140,12 +134,5 @@ export const useSortMethodParam = () => {
 export const useFolioParam = () => {
   return useQueryState(allUIComponentParamNames.folio, {
     ...parseAsString,
-  });
-};
-
-export const useSearchStringParam = () => {
-  return useQueryState(allUIComponentParamNames.search_string, {
-    ...parseAsString.withDefault(""),
-    history: "push",
   });
 };

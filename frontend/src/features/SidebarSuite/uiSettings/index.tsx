@@ -10,7 +10,6 @@ import { default as FolioOption } from "./FolioOption";
 // import { default as MultiLingualSelector } from "./MultiLingualSelector";
 import { default as ParLengthFilter } from "./ParLengthFilter";
 import { default as ScoreFilter } from "./ScoreFilter";
-import { default as SearchLanguageSelector } from "./SearchLanguageSelector";
 import { default as SortOption } from "./SortOption";
 import { default as TextScriptOption } from "./TextScriptOption";
 
@@ -18,7 +17,6 @@ export const filterComponents: Record<
   RequestFilterUISettingName,
   JSX.Element | null
 > = {
-  language: <SearchLanguageSelector />,
   score: <ScoreFilter />,
   par_length: <ParLengthFilter />,
   languages: null, // pending spec clarity re MultiLingualSelector

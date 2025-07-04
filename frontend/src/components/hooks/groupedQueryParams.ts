@@ -8,7 +8,6 @@ import {
   useIncludeCategoriesParam,
   useIncludeCollectionsParam,
   useIncludeFilesParam,
-  useLanguageParam,
   useLanguagesParam,
   useParLengthParam,
   useScoreParam,
@@ -25,7 +24,6 @@ export const useDbQueryFilters = () => {
   const [include_collections] = useIncludeCollectionsParam();
   const [include_categories] = useIncludeCategoriesParam();
   const [include_files] = useIncludeFilesParam();
-  const [language] = useLanguageParam();
   const [languages] = useLanguagesParam();
 
   const filters: AllAPIRequestProps["filters"] = {
@@ -38,7 +36,6 @@ export const useDbQueryFilters = () => {
     include_categories: nullToUndefined(include_categories),
     include_files: nullToUndefined(include_files),
     languages: nullToUndefined(languages),
-    language,
   };
 
   return filters;

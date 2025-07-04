@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import { useResultPageType } from "@components/hooks/useResultPageType";
 import { useSettingsDrawer } from "@components/hooks/useSettingsDrawer";
 import { TabContext } from "@mui/lab/";
 import { Box, Drawer, Toolbar, useMediaQuery } from "@mui/material";
@@ -11,7 +10,6 @@ export function SidebarSuite() {
   const { isSettingsOpen, setIsSettingsOpen, drawerWidth } =
     useSettingsDrawer();
   const [activeTab, setActiveTab] = useState("0");
-  const { isSearchPage } = useResultPageType();
 
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
@@ -50,7 +48,6 @@ export function SidebarSuite() {
         <Box sx={{ width: 1 }}>
           <TabContext value={activeTab}>
             <TabContent
-              isSearchPage={isSearchPage}
               handleTabChange={handleTabChange}
               setIsSettingsOpen={setIsSettingsOpen}
             />

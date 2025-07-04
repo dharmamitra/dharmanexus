@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "next-i18next";
-import { useResultPageType } from "@components/hooks/useResultPageType";
+import { useNullableDbRouterParams } from "@components/hooks/useDbRouterParams";
 import {
   Popper,
   PopperMsgBox,
@@ -18,7 +18,7 @@ import { RESULT_PAGE_TITLE_GROUP_ID } from "@utils/constants";
 export const CopyResultInfoButton = () => {
   const { t } = useTranslation("settings");
 
-  const { resultPageType } = useResultPageType();
+  const { fileName } = useNullableDbRouterParams();
 
   const [popperAnchorEl, setPopperAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -27,7 +27,7 @@ export const CopyResultInfoButton = () => {
     const target = event.currentTarget;
 
     let title = "";
-    if (resultPageType === "dbFile") {
+    if (fileName) {
       title =
         document
           .getElementById(RESULT_PAGE_TITLE_GROUP_ID)

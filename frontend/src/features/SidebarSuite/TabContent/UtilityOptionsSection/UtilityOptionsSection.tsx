@@ -3,12 +3,8 @@ import React, { useMemo } from "react";
 import { useTranslation } from "next-i18next";
 import { currentDbViewAtom } from "@atoms";
 import { useNullableDbRouterParams } from "@components/hooks/useDbRouterParams";
-import { useResultPageType } from "@components/hooks/useResultPageType";
 import PanelHeading from "@features/SidebarSuite/common/PanelHeading";
-import {
-  UNAVAILABLE_DB_SOURCE_PAGE_UI_UTILITIES,
-  UNAVAILABLE_SEARCH_PAGE_UI_UTILITIES,
-} from "@features/SidebarSuite/TabContent/config";
+import { UNAVAILABLE_DB_SOURCE_PAGE_UI_UTILITIES } from "@features/SidebarSuite/TabContent/config";
 import { UtilityUIOptionName } from "@features/SidebarSuite/types";
 import { utilityUISettings } from "@features/SidebarSuite/uiSettings/config";
 import { getAvailableSettings } from "@features/SidebarSuite/utils";
@@ -33,16 +29,8 @@ export const UtilityOptionsSection = () => {
   const currentView = useAtomValue(currentDbViewAtom);
   const { dbLanguage } = useNullableDbRouterParams();
 
-  const pageType = useResultPageType();
-
   const uiOptions = useMemo(() => {
-    if (pageType.isSearchPage) {
-      return utilityUISettings.filter(
-        (setting) => !UNAVAILABLE_SEARCH_PAGE_UI_UTILITIES.includes(setting),
-      );
-    }
-
-    if (dbLanguage && pageType.isDbFilePage) {
+    if (dbLanguage) {
       return getAvailableSettings<UtilityUIOptionName>({
         dbLanguage,
         uiSettings: utilityUISettings,
@@ -52,7 +40,7 @@ export const UtilityOptionsSection = () => {
     }
 
     return [];
-  }, [dbLanguage, currentView, pageType]);
+  }, [dbLanguage, currentView]);
 
   if (uiOptions.length === 0) {
     return null;

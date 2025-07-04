@@ -1,7 +1,6 @@
 import {
   DBSourceFilePageFilterUISettingName,
   DisplayUISettingName,
-  SearchPageFilterUISettingName,
   UtilityUIOptionName,
 } from "@features/SidebarSuite/types";
 import { dbSourceFileRequestFilters } from "@features/SidebarSuite/uiSettings/config";
@@ -18,15 +17,6 @@ export const AVAILABLE_DB_FILE_PAGE_FILTERS: Record<
   [DbViewEnum.NUMBERS]: dbSourceFileRequestFilters,
   [DbViewEnum.TABLE]: dbSourceFileRequestFilters,
   [DbViewEnum.TEXT]: dbSourceFileRequestFilters,
-};
-
-export const AVAILABLE_SEARCH_PAGE_FILTERS: Record<
-  SearchPageFilterUISettingName,
-  Set<APISchemas["Languages"]>
-> = {
-  language: new Set(["all", "bo", "zh", "pa", "sa"]),
-  exclude_sources: new Set(["bo", "zh", "pa", "sa"]),
-  include_sources: new Set(["bo", "zh", "pa", "sa"]),
 };
 
 type LanguageUnabvailableUtilities = Partial<
@@ -50,11 +40,6 @@ export const UNAVAILABLE_DB_SOURCE_PAGE_UI_UTILITIES: UnavailableDisplayUtilitie
       emailResultInfo: ["all"],
     },
   };
-
-export const UNAVAILABLE_SEARCH_PAGE_UI_UTILITIES: UtilityUIOptionName[] = [
-  "download_data",
-  "emailResultInfo",
-];
 
 type LanguageUnabvailableDisplaySettings = Partial<
   Record<DisplayUISettingName, APISchemas["Languages"][]>

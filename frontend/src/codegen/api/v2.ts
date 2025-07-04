@@ -4,23 +4,6 @@
  */
 
 export interface paths {
-  "/search/": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    /** Search */
-    post: operations["search_search__post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
   "/graph-view/": {
     parameters: {
       query?: never;
@@ -76,60 +59,6 @@ export interface paths {
      *     Please display a message asking the user to use the filters to reduce the dataset size.
      */
     post: operations["get_graph_for_file_graph_view__post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/visual-view/": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    /**
-     * Get Visual Graph Data
-     * @description Endpoint for visual view.
-     *
-     *     **Input is:**
-     *
-     *     *inquiry*: A string with the required inquiry collection ("Suttas-Early-1"), category ("dn") or file ("PA_dn_1")
-     *
-     *     *hit*: And array with the required hit collection(s) ["Suttas-Early-1","Vinaya"]
-     *
-     *     *language*: pa, sa, bo or zh
-     *
-     *     **Output is f.i.:**
-     *
-     *     ```
-     *     {
-     *         "totalpages": 4,
-     *         "graphdata": [
-     *                 [
-     *                   "Khuddakapāṭha (kp)",
-     *                   "Dīghanikāya_(dn)",
-     *                   1094
-     *                 ],
-     *                 [
-     *                   "Khuddakapāṭha (kp)",
-     *                   "Majjhimanikāya_(mn)"
-     *                   5042
-     *                 ],
-     *
-     *                 ...
-     *
-     *                 ]
-     *               ]
-     *     }
-     *     ```
-     *
-     *     Note that if a collection or file is selected, the total number of pages is always 1.
-     */
-    post: operations["get_visual_graph_data_visual_view__post"];
     delete?: never;
     options?: never;
     head?: never;
@@ -466,6 +395,10 @@ export interface components {
     Collection: {
       /** Collection */
       collection: string;
+      /** Collectiondisplayname */
+      collectiondisplayname: string;
+      /** Collectionsearchfield */
+      collectionsearchfield: string;
       /** Categories */
       categories: components["schemas"]["Category"][];
     };
@@ -704,50 +637,6 @@ export interface components {
       category: string;
     };
     /**
-     * SearchFilters
-     * @description Filters for search
-     */
-    SearchFilters: {
-      language: components["schemas"]["Languages"];
-      /** Include Files */
-      include_files?: string[];
-      /** Exclude Files */
-      exclude_files?: string[];
-      /** Include Categories */
-      include_categories?: string[];
-      /** Exclude Categories */
-      exclude_categories?: string[];
-      /** Include Collections */
-      include_collections?: string[];
-      /** Exclude Collections */
-      exclude_collections?: string[];
-    };
-    /** SearchInput */
-    SearchInput: {
-      /** Search String */
-      search_string: string;
-      filters: components["schemas"]["SearchFilters"];
-    };
-    /** SearchOutput */
-    SearchOutput: {
-      /** Searchresults */
-      searchResults: components["schemas"]["SearchResults"][];
-    };
-    /** SearchResults */
-    SearchResults: {
-      /** Category */
-      category: string;
-      /** Language */
-      language: string;
-      /** Segment Nr */
-      segment_nr: string;
-      full_names: components["schemas"]["FullNames"];
-      /** Similarity */
-      similarity: number;
-      /** Segtext */
-      segtext: components["schemas"]["FullText"][];
-    };
-    /**
      * SortMethod
      * @description An enumeration.
      * @enum {string}
@@ -810,31 +699,6 @@ export interface components {
       /** Error Type */
       type: string;
     };
-    /** VisualViewData */
-    VisualViewData: {
-      /**
-       * Totalpages
-       * @default 1
-       */
-      totalpages: number;
-      /** Graphdata */
-      graphdata: (string | number)[][];
-    };
-    /** VisualViewInput */
-    VisualViewInput: {
-      /** Inquiry */
-      inquiry: string;
-      /** Hit */
-      hit: string[];
-      language: components["schemas"]["Languages"];
-      /**
-       * Page
-       * @default 0
-       */
-      page: number;
-    };
-    /** VisualViewOutput */
-    VisualViewOutput: components["schemas"]["VisualViewData"];
     /** Segment */
     api__endpoints__models__numbers_view_models__Segment: {
       /** Segmentnr */
@@ -900,35 +764,6 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  search_search__post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["SearchInput"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: Record<string, unknown>;
-        content: {
-          "application/json": components["schemas"]["SearchOutput"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: Record<string, unknown>;
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
   get_graph_for_file_graph_view__post: {
     parameters: {
       query?: never;
@@ -947,35 +782,6 @@ export interface operations {
         headers: Record<string, unknown>;
         content: {
           "application/json": components["schemas"]["GraphViewOutput"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: Record<string, unknown>;
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  get_visual_graph_data_visual_view__post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["VisualViewInput"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: Record<string, unknown>;
-        content: {
-          "application/json": components["schemas"]["VisualViewOutput"];
         };
       };
       /** @description Validation Error */

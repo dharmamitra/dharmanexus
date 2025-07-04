@@ -1,7 +1,4 @@
 import { AllAPIRequestProps, APISchemas } from "@utils/api/types";
-import type { DbViewEnum } from "@utils/constants";
-
-export type AppResultPageView = DbViewEnum | "search";
 
 type APIRequestPropsName = keyof AllAPIRequestProps;
 
@@ -52,11 +49,6 @@ export type RequestFilterUISettingName = keyof FilterUISettings;
 export type DBSourceFilePageFilterUISettingName = Exclude<
   RequestFilterUISettingName,
   "language"
->;
-
-export type SearchPageFilterUISettingName = Exclude<
-  RequestFilterUISettingName,
-  "par_length" | "score" | "languages"
 >;
 
 export type DbSourceFilterUISetting = Extract<

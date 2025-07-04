@@ -1,8 +1,6 @@
 import React, { memo } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useResultPageType } from "@components/hooks/useResultPageType";
-import { GlobalSearch } from "@features/globalSearch";
 import { useTheme } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -25,7 +23,6 @@ export const AppTopBar = memo(function AppTopBar() {
   const materialTheme = useTheme();
   const { route } = useRouter();
   const isHomeRoute = route === "/";
-  const { isSearchPage } = useResultPageType();
 
   return (
     <AppBar
@@ -41,7 +38,6 @@ export const AppTopBar = memo(function AppTopBar() {
         <Box
           sx={{
             display: "flex",
-            // gives space for open search bar
             flex: 1,
             grow: 1,
             justifyContent: "flex-start",
@@ -49,8 +45,6 @@ export const AppTopBar = memo(function AppTopBar() {
           }}
         >
           <LogoLink showText={!isHomeRoute} />
-
-          {!isSearchPage && <GlobalSearch />}
         </Box>
 
         <NavMenu />

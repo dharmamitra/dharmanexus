@@ -7,7 +7,6 @@ import { getExternalLinksData } from "./endpoints/links";
 import { getDbSourceMenuData } from "./endpoints/menudata";
 import { getNumbersViewCategories } from "./endpoints/numbers-view/categories";
 import { getNumbersViewData } from "./endpoints/numbers-view/numbers";
-import { getGlobalSearchData } from "./endpoints/search";
 import { getTableData } from "./endpoints/table-view/table";
 import { getTextViewMiddleParallelsData } from "./endpoints/text-view/middle";
 import { getTextViewParallelsData } from "./endpoints/text-view/text-parallels";
@@ -85,13 +84,6 @@ export const DbApi = {
       params,
     ],
     call: getParallelDownloadData,
-  },
-  GlobalSearchData: {
-    makeQueryKey: (query: APIPostRequestBody<"/search/">) => [
-      "globalSearchData",
-      query,
-    ],
-    call: getGlobalSearchData,
   },
   TextDisplayName: {
     makeQueryKey: (fileName: string) => ["textNameData", fileName],

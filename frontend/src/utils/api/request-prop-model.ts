@@ -3,6 +3,7 @@ import { AllAPIRequestProps } from "@utils/api/types";
 // `_allAPIRequestPropModel` is an `at a glance` ref that catches any prop model changes pulled from the API
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _allAPIRequestPropModel: AllAPIRequestProps = {
+  language: "",
   filters: {
     score: 0,
     par_length: 0,
@@ -12,7 +13,6 @@ const _allAPIRequestPropModel: AllAPIRequestProps = {
     include_collections: [],
     include_categories: [],
     include_files: [],
-    language: "all",
     languages: ["all"],
   },
   active_segment: "none",
@@ -21,10 +21,6 @@ const _allAPIRequestPropModel: AllAPIRequestProps = {
   page: 0,
   download_data: "table",
   filename: "",
-  language: "pa",
   parallel_ids: [],
-  search_string: "",
   segmentnr: "",
-  inquiry: "",
-  hit: [],
 };

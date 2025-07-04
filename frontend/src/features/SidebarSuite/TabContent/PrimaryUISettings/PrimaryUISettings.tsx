@@ -1,17 +1,12 @@
-import { useResultPageType } from "@components/hooks/useResultPageType";
+import { useNullableDbRouterParams } from "@components/hooks/useDbRouterParams";
 
 import DbFilePrimaryUISettings from "./DbFilePrimaryUISettings";
-import SearchPrimaryUISettings from "./SearchPrimaryUISettings";
 
 export const PrimaryUISettings = () => {
-  const { isSearchPage, isDbFilePage } = useResultPageType();
+  const { fileName } = useNullableDbRouterParams();
 
-  if (isDbFilePage) {
+  if (fileName) {
     return <DbFilePrimaryUISettings />;
-  }
-
-  if (isSearchPage) {
-    return <SearchPrimaryUISettings />;
   }
 
   return null;

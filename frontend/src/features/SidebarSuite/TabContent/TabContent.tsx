@@ -4,9 +4,7 @@ import { DrawerHeader } from "src/features/SidebarSuite/common/MuiStyledSidebarC
 
 import {
   DbFilePageSidebarTabPanels,
-  SearchPageSidebarTabPanels,
   SidebarTabListDbPage,
-  SidebarTabListSearch,
 } from "./tabPanelGroups";
 
 export const HeaderBoxSyles = {
@@ -31,30 +29,12 @@ function CloseButton({
 }
 
 export function TabContent({
-  isSearchPage,
   handleTabChange,
   setIsSettingsOpen,
 }: {
-  isSearchPage: boolean;
   handleTabChange: (event: React.SyntheticEvent, newValue: string) => void;
   setIsSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  if (isSearchPage) {
-    return (
-      <>
-        <DrawerHeader>
-          <Box sx={HeaderBoxSyles}>
-            <SidebarTabListSearch onTabChange={handleTabChange} />
-          </Box>
-
-          <CloseButton setIsSettingsOpen={setIsSettingsOpen} />
-        </DrawerHeader>
-
-        <SearchPageSidebarTabPanels />
-      </>
-    );
-  }
-
   return (
     <>
       <DrawerHeader>

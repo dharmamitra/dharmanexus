@@ -1,24 +1,18 @@
 import * as React from "react";
 import CurrentResultChips from "@components/db/CurrentResultChips";
-import { useResultPageType } from "@components/hooks/useResultPageType";
 import { Stack, Typography } from "@mui/material";
 import { RESULT_PAGE_TITLE_GROUP_ID } from "@utils/constants";
 
 import { DbFileButtons } from "./DbFileButtons";
 import { QueryPageButtons } from "./QueryPageButtons";
-import { SearchButtons } from "./SearchButtons";
 
 export const QueryPageTopStack = ({
-  matchCount = 0,
   title,
   subtitle,
 }: {
-  matchCount?: number;
   title: string;
   subtitle?: string;
 }) => {
-  const { isSearchPage } = useResultPageType();
-
   return (
     <Stack
       direction={{ xs: "column", md: "row" }}
@@ -49,9 +43,9 @@ export const QueryPageTopStack = ({
         alignItems={{ xs: "center", md: "flex-end" }}
         spacing={{ xs: 0, md: 2 }}
       >
-        <CurrentResultChips matches={matchCount} />
+        <CurrentResultChips />
         <QueryPageButtons>
-          {isSearchPage ? <SearchButtons /> : <DbFileButtons />}
+          <DbFileButtons />
         </QueryPageButtons>
       </Stack>
     </Stack>
