@@ -7,7 +7,7 @@ import { appWithTranslation } from "next-i18next";
 import nextI18NextConfig from "next-i18next.config";
 import { DefaultSeo } from "next-seo";
 import SEO from "next-seo.config";
-import { MitraAppTopBar } from "@mitra/components/layout/MitraAppTopBar";
+import { AppTopBar } from "@components/layout/AppTopBar";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
 import {
@@ -46,7 +46,7 @@ function MyApp(props: AppProps) {
 
             <ThemeProvider>
               <CssBaseline />
-              <MitraAppTopBar />
+              <AppTopBar />
               <Component {...pageProps} />
             </ThemeProvider>
           </HydrationBoundary>

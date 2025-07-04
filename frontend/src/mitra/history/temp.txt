@@ -1,4 +1,0 @@
-M frontend/.env
-M frontend/src/components/layout/AppTopBar.tsx
-M frontend/src/features/SidebarSuite/SidebarSuite.tsx
-M frontend/src/pages/_app.tsx

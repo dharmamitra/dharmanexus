@@ -57,8 +57,6 @@ export default function TablePage() {
     [data],
   );
 
-  // todo: refactor to reuse PageContainer
-
   if (isError) {
     return (
       <PageContainer maxWidth="xl" isQueryResultsPage>
