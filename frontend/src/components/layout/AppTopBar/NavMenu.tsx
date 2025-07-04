@@ -16,7 +16,6 @@ const Desktop = () => {
   return (
     <Box component="nav" sx={{ display: { xs: "none", sm: "flex" } }}>
       <DbLanguageMenu type="database" />
-      <DbLanguageMenu type="visual" />
       <NavLink title={t("header.about")} href="/about" />
     </Box>
   );
@@ -102,10 +101,7 @@ export const NavMenu = () => {
           <DbLanguageMenu type="database" isMobile />
         </MenuItem>
         <MenuItem>
-          <DbLanguageMenu type="visual" isMobile />
-        </MenuItem>
-        <MenuItem>
-          <NavLink title={t("header.about")} href="/about" />
+          <NavLink title={t("header.guide")} href="/guide" />
         </MenuItem>
       </Menu>
     </Box>

@@ -4,10 +4,10 @@ Contains all database queries related to table view.
 
 QUERY_TABLE_VIEW = """
 FOR f IN parallels_sorted_file
-    FILTER f._key == @filename
+    FILTER f.filename == @filename
     FOR current_parallel in f.@sortkey
         FOR p in parallels
-            FILTER p._key == current_parallel
+            FILTER p.parallel_id == current_parallel
             LET folios = (
                 FOR segmentnr IN p.root_segnr
                     FOR segment IN segments
@@ -74,10 +74,10 @@ FOR f IN parallels_sorted_file
 
 QUERY_TABLE_DOWNLOAD = """
 FOR f IN parallels_sorted_file
-    FILTER f._key == @filename
+    FILTER f.filename == @filename
     FOR current_parallel in f.@sortkey
         FOR p in parallels
-            FILTER p._key == current_parallel
+            FILTER p.parallel_id == current_parallel
             LET folios = (
                 FOR segnr IN p.root_segnr
                     FOR segment IN segments
@@ -112,7 +112,7 @@ FOR f IN parallels_sorted_file
             LET filename = REGEX_REPLACE(p.par_segnr[0],":.*","")
             let displayname = (
                 FOR file IN files
-                    FILTER file._key == filename
+                    FILTER file.filename == filename
                     return [file.displayName, file.textname]
             )
             LIMIT 2500

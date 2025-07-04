@@ -3,24 +3,34 @@ import { transformDataForTreeView } from "@components/db/SearchableDbSourceTree/
 import type { APIGetRequestQuery, APIGetResponse } from "@utils/api/types";
 
 function parseStructuredDbSourceMenuData(data: APIGetResponse<"/menudata/">) {
-  return data.menudata.map(({ collection, categories }) => ({
-    collection,
-    categories: categories.map(
-      ({ files, categorydisplayname, category: categoryName }) => ({
-        files: files.map(
-          ({ displayName, filename, search_field, textname }) => ({
-            displayName,
-            displayId: textname,
-            searchField: search_field,
-            fileName: filename,
-            category: categoryName,
-          }),
-        ),
-        name: categoryName,
-        displayName: categorydisplayname,
-      }),
-    ),
-  }));
+  return data.menudata.map(({ collection, categories }) => {
+    return {
+      name: collection,
+      displayName: collection,
+      categories: categories.map(
+        ({
+          category: categoryName,
+          categorydisplayname,
+          categorysearch_field,
+          files,
+        }) => ({
+          name: categoryName,
+          displayName: categorydisplayname,
+          searchField: categorysearch_field,
+          files: files.map(
+            ({ displayName, filename, textname, search_field }) => ({
+              name: filename,
+              fileName: filename,
+              displayName,
+              displayId: textname,
+              searchField: search_field,
+              category: categoryName,
+            }),
+          ),
+        }),
+      ),
+    };
+  });
 }
 
 export type ParsedStructuredDbSourceMenuData = ReturnType<

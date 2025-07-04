@@ -4,8 +4,8 @@ Contains all database queries for various utils.
 """
 
 QUERY_FOLIOS = """
-FOR file in files
-    FILTER file._key == @filename
+FOR file IN files
+    FILTER file.filename == @filename
     RETURN file.folios
 """
 
@@ -39,7 +39,7 @@ FOR p IN parallels
 
     FILTER p.score * 100 >= @score
     FILTER p.par_length >= @parlength
-    LIMIT 15000
+    LIMIT 1000
     COLLECT WITH COUNT INTO length
     RETURN length
 """
@@ -52,6 +52,6 @@ FOR file IN files
 
 QUERY_LINK = """
 FOR file IN files
-    FILTER file._key == @filename
-    RETURN [file.link, file.link2]
+    FILTER file.filename == @filename
+    RETURN file.external_links
 """

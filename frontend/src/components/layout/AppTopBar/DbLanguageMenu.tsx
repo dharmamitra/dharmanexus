@@ -15,7 +15,7 @@ import {
 } from "material-ui-popup-state/hooks";
 
 interface DbLanguageMenuProps {
-  type: "database" | "visual";
+  type: "database";
   isMobile?: boolean;
 }
 
@@ -41,19 +41,13 @@ export const DbLanguageMenu = ({ type, isMobile }: DbLanguageMenuProps) => {
 
   const handleLanguageChange = React.useCallback(
     async (language: string) => {
-      if (type === "database") {
-        const availableViews = getAvailableDBViews(
-          getValidDbLanguage(language),
-        );
-        if (!availableViews.includes(currentView)) {
-          setCurrentView(DEFAULT_DB_VIEW);
-        }
-        await router.push(`/db/${language}`);
-      } else {
-        await router.push(`/db/${language}/visual`);
+      const availableViews = getAvailableDBViews(getValidDbLanguage(language));
+      if (!availableViews.includes(currentView)) {
+        setCurrentView(DEFAULT_DB_VIEW);
       }
+      await router.push(`/db/${language}`);
     },
-    [router, type, currentView, setCurrentView],
+    [router, currentView, setCurrentView],
   );
 
   const menuProps = bindMenu(popupState);

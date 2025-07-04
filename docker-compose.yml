@@ -1,8 +1,8 @@
 services:
   arangodb:
     image: arangodb:3.12.3
-    platform: linux/amd64
-    #platform: linux/arm64/v8 # Use this instead if you want to use it on m1+ macs
+    #platform: linux/arm64/v8
+    #platform: linux/amd64 # Use this instead if you want to use it on Intel macs or Linux
     expose:
       - "8529"
     container_name: "arangodb"
@@ -104,7 +104,8 @@ services:
     command: pytest -v
     depends_on:
       - arangodb
-  
+    networks:
+      - app-network
 
   frontend:
     container_name: frontend
@@ -115,6 +116,7 @@ services:
     # Set environment variables directly in the docker-compose file
     environment:
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+      NEXT_PUBLIC_DEPLOYMENT: ${NEXT_PUBLIC_DEPLOYMENT}
 
     # Set environment variables based on the .env file
     env_file:

@@ -104,7 +104,7 @@ const TreeBreadcrumbs = ({ type }: { type: DbSourceTreeType }) => {
                 color="text.primary"
                 fontSize="inherit"
               >
-                {node.id}
+                {node?.data.displayId ?? node.id}
               </Typography>
             </Box>
           </Button>

@@ -7,7 +7,6 @@ import { getExternalLinksData } from "./endpoints/links";
 import { getDbSourceMenuData } from "./endpoints/menudata";
 import { getNumbersViewCategories } from "./endpoints/numbers-view/categories";
 import { getNumbersViewData } from "./endpoints/numbers-view/numbers";
-import { getGlobalSearchData } from "./endpoints/search";
 import { getTableData } from "./endpoints/table-view/table";
 import { getTextViewMiddleParallelsData } from "./endpoints/text-view/middle";
 import { getTextViewParallelsData } from "./endpoints/text-view/text-parallels";
@@ -15,10 +14,6 @@ import { getAvailableLanguages } from "./endpoints/utils/available-languages";
 import { getCountMatches } from "./endpoints/utils/count-matches";
 import { getTextDisplayName } from "./endpoints/utils/displayname";
 import { getFolios } from "./endpoints/utils/folios";
-import {
-  getVisualGraphData,
-  getVisualViewCollections,
-} from "./endpoints/visual-view";
 
 export const DbApi = {
   //* VIEWS
@@ -90,31 +85,8 @@ export const DbApi = {
     ],
     call: getParallelDownloadData,
   },
-  GlobalSearchData: {
-    makeQueryKey: (query: APIPostRequestBody<"/search/">) => [
-      "globalSearchData",
-      query,
-    ],
-    call: getGlobalSearchData,
-  },
   TextDisplayName: {
     makeQueryKey: (fileName: string) => ["textNameData", fileName],
     call: getTextDisplayName,
-  },
-  VisualViewCollections: {
-    makeQueryKey: (language: DbLanguage) => ["visualViewCollections", language],
-    call: (language: DbLanguage) => getVisualViewCollections(language),
-  },
-  VisualViewGraphData: {
-    makeQueryKey: (
-      language: DbLanguage,
-      inquiryCollection: string,
-      hitCollections: string[],
-    ) => ["visualViewGraphData", language, inquiryCollection, hitCollections],
-    call: (
-      language: DbLanguage,
-      inquiryCollection: string,
-      hitCollections: string[],
-    ) => getVisualGraphData(language, inquiryCollection, hitCollections),
   },
 };

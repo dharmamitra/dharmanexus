@@ -1,4 +1,5 @@
 import re
+import unidecode
 
 def get_cat_from_segmentnr(segmentnr):
     """
@@ -18,6 +19,8 @@ def get_filename_from_segmentnr(segnr):
     segnr = segnr.replace(".json", "")
     if "ZH_" in segnr:
         segnr = re.sub("_[0-9]+:", ":", segnr)
+        if re.match(r".*_[0-9]{3}$", segnr):
+            segnr = re.sub("_[0-9]{3}$", "", segnr)
     else:
         segnr = re.sub(r"\$[0-9]+", "", segnr)
     return segnr.split(":")[0]
@@ -41,3 +44,28 @@ def get_language_from_filename(filename) -> str:
     else:
         print("ERROR: Language not found for filename: ", filename)
     return lang
+
+
+def normalize_filename_for_key(filename: str) -> str:
+    """
+    Normalize a filename to be safe for use as an ArangoDB document key.
+    This converts diacritical marks and other Unicode characters to ASCII equivalents.
+    
+    Args:
+        filename: The original filename that may contain diacritical marks
+        
+    Returns:
+        A normalized filename safe for use as an ArangoDB _key
+    """
+    # Convert Unicode characters (including diacriticals) to ASCII equivalents
+    normalized = unidecode.unidecode(filename)
+    
+    # ArangoDB keys should only contain letters, digits, underscore, and hyphen
+    # Replace any other characters with underscore
+    normalized = re.sub(r'[^a-zA-Z0-9_-]', '_', normalized)
+    
+    # Ensure the key doesn't start with a number (ArangoDB requirement)
+    if normalized and normalized[0].isdigit():
+        normalized = '_' + normalized
+        
+    return normalized

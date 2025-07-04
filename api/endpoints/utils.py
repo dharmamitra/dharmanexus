@@ -29,6 +29,11 @@ async def get_counts_for_file(input: CountMatchesInput) -> Any:
             "filter_exclude_collections": input.filters.exclude_collections,
         },
     )
+    
+    # Handle case where no data is returned
+    if not query_graph_result.result:
+        return {"parallel_count": 0}
+    
     return {"parallel_count": query_graph_result.result[0]}
 
 
@@ -47,6 +52,11 @@ async def get_folios_for_file(
         utils_queries.QUERY_FOLIOS,
         bind_vars={"filename": filename},
     )
+    
+    # Handle case where no data is returned
+    if not query_result.result:
+        return {"folios": []}
+    
     return {"folios": query_result.result[0]}
 
 
@@ -59,6 +69,11 @@ def get_displayname(segmentnr):
         utils_queries.QUERY_DISPLAYNAME,
         bind_vars={"filename": filename},
     )
+    
+    # Handle case where no data is returned
+    if not query_result.result:
+        return ["", ""]
+    
     return query_result.result[0]
 
 
@@ -93,4 +108,9 @@ async def get_active_segment_for_folio(
         utils_queries.QUERY_SEGMENT_FOR_FOLIO,
         bind_vars={"folio": folio, "filename": filename},
     )
+    
+    # Handle case where no data is returned
+    if not query_result.result:
+        return {"active_segment": ""}
+    
     return {"active_segment": query_result.result[0]}

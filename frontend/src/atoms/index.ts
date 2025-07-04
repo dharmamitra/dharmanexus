@@ -16,12 +16,6 @@ export const currentDbViewAtom = atomWithStorage<DbViewEnum>(
 );
 
 /**
- * SEARCH
- */
-
-export const isSearchTriggeredAtom = atom(false);
-
-/**
  * SOURCE DATA TREE
  */
 

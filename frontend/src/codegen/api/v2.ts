@@ -4,23 +4,6 @@
  */
 
 export interface paths {
-  "/search/": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    /** Search */
-    post: operations["search_search__post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
   "/graph-view/": {
     parameters: {
       query?: never;
@@ -412,6 +395,10 @@ export interface components {
     Collection: {
       /** Collection */
       collection: string;
+      /** Collectiondisplayname */
+      collectiondisplayname: string;
+      /** Collectionsearchfield */
+      collectionsearchfield: string;
       /** Categories */
       categories: components["schemas"]["Category"][];
     };
@@ -650,50 +637,6 @@ export interface components {
       category: string;
     };
     /**
-     * SearchFilters
-     * @description Filters for search
-     */
-    SearchFilters: {
-      language: components["schemas"]["Languages"];
-      /** Include Files */
-      include_files?: string[];
-      /** Exclude Files */
-      exclude_files?: string[];
-      /** Include Categories */
-      include_categories?: string[];
-      /** Exclude Categories */
-      exclude_categories?: string[];
-      /** Include Collections */
-      include_collections?: string[];
-      /** Exclude Collections */
-      exclude_collections?: string[];
-    };
-    /** SearchInput */
-    SearchInput: {
-      /** Search String */
-      search_string: string;
-      filters: components["schemas"]["SearchFilters"];
-    };
-    /** SearchOutput */
-    SearchOutput: {
-      /** Searchresults */
-      searchResults: components["schemas"]["SearchResults"][];
-    };
-    /** SearchResults */
-    SearchResults: {
-      /** Category */
-      category: string;
-      /** Language */
-      language: string;
-      /** Segment Nr */
-      segment_nr: string;
-      full_names: components["schemas"]["FullNames"];
-      /** Similarity */
-      similarity: number;
-      /** Segtext */
-      segtext: components["schemas"]["FullText"][];
-    };
-    /**
      * SortMethod
      * @description An enumeration.
      * @enum {string}
@@ -821,35 +764,6 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  search_search__post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["SearchInput"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: Record<string, unknown>;
-        content: {
-          "application/json": components["schemas"]["SearchOutput"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: Record<string, unknown>;
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
   get_graph_for_file_graph_view__post: {
     parameters: {
       query?: never;

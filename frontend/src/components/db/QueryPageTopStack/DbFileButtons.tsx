@@ -8,7 +8,6 @@ import {
   useIncludeCategoriesParam,
   useIncludeCollectionsParam,
   useIncludeFilesParam,
-  useLanguageParam,
   useLanguagesParam,
   useParLengthParam,
   useScoreParam,
@@ -39,7 +38,6 @@ export const DbFileButtons = () => {
   const [, setIncludeCollectionsParam] = useIncludeCollectionsParam();
   const [, setIncludeCategoriesParam] = useIncludeCategoriesParam();
   const [, setIncludeFilesParam] = useIncludeFilesParam();
-  const [, setLanguageParam] = useLanguageParam();
   const [, setLanguagesParam] = useLanguagesParam();
 
   const handleReset = React.useCallback(async () => {
@@ -52,7 +50,6 @@ export const DbFileButtons = () => {
       setIncludeCollectionsParam(null),
       setIncludeCategoriesParam(null),
       setIncludeFilesParam(null),
-      setLanguageParam(null),
       setLanguagesParam(null),
     ]);
   }, [
@@ -64,7 +61,6 @@ export const DbFileButtons = () => {
     setIncludeCollectionsParam,
     setIncludeCategoriesParam,
     setIncludeFilesParam,
-    setLanguageParam,
     setLanguagesParam,
   ]);
 

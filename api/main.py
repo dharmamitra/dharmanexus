@@ -13,12 +13,10 @@ from fastapi_cache.backends.redis import RedisBackend
 from redis import asyncio as aioredis
 from .cache_config import make_cache_key_builder, CustomJsonCoder
 from .endpoints import (
-    search,
     table_view,
     text_view,
     numbers_view,
     graph_view,
-    visual_view,
     menu,
     utils,
     links,
@@ -91,9 +89,7 @@ async def startup():
     logger.info("Cache initialized")
 
 
-APP.include_router(search.router)
 APP.include_router(graph_view.router)
-APP.include_router(visual_view.router)
 APP.include_router(download.router)
 APP.include_router(table_view.router, prefix="/table-view")
 APP.include_router(text_view.router, prefix="/text-view")

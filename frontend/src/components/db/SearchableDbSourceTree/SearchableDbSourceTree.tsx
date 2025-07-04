@@ -6,7 +6,6 @@ import {
   activeDbSourceTreeBreadcrumbsAtom,
 } from "@atoms";
 import type { DbSourceTreeNode } from "@components/db/SearchableDbSourceTree/types";
-import { useLanguageParam } from "@components/hooks/params";
 import { useNullableDbRouterParams } from "@components/hooks/useDbRouterParams";
 import SearchIcon from "@mui/icons-material/Search";
 import {
@@ -154,18 +153,11 @@ const SearchableDbSourceTreeContent = memo<
 
 export function SearchableDbSourceTree(props: SearchableDbSourceTreeProps) {
   const { dbLanguage: dbFileLanguage } = useNullableDbRouterParams();
-  const [searchLanguage] = useLanguageParam();
   const { t } = useTranslation("common");
 
   if (isValidDbLanguage(dbFileLanguage)) {
     return (
       <SearchableDbSourceTreeContent {...props} dbLanguage={dbFileLanguage} />
-    );
-  }
-
-  if (isValidDbLanguage(searchLanguage)) {
-    return (
-      <SearchableDbSourceTreeContent {...props} dbLanguage={searchLanguage} />
     );
   }
 

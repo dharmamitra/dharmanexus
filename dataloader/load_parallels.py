@@ -19,6 +19,7 @@ from dataloader_constants import (
 from shared.utils import (
     get_cat_from_segmentnr,
     get_filename_from_segmentnr,
+    normalize_filename_for_key,
 )
 
 
@@ -34,14 +35,16 @@ def load_parallels(parallels, db: StandardDatabase) -> None:
     parallels_to_be_inserted = []
 
     for parallel in parallels:
+        
         if not should_download_file(parallel["root_segnr"][0]):
             continue
+        
         category_root = get_cat_from_segmentnr(parallel["root_segnr"][0])
         category_parallel = get_cat_from_segmentnr(parallel["par_segnr"][0])
         root_filename = get_filename_from_segmentnr(parallel["root_segnr"][0])
         par_filename = get_filename_from_segmentnr(parallel["par_segnr"][0])
-        parallel["_id"] = parallel["id"]
-        parallel["_key"] = parallel["id"]
+        parallel["parallel_id"] = parallel["id"]
+        parallel["_key"] = normalize_filename_for_key(parallel["id"])
         parallel["root_category"] = category_root
         parallel["par_category"] = category_parallel
         if root_filename in files_lookup:
@@ -50,7 +53,6 @@ def load_parallels(parallels, db: StandardDatabase) -> None:
             parallel["par_collection"] = files_lookup[par_filename]
         parallel["par_filename"] = par_filename
         # here we delete some things that we don't need in the DB:
-        del parallel["id"]
         del parallel["par_segtext"]
         del parallel["root_segtext"]
         del parallel["par_string"]
@@ -106,7 +108,8 @@ def load_parallels_for_language(folder, lang, db, number_of_threads):
     }
 
     files = os.listdir(folder)
-    files = list(filter(lambda f: f.endswith(".ndjson.gz"), files))
+    files = list(filter(lambda f: f.endswith(".ndjson.gz"), files))    
+    files = list(filter(lambda f: should_download_file(f), files))
     pool = multiprocessing.Pool(number_of_threads)
     async_results = []
     for file in files:
@@ -119,6 +122,7 @@ def load_parallels_for_language(folder, lang, db, number_of_threads):
 
     db_collection.add_hash_index(
         fields=[
+            "parallel_id",
             "root_filename",
             "par_filename",
             "root_category",
@@ -128,10 +132,16 @@ def load_parallels_for_language(folder, lang, db, number_of_threads):
         ],
         unique=False,
     )
+    # Add a single-field hash index for fast lookup by parallel_id
+    db_collection.add_hash_index(fields=["parallel_id"], unique=False)
     # add index for root_segnr on all list items
     db_collection.add_hash_index(fields=["root_segnr[*]"], unique=False)
     db_collection.add_hash_index(fields=["par_segnr[*]"], unique=False)
-
+    db_collection.add_hash_index(fields=["root_filename"], unique=False)
+    db_collection.add_hash_index(fields=["root_segnr[*]"], unique=False)
+    db_collection.add_hash_index(fields=["par_segnr[*]"], unique=False)
+    db_collection.add_hash_index(fields=["root_filename"], unique=False)
+    
     pool.close()
     pool.join()
 
@@ -144,7 +154,12 @@ def clean_parallels_for_language(lang, db):
 
 def load_sorted_parallels_file(path, lang, db_collection):
     print("Loading sorted parallels for file: ", path)
-    file= json.load(gzip.open(path, "rt", encoding="utf-8"))
+    try:
+        file = json.load(gzip.open(path, "rt", encoding="utf-8"))
+    except json.JSONDecodeError as e:
+        print(f"JSON decode error in file {path}: {e}")
+        return
+    
     batch_size = 100
     batch = []
 
@@ -154,7 +169,7 @@ def load_sorted_parallels_file(path, lang, db_collection):
     if not should_download_file(file["filename"]):
         return
     filename = get_filename_from_segmentnr(file["filename"])
-    file["_key"] = filename
+    file["_key"] = normalize_filename_for_key(filename)
     file["lang"] = lang
     batch.append(file)
 
@@ -190,9 +205,55 @@ def load_sorted_parallels_for_language(folder, lang, db):
     files = os.listdir(folder)
     files = list(filter(lambda f: f.endswith("_stats.json.gz"), files))
     files = list(filter(lambda f: not "global" in f, files))
+    files = list(filter(should_download_file, files))
 
     for file in tqdm(files):
         load_sorted_parallels_file(os.path.join(folder, file), lang, db_collection)
     db_collection.add_hash_index(fields=["filename", "lang"])
 
     print("Done sorted parallels for language: ", lang)
+
+
+def clean_all_parallels_collections(db):
+    """
+    Remove and recreate all parallels-related collections completely.
+    
+    :param db: ArangoDB connection object
+    """
+    print("Removing all parallels collections...")
+    
+    # Remove parallels collection
+    try:
+        db.delete_collection(COLLECTION_PARALLELS)
+        print(f"Deleted collection: {COLLECTION_PARALLELS}")
+    except Exception as e:
+        print(f"Error deleting {COLLECTION_PARALLELS}: {e}")
+    
+    # Remove parallels_sorted_file collection
+    try:
+        db.delete_collection(COLLECTION_PARALLELS_SORTED_BY_FILE)
+        print(f"Deleted collection: {COLLECTION_PARALLELS_SORTED_BY_FILE}")
+    except Exception as e:
+        print(f"Error deleting {COLLECTION_PARALLELS_SORTED_BY_FILE}: {e}")
+    
+    print("Recreating empty parallels collections...")
+    
+    # Recreate parallels collection
+    try:
+        db.create_collection(COLLECTION_PARALLELS)
+        print(f"Recreated collection: {COLLECTION_PARALLELS}")
+    except Exception as e:
+        print(f"Error creating {COLLECTION_PARALLELS}: {e}")
+    
+    # Recreate parallels_sorted_file collection
+    try:
+        db.create_collection(COLLECTION_PARALLELS_SORTED_BY_FILE)
+        print(f"Recreated collection: {COLLECTION_PARALLELS_SORTED_BY_FILE}")
+    except Exception as e:
+        print(f"Error creating {COLLECTION_PARALLELS_SORTED_BY_FILE}: {e}")
+    
+    print("All parallels collections have been removed and recreated as empty collections.")
+
+
+if __name__ == "__main__":
+    pass

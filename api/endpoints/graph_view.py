@@ -66,4 +66,8 @@ async def get_graph_for_file(input: GraphInput) -> Any:
         },
     )
 
+    # Handle case where no data is returned
+    if not query_graph_result.result:
+        return []
+    
     return query_graph_result.result[0]

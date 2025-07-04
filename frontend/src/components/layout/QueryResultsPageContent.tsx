@@ -1,8 +1,6 @@
 import { type FC, type PropsWithChildren, useEffect, useState } from "react";
-import { useTranslation } from "next-i18next";
 import { DbViewPageHead } from "@components/db/DbViewPageHead";
 import { useNullableDbRouterParams } from "@components/hooks/useDbRouterParams";
-import { useResultPageType } from "@components/hooks/useResultPageType";
 import { useSettingsDrawer } from "@components/hooks/useSettingsDrawer";
 import { SidebarSuite } from "@features/SidebarSuite";
 import { Main } from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
@@ -23,14 +21,12 @@ export const QueryResultsPageContent: FC<Props> = ({
   maxWidth,
   containerStyles,
 }) => {
-  const { t } = useTranslation();
   const { fileName } = useNullableDbRouterParams();
 
   const lgWidth = useMaterialTheme().breakpoints.values.lg;
 
   const [isInitialized, setIsInitialized] = useState(false);
   const { isSettingsOpen, setIsSettingsOpen } = useSettingsDrawer();
-  const { isDbFilePage } = useResultPageType();
 
   useEffect(() => {
     if (!isInitialized) {
@@ -47,7 +43,7 @@ export const QueryResultsPageContent: FC<Props> = ({
             maxWidth={maxWidth}
             sx={{ minHeight: "calc(100vh - 100px)", ...containerStyles }}
           >
-            {isDbFilePage ? <DbViewPageHead /> : null}
+            {fileName ? <DbViewPageHead /> : null}
             {children}
           </Container>
           <SidebarSuite />
@@ -55,7 +51,7 @@ export const QueryResultsPageContent: FC<Props> = ({
       ) : (
         <main style={{ height: "100%" }}>
           <Typography component="h1" sx={visuallyHidden}>
-            {fileName ?? t("search.pageTitle")}
+            {fileName}
           </Typography>
         </main>
       )}

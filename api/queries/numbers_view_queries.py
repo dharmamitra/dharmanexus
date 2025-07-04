@@ -4,7 +4,7 @@ Contains all database queries related to numbers view.
 
 QUERY_NUMBERS_VIEW = """
 FOR file IN files
-    FILTER file._key == @filename
+    FILTER file.filename == @filename
     LET selected_folio = @folio OR file.folios[0]
     LET selected_folio_segmentnr = FIRST(
         FOR segment in segments
@@ -31,7 +31,7 @@ FOR file IN files
 
                 LET file_info = FIRST(
                     FOR f in files
-                        FILTER f._key == p.par_filename
+                        FILTER f.filename == p.par_filename
                         RETURN {
                             displayName: f.displayName,
                             fileName: f.filename,
@@ -53,7 +53,7 @@ FOR file IN files
 
 QUERY_NUMBERS_DOWNLOAD = """
 FOR file IN files
-    FILTER file._key == @filename
+    FILTER file.filename == @filename
     LET selected_folio = @folio OR file.folios[0]
     LET selected_folio_segmentnr = FIRST(
         FOR segment in segments
@@ -81,7 +81,7 @@ FOR file IN files
 
                 LET file_info = FIRST(
                     FOR f in files
-                        FILTER f._key == p.par_filename
+                        FILTER f.filename == p.par_filename
                         RETURN {
                             displayName: f.displayName,
                             fileName: f.filename,

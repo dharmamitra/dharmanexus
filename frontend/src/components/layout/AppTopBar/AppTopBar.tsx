@@ -1,15 +1,17 @@
 import React, { memo } from "react";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
-import { useResultPageType } from "@components/hooks/useResultPageType";
-import { GlobalSearch } from "@features/globalSearch";
-import { useTheme } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
+import { useTranslation } from "next-i18next";
+import { Link } from "@components/common/Link";
+import { DatabaseMenu } from "@components/layout/TopBarDatabaseMenu";
+import {
+  AppBar as MuiAppBar,
+  Box,
+  Button,
+  Toolbar,
+  useTheme,
+} from "@mui/material";
 
-import { LogoLink } from "./LogoLink";
-import { NavMenu } from "./NavMenu";
+import { LogoBlock } from "./LogoBlock";
 import { UtilityButtonsLoading } from "./UtilityButtons";
 
 // Aviods i18n content server/client mismatch hydration issue.
@@ -21,42 +23,62 @@ const UtilityButtons = dynamic(
   },
 );
 
+// TODO: multi deployment config if needed
+const SEARCH_URL = `${process.env.NEXT_PUBLIC_MITRA_SEARCH_URL}`;
+
+interface AppBarLinkProps {
+  title: string;
+  href: string;
+}
+
+const AppBarLink = ({ title, href }: AppBarLinkProps) => (
+  <Button variant="text" color="inherit">
+    <Link variant="button" color="text.primary" href={href} underline="none">
+      {title}
+    </Link>
+  </Button>
+);
+
 export const AppTopBar = memo(function AppTopBar() {
   const materialTheme = useTheme();
-  const { route } = useRouter();
-  const isHomeRoute = route === "/";
-  const { isSearchPage } = useResultPageType();
+  const { t } = useTranslation();
 
   return (
-    <AppBar
-      position="sticky"
-      elevation={0}
-      sx={{
-        zIndex: materialTheme.zIndex.drawer + 1,
-        borderBottom: `1px solid ${materialTheme.palette.background.grey}`,
-      }}
-      data-testid="app-bar"
-    >
-      <Toolbar sx={{ mx: 2 }} disableGutters>
-        <Box
-          sx={{
-            display: "flex",
-            // gives space for open search bar
-            flex: 1,
-            grow: 1,
-            justifyContent: "flex-start",
-            alignItems: "center",
-          }}
-        >
-          <LogoLink showText={!isHomeRoute} />
+    <Box bgcolor="background.paper">
+      <MuiAppBar
+        position="sticky"
+        color="transparent"
+        elevation={0}
+        sx={{
+          zIndex: materialTheme.zIndex.drawer + 1,
+          borderBottom: `1px solid ${materialTheme.palette.divider}`,
+        }}
+        data-testid="app-bar"
+      >
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <LogoBlock />
 
-          {!isSearchPage && <GlobalSearch />}
-        </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              component="nav"
+              sx={{
+                display: "flex",
+                gap: 0.75,
+              }}
+            >
+              <DatabaseMenu />
 
-        <NavMenu />
+              <Button variant="text" color="inherit" href={SEARCH_URL}>
+                {t("header.search")}
+              </Button>
 
-        <UtilityButtons />
-      </Toolbar>
-    </AppBar>
+              <AppBarLink title={t("header.about")} href="/about" />
+            </Box>
+
+            <UtilityButtons />
+          </Box>
+        </Toolbar>
+      </MuiAppBar>
+    </Box>
   );
 });

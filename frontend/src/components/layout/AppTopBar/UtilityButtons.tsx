@@ -13,6 +13,7 @@ export const UtilityButtonsLoading = () => (
       //   gap: 0.5,
       alignItems: "center",
       minWidth: "72px",
+      ml: 1,
     }}
   >
     <IconButton disabled>
@@ -25,8 +26,8 @@ export const UtilityButtonsLoading = () => (
 );
 
 export const UtilityButtons = () => (
-  <>
+  <Box sx={{ display: "flex", alignItems: "center", ml: 1 }}>
     <ThemeToggleButton />
     <LocaleSelector />
-  </>
+  </Box>
 );

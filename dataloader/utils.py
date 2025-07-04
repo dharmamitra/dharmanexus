@@ -84,20 +84,13 @@ def get_database() -> StandardDatabase:
     return client.db(DB_NAME, username=ARANGO_USER, password=ARANGO_PASSWORD)
 
 
-def sliding_window(data_list, window_size=3):
-    """Generates sliding windows from a list."""
-    return [
-        data_list[i : i + window_size] for i in range(len(data_list) - window_size + 1)
-    ]
-
-
 def should_download_file(filename: str) -> bool:
     """
     Limit source file set size to speed up loading process
     Can be controlled with the `LIMIT` environment variable.
     """
-    if "T31" in filename:
-        return True
+    #if "T02" in filename:
+    return True
 
 
 def check_if_collection_exists(db, collection_name):

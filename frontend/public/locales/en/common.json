@@ -6,8 +6,8 @@
   "header": {
     "about": "About",
     "database": "Database",
-    "toggleTheme": "Toggle theme",
-    "visual": "Sankey Charts"
+    "search": "Search",
+    "toggleTheme": "Toggle theme"
   },
   "language": {
     "all": "All",
@@ -41,14 +41,6 @@
     "clearSelectedSegment": "Clear selected segment",
     "segmentMatches": "Segment Matches"
   },
-  "visual": {
-    "openVisualCharts": "Open Sankey Chart",
-    "visualInfoHeader": "Sankey Chart",
-    "visualInfo1": "Select the Inquiry Collection, Category or Text and Hit Collection and/or Category.",
-    "visualInfo2": "More than one Hit Collection and/or Category can be selected.",
-    "inquiryCollectionLabel": "Inquiry Text(s)",
-    "hitCollectionsLabel": "Hit Text(s)"
-  },
   "news": {
     "title": "News",
     "readMore": "Read more",
@@ -77,7 +69,7 @@
     "pageTitle": "Search Results",
     "dialogTitle": "BudhhaNexus Global Search",
     "inputPlaceholder": "Enter exact search term (whole words only)",
-    "search": "Search",
+    "search": "Enter text name or number",
     "runSearch": "Run search",
     "clearSearch": "Clear search term",
     "toggleSearch": "Toggle search box",

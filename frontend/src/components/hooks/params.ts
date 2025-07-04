@@ -75,12 +75,6 @@ const parseAsDbLanguage = parseAsStringLiteral([
   DEFAULT_LANGUAGE,
 ]);
 
-export const useLanguageParam = () => {
-  return useQueryState(allUIComponentParamNames.language, {
-    ...parseAsDbLanguage.withDefault(DEFAULT_PARAM_VALUES.language),
-  });
-};
-
 export const useLanguagesParam = () => {
   return useQueryState(allUIComponentParamNames.languages, {
     ...parseAsArrayOf(parseAsDbLanguage).withDefault([DEFAULT_LANGUAGE]),
@@ -140,26 +134,5 @@ export const useSortMethodParam = () => {
 export const useFolioParam = () => {
   return useQueryState(allUIComponentParamNames.folio, {
     ...parseAsString,
-  });
-};
-
-export const useSearchStringParam = () => {
-  return useQueryState(allUIComponentParamNames.search_string, {
-    ...parseAsString.withDefault(""),
-    history: "push",
-  });
-};
-
-// for visual view
-export const useVisualCollectionStringParam = () => {
-  return useQueryState(allUIComponentParamNames.collection, {
-    ...parseAsString.withDefault(""),
-    history: "push",
-  });
-};
-export const useVisualHitCollectionsStringParam = () => {
-  return useQueryState(allUIComponentParamNames.hit_collections, {
-    ...parseAsArrayOf(parseAsString).withDefault([]),
-    history: "push",
   });
 };

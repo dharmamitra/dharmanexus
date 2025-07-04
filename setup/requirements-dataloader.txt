@@ -12,3 +12,4 @@ fastapi
 pandas
 natsort
 jsonschema
+psutil

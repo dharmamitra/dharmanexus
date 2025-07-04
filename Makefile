@@ -34,7 +34,7 @@ clean-all:
 
 # Clear Redis cache
 clear-cache:
-	@docker exec -t buddhanexus-redis-1 redis-cli FLUSHALL
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
 
 # Initialize database and create empty collections
 create-db:
@@ -62,46 +62,46 @@ clean-db:
 load-tibetan-data:
 	@docker exec -t dataloader bash -c "invoke create-collections"
 	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=bo"
-	@docker exec -t dataloader bash -c "invoke load-parallels --lang=bo"
-	@docker exec -t dataloader bash -c "invoke load-global-stats --lang=bo"
+	#@docker exec -t dataloader bash -c "invoke load-parallels --lang=bo"
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
 
 load-pali-data:
 	@docker exec -t dataloader bash -c "invoke create-collections"
 	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=pa"
 	@docker exec -t dataloader bash -c "invoke load-parallels --lang=pa"
-	@docker exec -t dataloader bash -c "invoke load-global-stats --lang=pa"
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
 
 load-chinese-data:
 	@docker exec -t dataloader bash -c "invoke create-collections"
 	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=zh"
 	@docker exec -t dataloader bash -c "invoke load-parallels --lang=zh"
-	@docker exec -t dataloader bash -c "invoke load-global-stats --lang=zh"
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
 
 load-sanskrit-data:
 	#@docker exec -t dataloader bash -c "invoke create-collections"
-	#@docker exec -t dataloader bash -c "invoke load-text-segments --lang=sa"
+	@docker exec -t dataloader bash -c "invoke load-text-segments --lang=sa"
 	@docker exec -t dataloader bash -c "invoke load-parallels --lang=sa"
-	@docker exec -t dataloader bash -c "invoke load-global-stats --lang=sa"
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
 
 clean-tibetan-data:
 	@docker exec -t dataloader bash -c "invoke clean-text-segments --lang=bo"
 	@docker exec -t dataloader bash -c "invoke clean-parallels --lang=bo"
-	@docker exec -t dataloader bash -c "invoke clean-global-stats --lang=bo"
 
 clean-chinese-data:
 	@docker exec -t dataloader bash -c "invoke clean-text-segments --lang=zh"
 	@docker exec -t dataloader bash -c "invoke clean-parallels --lang=zh"
-	@docker exec -t dataloader bash -c "invoke clean-global-stats --lang=zh"
 
 clean-pali-data:
 	@docker exec -t dataloader bash -c "invoke clean-text-segments --lang=pa"
 	@docker exec -t dataloader bash -c "invoke clean-parallels --lang=pa"
-	@docker exec -t dataloader bash -c "invoke clean-global-stats --lang=pa"
 
 clean-sanskrit-data:
 	@docker exec -t dataloader bash -c "invoke clean-text-segments --lang=sa"
 	@docker exec -t dataloader bash -c "invoke clean-parallels --lang=sa"
-	@docker exec -t dataloader bash -c "invoke clean-global-stats --lang=sa"
+
+clean-all-parallels:
+	@docker exec -t dataloader bash -c "invoke clean-all-parallels"
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
 
 list-tasks:
 	@docker exec -t dataloader bash -c "invoke --list"

@@ -88,6 +88,11 @@ def get_page_for_segment(active_segment):
         query=utils_queries.QUERY_PAGE_FOR_SEGMENT,
         bindVars={"segmentnr": active_segment},
     )
+    
+    # Handle case where no page is found for the segment
+    if not page_for_segment.result:
+        return 0
+    
     return page_for_segment.result[0]
 
 
