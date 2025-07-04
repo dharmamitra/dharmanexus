@@ -36,7 +36,10 @@ async def get_table_view(input: GeneralInput) -> Any:
 
             (matches sorted by match-length in the target/quoted text)
     """
+    print("FILENAME", input.filename)
+    print("SORTKEY", get_sort_key(input.sort_method))
     query_result = execute_query(
+        
         table_view_queries.QUERY_TABLE_VIEW,
         bind_vars={
             "filename": input.filename,

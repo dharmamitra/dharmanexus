@@ -4,10 +4,7 @@
     "language": "Sprache"
   },
   "header": {
-<<<<<<< HEAD
-=======
-    "about": "Über",
->>>>>>> main
+    "about": "Hilfe",
     "database": "Datenbank",
     "guide": "Anleitung",
     "toggleTheme": "Theme wechseln"
