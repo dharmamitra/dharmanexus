@@ -14,30 +14,24 @@ export function transformDataForTreeView(
    *  - if it's possible to enforce id uniqueness on BE - duplicate `id`s (eg. dhp) cause react-arborist to trigger key errors and rendering issues. Creating unique ids on FE breaks currnet file selection.
    * */
   return data.map((collection) => ({
-    id: collection.collection,
-    name: collection.collectiondisplayname,
-    searchField: collection.collection,
     dataType: DbSourceTreeNodeDataType.COLLECTION,
-    children: collection.categories.map(({ name, displayName, files }) => ({
-      id: name,
-      name: displayName,
+    id: collection.name,
+    name: collection.displayName,
+    searchField: collection.name,
+    children: collection.categories.map((category, categoryIndex) => ({
       dataType: DbSourceTreeNodeDataType.CATEGORY,
-      searchField: `${displayName}/${name}`,
-      children: files.map(
-        ({
-          fileName,
-          displayName: fileDisplayName,
-          searchField,
-          displayId,
-        }) => ({
-          id: fileName,
-          displayId,
-          name: fileDisplayName,
-          fileName,
-          dataType: DbSourceTreeNodeDataType.TEXT,
-          searchField,
-        }),
-      ),
+      id: `${collection.name}-${categoryIndex}-${category.name}`,
+      displayId: category.name,
+      name: category.displayName,
+      searchField: category.searchField,
+      children: category.files.map((file) => ({
+        dataType: DbSourceTreeNodeDataType.TEXT,
+        id: file.name,
+        displayId: file.displayId,
+        name: file.displayName,
+        fileName: file.fileName,
+        searchField: file.searchField,
+      })),
     })),
   }));
 }

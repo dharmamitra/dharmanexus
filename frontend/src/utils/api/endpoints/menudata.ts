@@ -3,52 +3,39 @@ import { transformDataForTreeView } from "@components/db/SearchableDbSourceTree/
 import type { APIGetRequestQuery, APIGetResponse } from "@utils/api/types";
 
 function parseStructuredDbSourceMenuData(data: APIGetResponse<"/menudata/">) {
-  return data.menudata.map((collectionData) => {
-    const { collection, categories } = collectionData;
-    // Check if collectiondisplayname exists in the response, fallback to collection name
-    const collectiondisplayname =
-      (collectionData as any).collectiondisplayname || collection;
-
+  return data.menudata.map(({ collection, categories }) => {
     return {
-      collection,
-      collectiondisplayname,
+      name: collection,
+      displayName: collection,
       categories: categories.map(
-        ({ files, categorydisplayname, category: categoryName }) => ({
+        ({
+          category: categoryName,
+          categorydisplayname,
+          categorysearch_field,
+          files,
+        }) => ({
+          name: categoryName,
+          displayName: categorydisplayname,
+          searchField: categorysearch_field,
           files: files.map(
-            ({ displayName, filename, search_field, textname }) => ({
+            ({ displayName, filename, textname, search_field }) => ({
+              name: filename,
+              fileName: filename,
               displayName,
               displayId: textname,
               searchField: search_field,
-              fileName: filename,
               category: categoryName,
             }),
           ),
-          name: categoryName,
-          displayName: categorydisplayname,
         }),
       ),
     };
   });
 }
 
-// Add explicit type definition to ensure collectiondisplayname is included
-export type ParsedCollection = {
-  collection: string;
-  collectiondisplayname: string;
-  categories: {
-    files: {
-      displayName: string;
-      displayId: string;
-      searchField: string;
-      fileName: string;
-      category: string;
-    }[];
-    name: string;
-    displayName: string;
-  }[];
-};
-
-export type ParsedStructuredDbSourceMenuData = ParsedCollection[];
+export type ParsedStructuredDbSourceMenuData = ReturnType<
+  typeof parseStructuredDbSourceMenuData
+>;
 
 export async function getDbSourceMenuData(
   query: APIGetRequestQuery<"/menudata/">,
