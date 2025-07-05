@@ -3,10 +3,16 @@ import { useTranslation } from "react-i18next";
 import Brightness1Icon from "@mui/icons-material/Brightness4";
 import Brightness2Icon from "@mui/icons-material/Brightness7";
 import { IconButton } from "@mui/material";
-import { useColorScheme } from "@mui/material/styles";
 
-export const ThemeToggleButton = () => {
-  const { mode, setMode } = useColorScheme();
+export type ThemeToggleButtonProps = {
+  mode?: string;
+  setMode: (mode: "light" | "dark" | null) => void;
+};
+
+export const ThemeToggleButton = ({
+  mode = "light",
+  setMode,
+}: ThemeToggleButtonProps) => {
   const { t } = useTranslation("common");
 
   return (

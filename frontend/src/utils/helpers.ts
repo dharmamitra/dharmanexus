@@ -13,3 +13,7 @@ export const exhaustiveStringTuple =
       : never
   ) =>
     x;
+
+export const setLogoModeFilter = (mode = "light") => {
+  return mode === "dark" ? "brightness(0) invert(1)" : "";
+};

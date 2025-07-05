@@ -15,19 +15,21 @@ export const LIGHT_MODE_MATCH_HEAT_COLORS = [
   "#C6103B", // most matches
 ] as const;
 
-// colours are "counter inverted" to adjust for css dark mode filter
-// NOTE: These colours have been tested for WCAG compliance. Some colour
-// contrast checkers will not recognize the css invert and fail
-// the a11y test, but this is a false negative.
+// colours are "counter-filtered" to adjust for css dark mode filters
+// including invert(1) and hue-rotate(90deg).
+// rendered on a #2f313f background
+// These colours should be WCAG compliant, although some colour
+// contrast checkers will not recognize the css invert and give a false
+// fail on the a11y test.
 export const DARK_MODE_MATCH_HEAT_INVERTED_COLORS = [
-  "#170C05", // fewest matches (inverted from #E8F3FA)
-  "#2E1512", // inverted from #D1EAED
-  "#360D10", // inverted from #C9F2EF
-  "#5a1b31", // inverted from #A5E4CE
-  "#611e6b", // inverted from #9DE193
-  "#421f6f", // inverted from #BDE090
-  "#3a3788", // inverted from #C5C877
-  "#122688", // inverted from #EDD977
-  "#00356B", // inverted from #FFCA94
-  "#00573E", // inverted from #FFA8C1 - most matches
+  "#532d45", // fewest matches
+  "#55303f",
+  "#55333b",
+  "#584a37",
+  "#554d2f",
+  "#484b2a",
+  "#3a4324",
+  "#29411f",
+  "#1a7e0e",
+  "#0f7701", // most matches
 ] as const;

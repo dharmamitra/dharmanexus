@@ -59,7 +59,7 @@ export const shouldShowSegmentNumbersAtom = atomWithStorage<boolean>(
 );
 export const shouldUseMonochromaticSegmentColorsAtom = atomWithStorage<boolean>(
   "shouldUseMonochromaticSegmentColors",
-  false,
+  true,
 );
 
 export const activeSegmentMatchesAtom = atom<string[]>([]);

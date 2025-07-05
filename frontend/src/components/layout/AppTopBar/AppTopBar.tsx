@@ -10,16 +10,24 @@ import {
   Toolbar,
   useTheme,
 } from "@mui/material";
+import { useColorScheme } from "@mui/material/styles";
 
-import { LogoBlock } from "./LogoBlock";
 import { UtilityButtonsLoading } from "./UtilityButtons";
 
-// Aviods i18n content server/client mismatch hydration issue.
+// Aviods server/client mismatch hydration issues for server side rendered components.
 const UtilityButtons = dynamic(
   () => import("./UtilityButtons").then((module) => module.UtilityButtons),
   {
     ssr: false,
     loading: UtilityButtonsLoading,
+  },
+);
+
+const LogoBlock = dynamic(
+  () => import("./LogoBlock").then((module) => module.LogoBlock),
+  {
+    ssr: false,
+    loading: () => <div />,
   },
 );
 
@@ -41,6 +49,7 @@ const AppBarLink = ({ title, href }: AppBarLinkProps) => (
 
 export const AppTopBar = memo(function AppTopBar() {
   const materialTheme = useTheme();
+  const { mode, setMode } = useColorScheme();
   const { t } = useTranslation();
 
   return (
@@ -56,7 +65,7 @@ export const AppTopBar = memo(function AppTopBar() {
         data-testid="app-bar"
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <LogoBlock />
+          <LogoBlock mode={mode} />
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box
@@ -75,7 +84,7 @@ export const AppTopBar = memo(function AppTopBar() {
               <AppBarLink title={t("header.about")} href="/about" />
             </Box>
 
-            <UtilityButtons />
+            <UtilityButtons mode={mode} setMode={setMode} />
           </Box>
         </Toolbar>
       </MuiAppBar>

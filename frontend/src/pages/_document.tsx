@@ -24,7 +24,11 @@ export default function MyDocument(
 
   return (
     <Html lang={currentLocale}>
-      <Head nonce={process.env.nonce} data-color-scheme="light">
+      <Head nonce={process.env.nonce}>
+        <InitColorSchemeScript
+          nonce={process.env.nonce}
+          attribute="mui-theme"
+        />
         <meta charSet="utf-8" />
         <DocumentHeadTags {...props} />
         <script
