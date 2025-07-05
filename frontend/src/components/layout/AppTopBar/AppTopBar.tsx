@@ -3,13 +3,7 @@ import dynamic from "next/dynamic";
 import { useTranslation } from "next-i18next";
 import { Link } from "@components/common/Link";
 import { DatabaseMenu } from "@components/layout/TopBarDatabaseMenu";
-import {
-  AppBar as MuiAppBar,
-  Box,
-  Button,
-  Toolbar,
-  useTheme,
-} from "@mui/material";
+import { AppBar as MuiAppBar, Box, Button, Toolbar } from "@mui/material";
 import { useColorScheme } from "@mui/material/styles";
 
 import { UtilityButtonsLoading } from "./UtilityButtons";
@@ -48,7 +42,6 @@ const AppBarLink = ({ title, href }: AppBarLinkProps) => (
 );
 
 export const AppTopBar = memo(function AppTopBar() {
-  const materialTheme = useTheme();
   const { mode, setMode } = useColorScheme();
   const { t } = useTranslation();
 
@@ -59,8 +52,9 @@ export const AppTopBar = memo(function AppTopBar() {
         color="transparent"
         elevation={0}
         sx={{
-          zIndex: materialTheme.zIndex.drawer + 1,
-          borderBottom: `1px solid ${materialTheme.palette.divider}`,
+          zIndex: "1201",
+          borderBottom: `1px solid`,
+          borderBottomColor: "divider",
         }}
         data-testid="app-bar"
       >
