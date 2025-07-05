@@ -2,7 +2,7 @@ import React from "react";
 import type { GetStaticProps } from "next";
 import dynamic from "next/dynamic";
 import { useTranslation } from "next-i18next";
-import { logoDimensions } from "@components/common/FullLogo";
+import { logoDimensions, logoSpacing } from "@components/common/FullLogo";
 import { DbLanguageLinkBox } from "@components/layout/DbLanguageLinkBox";
 import { PageContainer } from "@components/layout/PageContainer";
 import { sourceSerif } from "@components/theme";
@@ -30,20 +30,16 @@ const LogoHeader = dynamic(
     loading: () => (
       <Box
         sx={{
-          p: {
-            xs: 3,
-            sm: 4,
-          },
-          mx: { xs: 2, sm: 0 },
-          mt: 8,
-          mb: 0,
+          ...logoSpacing,
           border: "solid 1px",
           borderColor: "divider",
         }}
       >
         <Box
           sx={{
-            minHeight: logoDimensions.dharmamitra.height,
+            width: "100%",
+            maxWidth: `${logoDimensions.dharmamitra.width}px`,
+            aspectRatio: `${logoDimensions.dharmamitra.width} / ${logoDimensions.dharmamitra.height}`,
           }}
         />
       </Box>
@@ -62,9 +58,9 @@ export default function Home() {
         elevation={1}
         sx={{
           py: { xs: 4, sm: 8 },
-          px: 4,
+          px: { xs: 1, sm: 4 },
           mt: 0,
-          mx: { xs: 2, sm: 0 },
+          mx: logoSpacing.mx,
           mb: { xs: 2, sm: 4 },
         }}
       >

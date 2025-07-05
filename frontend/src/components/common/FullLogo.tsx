@@ -17,31 +17,49 @@ export const logoDimensions: Record<
   kumarajiva: { width: 392, height: 216 },
 };
 
+export const logoSpacing = {
+  p: { xs: 3, sm: 4 },
+  mx: 2,
+  mt: 8,
+  mb: 0,
+} as const;
+
 export const FullLogo = () => {
   const materialTheme = useTheme();
   const { mode } = useColorScheme();
+  const { width, height } = logoDimensions.dharmamitra;
 
   return (
     <Box
       sx={{
+        ...logoSpacing,
         display: "grid",
         placeItems: "center",
-        p: { xs: 3, sm: 4 },
-        mx: { xs: 2, sm: 0 },
-        mt: 8,
-        mb: 0,
         backgroundColor: materialTheme.palette.background.header,
         borderBottom: `1px solid ${materialTheme.palette.divider}`,
         borderRadiusTopLeft: 1,
-        borderRadiusTopRights: 1,
+        borderRadiusTopRight: 1,
       }}
     >
-      <Image
-        src={logoPaths.dharmamitra}
-        alt="logo"
-        {...logoDimensions.dharmamitra}
-        style={{ filter: setLogoModeFilter(mode) }}
-      />
+      <Box
+        sx={{
+          position: "relative",
+          width: "100%",
+          maxWidth: `${width}px`,
+          aspectRatio: `${width} / ${height}`,
+        }}
+      >
+        <Image
+          src={logoPaths.dharmamitra}
+          alt="logo"
+          sizes="(max-width: 600px) 90vw, 397px"
+          style={{
+            objectFit: "contain",
+            filter: setLogoModeFilter(mode),
+          }}
+          fill
+        />
+      </Box>
     </Box>
   );
 };
