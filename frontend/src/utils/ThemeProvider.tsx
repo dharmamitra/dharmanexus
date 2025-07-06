@@ -14,5 +14,9 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
     extendTheme(getDesignTokens({ dbLanguage })),
   );
 
-  return <CssVarsProvider theme={MUITheme}>{children}</CssVarsProvider>;
+  return (
+    <CssVarsProvider theme={MUITheme} defaultMode="system">
+      {children}
+    </CssVarsProvider>
+  );
 };

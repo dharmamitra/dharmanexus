@@ -127,7 +127,6 @@ export const getBaseDesignTokens = ({
     h1: {
       fontFamily: sourceSerif.style.fontFamily,
       fontSize: "4.5rem",
-      color: grey[800],
     },
     h2: { fontFamily: sourceSerif.style.fontFamily, fontSize: "2.5rem" },
     h3: { fontFamily: sourceSerif.style.fontFamily, fontSize: "1.75rem" },

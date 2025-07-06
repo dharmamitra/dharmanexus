@@ -25,10 +25,6 @@ export default function MyDocument(
   return (
     <Html lang={currentLocale}>
       <Head nonce={process.env.nonce}>
-        <InitColorSchemeScript
-          nonce={process.env.nonce}
-          attribute="mui-theme"
-        />
         <meta charSet="utf-8" />
         <DocumentHeadTags {...props} />
         <script
@@ -81,7 +77,12 @@ export default function MyDocument(
       </Head>
 
       <body>
-        <InitColorSchemeScript />
+        <InitColorSchemeScript
+          defaultMode="system"
+          modeStorageKey="mui-mode"
+          colorSchemeStorageKey="mui-color-scheme"
+          attribute="data-mui-color-scheme" // matches the provider default
+        />
         <Main />
         <NextScript nonce={process.env.nonce} />
       </body>
