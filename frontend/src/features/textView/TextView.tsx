@@ -1,6 +1,7 @@
 import "allotment/dist/style.css";
 
 import React, { useEffect, useRef } from "react";
+import { activeSegmentMatchesAtom } from "@atoms";
 import {
   useActiveSegmentParam,
   useRightPaneActiveSegmentParam,
@@ -10,6 +11,7 @@ import { TextViewLeftPane } from "@features/textView/TextViewLeftPane";
 import { TextViewRightPane } from "@features/textView/TextViewRightPane";
 import { Paper } from "@mui/material";
 import { Allotment, AllotmentHandle, LayoutPriority } from "allotment";
+import { useAtomValue } from "jotai";
 
 import TextViewMiddleParallels from "./TextViewMiddleParallels";
 
@@ -17,10 +19,12 @@ import TextViewMiddleParallels from "./TextViewMiddleParallels";
 export const TextView = () => {
   const [activeSegmentId] = useActiveSegmentParam();
   const [rightPaneActiveSegmentId] = useRightPaneActiveSegmentParam();
+  const activeSegmentMatches = useAtomValue(activeSegmentMatchesAtom);
 
   const allotmentRef = useRef<AllotmentHandle>(null);
 
-  const shouldShowMiddlePane = activeSegmentId !== "none";
+  const shouldShowMiddlePane =
+    activeSegmentId !== "none" && activeSegmentMatches.length > 0;
 
   const shouldShowRightPane =
     rightPaneActiveSegmentId !== DEFAULT_PARAM_VALUES.active_segment;

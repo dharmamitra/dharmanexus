@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import {
   activeSegmentMatchesAtom,
   hoveredOverParallelIdAtom,
@@ -62,6 +62,7 @@ export const TextSegment = ({
   const updateSelectedLocationInGlobalState = useCallback(
     async (location: { id: string; index: number; matches: string[] }) => {
       setIsMiddlePanePointingLeft(isRightPane);
+      setSelectedSegmentMatches(location.matches);
       await Promise.all([
         setActiveSegmentId(location.id),
         setActiveSegmentIndex(location.index),
@@ -74,29 +75,7 @@ export const TextSegment = ({
       setActiveSegmentId,
       setActiveSegmentIndex,
       setIsMiddlePanePointingLeft,
-    ],
-  );
-
-  // find matches for the selected segment when the page is first rendered
-  useLayoutEffect(
-    function openMiddlePaneWithMatches() {
-      if (!isSegmentSelected || typeof activeSegmentIndex !== "number") return;
-      const segmentInData = data?.segmentText[activeSegmentIndex];
-      if (!segmentInData) return;
-      if (isRightPane && isMiddlePanePointingLeft) {
-        setSelectedSegmentMatches(segmentInData.matches);
-      } else if (!isRightPane && !isMiddlePanePointingLeft) {
-        setSelectedSegmentMatches(segmentInData.matches);
-      }
-    },
-    [
-      isSegmentSelected,
-      data?.segmentText,
-      activeSegmentId,
-      activeSegmentIndex,
       setSelectedSegmentMatches,
-      isRightPane,
-      isMiddlePanePointingLeft,
     ],
   );
 
