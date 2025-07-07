@@ -53,7 +53,7 @@ export const TextSegment = ({
   const setSelectedSegmentMatches = useSetAtom(activeSegmentMatchesAtom);
   const isSegmentSelected = activeSegmentId === data?.segmentNumber;
 
-  const [isMiddlePanePointingLeft, setIsMiddlePanePointingLeft] = useAtom(
+  const [, setIsMiddlePanePointingLeft] = useAtom(
     textViewIsMiddlePanePointingLeftAtom,
   );
 
