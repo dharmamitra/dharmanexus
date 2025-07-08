@@ -1,11 +1,11 @@
 import React, { memo } from "react";
 import dynamic from "next/dynamic";
-import { useTranslation } from "next-i18next";
-import { Link } from "@components/common/Link";
-import { DatabaseMenu } from "@components/layout/TopBarDatabaseMenu";
-import { AppBar as MuiAppBar, Box, Button, Toolbar } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import { AppBar as MuiAppBar, Box, Toolbar } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import { useColorScheme } from "@mui/material/styles";
 
+import { Desktop as NavMenuDesktop } from "./NavMenu";
 import { UtilityButtonsLoading } from "./UtilityButtons";
 
 // Aviods server/client mismatch hydration issues for server side rendered components.
@@ -25,25 +25,32 @@ const LogoBlock = dynamic(
   },
 );
 
-// TODO: multi deployment config if needed
-const SEARCH_URL = `${process.env.NEXT_PUBLIC_MITRA_SEARCH_URL}`;
+const NavMenu = dynamic(
+  () => import("./NavMenu").then((module) => module.NavMenu),
+  {
+    ssr: false,
+    loading: () => (
+      <>
+        <IconButton
+          size="large"
+          aria-label="navigation menu"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          color="inherit"
+          sx={{ display: { md: "none" } }}
+          disabled
+        >
+          <MenuIcon />
+        </IconButton>
 
-interface AppBarLinkProps {
-  title: string;
-  href: string;
-}
-
-const AppBarLink = ({ title, href }: AppBarLinkProps) => (
-  <Button variant="text" color="inherit">
-    <Link variant="button" color="text.primary" href={href} underline="none">
-      {title}
-    </Link>
-  </Button>
+        <NavMenuDesktop />
+      </>
+    ),
+  },
 );
 
 export const AppTopBar = memo(function AppTopBar() {
   const { mode, setMode } = useColorScheme();
-  const { t } = useTranslation();
 
   return (
     <Box bgcolor="background.paper">
@@ -62,22 +69,7 @@ export const AppTopBar = memo(function AppTopBar() {
           <LogoBlock mode={mode} />
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Box
-              component="nav"
-              sx={{
-                display: "flex",
-                gap: 0.75,
-              }}
-            >
-              <DatabaseMenu />
-
-              <Button variant="text" color="inherit" href={SEARCH_URL}>
-                {t("header.search")}
-              </Button>
-
-              <AppBarLink title={t("header.about")} href="/about" />
-            </Box>
-
+            <NavMenu />
             <UtilityButtons mode={mode} setMode={setMode} />
           </Box>
         </Toolbar>
