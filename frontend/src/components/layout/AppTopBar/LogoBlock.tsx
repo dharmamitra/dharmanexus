@@ -5,17 +5,18 @@ import { MITRA_URL } from "@mitra/constants";
 import { getBasePath } from "@mitra/utils";
 import { Box, Link as MuiLink, useTheme } from "@mui/material";
 import imgMitraLogo from "@public/assets/logos/dm-logo-flat.png";
+import { setLogoModeFilter } from "@utils/helpers";
 
 const logoWidePaths: Record<Deployment, string> = {
   dharmamitra: "/assets/logos/dn-logo-title.png",
   kumarajiva: "/assets/logos/kp-logo-full.png",
 };
 
-export const LogoBlock = () => {
+export const LogoBlock = ({ mode = "light" }: { mode?: string }) => {
   const materialTheme = useTheme();
 
   return (
-    <Box>
+    <Box sx={{ filter: setLogoModeFilter(mode) }}>
       <MuiLink
         sx={{
           display: "block",

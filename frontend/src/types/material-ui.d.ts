@@ -15,7 +15,7 @@ declare module "@mui/material/styles" {
     header: string;
     grey: string;
     accent: string;
-    card: string;
+    active: string;
     selected: string;
     inverted: string;
   }

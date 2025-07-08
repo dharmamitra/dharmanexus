@@ -112,7 +112,7 @@ export const ParallelSegment = ({
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-start",
-            bgcolor: isActive ? "background.default" : "background.card",
+            bgcolor: isActive ? "background.active" : "background.header",
             flexDirection: { xs: "column", sm: "row" },
           }}
         >

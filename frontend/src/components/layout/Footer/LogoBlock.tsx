@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { getBasePath } from "@mitra/utils";
 import { Box, Link } from "@mui/material";
+import { useColorScheme } from "@mui/material/styles";
+import { setLogoModeFilter } from "@utils/helpers";
 
 const dharmamitraLogo = {
   src: `${getBasePath()}/assets/logos/dm-logo-full-no-tagline.png`,
@@ -46,6 +48,8 @@ const MitraLogoImage = () => {
 };
 
 export default function LogoBlockComponent() {
+  const { mode } = useColorScheme();
+
   return (
     <Box
       sx={{
@@ -56,6 +60,7 @@ export default function LogoBlockComponent() {
         alignItems: "center",
         justifyContent: "center",
         gap: 0,
+        filter: setLogoModeFilter(mode),
       }}
     >
       <Link
