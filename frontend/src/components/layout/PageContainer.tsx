@@ -14,6 +14,30 @@ const Footer = dynamic(
   () => import("./Footer").then((module) => module.Footer),
   {
     ssr: false,
+    loading: () => (
+      <Box
+        sx={{
+          width: "100%",
+          py: 6,
+          px: { xs: 3, md: 4 },
+          mt: { xs: 3, md: 10 },
+          bgcolor: "accent",
+        }}
+        component="footer"
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          <Box sx={{ minHeight: 100 }} />
+        </Box>
+      </Box>
+    ),
   },
 );
 
