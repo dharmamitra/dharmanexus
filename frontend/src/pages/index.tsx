@@ -15,11 +15,11 @@ import { DbLanguage } from "@utils/api/types";
 import { getI18NextStaticProps } from "@utils/nextJsHelpers";
 import merge from "lodash/merge";
 
-const dbLanguagePaths: Record<DbLanguage, { title: string; href: string }> = {
-  bo: { title: "Tibetan", href: "/db/bo" },
-  pa: { title: "Pali", href: "/db/pa" },
-  sa: { title: "Sanskrit", href: "/db/sa" },
-  zh: { title: "Chinese", href: "/db/zh" },
+const dbLanguagePaths: Record<DbLanguage, { href: string }> = {
+  bo: { href: "/db/bo" },
+  pa: { href: "/db/pa" },
+  sa: { href: "/db/sa" },
+  zh: { href: "/db/zh" },
 };
 
 const LogoHeader = dynamic(
@@ -96,7 +96,7 @@ export default function Home() {
           {Object.entries(dbLanguagePaths).map(([key, value]) => (
             <DbLanguageLinkBox
               key={key}
-              title={value.title}
+              title={t(`language.${key}`)}
               href={value.href}
             />
           ))}
