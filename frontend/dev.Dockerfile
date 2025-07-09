@@ -15,7 +15,8 @@ RUN yarn install --immutable
 
 COPY src ./src
 COPY public ./public
-COPY content ./content
+# The project has removed all md pages. If they are added back, this line should be uncommented
+# COPY content ./content
 COPY next.config.js .
 COPY tsconfig.json .
 COPY .eslintrc.js .
