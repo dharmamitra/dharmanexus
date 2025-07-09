@@ -10,6 +10,7 @@ class TextParallelsInput(BaseModel):
     filters: Optional[Filters]
     active_match_id: Optional[str] = None
     page: int = 0
+    include_matches: bool = True 
 
 
 class FullMatchText(FullText):

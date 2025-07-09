@@ -108,6 +108,7 @@ async def get_file_text_segments_and_parallels(input: TextParallelsInput) -> Any
         "score": input.filters.score,
         "parlength": input.filters.par_length,
         "multi_lingual": input.filters.languages,
+        "include_matches": input.include_matches,
         "filter_include_files": input.filters.include_files,
         "filter_include_categories": input.filters.include_categories,
         "filter_include_collections": input.filters.include_collections,
