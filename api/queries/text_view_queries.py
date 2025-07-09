@@ -22,7 +22,7 @@ FOR file IN files
         FOR segmentnr IN (file.segment_pages[@page] ? file.segment_pages[@page] : [])
             FOR segment IN segments
                 FILTER segment.segmentnr == segmentnr
-                LET parallel_ids = (
+                LET parallel_ids = @include_matches ? (
                     FOR p IN parallels
                         FILTER segmentnr IN p.root_segnr
                         FILTER p.score * 100 >= @score
@@ -35,7 +35,7 @@ FOR file IN files
                         FILTER LENGTH(@filter_exclude_collections) == 0 OR p.par_collection NOT IN @filter_exclude_collections
                         FILTER "all" IN @multi_lingual OR POSITION(@multi_lingual, p.tgt_lang)
                         RETURN p._key
-                )
+                ) : []
                 RETURN {
                     segnr: segment.segmentnr,
                     segtext: segment.original,
@@ -43,12 +43,12 @@ FOR file IN files
                 }
     )
 
-    LET parallel_ids = UNIQUE(FLATTEN(
+    LET parallel_ids = @include_matches ? UNIQUE(FLATTEN(
         FOR segment IN page_segments
             RETURN segment.parallel_ids
-    ))
+    )) : []
 
-    LET parallels = (
+    LET parallels = @include_matches ? (
         FOR parallel_id IN parallel_ids
             FOR p IN parallels
                 FILTER p._key == parallel_id
@@ -68,7 +68,7 @@ FOR file IN files
                     root_segnr: p.root_segnr,
                     id: p._key
                 }
-    )
+    ) : []
 
     RETURN {
         textleft: page_segments,
