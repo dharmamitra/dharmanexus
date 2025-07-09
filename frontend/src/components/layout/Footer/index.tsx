@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import LogoBlock from "./LogoBlock";
 import Statements from "./Statements";
 
-export default function Footer() {
+export function Footer() {
   const materialTheme = useTheme();
   return (
     <Box

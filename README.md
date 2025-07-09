@@ -1,5 +1,7 @@
 # DharmaNexus
-Backend for the DharmaNexus project.
+Main repository for the [DharmaNexus](dharmanexus.org) project.  
+
+General introduction and documentation for end users is available [here](https://dharmamitra.github.io/dharmamitra-guides/dharmanexus/)!
 
 Includes:
 - API (using [fastapi](https://fastapi.tiangolo.com/))

@@ -1,57 +1,49 @@
 import React from "react";
 import { useTranslation } from "next-i18next";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Button, Link, useMediaQuery, useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { DOCS_URL, SEARCH_URL } from "@utils/constants";
 
 import { DbLanguageMenu } from "./DbLanguageMenu";
-import { NavLink } from "./NavLink";
 
-const Desktop = () => {
+export const Desktop = () => {
   const { t } = useTranslation();
 
   return (
-    <Box component="nav" sx={{ display: { xs: "none", sm: "flex" } }}>
+    <Box component="nav" sx={{ display: { xs: "none", md: "flex" } }}>
       <DbLanguageMenu type="database" />
-      <NavLink title={t("header.about")} href="/about" />
-    </Box>
-  );
-};
-
-const Loading = () => {
-  return (
-    <>
-      <IconButton
-        size="large"
-        aria-label="navigation menu"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
+      <Button
         color="inherit"
-        sx={{ display: { sm: "none" } }}
-        disabled
+        href={SEARCH_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        endIcon={<ArrowOutwardIcon />}
       >
-        <MenuIcon />
-      </IconButton>
-
-      <Desktop />
-    </>
+        {t("header.search")}
+      </Button>
+      <Button
+        color="inherit"
+        href={DOCS_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        endIcon={<ArrowOutwardIcon />}
+      >
+        {t("header.docs")}
+      </Button>
+    </Box>
   );
 };
 
 export const NavMenu = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const [isMounted, setIsMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, [setIsMounted]);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -61,11 +53,7 @@ export const NavMenu = () => {
     setAnchorEl(null);
   };
 
-  if (!isMounted) {
-    return <Loading />;
-  }
-
-  if (isSmUp) {
+  if (isMdUp) {
     return <Desktop />;
   }
 
@@ -101,7 +89,32 @@ export const NavMenu = () => {
           <DbLanguageMenu type="database" isMobile />
         </MenuItem>
         <MenuItem>
-          <NavLink title={t("header.guide")} href="/guide" />
+          <Link
+            href={SEARCH_URL}
+            color="inherit"
+            variant="button"
+            underline="none"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{ mr: 1 }}
+          >
+            {t("header.search")}
+          </Link>
+          <ArrowOutwardIcon color="action" />
+        </MenuItem>
+        <MenuItem>
+          <Link
+            href={DOCS_URL}
+            color="inherit"
+            variant="button"
+            underline="none"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{ mr: 1 }}
+          >
+            {t("header.docs")}
+          </Link>
+          <ArrowOutwardIcon color="action" />
         </MenuItem>
       </Menu>
     </Box>

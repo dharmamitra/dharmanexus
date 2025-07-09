@@ -74,6 +74,9 @@ export const DbFileButtons = () => {
         data-testid="db-results-settings-button"
         aria-label={t(`resultsHead.settingsTip`)}
         title={t(`resultsHead.settingsTip`)}
+        sx={{
+          lineHeight: 1.2,
+        }}
         startIcon={isMd && <TuneIcon />}
         onClick={() => setIsSettingsOpen((prev) => !prev)}
       >
@@ -85,6 +88,9 @@ export const DbFileButtons = () => {
         data-testid="db-results-clear-settings-button"
         aria-label={t(`resultsHead.resetTip`)}
         title={t(`resultsHead.resetTip`)}
+        sx={{
+          lineHeight: 1.2,
+        }}
         startIcon={isMd && <RotateLeftOutlinedIcon />}
         onClick={handleReset}
       >
@@ -96,6 +102,9 @@ export const DbFileButtons = () => {
         data-testid="db-results-text-select-modal-button"
         aria-label={t(`resultsHead.textSelectTip`)}
         title={t(`resultsHead.textSelectTip`)}
+        sx={{
+          lineHeight: 1.2,
+        }}
         startIcon={isMd && <GradingOutlinedIcon />}
         onClick={() => setIsSourceTreeOpen(true)}
       >

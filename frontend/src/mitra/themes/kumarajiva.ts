@@ -31,7 +31,7 @@ export const getKumarajivaDesignTokens = ({
           header: dbLanguage
             ? DB_LANGUAGE_COLORS_LIGHT[dbLanguage]
             : defaultPrimaryBg,
-          card: grey[100],
+          active: grey[100],
           inverted: grey[800],
         },
         text: {
@@ -74,7 +74,7 @@ export const getKumarajivaDesignTokens = ({
           header: dbLanguage
             ? DB_LANGUAGE_COLORS_DARK.main[dbLanguage]
             : defaultPrimary,
-          card: defaultPrimary,
+          active: defaultPrimary,
         },
         text: {
           primary: grey[100],

@@ -59,7 +59,7 @@ export const DbLanguageMenu = ({ type, isMobile }: DbLanguageMenuProps) => {
         color="inherit"
         {...bindTrigger(popupState)}
         {...(isMobile && {
-          sx: { "&:hover": { backgroundColor: "transparent" } },
+          sx: { p: 0, "&:hover": { backgroundColor: "transparent" } },
         })}
       >
         {t(`header.${type}`)}

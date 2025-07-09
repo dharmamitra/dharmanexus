@@ -4,7 +4,7 @@ import Brightness6Icon from "@mui/icons-material/Brightness6";
 import LanguageIcon from "@mui/icons-material/Language";
 import { Box, IconButton } from "@mui/material";
 
-import { ThemeToggleButton } from "./ThemeToggleButton";
+import { ThemeToggleButton, ThemeToggleButtonProps } from "./ThemeToggleButton";
 
 export const UtilityButtonsLoading = () => (
   <Box
@@ -13,7 +13,7 @@ export const UtilityButtonsLoading = () => (
       //   gap: 0.5,
       alignItems: "center",
       minWidth: "72px",
-      ml: 1,
+      ml: { md: 1 },
     }}
   >
     <IconButton disabled>
@@ -25,9 +25,9 @@ export const UtilityButtonsLoading = () => (
   </Box>
 );
 
-export const UtilityButtons = () => (
-  <Box sx={{ display: "flex", alignItems: "center", ml: 1 }}>
-    <ThemeToggleButton />
+export const UtilityButtons = ({ mode, setMode }: ThemeToggleButtonProps) => (
+  <Box sx={{ display: "flex", alignItems: "center", ml: { md: 1 } }}>
+    <ThemeToggleButton mode={mode} setMode={setMode} />
     <LocaleSelector />
   </Box>
 );

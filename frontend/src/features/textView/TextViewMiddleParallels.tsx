@@ -134,7 +134,7 @@ export default function TextViewMiddleParallels() {
       <CardHeader
         data-testid="middle-view-header"
         sx={{
-          backgroundColor: "background.card",
+          backgroundColor: "background.header",
           position: "sticky",
           top: 0,
           zIndex: 2,

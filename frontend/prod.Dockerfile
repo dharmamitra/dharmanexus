@@ -31,7 +31,8 @@ RUN yarn install --immutable
 
 COPY src ./src
 COPY public ./public
-COPY content ./content
+# The project has removed all md pages. If they are added back, this line should be uncommented
+# COPY content ./content
 COPY next.config.js .
 COPY tsconfig.json .
 COPY next-i18next.config.js .
@@ -72,7 +73,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 # copy the static folder inside the .next folder generated from the build process
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
 
 # Environment variables must be redefined at run time
 ARG ENV_VARIABLE

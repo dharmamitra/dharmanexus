@@ -17,12 +17,12 @@ export const QueryPageTopStack = ({
     <Stack
       direction={{ xs: "column", md: "row" }}
       justifyContent="space-between"
-      alignItems={{ xs: "left", md: "center" }}
+      alignItems={{ xs: "left" }}
       spacing={{ xs: 0, md: 2 }}
       pb={1}
     >
       <hgroup id={RESULT_PAGE_TITLE_GROUP_ID} style={{ maxWidth: "880px" }}>
-        <Typography variant="h3" component="h1" mt={1} fontWeight={400}>
+        <Typography variant="h5" component="h1" mt={1} fontWeight={400}>
           {title}
         </Typography>
         {subtitle ? (

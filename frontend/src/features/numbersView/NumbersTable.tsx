@@ -86,7 +86,7 @@ export default function NumbersTable({
     return table.getHeaderGroups().map((headerGroup) => (
       <TableRow
         key={headerGroup.id}
-        sx={{ backgroundColor: "background.card", margin: 0 }}
+        sx={{ backgroundColor: "background.header", margin: 0 }}
       >
         {headerGroup.headers.map((header) => {
           const styles = {
@@ -177,7 +177,7 @@ export default function NumbersTable({
   });
 
   return (
-    <div style={{ height: "100%" }}>
+    <div style={{ height: "100%", marginTop: "12px" }}>
       <TableVirtuoso
         totalCount={data.length}
         components={components}

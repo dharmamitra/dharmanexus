@@ -64,7 +64,7 @@ export const getBaseDesignTokens = ({
             ? DB_LANGUAGE_COLORS_LIGHT[dbLanguage]
             : defaultPrimary,
           accent: grey[50],
-          card: grey[100],
+          active: grey[100],
           selected: grey[300],
           inverted: grey[800],
         },
@@ -108,7 +108,7 @@ export const getBaseDesignTokens = ({
             ? DB_LANGUAGE_COLORS_DARK.main[dbLanguage]
             : defaultPrimary,
           accent: grey[900],
-          card: defaultPrimary,
+          active: defaultPrimary,
           selected: "#262329",
           inverted: grey[100],
         },
@@ -127,7 +127,6 @@ export const getBaseDesignTokens = ({
     h1: {
       fontFamily: sourceSerif.style.fontFamily,
       fontSize: "4.5rem",
-      color: grey[800],
     },
     h2: { fontFamily: sourceSerif.style.fontFamily, fontSize: "2.5rem" },
     h3: { fontFamily: sourceSerif.style.fontFamily, fontSize: "1.75rem" },
