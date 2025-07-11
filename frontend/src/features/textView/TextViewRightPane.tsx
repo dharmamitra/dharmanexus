@@ -6,7 +6,7 @@ import {
 } from "@components/hooks/params";
 import { CloseTextViewPaneButton } from "@features/textView/CloseTextViewPaneButton";
 import { TextViewPane } from "@features/textView/TextViewPane";
-import { Box, CardHeader } from "@mui/material";
+import { Box, CardHeader, Tooltip, Typography } from "@mui/material";
 import { useAtomValue, useSetAtom } from "jotai";
 
 export const TextViewRightPane = () => {
@@ -36,8 +36,36 @@ export const TextViewRightPane = () => {
           width: "100%",
         }}
         action={<CloseTextViewPaneButton handlePress={handleClear} />}
-        title={rightPaneFileName}
-        subheader={activeSegmentId}
+        title={
+          <Tooltip
+            PopperProps={{ disablePortal: true }}
+            placement="bottom-start"
+            componentsProps={{
+              popper: {
+                sx: {
+                  maxWidth: "60vw",
+                  whiteSpace: "normal",
+                  wordBreak: "break-word",
+                },
+              },
+              tooltip: {
+                sx: {
+                  maxWidth: "60vw",
+                  whiteSpace: "normal",
+                  wordBreak: "break-word",
+                },
+              },
+            }}
+            title={
+              <>
+                <Typography variant="body2">{activeSegmentId}</Typography>
+                <Typography variant="h6">{rightPaneFileName}</Typography>
+              </>
+            }
+          >
+            <Typography variant="h6">{activeSegmentId}</Typography>
+          </Tooltip>
+        }
       />
 
       <TextViewPane
