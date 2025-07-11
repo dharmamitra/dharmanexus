@@ -5,7 +5,7 @@ import {
   hoveredOverParallelIdAtom,
   textViewIsMiddlePanePointingLeftAtom,
 } from "@atoms";
-import LoadingSpinner from "@components/common/LoadingSpinner";
+import { LoadingCard } from "@components/common/Loading";
 import {
   useActiveSegmentIndexParam,
   useActiveSegmentParam,
@@ -129,8 +129,6 @@ export default function TextViewMiddleParallels() {
 
   return (
     <Box className={styles.container}>
-      <LoadingSpinner isLoading={isLoading} />
-
       <CardHeader
         data-testid="middle-view-header"
         sx={{
@@ -161,7 +159,11 @@ export default function TextViewMiddleParallels() {
       />
 
       <CardContent className={styles.cardContent}>
-        {parallelsToDisplay}
+        {isLoading
+          ? Array.from({ length: 3 }).map((_, index) => (
+              <LoadingCard key={index} />
+            ))
+          : parallelsToDisplay}
       </CardContent>
     </Box>
   );

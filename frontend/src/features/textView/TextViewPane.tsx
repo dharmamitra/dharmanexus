@@ -7,10 +7,8 @@ import React, {
   useRef,
 } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
-import { InfiniteLoadingSpinner } from "@components/common/LoadingSpinner";
 import {
   EmptyPlaceholder,
-  ListDivider,
   ListLoadingIndicator,
 } from "@components/db/ListComponents";
 import { TextSegment } from "@features/textView/TextSegment";
@@ -140,17 +138,17 @@ export const TextViewPane = ({
 
   return (
     <Card sx={{ height: "100%" }}>
-      <Box sx={{ height: "100%", py: 0, px: 2 }}>
+      <Box sx={{ height: "100%", py: 2, px: 2 }}>
         <Virtuoso<ParsedTextViewParallel>
           ref={virtuosoRef}
           firstItemIndex={firstItemIndex}
           increaseViewportBy={1000}
           skipAnimationFrameInResizeObserver={true}
           components={{
-            Header: isFetchingPreviousPage ? ListLoadingIndicator : ListDivider,
-            Footer: isFetchingNextPage ? ListLoadingIndicator : ListDivider,
+            Header: isFetchingPreviousPage ? ListLoadingIndicator : undefined,
+            Footer: isFetchingNextPage ? ListLoadingIndicator : undefined,
             EmptyPlaceholder: isFetching
-              ? InfiniteLoadingSpinner
+              ? ListLoadingIndicator
               : EmptyPlaceholder,
           }}
           itemContent={itemContent}
