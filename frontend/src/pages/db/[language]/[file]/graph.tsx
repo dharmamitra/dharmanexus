@@ -9,7 +9,7 @@ import { useTranslation } from "next-i18next";
 // import merge from "lodash/merge";
 // export { getDbViewFileStaticPaths as getStaticPaths } from "@utils/nextJsHelpers";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { InfiniteLoadingSpinner } from "@components/common/LoadingSpinner";
+import { LoadingText } from "@components/common/Loading";
 import { ResultQueryError } from "@components/db/ResultQueryError";
 import {
   nullToUndefined,
@@ -82,7 +82,7 @@ export default function GraphPage() {
   if (isLoading || isFallback) {
     return (
       <PageContainer maxWidth="xl" isQueryResultsPage>
-        <InfiniteLoadingSpinner />
+        <LoadingText />
       </PageContainer>
     );
   }

@@ -7,6 +7,7 @@ import {
 import { dbLanguages } from "@utils/api/constants";
 import {
   parseAsArrayOf,
+  parseAsBoolean,
   parseAsInteger,
   parseAsString,
   parseAsStringLiteral,
@@ -134,5 +135,11 @@ export const useSortMethodParam = () => {
 export const useFolioParam = () => {
   return useQueryState(allUIComponentParamNames.folio, {
     ...parseAsString,
+  });
+};
+
+export const useIncludeMatchesParam = () => {
+  return useQueryState(allUIComponentParamNames.include_matches, {
+    ...parseAsBoolean.withDefault(DEFAULT_PARAM_VALUES.include_matches),
   });
 };

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useStandardViewBaseQueryParams } from "@components/hooks/groupedQueryParams";
 import {
+  useIncludeMatchesParam,
   useLeftPaneActiveMatchParam,
   useRightPaneActiveMatchParam,
 } from "@components/hooks/params";
@@ -40,6 +41,7 @@ export function useTextViewPane({
 }: Props): UseTextPageReturn {
   useSetDbViewFromPath();
   const requestBodyBase = useStandardViewBaseQueryParams();
+  const [includeMatches] = useIncludeMatchesParam();
 
   const { fileName: fileNameUrlParam } = useDbPageRouterParams();
   const [leftPaneActiveMatchId, setLeftPaneActiveMatchId] =
@@ -92,6 +94,7 @@ export function useTextViewPane({
     initialPageParam,
     queryKey: DbApi.TextView.makeQueryKey({
       ...requestBodyBase,
+      include_matches: includeMatches,
       active_segment: activeSegment,
       filters: requestFilters,
     }),
@@ -126,6 +129,7 @@ export function useTextViewPane({
 
       return DbApi.TextView.call({
         ...requestBodyBase,
+        include_matches: includeMatches,
         page: pageParam ?? 0,
         filename:
           fileNameFromActiveSegment === "none"
@@ -133,7 +137,6 @@ export function useTextViewPane({
             : (fileNameFromActiveSegment ?? ""),
         active_segment: activeSegmentParam,
         active_match_id: activeMatchIdParam,
-
         filters: requestFilters,
       });
     },

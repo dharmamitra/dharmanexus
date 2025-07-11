@@ -7,7 +7,7 @@ import {
 // import { getI18NextStaticProps } from "@utils/nextJsHelpers";
 // import merge from "lodash/merge";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { InfiniteLoadingSpinner } from "@components/common/LoadingSpinner";
+import { LoadingText } from "@components/common/Loading";
 import { ResultQueryError } from "@components/db/ResultQueryError";
 import { useStandardViewBaseQueryParams } from "@components/hooks/groupedQueryParams";
 import { useSortMethodParam } from "@components/hooks/params";
@@ -68,7 +68,7 @@ export default function TablePage() {
   if (isFallback || isLoading) {
     return (
       <PageContainer maxWidth="xl" isQueryResultsPage>
-        <InfiniteLoadingSpinner />
+        <LoadingText />
       </PageContainer>
     );
   }

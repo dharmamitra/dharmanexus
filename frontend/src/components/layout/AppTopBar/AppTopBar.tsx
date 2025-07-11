@@ -65,7 +65,13 @@ export const AppTopBar = memo(function AppTopBar() {
         }}
         data-testid="app-bar"
       >
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            bgcolor: "background.paper",
+          }}
+        >
           <LogoBlock mode={mode} />
 
           <Box sx={{ display: "flex", alignItems: "center" }}>

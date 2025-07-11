@@ -5,11 +5,7 @@ import { useSettingsDrawer } from "@components/hooks/useSettingsDrawer";
 import { SidebarSuite } from "@features/SidebarSuite";
 import { Main } from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
 import type { Breakpoint, SxProps } from "@mui/material";
-import {
-  Container,
-  Typography,
-  useTheme as useMaterialTheme,
-} from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 
 interface Props extends PropsWithChildren {
@@ -23,17 +19,14 @@ export const QueryResultsPageContent: FC<Props> = ({
 }) => {
   const { fileName } = useNullableDbRouterParams();
 
-  const lgWidth = useMaterialTheme().breakpoints.values.lg;
-
   const [isInitialized, setIsInitialized] = useState(false);
-  const { isSettingsOpen, setIsSettingsOpen } = useSettingsDrawer();
+  const { isSettingsOpen } = useSettingsDrawer();
 
   useEffect(() => {
     if (!isInitialized) {
-      setIsSettingsOpen(window.innerWidth >= lgWidth);
       setIsInitialized(true);
     }
-  }, [isInitialized, lgWidth, setIsSettingsOpen]);
+  }, [isInitialized]);
 
   return (
     <>

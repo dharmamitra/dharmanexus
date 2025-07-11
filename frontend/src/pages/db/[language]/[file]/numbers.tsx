@@ -7,7 +7,7 @@ import {
 // import { getI18NextStaticProps } from "@utils/nextJsHelpers";
 // import merge from "lodash/merge";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import LoadingSpinner from "@components/common/LoadingSpinner";
+import { LoadingText } from "@components/common/Loading";
 // import { prefetchDbResultsPageData } from "@utils/api/apiQueryUtils";
 // export { getDbViewFileStaticPaths as getStaticPaths } from "@utils/nextJsHelpers";
 import { ResultQueryError } from "@components/db/ResultQueryError";
@@ -101,7 +101,7 @@ export default function NumbersPage() {
   if (isFallback || isLoading) {
     return (
       <PageContainer maxWidth={false} isQueryResultsPage>
-        <LoadingSpinner />
+        <LoadingText />
       </PageContainer>
     );
   }

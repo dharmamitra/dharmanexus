@@ -1,7 +1,7 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { InfiniteLoadingSpinner } from "@components/common/LoadingSpinner";
+import { LoadingText } from "@components/common/Loading";
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { PageContainer } from "@components/layout/PageContainer";
 import { DbSourceBrowserDrawer } from "@features/sourceTextBrowserDrawer/sourceTextBrowserDrawer";
@@ -13,7 +13,7 @@ export default function TextPage() {
   if (isFallback) {
     return (
       <PageContainer maxWidth="xl" isQueryResultsPage>
-        <InfiniteLoadingSpinner />
+        <LoadingText />
       </PageContainer>
     );
   }
