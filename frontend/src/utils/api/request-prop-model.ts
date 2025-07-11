@@ -23,4 +23,5 @@ const _allAPIRequestPropModel: AllAPIRequestProps = {
   filename: "",
   parallel_ids: [],
   segmentnr: "",
+  include_matches: true,
 };

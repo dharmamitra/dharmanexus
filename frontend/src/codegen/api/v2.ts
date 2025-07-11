@@ -673,6 +673,11 @@ export interface components {
        * @default 0
        */
       page: number;
+      /**
+       * Include Matches
+       * @default true
+       */
+      include_matches: boolean;
     };
     /** TextViewLeftOutput */
     TextViewLeftOutput: {

@@ -92,6 +92,7 @@ export function useTextViewPane({
     initialPageParam,
     queryKey: DbApi.TextView.makeQueryKey({
       ...requestBodyBase,
+      include_matches: true,
       active_segment: activeSegment,
       filters: requestFilters,
     }),
@@ -126,6 +127,7 @@ export function useTextViewPane({
 
       return DbApi.TextView.call({
         ...requestBodyBase,
+        include_matches: true,
         page: pageParam ?? 0,
         filename:
           fileNameFromActiveSegment === "none"
@@ -133,7 +135,6 @@ export function useTextViewPane({
             : (fileNameFromActiveSegment ?? ""),
         active_segment: activeSegmentParam,
         active_match_id: activeMatchIdParam,
-
         filters: requestFilters,
       });
     },

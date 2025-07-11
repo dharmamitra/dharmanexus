@@ -83,6 +83,7 @@ export const allUIComponentParamNames: AllUIComponentParamNames = {
   active_match_id: "active_match_id",
   left_pane_active_match: "left_pane_active_match",
   right_pane_active_match: "right_pane_active_match",
+  include_matches: "include_matches",
 };
 
 export const DEFAULT_LANGUAGE = "all";
