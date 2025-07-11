@@ -29,6 +29,10 @@ function getSettingCounts({
   const params = Object.fromEntries(searchParams.entries());
 
   for (const key of Object.keys(params)) {
+    if (key === "include_matches") {
+      continue;
+    }
+
     if (key.startsWith("exclude_") && !isExcludeSet) {
       filter += 1;
       isExcludeSet = true;

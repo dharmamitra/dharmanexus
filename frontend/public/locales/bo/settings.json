@@ -48,7 +48,8 @@
     "copyResultInfo": "Copy result page details",
     "emailResultInfo": "Email result page details",
     "showSegmentNumbers": "ཚན་པའི་གྲངས་ཐོ་སྟོན།",
-    "useMonochromaticSegmentColors": "ཚན་པ་མཚུངས་པ་རྣམས་ཁ་དོག་གཅིག་གྱུར་བྱོས།"
+    "useMonochromaticSegmentColors": "ཚན་པ་མཚུངས་པ་རྣམས་ཁ་དོག་གཅིག་གྱུར་བྱོས།",
+    "showTextViewMatches": "Show matches with other {{lang}} texts"
   },
   "optionsPopperMsgs": {
     "downloadStarted": "Downloading...",

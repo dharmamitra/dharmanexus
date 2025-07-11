@@ -12,6 +12,7 @@ import {
   useParLengthParam,
   useScoreParam,
 } from "@components/hooks/params";
+import { useIsRenderedInReaderMode } from "@components/hooks/useIsRenderedInReaderMode";
 import { useSettingsDrawer } from "@components/hooks/useSettingsDrawer";
 import GradingOutlinedIcon from "@mui/icons-material/GradingOutlined";
 import RotateLeftOutlinedIcon from "@mui/icons-material/RotateLeftOutlined";
@@ -29,6 +30,7 @@ export const DbFileButtons = () => {
 
   const setIsSourceTreeOpen = useSetAtom(isDbSourceBrowserDrawerOpenAtom);
   const { setIsSettingsOpen } = useSettingsDrawer();
+  const isRenderedInReaderMode = useIsRenderedInReaderMode();
 
   const [, setScoreParam] = useScoreParam();
   const [, setParLengthParam] = useParLengthParam();
@@ -71,34 +73,6 @@ export const DbFileButtons = () => {
     >
       <Button
         variant="outlined"
-        data-testid="db-results-settings-button"
-        aria-label={t(`resultsHead.settingsTip`)}
-        title={t(`resultsHead.settingsTip`)}
-        sx={{
-          lineHeight: 1.2,
-        }}
-        startIcon={isMd && <TuneIcon />}
-        onClick={() => setIsSettingsOpen((prev) => !prev)}
-      >
-        {t(`resultsHead.settings`)}
-      </Button>
-
-      <Button
-        variant="outlined"
-        data-testid="db-results-clear-settings-button"
-        aria-label={t(`resultsHead.resetTip`)}
-        title={t(`resultsHead.resetTip`)}
-        sx={{
-          lineHeight: 1.2,
-        }}
-        startIcon={isMd && <RotateLeftOutlinedIcon />}
-        onClick={handleReset}
-      >
-        {t(`resultsHead.reset`)}
-      </Button>
-
-      <Button
-        variant="outlined"
         data-testid="db-results-text-select-modal-button"
         aria-label={t(`resultsHead.textSelectTip`)}
         title={t(`resultsHead.textSelectTip`)}
@@ -109,6 +83,36 @@ export const DbFileButtons = () => {
         onClick={() => setIsSourceTreeOpen(true)}
       >
         {t(`resultsHead.textSelect`)}
+      </Button>
+
+      {isRenderedInReaderMode ? (
+        <Button
+          variant="outlined"
+          data-testid="db-results-clear-settings-button"
+          aria-label={t(`resultsHead.resetTip`)}
+          title={t(`resultsHead.resetTip`)}
+          sx={{
+            lineHeight: 1.2,
+          }}
+          startIcon={isMd && <RotateLeftOutlinedIcon />}
+          onClick={handleReset}
+        >
+          {t(`resultsHead.reset`)}
+        </Button>
+      ) : null}
+
+      <Button
+        variant="outlined"
+        data-testid="db-results-settings-button"
+        aria-label={t(`resultsHead.settingsTip`)}
+        title={t(`resultsHead.settingsTip`)}
+        sx={{
+          lineHeight: 1.2,
+        }}
+        startIcon={isMd && <TuneIcon />}
+        onClick={() => setIsSettingsOpen((prev) => !prev)}
+      >
+        {t(`resultsHead.settings`)}
       </Button>
     </ButtonGroup>
   );

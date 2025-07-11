@@ -37,7 +37,10 @@ export const scriptSelectionAtom = atomWithStorage<Script>(
   "text-script-selection",
   "Unicode",
 );
-export const isSettingsOpenAtom = atom(true);
+export const isSettingsOpenAtom = atomWithStorage<boolean>(
+  "isSettingsOpen",
+  false,
+);
 export const dbSourceFiltersSelectedIdsAtom = atom<DbSourceFiltersSelectedIds>({
   exclude_sources: [],
   include_sources: [],

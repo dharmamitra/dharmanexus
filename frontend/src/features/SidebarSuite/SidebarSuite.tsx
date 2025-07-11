@@ -39,6 +39,7 @@ export function SidebarSuite() {
       open={isSettingsOpen}
       onClose={() => setIsSettingsOpen(false)}
     >
+      {/* Offsets app bar */}
       <Toolbar />
       <aside
         id="db-results-settings-sidebar"

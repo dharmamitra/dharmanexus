@@ -48,7 +48,8 @@
     "copyResultInfo": "Copy result page details",
     "emailResultInfo": "Email result page details",
     "showSegmentNumbers": "Show segment numbers",
-    "useMonochromaticSegmentColors": "Use monochromatic segment match colors"
+    "useMonochromaticSegmentColors": "Use monochromatic segment match colors",
+    "showTextViewMatches": "Show matches with other {{lang}} texts"
   },
   "optionsPopperMsgs": {
     "downloadStarted": "Downloading...",
