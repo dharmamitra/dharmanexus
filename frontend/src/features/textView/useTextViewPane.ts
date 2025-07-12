@@ -159,6 +159,12 @@ export function useTextViewPane({
   });
 
   useEffect(() => {
+    // When filters change, we need to reset the selected segments map.
+    // This ensures that the active_segment is passed to the BE on the first request.
+    previouslySelectedSegmentsMap.current = {};
+  }, [requestBodyBase]);
+
+  useEffect(() => {
     if (isFetchedAfterMount) {
       previousFileName.current = fileName;
     }
