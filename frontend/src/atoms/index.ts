@@ -65,6 +65,23 @@ export const shouldUseMonochromaticSegmentColorsAtom = atomWithStorage<boolean>(
   true,
 );
 
+export const fontSizeAtom = atomWithStorage<number>("fontSize", 18);
+
+export const compactHighlightModeAtom = atomWithStorage<boolean>(
+  "compactHighlightMode",
+  false,
+);
+
+export const showSourceTooltipsAtom = atomWithStorage<boolean>(
+  "showSourceTooltips",
+  true,
+);
+
+export const includeMatchesAtom = atomWithStorage<boolean>(
+  "includeMatches",
+  false,
+);
+
 export const activeSegmentMatchesAtom = atom<string[]>([]);
 
 export const hoveredOverParallelIdAtom = atom<string>("");

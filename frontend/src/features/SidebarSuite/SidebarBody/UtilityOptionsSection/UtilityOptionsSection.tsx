@@ -4,7 +4,7 @@ import { useTranslation } from "next-i18next";
 import { currentDbViewAtom } from "@atoms";
 import { useNullableDbRouterParams } from "@components/hooks/useDbRouterParams";
 import PanelHeading from "@features/SidebarSuite/common/PanelHeading";
-import { UNAVAILABLE_DB_SOURCE_PAGE_UI_UTILITIES } from "@features/SidebarSuite/TabContent/config";
+import { UNAVAILABLE_DB_SOURCE_PAGE_UI_UTILITIES } from "./config";
 import { UtilityUIOptionName } from "@features/SidebarSuite/types";
 import { utilityUISettings } from "@features/SidebarSuite/uiSettings/config";
 import { getAvailableSettings } from "@features/SidebarSuite/utils";
@@ -25,7 +25,6 @@ export const UtilityUiomponents: Record<
 };
 
 export const UtilityOptionsSection = () => {
-  const { t } = useTranslation("settings");
   const currentView = useAtomValue(currentDbViewAtom);
   const { dbLanguage } = useNullableDbRouterParams();
 
@@ -35,7 +34,7 @@ export const UtilityOptionsSection = () => {
         dbLanguage,
         uiSettings: utilityUISettings,
         unavailableSettingsForViewOrLang:
-          UNAVAILABLE_DB_SOURCE_PAGE_UI_UTILITIES[currentView],
+          UNAVAILABLE_DB_SOURCE_PAGE_UI_UTILITIES[currentView] ?? {},
       });
     }
 
@@ -47,18 +46,14 @@ export const UtilityOptionsSection = () => {
   }
 
   return (
-    <>
-      <PanelHeading heading={t("headings.tools")} sx={{ mt: 3 }} />
+    <List sx={{ m: 0 }}>
+      {uiOptions.map((filter) => {
+        const Component = UtilityUiomponents[filter];
+        const key = `filter-setting-${filter}`;
 
-      <List sx={{ m: 0 }}>
-        {uiOptions.map((filter) => {
-          const Component = UtilityUiomponents[filter];
-          const key = `filter-setting-${filter}`;
-
-          if (!Component) return null;
-          return React.cloneElement(Component, { key });
-        })}
-      </List>
-    </>
+        if (!Component) return null;
+        return React.cloneElement(Component, { key });
+      })}
+    </List>
   );
 };

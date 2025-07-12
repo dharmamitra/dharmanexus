@@ -13,6 +13,8 @@ import {
   parseAsStringLiteral,
   useQueryState,
 } from "nuqs";
+import { useAtom } from "jotai";
+import { includeMatchesAtom } from "@atoms";
 
 import { useNullableDbRouterParams } from "./useDbRouterParams";
 
@@ -141,7 +143,5 @@ export const useFolioParam = () => {
 };
 
 export const useIncludeMatchesParam = () => {
-  return useQueryState(allUIComponentParamNames.include_matches, {
-    ...parseAsBoolean.withDefault(DEFAULT_PARAM_VALUES.include_matches),
-  });
+  return useAtom(includeMatchesAtom);
 };

@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from "react";
 import {
   activeSegmentMatchesAtom,
+  fontSizeAtom,
   hoveredOverParallelIdAtom,
   scriptSelectionAtom,
   shouldShowSegmentNumbersAtom,
@@ -10,8 +11,15 @@ import {
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { sourceSans } from "@components/theme";
 import { enscriptText } from "@features/SidebarSuite/utils";
+import { createURLToSegment } from "@features/textView/utils";
 import { TextViewPaneProps } from "@features/textView/TextViewPane";
 import { useColorScheme } from "@mui/material/styles";
+import {
+  Box,
+  Link as MuiLink,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-parallels";
 import type { Scale } from "chroma-js";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -37,6 +45,8 @@ export const TextSegment = ({
   activeSegmentId: string;
   clearActiveMatch: () => Promise<void>;
 } & TextViewPaneProps) => {
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up("sm"));
   const { mode } = useColorScheme();
   const isDarkTheme = mode === "dark";
   const matchHeatColors = isDarkTheme
@@ -58,6 +68,7 @@ export const TextSegment = ({
   );
 
   const scriptSelection = useAtomValue(scriptSelectionAtom);
+  const fontSize = useAtomValue(fontSizeAtom);
 
   const updateSelectedLocationInGlobalState = useCallback(
     async (location: { id: string; index: number; matches: string[] }) => {
@@ -87,17 +98,29 @@ export const TextSegment = ({
 
   if (!data) return null;
 
+  const urlToSegment = createURLToSegment({
+    segmentNumber: data.segmentNumber,
+    language: dbLanguage,
+  });
+
   // segnr also contains the file name - we need to strip it away
   const [, segmentNumber] = data.segmentNumber.split(":");
 
   return (
     <div className={styles.segmentWrapper}>
-      <span
+      <Box
         className={`${styles.segmentNumber} ${
           isSegmentSelected && styles["segmentNumber--selected"]
         } ${!shouldShowSegmentNumbers && styles["segmentNumber--hidden"]}`}
-        data-segmentnumber={segmentNumber}
-      />
+      >
+        <MuiLink
+          href={urlToSegment}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-segmentnumber={segmentNumber}
+          className={styles.segmentNumber__link}
+        />
+      </Box>
 
       {data.segmentText.map(
         ({ text, highlightColor, matches, isActiveMatch }, i) => {
@@ -138,6 +161,7 @@ export const TextSegment = ({
               <span
                 key={segmentKey}
                 className={`${segmentClassName} ${styles["segment--noMatches"]}`}
+                style={{ fontSize: `${fontSize}px` }}
               >
                 {textContent}
               </span>
@@ -158,6 +182,7 @@ export const TextSegment = ({
               style={{
                 fontFamily: sourceSans.style.fontFamily,
                 color,
+                fontSize: `${fontSize}px`,
               }}
               onClick={async () => {
                 await updateSelectedLocationInGlobalState({
