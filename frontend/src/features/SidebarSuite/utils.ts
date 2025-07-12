@@ -1,5 +1,8 @@
-import type { LanguageUnavailableSettings, Script } from "@features/SidebarSuite/types";
-import { APISchemas, DbLanguage } from "@utils/api/types";
+import type {
+  LanguageUnavailableSettings,
+  Script,
+} from "@features/SidebarSuite/types";
+import { DbLanguage } from "@utils/api/types";
 import { EwtsConverter } from "tibetan-ewts-converter";
 
 export const getAvailableSettings = <T extends string>({

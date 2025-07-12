@@ -51,7 +51,11 @@ export const ResetFiltersButton = () => {
   ]);
 
   return (
-    <Button variant="outlined" onClick={handleReset} sx={{ mt: 2, width: "100%" }}>
+    <Button
+      variant="outlined"
+      sx={{ mt: 2, width: "100%" }}
+      onClick={handleReset}
+    >
       {t("resultsHead.reset")}
     </Button>
   );

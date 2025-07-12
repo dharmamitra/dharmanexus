@@ -1,4 +1,3 @@
-import { useCallback, useMemo } from "react";
 import {
   activeSegmentMatchesAtom,
   fontSizeAtom,
@@ -11,18 +10,19 @@ import {
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { sourceSans } from "@components/theme";
 import { enscriptText } from "@features/SidebarSuite/utils";
-import { createURLToSegment } from "@features/textView/utils";
 import { TextViewPaneProps } from "@features/textView/TextViewPane";
-import { useColorScheme } from "@mui/material/styles";
+import { createURLToSegment } from "@features/textView/utils";
 import {
   Box,
   Link as MuiLink,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { useColorScheme } from "@mui/material/styles";
 import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-parallels";
 import type { Scale } from "chroma-js";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useCallback, useMemo } from "react";
 
 import {
   DARK_MODE_MATCH_HEAT_INVERTED_COLORS,
@@ -46,7 +46,7 @@ export const TextSegment = ({
   clearActiveMatch: () => Promise<void>;
 } & TextViewPaneProps) => {
   const theme = useTheme();
-  const isSm = useMediaQuery(theme.breakpoints.up("sm"));
+  useMediaQuery(theme.breakpoints.up("sm"));
   const { mode } = useColorScheme();
   const isDarkTheme = mode === "dark";
   const matchHeatColors = isDarkTheme

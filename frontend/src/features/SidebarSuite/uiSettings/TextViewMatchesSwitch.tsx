@@ -11,8 +11,8 @@ export const TextViewMatchesSwitch = () => {
         control={
           <Switch
             checked={includeMatches}
-            onChange={async (event) => {
-              await setIncludeMatches(event.target.checked);
+            onChange={(event) => {
+              setIncludeMatches(event.target.checked);
             }}
           />
         }

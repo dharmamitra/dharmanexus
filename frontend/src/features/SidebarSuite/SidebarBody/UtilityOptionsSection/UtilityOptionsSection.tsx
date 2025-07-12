@@ -1,10 +1,7 @@
 import type { JSX } from "react";
 import React, { useMemo } from "react";
-import { useTranslation } from "next-i18next";
 import { currentDbViewAtom } from "@atoms";
 import { useNullableDbRouterParams } from "@components/hooks/useDbRouterParams";
-import PanelHeading from "@features/SidebarSuite/common/PanelHeading";
-import { UNAVAILABLE_DB_SOURCE_PAGE_UI_UTILITIES } from "./config";
 import { UtilityUIOptionName } from "@features/SidebarSuite/types";
 import { utilityUISettings } from "@features/SidebarSuite/uiSettings/config";
 import { getAvailableSettings } from "@features/SidebarSuite/utils";
@@ -12,6 +9,7 @@ import List from "@mui/material/List";
 import { useAtomValue } from "jotai";
 
 import { CopyResultInfoButton } from "./CopyResultInfoButton";
+import { UNAVAILABLE_DB_SOURCE_PAGE_UI_UTILITIES } from "./config";
 import { DownloadResultsButton } from "./DownloadResultsButton";
 import { EmailResultInfoButton } from "./EmailResultInfoButton";
 

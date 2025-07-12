@@ -1,7 +1,7 @@
-import React from "react";
-import { useAtom } from "jotai";
 import { fontSizeAtom } from "@atoms";
-import { Typography, Slider, Box } from "@mui/material";
+import { Box, Slider, Typography } from "@mui/material";
+import { useAtom } from "jotai";
+import React from "react";
 
 export const FontSizeSlider = () => {
   const [fontSize, setFontSize] = useAtom(fontSizeAtom);
@@ -16,14 +16,14 @@ export const FontSizeSlider = () => {
         Font Size
       </Typography>
       <Slider
-        value={fontSize}
-        onChange={handleSliderChange}
         aria-labelledby="font-size-slider"
+        value={fontSize}
         valueLabelDisplay="auto"
         step={1}
         marks
         min={12}
         max={24}
+        onChange={handleSliderChange}
       />
     </Box>
   );

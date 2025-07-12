@@ -1,7 +1,7 @@
-import React from "react";
-import { useAtom } from "jotai";
 import { compactHighlightModeAtom } from "@atoms";
 import { FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
+import { useAtom } from "jotai";
+import React from "react";
 
 export const CompactHighlightSwitch = () => {
   const [compactMode, setCompactMode] = useAtom(compactHighlightModeAtom);

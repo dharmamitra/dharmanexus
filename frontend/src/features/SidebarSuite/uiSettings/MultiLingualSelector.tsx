@@ -1,30 +1,29 @@
-import * as React from "react";
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
-import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
-import {
-  Popper,
-  PopperMsgBox,
-} from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
 import {
   Box,
+  Checkbox,
   Fade,
   FormControl,
   FormLabel,
   ListItemText,
   MenuItem,
+  Select,
 } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
-import Select from "@mui/material/Select";
 import type { Theme } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
-import { DbLanguage, dbLanguages } from "@utils/api/constants";
+import {
+  Popper,
+  PopperMsgBox,
+} from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
 import { allUIComponentParamNames } from "@features/SidebarSuite/uiSettings/config";
+import { DbLanguage, dbLanguages } from "@utils/api/constants";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import * as React from "react";
 
 function getStyles(
   name: DbLanguage,
   selectedLanguages: DbLanguage[],
-  theme: Theme
+  theme: Theme,
 ) {
   return {
     fontWeight: selectedLanguages.includes(name)
