@@ -10,7 +10,6 @@ import { getNumbersViewData } from "./endpoints/numbers-view/numbers";
 import { getTableData } from "./endpoints/table-view/table";
 import { getTextViewMiddleParallelsData } from "./endpoints/text-view/middle";
 import { getTextViewParallelsData } from "./endpoints/text-view/text-parallels";
-import { getAvailableLanguages } from "./endpoints/utils/available-languages";
 import { getCountMatches } from "./endpoints/utils/count-matches";
 import { getTextDisplayName } from "./endpoints/utils/displayname";
 import { getFolios } from "./endpoints/utils/folios";
@@ -69,10 +68,6 @@ export const DbApi = {
   FolioData: {
     makeQueryKey: (fileName: string) => ["foliosData", fileName],
     call: getFolios,
-  },
-  AvailableLanguagesData: {
-    makeQueryKey: (fileName: string) => ["availableLanguagesData", fileName],
-    call: getAvailableLanguages,
   },
   ExternalLinksData: {
     makeQueryKey: (fileName: string) => ["externalLinkData", fileName],
