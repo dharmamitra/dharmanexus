@@ -1,3 +1,11 @@
+import * as React from "react";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import {
+  Popper,
+  PopperMsgBox,
+} from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
+import { allUIComponentParamNames } from "@features/SidebarSuite/uiSettings/config";
 import {
   Box,
   Checkbox,
@@ -10,15 +18,7 @@ import {
 } from "@mui/material";
 import type { Theme } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
-import {
-  Popper,
-  PopperMsgBox,
-} from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
-import { allUIComponentParamNames } from "@features/SidebarSuite/uiSettings/config";
 import { DbLanguage, dbLanguages } from "@utils/api/constants";
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
-import * as React from "react";
 
 function getStyles(
   name: DbLanguage,

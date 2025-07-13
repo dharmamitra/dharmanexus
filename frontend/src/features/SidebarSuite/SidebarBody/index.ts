@@ -1,1 +1,1 @@
-export * from "./SidebarBody"; 
+export * from "./SidebarBody";

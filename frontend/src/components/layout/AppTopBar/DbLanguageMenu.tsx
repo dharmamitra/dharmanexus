@@ -13,7 +13,6 @@ import {
   bindTrigger,
   usePopupState,
 } from "material-ui-popup-state/hooks";
-import { useHasMounted } from "@components/hooks/useHasMounted";
 
 interface DbLanguageMenuProps {
   type: "database";
@@ -39,7 +38,6 @@ export const DbLanguageMenu = ({ type, isMobile }: DbLanguageMenuProps) => {
   const { t } = useTranslation();
   const router = useRouter();
   const [currentView, setCurrentView] = useAtom(currentDbViewAtom);
-  const hasMounted = useHasMounted();
 
   const handleLanguageChange = React.useCallback(
     async (language: string) => {
@@ -64,7 +62,7 @@ export const DbLanguageMenu = ({ type, isMobile }: DbLanguageMenuProps) => {
           sx: { p: 0, "&:hover": { backgroundColor: "transparent" } },
         })}
       >
-        {hasMounted ? t(`header.${type}`) : ""}
+        {t(`header.${type}`)}
       </Button>
 
       <Menu {...menuProps} {...(isMobile && mobileOffsetProps)}>
@@ -76,7 +74,7 @@ export const DbLanguageMenu = ({ type, isMobile }: DbLanguageMenuProps) => {
               await handleLanguageChange(language);
             }}
           >
-            {hasMounted ? t(`language.${language}`) : ""}
+            {t(`language.${language}`)}
           </MenuItem>
         ))}
       </Menu>

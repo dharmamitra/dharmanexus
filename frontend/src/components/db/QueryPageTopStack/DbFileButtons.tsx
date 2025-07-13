@@ -1,15 +1,13 @@
 import * as React from "react";
 import { useTranslation } from "next-i18next";
 import { isDbSourceBrowserDrawerOpenAtom } from "@atoms";
-import { useIsRenderedInReaderMode } from "@components/hooks/useIsRenderedInReaderMode";
 import { useSettingsDrawer } from "@components/hooks/useSettingsDrawer";
+import { TextViewMatchesSwitch } from "@features/SidebarSuite/uiSettings/TextViewMatchesSwitch";
 import GradingOutlinedIcon from "@mui/icons-material/GradingOutlined";
-import RotateLeftOutlinedIcon from "@mui/icons-material/RotateLeftOutlined";
 import TuneIcon from "@mui/icons-material/Tune";
-import { Button, ButtonGroup, useMediaQuery, Box } from "@mui/material";
+import { Box, Button, ButtonGroup, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useSetAtom } from "jotai";
-import { TextViewMatchesSwitch } from "@features/SidebarSuite/uiSettings/TextViewMatchesSwitch";
 
 export const DbFileButtons = () => {
   const { t } = useTranslation("settings");
@@ -20,7 +18,6 @@ export const DbFileButtons = () => {
 
   const setIsSourceTreeOpen = useSetAtom(isDbSourceBrowserDrawerOpenAtom);
   const { setIsSettingsOpen } = useSettingsDrawer();
-  const isRenderedInReaderMode = useIsRenderedInReaderMode();
 
   return (
     <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>

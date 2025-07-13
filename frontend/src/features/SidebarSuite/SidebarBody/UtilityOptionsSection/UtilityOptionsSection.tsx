@@ -8,8 +8,8 @@ import { getAvailableSettings } from "@features/SidebarSuite/utils";
 import List from "@mui/material/List";
 import { useAtomValue } from "jotai";
 
-import { CopyResultInfoButton } from "./CopyResultInfoButton";
 import { UNAVAILABLE_DB_SOURCE_PAGE_UI_UTILITIES } from "./config";
+import { CopyResultInfoButton } from "./CopyResultInfoButton";
 import { DownloadResultsButton } from "./DownloadResultsButton";
 import { EmailResultInfoButton } from "./EmailResultInfoButton";
 

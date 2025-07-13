@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from "react";
 import {
   activeSegmentMatchesAtom,
   fontSizeAtom,
@@ -12,17 +13,11 @@ import { sourceSans } from "@components/theme";
 import { enscriptText } from "@features/SidebarSuite/utils";
 import { TextViewPaneProps } from "@features/textView/TextViewPane";
 import { createURLToSegment } from "@features/textView/utils";
-import {
-  Box,
-  Link as MuiLink,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Link as MuiLink, useMediaQuery, useTheme } from "@mui/material";
 import { useColorScheme } from "@mui/material/styles";
 import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-parallels";
 import type { Scale } from "chroma-js";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { useCallback, useMemo } from "react";
 
 import {
   DARK_MODE_MATCH_HEAT_INVERTED_COLORS,

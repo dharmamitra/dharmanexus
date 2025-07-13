@@ -1,3 +1,4 @@
+import { includeMatchesAtom } from "@atoms";
 import {
   allUIComponentParamNames,
   DEFAULT_LANGUAGE,
@@ -5,16 +6,14 @@ import {
   sortMethods,
 } from "@features/SidebarSuite/uiSettings/config";
 import { dbLanguages } from "@utils/api/constants";
+import { useAtom } from "jotai";
 import {
   parseAsArrayOf,
-  parseAsBoolean,
   parseAsInteger,
   parseAsString,
   parseAsStringLiteral,
   useQueryState,
 } from "nuqs";
-import { useAtom } from "jotai";
-import { includeMatchesAtom } from "@atoms";
 
 import { useNullableDbRouterParams } from "./useDbRouterParams";
 

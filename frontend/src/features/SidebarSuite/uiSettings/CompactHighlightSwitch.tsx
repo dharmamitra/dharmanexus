@@ -1,7 +1,7 @@
+import React from "react";
 import { compactHighlightModeAtom } from "@atoms";
 import { FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
 import { useAtom } from "jotai";
-import React from "react";
 
 export const CompactHighlightSwitch = () => {
   const [compactMode, setCompactMode] = useAtom(compactHighlightModeAtom);
@@ -21,4 +21,4 @@ export const CompactHighlightSwitch = () => {
       />
     </FormGroup>
   );
-}; 
+};

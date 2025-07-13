@@ -1,7 +1,7 @@
+import React from "react";
 import { showSourceTooltipsAtom } from "@atoms";
 import { FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
 import { useAtom } from "jotai";
-import React from "react";
 
 export const ShowSourceTooltipsSwitch = () => {
   const [showTooltips, setShowTooltips] = useAtom(showSourceTooltipsAtom);
@@ -23,4 +23,4 @@ export const ShowSourceTooltipsSwitch = () => {
       />
     </FormGroup>
   );
-}; 
+};

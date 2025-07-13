@@ -1,3 +1,4 @@
+import React from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Accordion,
@@ -5,7 +6,6 @@ import {
   AccordionSummary,
   Typography,
 } from "@mui/material";
-import React from "react";
 
 interface CollapsibleSectionProps {
   title: string;
@@ -30,4 +30,4 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
       <AccordionDetails>{children}</AccordionDetails>
     </Accordion>
   );
-}; 
+};

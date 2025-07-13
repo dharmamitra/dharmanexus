@@ -1,23 +1,24 @@
 import { useIncludeMatchesParam } from "@components/hooks/params";
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
+import { CollapsibleSection } from "@features/SidebarSuite/common/CollapsibleSection";
+import { DrawerHeader } from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
+import { CompactHighlightSwitch } from "@features/SidebarSuite/uiSettings/CompactHighlightSwitch";
+import DbSourceFilter from "@features/SidebarSuite/uiSettings/DbSourceFilter";
+import { DbViewSelector } from "@features/SidebarSuite/uiSettings/DbViewSelector";
+import FolioOption from "@features/SidebarSuite/uiSettings/FolioOption";
+import { FontSizeSlider } from "@features/SidebarSuite/uiSettings/FontSizeSlider";
+import { MonochromaticHighlightSwitch } from "@features/SidebarSuite/uiSettings/MonochromaticHighlightSwitch";
+import MultiLingualSelector from "@features/SidebarSuite/uiSettings/MultiLingualSelector";
+import ParLengthFilter from "@features/SidebarSuite/uiSettings/ParLengthFilter";
+import { ResetFiltersButton } from "@features/SidebarSuite/uiSettings/ResetFiltersButton";
+import ScoreFilter from "@features/SidebarSuite/uiSettings/ScoreFilter";
+import { ShowSegmentNumbersSwitch } from "@features/SidebarSuite/uiSettings/ShowSegmentNumbersSwitch";
+import { ShowSourceTooltipsSwitch } from "@features/SidebarSuite/uiSettings/ShowSourceTooltipsSwitch";
+import TextScriptOption from "@features/SidebarSuite/uiSettings/TextScriptOption";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Box, IconButton, Typography } from "@mui/material";
-import { CollapsibleSection } from "src/features/SidebarSuite/common/CollapsibleSection";
-import { DrawerHeader } from "src/features/SidebarSuite/common/MuiStyledSidebarComponents";
-import DbSourceFilter from "src/features/SidebarSuite/uiSettings/DbSourceFilter";
-import FolioOption from "src/features/SidebarSuite/uiSettings/FolioOption";
-import { MonochromaticHighlightSwitch } from "src/features/SidebarSuite/uiSettings/MonochromaticHighlightSwitch";
-import MultiLingualSelector from "src/features/SidebarSuite/uiSettings/MultiLingualSelector";
-import ParLengthFilter from "src/features/SidebarSuite/uiSettings/ParLengthFilter";
-import ScoreFilter from "src/features/SidebarSuite/uiSettings/ScoreFilter";
-import { ShowSegmentNumbersSwitch } from "src/features/SidebarSuite/uiSettings/ShowSegmentNumbersSwitch";
-import TextScriptOption from "src/features/SidebarSuite/uiSettings/TextScriptOption";
-import { UtilityOptionsSection } from "../SidebarBody/UtilityOptionsSection/UtilityOptionsSection";
-import { FontSizeSlider } from "src/features/SidebarSuite/uiSettings/FontSizeSlider";
-import { CompactHighlightSwitch } from "src/features/SidebarSuite/uiSettings/CompactHighlightSwitch";
-import { ShowSourceTooltipsSwitch } from "src/features/SidebarSuite/uiSettings/ShowSourceTooltipsSwitch";
-import { DbViewSelector } from "src/features/SidebarSuite/uiSettings/DbViewSelector";
-import { ResetFiltersButton } from "src/features/SidebarSuite/uiSettings/ResetFiltersButton";
+
+import { UtilityOptionsSection } from "./UtilityOptionsSection/UtilityOptionsSection";
 
 export const HeaderBoxSyles = {
   width: 1,

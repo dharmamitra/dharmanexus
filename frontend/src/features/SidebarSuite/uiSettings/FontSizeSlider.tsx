@@ -1,7 +1,7 @@
+import React from "react";
 import { fontSizeAtom } from "@atoms";
 import { Box, Slider, Typography } from "@mui/material";
 import { useAtom } from "jotai";
-import React from "react";
 
 export const FontSizeSlider = () => {
   const [fontSize, setFontSize] = useAtom(fontSizeAtom);
@@ -20,11 +20,11 @@ export const FontSizeSlider = () => {
         value={fontSize}
         valueLabelDisplay="auto"
         step={1}
-        marks
         min={12}
         max={24}
+        marks
         onChange={handleSliderChange}
       />
     </Box>
   );
-}; 
+};

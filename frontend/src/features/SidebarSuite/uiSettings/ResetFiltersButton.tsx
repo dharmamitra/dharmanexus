@@ -59,4 +59,4 @@ export const ResetFiltersButton = () => {
       {t("resultsHead.reset")}
     </Button>
   );
-}; 
+};
