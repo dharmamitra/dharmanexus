@@ -18,6 +18,7 @@ import { useColorScheme } from "@mui/material/styles";
 import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-parallels";
 import type { Scale } from "chroma-js";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import Link from "next/link";
 
 import {
   DARK_MODE_MATCH_HEAT_INVERTED_COLORS,
@@ -108,13 +109,14 @@ export const TextSegment = ({
           isSegmentSelected && styles["segmentNumber--selected"]
         } ${!shouldShowSegmentNumbers && styles["segmentNumber--hidden"]}`}
       >
-        <MuiLink
-          href={urlToSegment}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-segmentnumber={segmentNumber}
-          className={styles.segmentNumber__link}
-        />
+        <Link href={urlToSegment} passHref legacyBehavior>
+          <MuiLink
+            target="_blank"
+            rel="noopener noreferrer"
+            data-segmentnumber={segmentNumber}
+            className={styles.segmentNumber__link}
+          />
+        </Link>
       </Box>
 
       {data.segmentText.map(
