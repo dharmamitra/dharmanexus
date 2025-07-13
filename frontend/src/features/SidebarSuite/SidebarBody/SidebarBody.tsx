@@ -13,7 +13,6 @@ import ParLengthFilter from "@features/SidebarSuite/uiSettings/ParLengthFilter";
 import { ResetFiltersButton } from "@features/SidebarSuite/uiSettings/ResetFiltersButton";
 import ScoreFilter from "@features/SidebarSuite/uiSettings/ScoreFilter";
 import { ShowSegmentNumbersSwitch } from "@features/SidebarSuite/uiSettings/ShowSegmentNumbersSwitch";
-import { ShowSourceTooltipsSwitch } from "@features/SidebarSuite/uiSettings/ShowSourceTooltipsSwitch";
 import TextScriptOption from "@features/SidebarSuite/uiSettings/TextScriptOption";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Box, IconButton, Typography } from "@mui/material";
@@ -97,7 +96,6 @@ export function SidebarBody({
           >
             <MonochromaticHighlightSwitch />
             <CompactHighlightSwitch />
-            <ShowSourceTooltipsSwitch />
           </Box>
         </CollapsibleSection>
       </Box>
