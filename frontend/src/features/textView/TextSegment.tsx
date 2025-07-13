@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from "react";
+import Link from "next/link";
 import {
   activeSegmentMatchesAtom,
   fontSizeAtom,
@@ -18,7 +19,6 @@ import { useColorScheme } from "@mui/material/styles";
 import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-parallels";
 import type { Scale } from "chroma-js";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import Link from "next/link";
 
 import {
   DARK_MODE_MATCH_HEAT_INVERTED_COLORS,
