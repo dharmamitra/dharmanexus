@@ -191,7 +191,7 @@ export const ParallelSegment = ({
         <Divider />
 
         <CardContent onClick={() => id && onClick?.(id, textSegmentNumber)}>
-          <ParallelSegmentText text={text} />
+          <ParallelSegmentText text={text} language={language} />
         </CardContent>
       </Card>
     </Box>

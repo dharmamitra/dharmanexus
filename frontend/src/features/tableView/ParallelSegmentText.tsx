@@ -1,16 +1,15 @@
 import { scriptSelectionAtom } from "@atoms";
-import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { enscriptText } from "@features/SidebarSuite/utils";
 import { Typography } from "@mui/material";
-import { APISchemas } from "@utils/api/types";
+import { APISchemas, DbLanguage } from "@utils/api/types";
 import { useAtomValue } from "jotai";
 
 interface Props {
   text: APISchemas["FullText"][];
+  language: DbLanguage;
 }
 
-export const ParallelSegmentText = ({ text }: Props) => {
-  const { dbLanguage } = useDbPageRouterParams();
+export const ParallelSegmentText = ({ text, language }: Props) => {
   const script = useAtomValue(scriptSelectionAtom);
 
   if (!text) {
@@ -32,7 +31,7 @@ export const ParallelSegmentText = ({ text }: Props) => {
             {enscriptText({
               text: segmentText ?? "",
               script,
-              language: dbLanguage,
+              language: language,
             })}
           </Typography>
         );

@@ -35,6 +35,10 @@ def shorten_segment_names(segments):
     """
     Returns a shortened version of a range of segments
     """
+    # Safety check for empty or invalid input
+    if not segments or not isinstance(segments, list) or len(segments) == 0:
+        return ""
+    
     first_segment = re.sub("-[0-9]+", "", segments[0])
     last_segment = re.sub("-[0-9]+", "", segments[-1])
     shortened_segment = first_segment
