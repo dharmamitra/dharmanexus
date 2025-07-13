@@ -121,3 +121,7 @@ export type AllUIComponentParamNames = Record<
   UIComponentParamName,
   UIComponentParamName
 >;
+
+export type LanguageUnavailableSettings<T extends string> = Partial<
+  Record<T, APISchemas["Languages"][]>
+>;

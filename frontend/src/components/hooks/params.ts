@@ -1,3 +1,4 @@
+import { includeMatchesAtom } from "@atoms";
 import {
   allUIComponentParamNames,
   DEFAULT_LANGUAGE,
@@ -5,9 +6,9 @@ import {
   sortMethods,
 } from "@features/SidebarSuite/uiSettings/config";
 import { dbLanguages } from "@utils/api/constants";
+import { useAtom } from "jotai";
 import {
   parseAsArrayOf,
-  parseAsBoolean,
   parseAsInteger,
   parseAsString,
   parseAsStringLiteral,
@@ -92,7 +93,7 @@ export const useActiveSegmentParam = () => {
 export const useActiveSegmentIndexParam = () => {
   return useQueryState(
     allUIComponentParamNames.active_segment_index,
-    parseAsInteger,
+    parseAsInteger.withDefault(DEFAULT_PARAM_VALUES.active_segment_index),
   );
 };
 
@@ -106,7 +107,9 @@ export const useRightPaneActiveSegmentParam = () => {
 export const useRightPaneActiveSegmentIndexParam = () => {
   return useQueryState(
     allUIComponentParamNames.right_pane_active_segment_index,
-    parseAsInteger,
+    parseAsInteger.withDefault(
+      DEFAULT_PARAM_VALUES.right_pane_active_segment_index,
+    ),
   );
 };
 
@@ -139,7 +142,5 @@ export const useFolioParam = () => {
 };
 
 export const useIncludeMatchesParam = () => {
-  return useQueryState(allUIComponentParamNames.include_matches, {
-    ...parseAsBoolean.withDefault(DEFAULT_PARAM_VALUES.include_matches),
-  });
+  return useAtom(includeMatchesAtom);
 };
