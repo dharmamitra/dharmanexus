@@ -18,7 +18,7 @@ router = APIRouter()
 
 
 @router.post("/middle/", response_model=TextViewMiddleOutput)
-@cached_endpoint(expire=CACHE_TIMES["LONG"])
+#@cached_endpoint(expire=CACHE_TIMES["LONG"])
 async def get_parallels_for_middle(input: TextViewMiddleInput) -> Any:
     """
     :return: List of parallels for text view (middle)
@@ -33,7 +33,7 @@ async def get_parallels_for_middle(input: TextViewMiddleInput) -> Any:
     )
     db_fetch_end = time.time()
     print(f"[LOG] Database fetch took {db_fetch_end - db_fetch_start:.4f} seconds")
-    
+    print(f"[LOG] query_result: {query_result}")
     # Handle case where no data is returned
     if not query_result.result:
         total_time = time.time() - start_time
