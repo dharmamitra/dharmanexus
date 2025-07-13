@@ -31,7 +31,7 @@ export const ParallelSegmentText = ({ text, language }: Props) => {
             {enscriptText({
               text: segmentText ?? "",
               script,
-              language: language,
+              language,
             })}
           </Typography>
         );
