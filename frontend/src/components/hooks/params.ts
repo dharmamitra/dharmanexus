@@ -1,3 +1,4 @@
+import { includeMatchesAtom } from "@atoms";
 import {
   allUIComponentParamNames,
   DEFAULT_LANGUAGE,
@@ -5,9 +6,9 @@ import {
   sortMethods,
 } from "@features/SidebarSuite/uiSettings/config";
 import { dbLanguages } from "@utils/api/constants";
+import { useAtom } from "jotai";
 import {
   parseAsArrayOf,
-  parseAsBoolean,
   parseAsInteger,
   parseAsString,
   parseAsStringLiteral,
@@ -141,7 +142,5 @@ export const useFolioParam = () => {
 };
 
 export const useIncludeMatchesParam = () => {
-  return useQueryState(allUIComponentParamNames.include_matches, {
-    ...parseAsBoolean.withDefault(DEFAULT_PARAM_VALUES.include_matches),
-  });
+  return useAtom(includeMatchesAtom);
 };

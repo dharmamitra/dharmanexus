@@ -3,7 +3,6 @@ import {
   DisplayUISettingName,
   RequestFilterUISettingName,
 } from "@features/SidebarSuite/types";
-import { SegmentOptions } from "@features/SidebarSuite/uiSettings/SegmentOptions";
 
 import { default as DbSourceFilter } from "./DbSourceFilter";
 import { default as FolioOption } from "./FolioOption";
@@ -31,5 +30,5 @@ export const displaySettingComponents: Record<
   folio: <FolioOption />,
   sort_method: <SortOption />,
   script: <TextScriptOption />,
-  showSegmentNrs: <SegmentOptions />,
+  showSegmentNrs: null,
 };

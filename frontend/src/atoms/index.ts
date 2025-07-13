@@ -53,9 +53,7 @@ export const textViewFilterComparisonAtom = atom<string | undefined>(undefined);
 export const textViewRightPaneFileNameAtom = atom<string | undefined>(
   undefined,
 );
-export const textViewIsMiddlePanePointingLeftAtom = atom<boolean | undefined>(
-  undefined,
-);
+export const textViewIsMiddlePanePointingLeftAtom = atom(true);
 export const shouldShowSegmentNumbersAtom = atomWithStorage<boolean>(
   "shouldShowSegmentNumbers",
   true,
@@ -63,6 +61,13 @@ export const shouldShowSegmentNumbersAtom = atomWithStorage<boolean>(
 export const shouldUseMonochromaticSegmentColorsAtom = atomWithStorage<boolean>(
   "shouldUseMonochromaticSegmentColors",
   true,
+);
+
+export const fontSizeAtom = atomWithStorage<number>("fontSize", 18);
+
+export const includeMatchesAtom = atomWithStorage<boolean>(
+  "includeMatches",
+  false,
 );
 
 export const activeSegmentMatchesAtom = atom<string[]>([]);

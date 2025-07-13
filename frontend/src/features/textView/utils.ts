@@ -39,5 +39,5 @@ export const createURLToSegment = ({
   // Example: ["dn1:1.1.1_0", "dn1:1.1.2_0"] -> ["dn1", "1.1.1_0"]
   const [fileName] = segmentNumber.split(":");
 
-  return `/db/${language}/${fileName}/text?active_segment=${segmentNumber}&active_segment_index=0`;
+  return `/db/${language}/${fileName}/text?active_segment=${segmentNumber}`;
 };

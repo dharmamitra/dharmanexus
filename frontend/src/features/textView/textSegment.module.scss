@@ -1,4 +1,6 @@
 .segmentWrapper {
+  display: flex;
+  align-items: baseline;
   -webkit-user-select: none;
   pointer-events: none;
 }
@@ -35,11 +37,15 @@
 }
 
 .segmentNumber {
-  &::before {
-    content: attr(data-segmentnumber);
-    font-size: 0.6rem;
-    padding: 0.2em;
-    margin-right: 1em;
+  pointer-events: auto;
+
+  &__link {
+    &::before {
+      content: attr(data-segmentnumber);
+      font-size: 0.6rem;
+      padding: 0.2em;
+      margin-right: 1em;
+    }
   }
 
   &--selected {
