@@ -99,6 +99,8 @@ export const DEFAULT_PARAM_VALUES = {
   },
   sort_method: "position",
   active_segment: "none",
+  active_segment_index: 0,
+  right_pane_active_segment_index: 0,
   active_match: "",
   include_matches: false,
 } as const;

@@ -92,7 +92,7 @@ export const useActiveSegmentParam = () => {
 export const useActiveSegmentIndexParam = () => {
   return useQueryState(
     allUIComponentParamNames.active_segment_index,
-    parseAsInteger,
+    parseAsInteger.withDefault(DEFAULT_PARAM_VALUES.active_segment_index),
   );
 };
 
@@ -106,7 +106,9 @@ export const useRightPaneActiveSegmentParam = () => {
 export const useRightPaneActiveSegmentIndexParam = () => {
   return useQueryState(
     allUIComponentParamNames.right_pane_active_segment_index,
-    parseAsInteger,
+    parseAsInteger.withDefault(
+      DEFAULT_PARAM_VALUES.right_pane_active_segment_index,
+    ),
   );
 };
 
