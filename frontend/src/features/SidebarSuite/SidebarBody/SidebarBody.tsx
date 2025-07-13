@@ -2,9 +2,8 @@ import { useIncludeMatchesParam } from "@components/hooks/params";
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { CollapsibleSection } from "@features/SidebarSuite/common/CollapsibleSection";
 import { DrawerHeader } from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
-import { CompactHighlightSwitch } from "@features/SidebarSuite/uiSettings/CompactHighlightSwitch";
-import DbSourceFilter from "@features/SidebarSuite/uiSettings/DbSourceFilter";
 import { DbViewSelector } from "@features/SidebarSuite/uiSettings/DbViewSelector";
+import DbSourceFilter from "@features/SidebarSuite/uiSettings/DbSourceFilter";
 import FolioOption from "@features/SidebarSuite/uiSettings/FolioOption";
 import { FontSizeSlider } from "@features/SidebarSuite/uiSettings/FontSizeSlider";
 import { MonochromaticHighlightSwitch } from "@features/SidebarSuite/uiSettings/MonochromaticHighlightSwitch";
@@ -95,7 +94,6 @@ export function SidebarBody({
             }}
           >
             <MonochromaticHighlightSwitch />
-            <CompactHighlightSwitch />
           </Box>
         </CollapsibleSection>
       </Box>

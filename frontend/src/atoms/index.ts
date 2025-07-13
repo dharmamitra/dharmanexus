@@ -65,11 +65,6 @@ export const shouldUseMonochromaticSegmentColorsAtom = atomWithStorage<boolean>(
 
 export const fontSizeAtom = atomWithStorage<number>("fontSize", 18);
 
-export const compactHighlightModeAtom = atomWithStorage<boolean>(
-  "compactHighlightMode",
-  false,
-);
-
 export const includeMatchesAtom = atomWithStorage<boolean>(
   "includeMatches",
   false,
