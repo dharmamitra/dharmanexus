@@ -83,6 +83,15 @@ load-sanskrit-data:
 	@docker exec -t dataloader bash -c "invoke load-parallels --lang=sa"
 	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
 
+# Load multilingual matches from /matches/multilingual directory
+load-multilingual-matches:
+	@docker exec -t dataloader bash -c "invoke load-multilingual-matches"
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
+
+clean-multilingual-matches:
+	@docker exec -t dataloader bash -c "invoke clean-multilingual-matches"
+	@docker exec -t dharmanexus-redis-1 redis-cli FLUSHALL
+
 clean-tibetan-data:
 	@docker exec -t dataloader bash -c "invoke clean-text-segments --lang=bo"
 	@docker exec -t dataloader bash -c "invoke clean-parallels --lang=bo"
