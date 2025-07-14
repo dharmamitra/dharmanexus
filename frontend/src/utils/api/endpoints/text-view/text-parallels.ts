@@ -4,12 +4,15 @@ import type { APIPostRequestBody, APIPostResponse } from "@utils/api/types";
 
 function parseTextViewParallelsData(
   data: APIPostResponse<"/text-view/text-parallels/">,
-  lang: string,
 ) {
   return {
     page: data.page,
     totalPages: data.total_pages,
-    items: data.items?.map(({ segnr, segtext }) => ({
+    items: (
+      data.items as (APIPostResponse<"/text-view/text-parallels/">["items"][number] & {
+        lang: string;
+      })[]
+    )?.map(({ segnr, segtext, lang }) => ({
       segmentNumber: segnr,
       lang,
       segmentText: segtext.map(
@@ -34,13 +37,7 @@ export type ParsedTextViewParallel = ParsedTextViewParallelsData["items"][0];
 export async function getTextViewParallelsData(
   body: APIPostRequestBody<"/text-view/text-parallels/">,
 ) {
-  const {
-    page = 0,
-    lang,
-    ...params
-  } = body as APIPostRequestBody<"/text-view/text-parallels/"> & {
-    lang: string;
-  };
+  const { page = 0, ...params } = body;
 
   const { data } = await apiClient.POST("/text-view/text-parallels/", {
     body: {
@@ -53,7 +50,7 @@ export async function getTextViewParallelsData(
   }
 
   return {
-    data: parseTextViewParallelsData(data ?? [], lang),
+    data: parseTextViewParallelsData(data ?? []),
     pageNumber: page,
   };
 }
