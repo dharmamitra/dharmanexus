@@ -322,14 +322,8 @@ def calculate_color_maps_middle_view(data):
             entry["score"] = prettify_score(entry["score"])
             
             # Handle par_segnr safely - ensure it's a list and not empty
-            if isinstance(entry["par_segnr"], list) and len(entry["par_segnr"]) > 0:
-                entry["par_segnr_range"] = shorten_segment_names(entry["par_segnr"])
-                entry["par_segnr"] = entry["par_segnr"][0]
-            else:
-                # Handle case where par_segnr is empty or not a list
-                entry["par_segnr_range"] = ""
-                entry["par_segnr"] = ""
-            
+            entry["par_segnr_range"] = shorten_segment_names(entry["par_segnr"])
+            entry["par_segnr"] = entry["par_segnr"][0]
             del entry["par_offset_beg"]
             del entry["par_offset_end"]
         else:
@@ -339,13 +333,8 @@ def calculate_color_maps_middle_view(data):
             entry["score"] = prettify_score(entry["score"])
             
             # Handle par_segnr safely
-            if isinstance(entry["par_segnr"], list) and len(entry["par_segnr"]) > 0:
-                entry["par_segnr_range"] = shorten_segment_names(entry["par_segnr"])
-                entry["par_segnr"] = entry["par_segnr"][0]
-            else:
-                entry["par_segnr_range"] = ""
-                entry["par_segnr"] = ""
-            
+            entry["par_segnr_range"] = shorten_segment_names(entry["par_segnr"])
+            entry["par_segnr"] = entry["par_segnr"][0]
             # Remove offset fields if they exist
             if "par_offset_beg" in entry:
                 del entry["par_offset_beg"]
