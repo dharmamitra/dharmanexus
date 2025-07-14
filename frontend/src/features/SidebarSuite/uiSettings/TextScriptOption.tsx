@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useTranslation } from "next-i18next";
-import { scriptSelectionAtom } from "@atoms";
+import { scriptSelectionAtom, tibetanScriptAtom } from "@atoms";
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import type { Script } from "@features/SidebarSuite/types";
 import {
@@ -22,6 +22,12 @@ export default function TextScriptOption() {
   const { t } = useTranslation("settings");
 
   const [scriptSelection, setScriptSelection] = useAtom(scriptSelectionAtom);
+  const [tibetanScript, setTibetanScript] = useAtom(tibetanScriptAtom);
+
+  const isTibetan = dbLanguage === "bo";
+
+  const script = isTibetan ? tibetanScript : scriptSelection;
+  const setScript = isTibetan ? setTibetanScript : setScriptSelection;
 
   return (
     <FormControl sx={{ width: 1, mb: 1 }}>
@@ -37,13 +43,13 @@ export default function TextScriptOption() {
           id: "sort-option-selector",
         }}
         input={<OutlinedInput label={t("optionsLabels.script")} />}
-        value={scriptSelection}
-        onChange={(e) => setScriptSelection(e.target.value as Script)}
+        value={script}
+        onChange={(e) => setScript(e.target.value as Script)}
       >
-        {SCRIPT_OPTIONS[dbLanguage]?.map((script) => {
+        {SCRIPT_OPTIONS[dbLanguage]?.map((scriptOption) => {
           return (
-            <MenuItem key={script} value={script}>
-              {script}
+            <MenuItem key={scriptOption} value={scriptOption}>
+              {scriptOption}
             </MenuItem>
           );
         })}

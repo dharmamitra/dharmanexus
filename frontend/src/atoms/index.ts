@@ -47,6 +47,9 @@ export const dbSourceFiltersSelectedIdsAtom = atom<DbSourceFiltersSelectedIds>({
   include_sources: [],
 });
 
+export const isSearchDrawerOpenAtom = atom(false);
+export const isSettingsDrawerOpenAtom = atom(false);
+
 /**
  * TEXT VIEW
  */
@@ -73,4 +76,6 @@ export const includeMatchesAtom = atomWithStorage<boolean>(
 
 export const activeSegmentMatchesAtom = atom<string[]>([]);
 
-export const hoveredOverParallelIdAtom = atom<string>("");
+export const hoveredOverParallelIdAtom = atom<string | null>(null);
+
+export const isMiddlePaneMovingAtom = atom(false);
