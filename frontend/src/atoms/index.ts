@@ -73,3 +73,5 @@ export const includeMatchesAtom = atomWithStorage<boolean>(
 export const activeSegmentMatchesAtom = atom<string[]>([]);
 
 export const hoveredOverParallelIdAtom = atom<string>("");
+
+export * from "./script";
