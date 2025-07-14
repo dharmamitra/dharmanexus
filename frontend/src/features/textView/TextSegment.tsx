@@ -9,7 +9,6 @@ import {
   shouldUseMonochromaticSegmentColorsAtom,
   textViewIsMiddlePanePointingLeftAtom,
 } from "@atoms";
-import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { sourceSans } from "@components/theme";
 import { enscriptText } from "@features/SidebarSuite/utils";
 import { TextViewPaneProps } from "@features/textView/TextViewPane";
@@ -36,7 +35,7 @@ export const TextSegment = ({
   setActiveSegmentIndex,
   clearActiveMatch,
 }: {
-  data?: ParsedTextViewParallel;
+  data: ParsedTextViewParallel;
   colorScale: Scale;
   activeSegmentId: string;
   clearActiveMatch: () => Promise<void>;
@@ -48,8 +47,6 @@ export const TextSegment = ({
   const matchHeatColors = isDarkTheme
     ? DARK_MODE_MATCH_HEAT_INVERTED_COLORS
     : LIGHT_MODE_MATCH_HEAT_COLORS;
-
-  const { dbLanguage } = useDbPageRouterParams();
 
   const shouldUseMonochromaticSegmentColors = useAtomValue(
     shouldUseMonochromaticSegmentColorsAtom,
@@ -96,7 +93,7 @@ export const TextSegment = ({
 
   const urlToSegment = createURLToSegment({
     segmentNumber: data.segmentNumber,
-    language: dbLanguage,
+    language: data.lang,
   });
 
   // segnr also contains the file name - we need to strip it away
@@ -126,7 +123,7 @@ export const TextSegment = ({
             const textContent = enscriptText({
               text,
               script: scriptSelection,
-              language: dbLanguage,
+              language: data.lang,
             });
 
             // [hack/workaround]: in the right pane, we don't know the correct segment index

@@ -8,8 +8,9 @@ function parseTextViewParallelsData(
   return {
     page: data.page,
     totalPages: data.total_pages,
-    items: data.items?.map(({ segnr, segtext }) => ({
+    items: data.items?.map(({ segnr, segtext, lang }) => ({
       segmentNumber: segnr,
+      lang,
       segmentText: segtext.map(
         ({ text, highlightColor, matches, is_active_match }) => ({
           text,
