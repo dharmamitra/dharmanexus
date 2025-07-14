@@ -8,6 +8,7 @@ import {
   shouldShowSegmentNumbersAtom,
   shouldUseMonochromaticSegmentColorsAtom,
   textViewIsMiddlePanePointingLeftAtom,
+  tibetanScriptAtom,
 } from "@atoms";
 import { sourceSans } from "@components/theme";
 import { enscriptText } from "@features/SidebarSuite/utils";
@@ -60,7 +61,9 @@ export const TextSegment = ({
     textViewIsMiddlePanePointingLeftAtom,
   );
 
-  const scriptSelection = useAtomValue(scriptSelectionAtom);
+  const scriptSelection = useAtomValue(
+    data.lang === "bo" ? tibetanScriptAtom : scriptSelectionAtom,
+  );
   const fontSize = useAtomValue(fontSizeAtom);
 
   const updateSelectedLocationInGlobalState = useCallback(

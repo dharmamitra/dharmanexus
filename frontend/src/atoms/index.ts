@@ -37,6 +37,7 @@ export const scriptSelectionAtom = atomWithStorage<Script>(
   "text-script-selection",
   "Unicode",
 );
+export const tibetanScriptAtom = atom<"Unicode" | "Wylie">("Unicode");
 export const isSettingsOpenAtom = atomWithStorage<boolean>(
   "isSettingsOpen",
   false,
@@ -73,5 +74,3 @@ export const includeMatchesAtom = atomWithStorage<boolean>(
 export const activeSegmentMatchesAtom = atom<string[]>([]);
 
 export const hoveredOverParallelIdAtom = atom<string>("");
-
-export * from "./script";
