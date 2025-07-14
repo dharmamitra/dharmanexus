@@ -39,6 +39,7 @@ FOR file IN files
                 RETURN {
                     segnr: segment.segmentnr,
                     segtext: segment.original,
+                    lang: segment.lang,
                     parallel_ids: parallel_ids
                 }
     )

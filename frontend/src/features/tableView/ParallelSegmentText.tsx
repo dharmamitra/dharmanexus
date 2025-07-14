@@ -1,5 +1,4 @@
-import { fontSizeAtom, scriptSelectionAtom } from "@atoms";
-import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
+import { fontSizeAtom, scriptSelectionAtom, tibetanScriptAtom } from "@atoms";
 import { enscriptText } from "@features/SidebarSuite/utils";
 import { Typography } from "@mui/material";
 import { APISchemas, DbLanguage } from "@utils/api/types";
@@ -11,7 +10,9 @@ interface Props {
 }
 
 export const ParallelSegmentText = ({ text, language }: Props) => {
-  const script = useAtomValue(scriptSelectionAtom);
+  const script = useAtomValue(
+    language === "bo" ? tibetanScriptAtom : scriptSelectionAtom,
+  );
   const fontSize = useAtomValue(fontSizeAtom);
 
   if (!text) {
