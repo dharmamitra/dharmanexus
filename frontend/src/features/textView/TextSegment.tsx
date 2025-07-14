@@ -17,6 +17,7 @@ import { createURLToSegment } from "@features/textView/utils";
 import { Box, Link as MuiLink, useMediaQuery, useTheme } from "@mui/material";
 import { useColorScheme } from "@mui/material/styles";
 import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-parallels";
+import { DbLanguage } from "@utils/api/types";
 import type { Scale } from "chroma-js";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
@@ -96,7 +97,7 @@ export const TextSegment = ({
 
   const urlToSegment = createURLToSegment({
     segmentNumber: data.segmentNumber,
-    language: data.lang,
+    language: data.lang as DbLanguage,
   });
 
   // segnr also contains the file name - we need to strip it away
@@ -126,7 +127,7 @@ export const TextSegment = ({
             const textContent = enscriptText({
               text,
               script: scriptSelection,
-              language: data.lang,
+              language: data.lang as DbLanguage,
             });
 
             // [hack/workaround]: in the right pane, we don't know the correct segment index
