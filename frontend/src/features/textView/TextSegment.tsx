@@ -139,9 +139,10 @@ export const TextSegment = ({
                 activeSegmentIndex === i ||
                 activeSegmentIndex > data.segmentText.length);
 
-            const isSegmentPartHoveredOverInMiddleView = matchSets
-              ? matchSets[i]?.has(hoveredOverParallelId)
-              : false;
+            const isSegmentPartHoveredOverInMiddleView =
+              matchSets && hoveredOverParallelId
+                ? matchSets[i]?.has(hoveredOverParallelId)
+                : false;
 
             const isSelected = isSegmentSelected
               ? isSegmentPartSelected
