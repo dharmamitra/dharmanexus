@@ -59,15 +59,7 @@ export function useTextViewPane({
 
   const [firstItemIndex, setFirstItemIndex] = useState(START_INDEX);
 
-  const previouslySelectedSegmentsMap = useRef<Record<string, boolean>>({});
   const paginationState = useRef<PaginationState>([0, 0]);
-
-  const hasSegmentBeenSelected = useCallback(
-    (segmentId: string): boolean =>
-      segmentId !== DEFAULT_PARAM_VALUES.active_segment &&
-      Boolean(previouslySelectedSegmentsMap.current[segmentId]),
-    [],
-  );
 
   // in the right pane, everything is only filtered by active file
   const requestFilters = isRightPane
@@ -76,7 +68,6 @@ export function useTextViewPane({
 
   const {
     data,
-    isSuccess,
     fetchNextPage,
     fetchPreviousPage,
     isFetchingPreviousPage,
@@ -99,32 +90,22 @@ export function useTextViewPane({
       filters: requestFilters,
     }),
     queryFn: async ({ pageParam }) => {
-      // We pass the active_segment, but only on the first page load :/
-      //
-      // This is a bit of a workaround to enable scrolling up. Explanation:
-      // When `active_segment` is inside a query param, the BE always responds with the page that includes the segment.
-      // We pass it to the backend, and we assume the page is 0. In the BE response, it tells us that we're on page 1,
-      // but there's no way to request page 0 when `active_segment` is included.
-      //
-      // A possible issue with this workaround is that it only runs on the client side.
-      // We may need to revisit after moving to the Next.js App Router
+      // We pass the active_segment and active_match_id, but only on the first page load when a segment is active.
+      // On subsequent fetches (for pagination), we do not pass them, so the BE can use the `page` param.
+      // `pageParam` is only `undefined` on the very first fetch when a segment is active.
+      const isInitialFetchWithSegment = pageParam === undefined;
 
-      // if the `active_segment` param was already sent for this segment,
-      // don't send it anymore. This is how the BE works with pagination, otherwise it will start from page 0 again.
-      const hasActiveSegmentBeenSelected =
-        hasSegmentBeenSelected(activeSegment);
-
-      const activeSegmentParam = hasActiveSegmentBeenSelected
-        ? DEFAULT_PARAM_VALUES.active_segment
-        : activeSegment;
+      const activeSegmentParam = isInitialFetchWithSegment
+        ? activeSegment
+        : DEFAULT_PARAM_VALUES.active_segment;
 
       let activeMatchIdParam: string;
-      if (hasActiveSegmentBeenSelected) {
-        activeMatchIdParam = DEFAULT_PARAM_VALUES.active_match;
-      } else {
+      if (isInitialFetchWithSegment) {
         activeMatchIdParam = isRightPane
           ? rightPaneActiveMatchId
           : leftPaneActiveMatchId;
+      } else {
+        activeMatchIdParam = DEFAULT_PARAM_VALUES.active_match;
       }
 
       return DbApi.TextView.call({
@@ -159,25 +140,10 @@ export function useTextViewPane({
   });
 
   useEffect(() => {
-    // When filters change, we need to reset the selected segments map.
-    // This ensures that the active_segment is passed to the BE on the first request.
-    previouslySelectedSegmentsMap.current = {};
-  }, [requestBodyBase]);
-
-  useEffect(() => {
     if (isFetchedAfterMount) {
       previousFileName.current = fileName;
     }
   }, [fileName, isFetchedAfterMount]);
-
-  // see queryFn comment above
-  useEffect(
-    function updatePreviouslySelectedSegmentsMap() {
-      if (isSuccess && activeSegment)
-        previouslySelectedSegmentsMap.current[activeSegment] = true;
-    },
-    [isSuccess, activeSegment],
-  );
 
   useEffect(
     function handleApiResponse() {
@@ -215,7 +181,8 @@ export function useTextViewPane({
 
   const handleFetchingNextPage = useCallback(async () => {
     const response = await fetchNextPage();
-    paginationState.current[1] = response.data?.pages.at(-1)?.data.page;
+    const newEndEdge = response.data?.pages.at(-1)?.data.page;
+    paginationState.current = [paginationState.current[0], newEndEdge];
   }, [fetchNextPage]);
 
   const allParallels = useMemo(

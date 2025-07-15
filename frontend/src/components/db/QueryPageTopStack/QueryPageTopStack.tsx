@@ -1,6 +1,7 @@
 import * as React from "react";
 import CurrentResultChips from "@components/db/CurrentResultChips";
 import { useIsRenderedInReaderMode } from "@components/hooks/useIsRenderedInReaderMode";
+import { TextViewMatchesSwitch } from "@features/SidebarSuite/uiSettings/TextViewMatchesSwitch";
 import { Box, Stack, Typography } from "@mui/material";
 import { RESULT_PAGE_TITLE_GROUP_ID } from "@utils/constants";
 
@@ -43,6 +44,7 @@ export const QueryPageTopStack = ({
             {subtitle}
           </Typography>
         ) : null}
+        <TextViewMatchesSwitch />
       </Box>
 
       <Stack
