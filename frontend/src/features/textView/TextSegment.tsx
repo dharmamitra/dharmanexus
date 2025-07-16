@@ -36,11 +36,13 @@ export const TextSegment = ({
   setActiveSegmentId,
   setActiveSegmentIndex,
   clearActiveMatch,
+  initialActiveSegment,
 }: {
   data: ParsedTextViewParallel;
   colorScale: Scale;
   activeSegmentId: string;
   clearActiveMatch: () => Promise<void>;
+  initialActiveSegment?: string;
 } & TextViewPaneProps) => {
   const theme = useTheme();
   useMediaQuery(theme.breakpoints.up("sm"));
@@ -57,6 +59,9 @@ export const TextSegment = ({
   const hoveredOverParallelId = useAtomValue(hoveredOverParallelIdAtom);
   const setSelectedSegmentMatches = useSetAtom(activeSegmentMatchesAtom);
   const isSegmentSelected = activeSegmentId === data?.segmentNumber;
+  const isInitialActiveSegment =
+    initialActiveSegment === data?.segmentNumber &&
+    activeSegmentId === initialActiveSegment;
 
   const [, setIsMiddlePanePointingLeft] = useAtom(
     textViewIsMiddlePanePointingLeftAtom,
@@ -154,7 +159,10 @@ export const TextSegment = ({
               isSegmentPartSelected &&
               !isActiveMatch &&
               styles["segment--part-selected"]
-            } ${isSegmentPartHoveredOverInMiddleView && styles["segment--parallel-hovered"]}`;
+            } ${
+              isSegmentPartHoveredOverInMiddleView &&
+              styles["segment--parallel-hovered"]
+            } ${isInitialActiveSegment && styles["segment--initial-active"]}`;
 
             if (matches.length === 0) {
               return (

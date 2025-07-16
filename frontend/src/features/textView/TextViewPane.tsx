@@ -5,6 +5,7 @@ import React, {
   useLayoutEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 import {
@@ -31,6 +32,7 @@ export interface TextViewPaneProps {
   setActiveSegmentId: (id: string) => Promise<URLSearchParams>;
   activeSegmentIndex: number | null;
   setActiveSegmentIndex: (index: number) => Promise<URLSearchParams>;
+  initialActiveSegment?: string;
 }
 
 const debounceEdgeReachedFunction =
@@ -50,9 +52,12 @@ export const TextViewPane = ({
   setActiveSegmentId,
   activeSegmentIndex,
   setActiveSegmentIndex,
+  initialActiveSegment,
 }: TextViewPaneProps) => {
   const virtuosoRef = useRef<VirtuosoHandle>(null);
   const wasDataJustAppended: RefObject<boolean> = useRef(false);
+  const [initialSegmentId] = useState(initialActiveSegment ?? activeSegmentId);
+  const isInitialLoad = useRef(true);
 
   const {
     // [TODO] add error handling
@@ -67,7 +72,11 @@ export const TextViewPane = ({
     handleFetchingNextPage,
     isLoading,
     clearActiveMatch,
-  } = useTextViewPane({ activeSegment: activeSegmentId, isRightPane });
+    initialActiveSegment: initialActiveSegmentFromHook,
+  } = useTextViewPane({
+    activeSegment: isRightPane ? activeSegmentId : initialSegmentId,
+    isRightPane,
+  });
 
   // assign data to a ref to avoid re-running the effect when items are appended during endless loading.
   const allParallelsRef = useRef<ParsedTextViewParallels>(allParallels);
@@ -92,11 +101,23 @@ export const TextViewPane = ({
   }, [activeSegmentId, isLoading]);
 
   useEffect(() => {
-    scrollToActiveSegment();
+    // We want to scroll in two cases:
+    // 1. On the initial load of the component when a segment is active.
+    // 2. In the right pane, any time the active segment changes.
+    const shouldScroll = isRightPane || isInitialLoad.current;
 
-    // [workaround/hack] - it doesn't always consistently scroll to the activeSegment, even with this hack, but it helps
-    setTimeout(() => scrollToActiveSegment(), 1000);
-  }, [scrollToActiveSegment]);
+    // We can only scroll once the data has finished loading.
+    if (shouldScroll && !isLoading) {
+      scrollToActiveSegment();
+      // [workaround/hack] - it doesn't always consistently scroll to the activeSegment, even with this hack, but it helps
+      setTimeout(() => scrollToActiveSegment(), 1000);
+
+      if (isInitialLoad.current) {
+        // We've completed the initial scroll, so we disable it for subsequent renders.
+        isInitialLoad.current = false;
+      }
+    }
+  }, [isRightPane, isLoading, scrollToActiveSegment]);
 
   const handleStartReached = useCallback(async () => {
     wasDataJustAppended.current = true;
@@ -123,6 +144,7 @@ export const TextViewPane = ({
         setActiveSegmentIndex={setActiveSegmentIndex}
         clearActiveMatch={clearActiveMatch}
         isRightPane={isRightPane}
+        initialActiveSegment={initialActiveSegmentFromHook}
       />
     ),
     [
@@ -133,6 +155,7 @@ export const TextViewPane = ({
       isRightPane,
       setActiveSegmentId,
       setActiveSegmentIndex,
+      initialActiveSegmentFromHook,
     ],
   );
 

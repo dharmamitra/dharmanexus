@@ -28,6 +28,7 @@ interface UseTextPageReturn {
   isFetchingNextPage: boolean;
   isFetchingPreviousPage: boolean;
   error: Error | null;
+  initialActiveSegment: string;
 }
 
 interface Props {
@@ -210,5 +211,6 @@ export function useTextViewPane({
     isFetchingPreviousPage,
     isLoading,
     error,
+    initialActiveSegment: activeSegment,
   };
 }

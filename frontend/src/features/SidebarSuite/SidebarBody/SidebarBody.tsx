@@ -62,7 +62,7 @@ export function SidebarBody({
 
       <Box sx={{ p: 2 }}>
         <DbViewSelector />
-        <CollapsibleSection title="General Display Settings" defaultExpanded>
+        <CollapsibleSection title="General Display Settings">
           <ShowSegmentNumbersSwitch />
           {dbLanguage === "bo" && <TextScriptOption />}
           <FontSizeSlider />
@@ -86,7 +86,7 @@ export function SidebarBody({
           </Box>
         </CollapsibleSection>
 
-        <CollapsibleSection title="Match Highlighting & Display Style">
+        <CollapsibleSection title="Match Highlighting Style">
           <Box
             sx={{
               pointerEvents: includeMatches ? "auto" : "none",
