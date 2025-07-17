@@ -21,6 +21,7 @@ from .endpoints import (
     utils,
     links,
     download,
+    matches,
 )
 
 API_PREFIX = "/api-db" if os.environ["PROD"] == "1" else "/api-db"
@@ -101,6 +102,7 @@ APP.include_router(numbers_view.router, prefix="/numbers-view")
 APP.include_router(links.router, prefix="/links")
 APP.include_router(utils.router, prefix="/utils")
 APP.include_router(menu.router)
+APP.include_router(matches.router)
 
 
 @APP.get("/")
