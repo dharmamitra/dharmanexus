@@ -1,5 +1,6 @@
 import apiClient from "@api";
 import { parseAPIRequestBody } from "@utils/api/apiQueryUtils";
+import { DbLanguage } from "@utils/api/constants";
 import type { APIPostRequestBody, APIPostResponse } from "@utils/api/types";
 
 function parseTextViewParallelsData(
@@ -8,13 +9,10 @@ function parseTextViewParallelsData(
   return {
     page: data.page,
     totalPages: data.total_pages,
-    items: (
-      data.items as (APIPostResponse<"/text-view/text-parallels/">["items"][number] & {
-        lang: string;
-      })[]
-    )?.map(({ segnr, segtext, lang }) => ({
+    items: data.items?.map(({ segnr, segtext, lang }) => ({
       segmentNumber: segnr,
-      lang,
+      // TODO: remove remove casting once the backend schema has been updated
+      language: lang as DbLanguage,
       segmentText: segtext.map(
         ({ text, highlightColor, matches, is_active_match }) => ({
           text,
