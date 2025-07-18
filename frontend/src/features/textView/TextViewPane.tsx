@@ -8,6 +8,7 @@ import React, {
   useState,
 } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
+import { fontSizeAtom, tibetanScriptSelectionAtom } from "@atoms";
 import {
   EmptyPlaceholder,
   ListLoadingIndicator,
@@ -24,13 +25,14 @@ import {
   ParsedTextViewParallel,
   ParsedTextViewParallels,
 } from "@utils/api/endpoints/text-view/text-parallels";
+import { useAtomValue } from "jotai";
 import debounce from "lodash/debounce";
 
 export interface TextViewPaneProps {
   isRightPane: boolean;
   activeSegmentId: string;
   setActiveSegmentId: (id: string) => Promise<URLSearchParams>;
-  activeSegmentIndex: number | null;
+  activeSegmentIndex: number;
   setActiveSegmentIndex: (index: number) => Promise<URLSearchParams>;
   initialActiveSegment?: string;
 }
@@ -54,6 +56,8 @@ export const TextViewPane = ({
   setActiveSegmentIndex,
   initialActiveSegment,
 }: TextViewPaneProps) => {
+  const tibetanScript = useAtomValue(tibetanScriptSelectionAtom);
+  const fontSize = useAtomValue(fontSizeAtom);
   const virtuosoRef = useRef<VirtuosoHandle>(null);
   const wasDataJustAppended: RefObject<boolean> = useRef(false);
   const [initialSegmentId] = useState(initialActiveSegment ?? activeSegmentId);
@@ -145,6 +149,8 @@ export const TextViewPane = ({
         clearActiveMatch={clearActiveMatch}
         isRightPane={isRightPane}
         initialActiveSegment={initialActiveSegmentFromHook}
+        tibetanScript={tibetanScript}
+        fontSize={fontSize}
       />
     ),
     [
@@ -156,6 +162,8 @@ export const TextViewPane = ({
       setActiveSegmentId,
       setActiveSegmentIndex,
       initialActiveSegmentFromHook,
+      tibetanScript,
+      fontSize,
     ],
   );
 

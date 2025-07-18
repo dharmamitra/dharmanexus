@@ -1,10 +1,12 @@
 import { NodeApi, TreeApi } from "react-arborist";
 import { DbSourceTreeNode } from "@components/db/SearchableDbSourceTree/types";
-import type { Script } from "@features/SidebarSuite/types";
+import type { TibetanScript } from "@features/SidebarSuite/types";
 import { DbSourceFiltersSelectedIds } from "@features/SidebarSuite/types";
 import { DbViewEnum, DEFAULT_DB_VIEW } from "@utils/constants";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+
+export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
 
 /**
  * GENERAL
@@ -33,11 +35,12 @@ export const focusedDbSourceTreeNodeAtom = atom<
 /**
  * SETTINGS SIDEBAR
  */
-export const scriptSelectionAtom = atomWithStorage<Script>(
-  "text-script-selection",
+
+export const tibetanScriptSelectionAtom = atomWithStorage<TibetanScript>(
+  "tibetan-script-selection",
   "Unicode",
 );
-export const tibetanScriptAtom = atom<"Unicode" | "Wylie">("Unicode");
+
 export const isSettingsOpenAtom = atomWithStorage<boolean>(
   "isSettingsOpen",
   false,

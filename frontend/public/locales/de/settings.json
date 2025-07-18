@@ -27,6 +27,7 @@
   },
   "optionsLabels": {
     "script": "Textskript auswählen",
+    "tibetanScript": "Tibetan Script",
     "folioAsGoTo": "Gehe zum ausgewählten Textabschnitt",
     "folioAsLimit": "Übereinstimmungen aus ausgewähltem Textabschnitt anzeigen",
     "folioShowAll": "Hele tekst",

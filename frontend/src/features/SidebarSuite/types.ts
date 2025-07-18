@@ -83,7 +83,14 @@ export type DisplayUISettingName =
 
 export type SortMethod = APISchemas["SortMethod"];
 
-export type Script = "Unicode" | "Wylie";
+export type TibetanScript = "Unicode" | "Wylie";
+export type SanskritScript = "IAST" | "Devanagari";
+export type Script = TibetanScript | SanskritScript;
+export type Scripts = {
+  bo: TibetanScript;
+  // TODO:  https://www.npmjs.com/package/@indic-transliteration/sanscript
+  // sa: SanskritScript;
+};
 
 /**
  *

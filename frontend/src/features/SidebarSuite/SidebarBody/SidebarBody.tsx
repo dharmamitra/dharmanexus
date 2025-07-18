@@ -1,6 +1,5 @@
 import { useTranslation } from "next-i18next";
 import { useIncludeMatchesParam } from "@components/hooks/params";
-import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { CollapsibleSection } from "@features/SidebarSuite/common/CollapsibleSection";
 import { DrawerHeader } from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
 import DbSourceFilter from "@features/SidebarSuite/uiSettings/DbSourceFilter";
@@ -13,7 +12,7 @@ import ParLengthFilter from "@features/SidebarSuite/uiSettings/ParLengthFilter";
 import { ResetFiltersButton } from "@features/SidebarSuite/uiSettings/ResetFiltersButton";
 import ScoreFilter from "@features/SidebarSuite/uiSettings/ScoreFilter";
 import { ShowSegmentNumbersSwitch } from "@features/SidebarSuite/uiSettings/ShowSegmentNumbersSwitch";
-import TextScriptOption from "@features/SidebarSuite/uiSettings/TextScriptOption";
+import { TibetanScriptSelector } from "@features/SidebarSuite/uiSettings/TextScriptSelectors";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Box, IconButton, Typography } from "@mui/material";
 
@@ -51,7 +50,6 @@ export function SidebarBody({
   setIsSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [includeMatches] = useIncludeMatchesParam();
-  const { dbLanguage } = useDbPageRouterParams();
   const { t } = useTranslation("settings");
 
   return (
@@ -73,10 +71,7 @@ export function SidebarBody({
         >
           <ShowSegmentNumbersSwitch />
           <MonochromaticHighlightSwitch />
-          <TextScriptOption
-            isRendered={dbLanguage === "bo"}
-            dbLanguage={dbLanguage}
-          />
+          <TibetanScriptSelector />
           <FontSizeSlider />
         </CollapsibleSection>
 

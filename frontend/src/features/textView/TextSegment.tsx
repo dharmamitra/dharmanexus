@@ -1,21 +1,23 @@
-import { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import Link from "next/link";
 import {
   activeSegmentMatchesAtom,
-  fontSizeAtom,
   hoveredOverParallelIdAtom,
-  scriptSelectionAtom,
   shouldShowSegmentNumbersAtom,
   shouldUseMonochromaticSegmentColorsAtom,
   textViewIsMiddlePanePointingLeftAtom,
-  tibetanScriptAtom,
 } from "@atoms";
 import { sourceSans } from "@components/theme";
-import { enscriptText } from "@features/SidebarSuite/utils";
-import { TextViewPaneProps } from "@features/textView/TextViewPane";
+import { TibetanScript } from "@features/SidebarSuite/types";
+import { enscriptSegment } from "@features/SidebarSuite/utils";
 import { createURLToSegment } from "@features/textView/utils";
-import { Box, Link as MuiLink, useMediaQuery, useTheme } from "@mui/material";
-import { useColorScheme } from "@mui/material/styles";
+import {
+  Box,
+  Link as MuiLink,
+  useColorScheme,
+  useMediaQuery,
+} from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-parallels";
 import type { Scale } from "chroma-js";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -25,6 +27,20 @@ import {
   LIGHT_MODE_MATCH_HEAT_COLORS,
 } from "./constants";
 import styles from "./textSegment.module.scss";
+
+type TextSegmentProps = {
+  isRightPane: boolean;
+  data: ParsedTextViewParallel;
+  colorScale: Scale;
+  activeSegmentId: string;
+  activeSegmentIndex: number;
+  setActiveSegmentId: (id: string) => Promise<URLSearchParams>;
+  setActiveSegmentIndex: (index: number) => Promise<URLSearchParams>;
+  clearActiveMatch: () => Promise<void>;
+  initialActiveSegment?: string;
+  tibetanScript: TibetanScript;
+  fontSize: number;
+};
 
 export const TextSegment = ({
   isRightPane,
@@ -36,13 +52,9 @@ export const TextSegment = ({
   setActiveSegmentIndex,
   clearActiveMatch,
   initialActiveSegment,
-}: {
-  data: ParsedTextViewParallel;
-  colorScale: Scale;
-  activeSegmentId: string;
-  clearActiveMatch: () => Promise<void>;
-  initialActiveSegment?: string;
-} & TextViewPaneProps) => {
+  tibetanScript,
+  fontSize,
+}: TextSegmentProps) => {
   const theme = useTheme();
   useMediaQuery(theme.breakpoints.up("sm"));
   const { mode } = useColorScheme();
@@ -65,11 +77,6 @@ export const TextSegment = ({
   const [, setIsMiddlePanePointingLeft] = useAtom(
     textViewIsMiddlePanePointingLeftAtom,
   );
-
-  const scriptSelection = useAtomValue(
-    data.language === "bo" ? tibetanScriptAtom : scriptSelectionAtom,
-  );
-  const fontSize = useAtomValue(fontSizeAtom);
 
   const updateSelectedLocationInGlobalState = useCallback(
     async (location: { id: string; index: number; matches: string[] }) => {
@@ -128,10 +135,10 @@ export const TextSegment = ({
         {data.segmentText.map(
           ({ text, highlightColor, matches, isActiveMatch }, i) => {
             const segmentKey = segmentNumber ? segmentNumber + i : undefined;
-            const textContent = enscriptText({
+            const textContent = enscriptSegment({
               text,
-              script: scriptSelection,
-              language: data.language,
+              tibetanScript,
+              segmentLanguage: data.language,
             });
 
             // [hack/workaround]: in the right pane, we don't know the correct segment index

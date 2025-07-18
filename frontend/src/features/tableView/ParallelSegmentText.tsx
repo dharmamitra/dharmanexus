@@ -1,5 +1,5 @@
-import { fontSizeAtom, scriptSelectionAtom, tibetanScriptAtom } from "@atoms";
-import { enscriptText } from "@features/SidebarSuite/utils";
+import { fontSizeAtom, tibetanScriptSelectionAtom } from "@atoms";
+import { enscriptSegment } from "@features/SidebarSuite/utils";
 import { Typography } from "@mui/material";
 import { APISchemas, DbLanguage } from "@utils/api/types";
 import { useAtomValue } from "jotai";
@@ -10,11 +10,8 @@ interface Props {
 }
 
 export const ParallelSegmentText = ({ text, language }: Props) => {
-  const script = useAtomValue(
-    language === "bo" ? tibetanScriptAtom : scriptSelectionAtom,
-  );
+  const tibetanScript = useAtomValue(tibetanScriptSelectionAtom);
   const fontSize = useAtomValue(fontSizeAtom);
-
   if (!text) {
     return null;
   }
@@ -27,14 +24,14 @@ export const ParallelSegmentText = ({ text, language }: Props) => {
         return (
           <Typography
             key={segmentText}
-            sx={{ display: "inline", fontSize: `${fontSize}px` }}
+            sx={{ display: "inline", fontSize: `${fontSize}px !important` }}
             fontWeight={isMatch ? 600 : 400}
             color={isMatch ? "text.primary" : "text.secondary"}
           >
-            {enscriptText({
+            {enscriptSegment({
               text: segmentText ?? "",
-              script,
-              language,
+              tibetanScript,
+              segmentLanguage: language,
             })}
           </Typography>
         );
