@@ -1,6 +1,6 @@
 import * as React from "react";
 import CurrentResultChips from "@components/db/CurrentResultChips";
-import { useIsRenderedInReaderMode } from "@components/hooks/useIsRenderedInReaderMode";
+import { useViewMatches } from "@components/hooks/useViewMatches";
 import { TextViewMatchesSwitch } from "@features/SidebarSuite/uiSettings/TextViewMatchesSwitch";
 import { Box, Stack, Typography } from "@mui/material";
 import { RESULT_PAGE_TITLE_GROUP_ID } from "@utils/constants";
@@ -15,7 +15,7 @@ export const QueryPageTopStack = ({
   title: string;
   subtitle?: string;
 }) => {
-  const isRenderedInReaderMode = useIsRenderedInReaderMode();
+  const matchOptions = useViewMatches();
 
   return (
     <Stack
@@ -44,7 +44,10 @@ export const QueryPageTopStack = ({
             {subtitle}
           </Typography>
         ) : null}
-        <TextViewMatchesSwitch />
+        <TextViewMatchesSwitch
+          isRendered={matchOptions.matchesSwitchVisible}
+          {...matchOptions}
+        />
       </Box>
 
       <Stack
@@ -57,7 +60,7 @@ export const QueryPageTopStack = ({
           <DbFileButtons />
         </QueryPageButtons>
 
-        {isRenderedInReaderMode ? <CurrentResultChips /> : null}
+        <CurrentResultChips isRendered={matchOptions.matchesVisible} />
       </Stack>
     </Stack>
   );

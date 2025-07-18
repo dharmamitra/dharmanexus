@@ -1,16 +1,22 @@
 import React from "react";
-import { useIncludeMatchesParam } from "@components/hooks/params";
 import { FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
 
-export const TextViewMatchesSwitch = () => {
-  const [includeMatches, setIncludeMatches] = useIncludeMatchesParam();
+type TextViewMatchesSwitchComponentProps = {
+  matchesVisible: boolean;
+  setIncludeMatches: (value: boolean) => void;
+};
 
+export const TextViewMatchesSwitchComponent = ({
+  matchesVisible,
+  setIncludeMatches,
+}: TextViewMatchesSwitchComponentProps) => {
   return (
     <FormGroup>
       <FormControlLabel
         control={
           <Switch
-            checked={includeMatches}
+            checked={matchesVisible}
+            size="small"
             onChange={(event) => {
               setIncludeMatches(event.target.checked);
             }}
@@ -20,4 +26,13 @@ export const TextViewMatchesSwitch = () => {
       />
     </FormGroup>
   );
+};
+
+export const TextViewMatchesSwitch = ({
+  isRendered,
+  ...props
+}: { isRendered: boolean } & TextViewMatchesSwitchComponentProps) => {
+  if (!isRendered) return null;
+
+  return <TextViewMatchesSwitchComponent {...props} />;
 };

@@ -58,7 +58,7 @@ function getSettingCounts({
   return { display, filter };
 }
 
-export default function CurrentResultChips() {
+function CurrentResultChipsComponent() {
   const { t } = useTranslation("settings");
 
   const searchParams = useSearchParams();
@@ -98,4 +98,14 @@ export default function CurrentResultChips() {
       )}
     </Box>
   );
+}
+
+export default function CurrentResultChips({
+  isRendered,
+}: {
+  isRendered: boolean;
+}) {
+  if (!isRendered) return null;
+
+  return <CurrentResultChipsComponent />;
 }
