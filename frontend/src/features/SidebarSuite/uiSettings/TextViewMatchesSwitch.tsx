@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "next-i18next";
 import { FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
 
 type TextViewMatchesSwitchComponentProps = {
@@ -10,6 +11,8 @@ export const TextViewMatchesSwitchComponent = ({
   matchesVisible,
   setIncludeMatches,
 }: TextViewMatchesSwitchComponentProps) => {
+  const { t } = useTranslation("settings");
+
   return (
     <FormGroup>
       <FormControlLabel
@@ -22,7 +25,11 @@ export const TextViewMatchesSwitchComponent = ({
             }}
           />
         }
-        label={<Typography lineHeight={1.25}>Show matches</Typography>}
+        label={
+          <Typography lineHeight={1.25}>
+            {t("optionsLabels.showMatches")}
+          </Typography>
+        }
       />
     </FormGroup>
   );

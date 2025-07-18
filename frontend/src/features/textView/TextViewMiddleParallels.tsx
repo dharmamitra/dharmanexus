@@ -133,6 +133,8 @@ export default function TextViewMiddleParallels() {
         data-testid="middle-view-header"
         sx={{
           backgroundColor: "background.header",
+          borderBottom: "2px solid",
+          borderColor: "divider",
           position: "sticky",
           top: 0,
           zIndex: 2,

@@ -3,7 +3,8 @@
     "selectLanguage": "Select language",
     "noSelection": "None selected",
     "default": "Default",
-    "resultsSubject": "DharmaNexus search results link"
+    "resultsSubject": "DharmaNexus search results link",
+    "close": "Close"
   },
   "resultsHead": {
     "matches": "Matches: ",
@@ -17,15 +18,11 @@
     "textSelectTip": "Select a new inquiry text",
     "cappedMessage": "Results exceeded maximum of {{max}} matches."
   },
-  "tabs": {
-    "settings": "Settings",
-    "options": "Options",
-    "info": "Info"
-  },
   "headings": {
-    "filters": "Filters",
-    "display": "Display",
-    "tools": "Tools",
+    "settings": "Settings",
+    "filters": "Match Filters",
+    "display": "Display Settings",
+    "tools": "Utilities",
     "links": "Links"
   },
   "optionsLabels": {
@@ -49,7 +46,9 @@
     "emailResultInfo": "Email result page details",
     "showSegmentNumbers": "Show segment numbers",
     "useMonochromaticSegmentColors": "Use monochromatic segment match colors",
-    "showTextViewMatches": "Show matches with other {{lang}} texts"
+    "showTextViewMatches": "Show matches with other {{lang}} texts",
+    "showMatches": "Show matches",
+    "fontSize": "Font size"
   },
   "optionsPopperMsgs": {
     "downloadStarted": "Downloading...",

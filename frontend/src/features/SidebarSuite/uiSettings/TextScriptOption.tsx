@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useTranslation } from "next-i18next";
 import { scriptSelectionAtom, tibetanScriptAtom } from "@atoms";
-import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import type { Script } from "@features/SidebarSuite/types";
 import {
   FormControl,
@@ -17,8 +16,7 @@ const SCRIPT_OPTIONS: Partial<Record<DbLanguage, Script[]>> = {
   bo: ["Unicode", "Wylie"],
 };
 
-export default function TextScriptOption() {
-  const { dbLanguage } = useDbPageRouterParams();
+function TextScriptOptionComponent({ dbLanguage }: { dbLanguage: DbLanguage }) {
   const { t } = useTranslation("settings");
 
   const [scriptSelection, setScriptSelection] = useAtom(scriptSelectionAtom);
@@ -30,7 +28,7 @@ export default function TextScriptOption() {
   const setScript = isTibetan ? setTibetanScript : setScriptSelection;
 
   return (
-    <FormControl sx={{ width: 1, mb: 1 }}>
+    <FormControl sx={{ width: 1, mt: 4, mb: 2 }}>
       <InputLabel id="text-script-selection-label">
         {t("optionsLabels.script")}
       </InputLabel>
@@ -56,4 +54,18 @@ export default function TextScriptOption() {
       </Select>
     </FormControl>
   );
+}
+
+export default function TextScriptOption({
+  isRendered,
+  dbLanguage,
+}: {
+  isRendered: boolean;
+  dbLanguage: DbLanguage;
+}) {
+  if (!isRendered) {
+    return null;
+  }
+
+  return <TextScriptOptionComponent dbLanguage={dbLanguage} />;
 }
