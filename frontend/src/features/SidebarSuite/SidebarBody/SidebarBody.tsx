@@ -1,5 +1,5 @@
+import { useTranslation } from "next-i18next";
 import { useIncludeMatchesParam } from "@components/hooks/params";
-import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { CollapsibleSection } from "@features/SidebarSuite/common/CollapsibleSection";
 import { DrawerHeader } from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
 import DbSourceFilter from "@features/SidebarSuite/uiSettings/DbSourceFilter";
@@ -12,7 +12,7 @@ import ParLengthFilter from "@features/SidebarSuite/uiSettings/ParLengthFilter";
 import { ResetFiltersButton } from "@features/SidebarSuite/uiSettings/ResetFiltersButton";
 import ScoreFilter from "@features/SidebarSuite/uiSettings/ScoreFilter";
 import { ShowSegmentNumbersSwitch } from "@features/SidebarSuite/uiSettings/ShowSegmentNumbersSwitch";
-import TextScriptOption from "@features/SidebarSuite/uiSettings/TextScriptOption";
+import { TibetanScriptSelector } from "@features/SidebarSuite/uiSettings/TextScriptSelectors";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Box, IconButton, Typography } from "@mui/material";
 
@@ -33,9 +33,10 @@ function CloseButton({
 }: {
   setIsSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const { t } = useTranslation("settings");
   return (
     <IconButton
-      aria-label="close settings"
+      aria-label={t("generic.close")}
       onClick={() => setIsSettingsOpen(false)}
     >
       <CloseRoundedIcon />
@@ -49,51 +50,56 @@ export function SidebarBody({
   setIsSettingsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [includeMatches] = useIncludeMatchesParam();
-  const { dbLanguage } = useDbPageRouterParams();
+  const { t } = useTranslation("settings");
 
   return (
     <>
       <DrawerHeader>
         <Box sx={HeaderBoxSyles}>
-          <Typography variant="h6">Settings</Typography>
+          <Typography variant="h6" component="h2">
+            {t("headings.settings")}
+          </Typography>
           <CloseButton setIsSettingsOpen={setIsSettingsOpen} />
         </Box>
       </DrawerHeader>
 
       <Box sx={{ p: 2 }}>
         <DbViewSelector />
-        <CollapsibleSection title="General Display Settings" defaultExpanded>
+        <CollapsibleSection
+          title={t("headings.display")}
+          defaultExpanded={true}
+        >
           <ShowSegmentNumbersSwitch />
-          {dbLanguage === "bo" && <TextScriptOption />}
+          <MonochromaticHighlightSwitch />
+          <TibetanScriptSelector />
           <FontSizeSlider />
-          <UtilityOptionsSection />
         </CollapsibleSection>
 
-        <CollapsibleSection title="Intertextual Matching">
+        <CollapsibleSection title={t("headings.filters")}>
           <Box
             sx={{
               pointerEvents: includeMatches ? "auto" : "none",
               opacity: includeMatches ? 1 : 0.5,
             }}
           >
+            <ResetFiltersButton />
             <MultiLingualSelector />
             <ScoreFilter />
             <ParLengthFilter />
             <DbSourceFilter filterName="exclude_sources" />
             <DbSourceFilter filterName="include_sources" />
             <FolioOption />
-            <ResetFiltersButton />
           </Box>
         </CollapsibleSection>
 
-        <CollapsibleSection title="Match Highlighting & Display Style">
+        <CollapsibleSection title={t("headings.tools")}>
           <Box
             sx={{
               pointerEvents: includeMatches ? "auto" : "none",
               opacity: includeMatches ? 1 : 0.5,
             }}
           >
-            <MonochromaticHighlightSwitch />
+            <UtilityOptionsSection />
           </Box>
         </CollapsibleSection>
       </Box>

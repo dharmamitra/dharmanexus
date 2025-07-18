@@ -68,7 +68,8 @@ FOR f IN parallels_sorted_file
                 par_pos_beg: p.par_pos_beg,
                 score: p.score * 100,
                 src_lang: p.src_lang,
-                tgt_lang: p.tgt_lang
+                tgt_lang: p.tgt_lang,
+                par_filename: p.par_filename
             }
 """
 

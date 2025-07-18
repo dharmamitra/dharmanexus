@@ -214,6 +214,100 @@ def load_sorted_parallels_for_language(folder, lang, db):
     print("Done sorted parallels for language: ", lang)
 
 
+def load_multilingual_parallels(folder, db, number_of_threads):
+    """
+    Given a folder with multilingual parallel json files, load them all into the `parallels` collection
+    
+    :param folder: Folder with multilingual parallel json files (e.g., /matches/multilingual)
+    :param db: ArangoDB connection object
+    :param number_of_threads: Number of threads to use for parallel loading
+    """
+    db_collection_files = db.collection(COLLECTION_FILES)
+    db_collection = db.collection(COLLECTION_PARALLELS)
+    
+    # Get all files lookup for all languages
+    files_db = db_collection_files.find({})
+    global files_lookup
+    files_lookup = {
+        file["_key"]: file["collection"] for file in files_db if "collection" in file
+    }
+
+    # Look for multilingual folder
+    multilingual_folder = os.path.join(folder, "multilingual")
+    if not os.path.exists(multilingual_folder):
+        print(f"Multilingual folder not found: {multilingual_folder}")
+        return
+
+    files = os.listdir(multilingual_folder)
+    files = list(filter(lambda f: f.endswith(".ndjson.gz"), files))    
+    files = list(filter(lambda f: should_download_file(f), files))
+    
+    if not files:
+        print(f"No valid multilingual files found in {multilingual_folder}")
+        return
+    
+    print(f"Found {len(files)} multilingual files to process")
+    
+    pool = multiprocessing.Pool(number_of_threads)
+    async_results = []
+    for file in files:
+        print(f"Processing multilingual file: {file}")
+        result = pool.apply_async(process_file, args=(os.path.join(multilingual_folder, file), None))
+        async_results.append(result)
+
+    for result in async_results:
+        result.get()
+
+    # Add indexes for multilingual data
+    db_collection.add_hash_index(
+        fields=[
+            "parallel_id",
+            "root_filename",
+            "par_filename",
+            "root_category",
+            "par_category",
+            "src_lang",
+            "tgt_lang",
+        ],
+        unique=False,
+    )
+    # Add a single-field hash index for fast lookup by parallel_id
+    db_collection.add_hash_index(fields=["parallel_id"], unique=False)
+    # add index for root_segnr on all list items
+    db_collection.add_hash_index(fields=["root_segnr[*]"], unique=False)
+    db_collection.add_hash_index(fields=["par_segnr[*]"], unique=False)
+    db_collection.add_hash_index(fields=["root_filename"], unique=False)
+    
+    pool.close()
+    pool.join()
+    
+    print("Multilingual parallels loading completed.")
+
+
+def clean_multilingual_parallels(db):
+    """
+    Clean all multilingual parallels from the database.
+    This removes parallels that have different source and target languages.
+    
+    :param db: ArangoDB connection object
+    """
+    db_collection = db.collection(COLLECTION_PARALLELS)
+    
+    # Remove parallels where src_lang != tgt_lang (these are multilingual)
+    # We need to use a query to find documents where src_lang != tgt_lang
+    query = """
+    FOR p IN parallels
+        FILTER p.src_lang != p.tgt_lang
+        REMOVE p IN parallels
+    """
+    result = db.aql.execute(query)
+    deleted_count = 0
+    for _ in result:
+        deleted_count += 1
+    
+    print(f"Deleted {deleted_count} multilingual parallels")
+
+
 def clean_all_parallels_collections(db):
     """
     Remove and recreate all parallels-related collections completely.

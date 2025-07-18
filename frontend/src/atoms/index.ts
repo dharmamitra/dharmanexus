@@ -1,10 +1,12 @@
 import { NodeApi, TreeApi } from "react-arborist";
 import { DbSourceTreeNode } from "@components/db/SearchableDbSourceTree/types";
-import type { Script } from "@features/SidebarSuite/types";
+import type { TibetanScript } from "@features/SidebarSuite/types";
 import { DbSourceFiltersSelectedIds } from "@features/SidebarSuite/types";
 import { DbViewEnum, DEFAULT_DB_VIEW } from "@utils/constants";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+
+export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
 
 /**
  * GENERAL
@@ -33,10 +35,12 @@ export const focusedDbSourceTreeNodeAtom = atom<
 /**
  * SETTINGS SIDEBAR
  */
-export const scriptSelectionAtom = atomWithStorage<Script>(
-  "text-script-selection",
+
+export const tibetanScriptSelectionAtom = atomWithStorage<TibetanScript>(
+  "tibetan-script-selection",
   "Unicode",
 );
+
 export const isSettingsOpenAtom = atomWithStorage<boolean>(
   "isSettingsOpen",
   false,
@@ -45,6 +49,9 @@ export const dbSourceFiltersSelectedIdsAtom = atom<DbSourceFiltersSelectedIds>({
   exclude_sources: [],
   include_sources: [],
 });
+
+export const isSearchDrawerOpenAtom = atom(false);
+export const isSettingsDrawerOpenAtom = atom(false);
 
 /**
  * TEXT VIEW
@@ -72,4 +79,6 @@ export const includeMatchesAtom = atomWithStorage<boolean>(
 
 export const activeSegmentMatchesAtom = atom<string[]>([]);
 
-export const hoveredOverParallelIdAtom = atom<string>("");
+export const hoveredOverParallelIdAtom = atom<string | null>(null);
+
+export const isMiddlePaneMovingAtom = atom(false);

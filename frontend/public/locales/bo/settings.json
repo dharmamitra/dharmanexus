@@ -3,7 +3,8 @@
     "selectLanguage": "སྐད་ཡིག་འདེམས།",
     "noSelection": "འདེམས་སྒྲུག་བྱས་མི་འདུག",
     "default": "སྤྱིར་བཏང་།",
-    "resultsSubject": "སངས་རྒྱས་སྒྱུ་དྲྭའི་འཚོལ་འབྲས་སྦྲེལ་ཐག"
+    "resultsSubject": "སངས་རྒྱས་སྒྱུ་དྲྭའི་འཚོལ་འབྲས་སྦྲེལ་ཐག",
+    "close": "Close"
   },
   "resultsHead": {
     "matches": "འདྲ་མཚུངས།",
@@ -17,19 +18,16 @@
     "textSelectTip": "འཚོལ་ཞིབ་ཡིག་ཆ་གསར་འདེམས་བྱོས།",
     "cappedMessage": "མཚུངས་འབྲས་བསྡུར་བྱའི་ཚད་ལས་བརྒལ་སོང་། {{max}} "
   },
-  "tabs": {
-    "settings": "སྒྲིག་བཀོད།",
-    "options": "གདམ་ཀ",
-    "info": "གནས་ཚུལ།"
-  },
   "headings": {
-    "filters": "ཚགས་སྒྲིག",
-    "display": "འགྲེམས་སྟོན།",
-    "tools": "ལག་ཆ།",
-    "links": "སྦྲེལ་ཐག"
+    "settings": "Settings",
+    "filters": "Match Filters",
+    "display": "Display Settings",
+    "tools": "Utilities",
+    "links": "Links"
   },
   "optionsLabels": {
     "script": "ཡི་གེ་འདེམས་སྒྲུག་བྱོས།",
+    "tibetanScript": "Tibetan script",
     "folioAsGoTo": "འདེམས་སྒྲུབ་བྱས་པའི་ཡིག་ཆ་ལ་ཕྱིར་ལོག་བྱོས།",
     "folioAsLimit": "འདེམས་སྒྲུག་བྱས་པའི་ཡིག་ཆའི་སྡེ་ཚན་ལས་མཚུངས་འབྲས་རྣམས་སྟོན།",
     "folioShowAll": "ཡིག་ཆ་ཆ་ཚང་།",
@@ -49,7 +47,9 @@
     "emailResultInfo": "Email result page details",
     "showSegmentNumbers": "ཚན་པའི་གྲངས་ཐོ་སྟོན།",
     "useMonochromaticSegmentColors": "ཚན་པ་མཚུངས་པ་རྣམས་ཁ་དོག་གཅིག་གྱུར་བྱོས།",
-    "showTextViewMatches": "Show matches with other {{lang}} texts"
+    "showTextViewMatches": "Show matches with other {{lang}} texts",
+    "showMatches": "Show matches",
+    "fontSize": "Font size"
   },
   "optionsPopperMsgs": {
     "downloadStarted": "Downloading...",

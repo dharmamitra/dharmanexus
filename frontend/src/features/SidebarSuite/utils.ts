@@ -1,6 +1,6 @@
 import type {
   LanguageUnavailableSettings,
-  Script,
+  TibetanScript,
 } from "@features/SidebarSuite/types";
 import { DbLanguage } from "@utils/api/types";
 import { EwtsConverter } from "tibetan-ewts-converter";
@@ -36,16 +36,18 @@ export const getAvailableSettings = <T extends string>({
 
 const ewts = new EwtsConverter();
 
-export const enscriptText = ({
+export const enscriptSegment = ({
   text,
-  language,
-  script,
+  segmentLanguage,
+  tibetanScript,
 }: {
   text?: string;
-  language: DbLanguage | undefined;
-  script: Script;
+  segmentLanguage: DbLanguage;
+  tibetanScript: TibetanScript;
 }) => {
-  return script === "Unicode" && language === "bo"
-    ? ewts.to_unicode(text)
-    : text;
+  if (segmentLanguage === "bo" && tibetanScript === "Unicode") {
+    return ewts.to_unicode(text);
+  }
+
+  return text;
 };

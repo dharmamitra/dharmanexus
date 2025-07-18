@@ -1,19 +1,17 @@
-import { fontSizeAtom, scriptSelectionAtom } from "@atoms";
-import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
-import { enscriptText } from "@features/SidebarSuite/utils";
+import { fontSizeAtom, tibetanScriptSelectionAtom } from "@atoms";
+import { enscriptSegment } from "@features/SidebarSuite/utils";
 import { Typography } from "@mui/material";
-import { APISchemas } from "@utils/api/types";
+import { APISchemas, DbLanguage } from "@utils/api/types";
 import { useAtomValue } from "jotai";
 
 interface Props {
   text: APISchemas["FullText"][];
+  language: DbLanguage;
 }
 
-export const ParallelSegmentText = ({ text }: Props) => {
-  const { dbLanguage } = useDbPageRouterParams();
-  const script = useAtomValue(scriptSelectionAtom);
+export const ParallelSegmentText = ({ text, language }: Props) => {
+  const tibetanScript = useAtomValue(tibetanScriptSelectionAtom);
   const fontSize = useAtomValue(fontSizeAtom);
-
   if (!text) {
     return null;
   }
@@ -26,14 +24,14 @@ export const ParallelSegmentText = ({ text }: Props) => {
         return (
           <Typography
             key={segmentText}
-            sx={{ display: "inline", fontSize: `${fontSize}px` }}
+            sx={{ display: "inline", fontSize: `${fontSize}px !important` }}
             fontWeight={isMatch ? 600 : 400}
             color={isMatch ? "text.primary" : "text.secondary"}
           >
-            {enscriptText({
+            {enscriptSegment({
               text: segmentText ?? "",
-              script,
-              language: dbLanguage,
+              tibetanScript,
+              segmentLanguage: language,
             })}
           </Typography>
         );

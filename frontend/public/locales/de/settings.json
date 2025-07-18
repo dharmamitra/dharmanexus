@@ -3,7 +3,8 @@
     "selectLanguage": "Sprache auswählen",
     "noSelection": "Nichts ausgewählt",
     "default": "Standard",
-    "resultsSubject": "DharmaNexus Suchergebnisse-Link"
+    "resultsSubject": "DharmaNexus Suchergebnisse-Link",
+    "close": "Close"
   },
   "resultsHead": {
     "matches": "Übereinstimmungen:",
@@ -17,19 +18,16 @@
     "textSelectTip": "Wählen Sie einen neuen Anfragetext",
     "cappedMessage": "Übereinstimmungen: {{max}} oder mehr."
   },
-  "tabs": {
-    "settings": "Einstellungen",
-    "options": "Optionen",
-    "info": "Info"
-  },
   "headings": {
-    "filters": "Filter",
-    "display": "Anzeigen",
-    "tools": "Werkzeuge",
+    "settings": "Settings",
+    "filters": "Match Filters",
+    "display": "Display Settings",
+    "tools": "Utilities",
     "links": "Links"
   },
   "optionsLabels": {
     "script": "Textskript auswählen",
+    "tibetanScript": "Tibetan Script",
     "folioAsGoTo": "Gehe zum ausgewählten Textabschnitt",
     "folioAsLimit": "Übereinstimmungen aus ausgewähltem Textabschnitt anzeigen",
     "folioShowAll": "Hele tekst",
@@ -49,7 +47,9 @@
     "emailResultInfo": "Email result page details",
     "showSegmentNumbers": "Segmentnummern anzeigen",
     "useMonochromaticSegmentColors": "Verwenden Sie monochromatische Farbkombinationen",
-    "showTextViewMatches": "Übereinstimmungen mit anderen {{lang}} Texten anzeigen"
+    "showTextViewMatches": "Übereinstimmungen mit anderen {{lang}} Texten anzeigen",
+    "showMatches": "Übereinstimmungen anzeigen",
+    "fontSize": "Font size"
   },
   "optionsPopperMsgs": {
     "downloadStarted": "Downloading...",

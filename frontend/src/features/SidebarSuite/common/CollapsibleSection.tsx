@@ -24,10 +24,15 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${title}-content`}
         id={`${title}-header`}
+        sx={{ my: "0 !important" }}
       >
-        <Typography>{title}</Typography>
+        <Typography component="h3" fontWeight={500}>
+          {title}
+        </Typography>
       </AccordionSummary>
-      <AccordionDetails>{children}</AccordionDetails>
+      <AccordionDetails sx={{ py: "0 !important" }}>
+        {children}
+      </AccordionDetails>
     </Accordion>
   );
 };

@@ -36,6 +36,11 @@
   }
 }
 
+.segment--initial-active {
+  background: var(--mui-palette-grey-700) !important;
+  color: var(--mui-palette-common-white) !important;
+}
+
 .segmentNumber {
   pointer-events: auto;
 

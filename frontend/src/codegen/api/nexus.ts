@@ -650,6 +650,8 @@ export interface components {
       segnr: string;
       /** Segtext */
       segtext: components["schemas"]["FullMatchText"][];
+      /** Lang */
+      lang: string;
     };
     /** TextParallelsInput */
     TextParallelsInput: {

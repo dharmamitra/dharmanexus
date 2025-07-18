@@ -32,6 +32,8 @@ from load_parallels import (
     load_sorted_parallels_for_language,
     clean_parallels_for_language,
     clean_all_parallels_collections,
+    load_multilingual_parallels,
+    clean_multilingual_parallels,
 )
 
 from utils import get_database, get_system_database
@@ -167,6 +169,37 @@ def clean_parallels(c, lang=DEFAULT_LANGS):
     for l in lang:
         clean_parallels_for_language(l, db)
         print("Parallel data cleaned for language ", l)
+
+
+@task
+def load_multilingual_matches(c, root_url=DEFAULT_MATCH_URL, threaded=True):
+    """
+    Load multilingual parallel files from the multilingual directory into the database.
+    
+    :param c: invoke.py context object
+    :param root_url: URL to the server where source files are stored
+    :param threaded: If dataloading should use multithreading. Uses n threads, where n = system cpu count.
+    """
+    thread_count = os.cpu_count()
+    print(
+        f"Loading multilingual parallel files from {root_url}/multilingual using {f'{thread_count} threads' if threaded else '1 thread'}."
+    )
+    db = get_database()
+    load_multilingual_parallels(
+        root_url, db, thread_count if threaded else 1
+    )
+
+
+@task
+def clean_multilingual_matches(c):
+    """
+    Clean all multilingual parallels from the database.
+    
+    :param c: invoke.py context object
+    """
+    db = get_database()
+    clean_multilingual_parallels(db)
+    print("Multilingual parallel data cleaned.")
 
 
 @task

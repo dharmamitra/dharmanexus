@@ -4,15 +4,16 @@ Contains all database queries related to graph view.
 """
 
 QUERY_GRAPH_VIEW = """
-LET target_file = FIRST(
+LET target_file = (
     FOR f IN parallels_sorted_file
         FILTER f.filename == @filename
         RETURN f
-)
+)[0]
 
 LET current_parallels = (
         FOR current_parallel IN target_file.parallels_randomized
-            LET p = DOCUMENT(parallels, current_parallel)
+            for p in parallels
+                FILTER p.parallel_id == current_parallel
                 FILTER LENGTH(@filter_include_collections) == 0 OR p.par_collection IN @filter_include_collections
                 FILTER p.score * 100 >= @score
                 FILTER p.par_length >= @parlength

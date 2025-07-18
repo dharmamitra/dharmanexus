@@ -21,6 +21,7 @@ class FullMatchText(FullText):
 class TextItem(BaseModel):
     segnr: str
     segtext: List[FullMatchText]
+    lang: str
 
 
 class TextViewLeftOutput(BaseModel):

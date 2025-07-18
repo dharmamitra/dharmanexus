@@ -1,21 +1,23 @@
-import { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import Link from "next/link";
 import {
   activeSegmentMatchesAtom,
-  fontSizeAtom,
   hoveredOverParallelIdAtom,
-  scriptSelectionAtom,
   shouldShowSegmentNumbersAtom,
   shouldUseMonochromaticSegmentColorsAtom,
   textViewIsMiddlePanePointingLeftAtom,
 } from "@atoms";
-import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { sourceSans } from "@components/theme";
-import { enscriptText } from "@features/SidebarSuite/utils";
-import { TextViewPaneProps } from "@features/textView/TextViewPane";
+import { TibetanScript } from "@features/SidebarSuite/types";
+import { enscriptSegment } from "@features/SidebarSuite/utils";
 import { createURLToSegment } from "@features/textView/utils";
-import { Box, Link as MuiLink, useMediaQuery, useTheme } from "@mui/material";
-import { useColorScheme } from "@mui/material/styles";
+import {
+  Box,
+  Link as MuiLink,
+  useColorScheme,
+  useMediaQuery,
+} from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-parallels";
 import type { Scale } from "chroma-js";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -26,6 +28,20 @@ import {
 } from "./constants";
 import styles from "./textSegment.module.scss";
 
+type TextSegmentProps = {
+  isRightPane: boolean;
+  data: ParsedTextViewParallel;
+  colorScale: Scale;
+  activeSegmentId: string;
+  activeSegmentIndex: number;
+  setActiveSegmentId: (id: string) => Promise<URLSearchParams>;
+  setActiveSegmentIndex: (index: number) => Promise<URLSearchParams>;
+  clearActiveMatch: () => Promise<void>;
+  initialActiveSegment?: string;
+  tibetanScript: TibetanScript;
+  fontSize: number;
+};
+
 export const TextSegment = ({
   isRightPane,
   data,
@@ -35,12 +51,10 @@ export const TextSegment = ({
   setActiveSegmentId,
   setActiveSegmentIndex,
   clearActiveMatch,
-}: {
-  data?: ParsedTextViewParallel;
-  colorScale: Scale;
-  activeSegmentId: string;
-  clearActiveMatch: () => Promise<void>;
-} & TextViewPaneProps) => {
+  initialActiveSegment,
+  tibetanScript,
+  fontSize,
+}: TextSegmentProps) => {
   const theme = useTheme();
   useMediaQuery(theme.breakpoints.up("sm"));
   const { mode } = useColorScheme();
@@ -49,8 +63,6 @@ export const TextSegment = ({
     ? DARK_MODE_MATCH_HEAT_INVERTED_COLORS
     : LIGHT_MODE_MATCH_HEAT_COLORS;
 
-  const { dbLanguage } = useDbPageRouterParams();
-
   const shouldUseMonochromaticSegmentColors = useAtomValue(
     shouldUseMonochromaticSegmentColorsAtom,
   );
@@ -58,13 +70,13 @@ export const TextSegment = ({
   const hoveredOverParallelId = useAtomValue(hoveredOverParallelIdAtom);
   const setSelectedSegmentMatches = useSetAtom(activeSegmentMatchesAtom);
   const isSegmentSelected = activeSegmentId === data?.segmentNumber;
+  const isInitialActiveSegment =
+    initialActiveSegment === data?.segmentNumber &&
+    activeSegmentId === initialActiveSegment;
 
   const [, setIsMiddlePanePointingLeft] = useAtom(
     textViewIsMiddlePanePointingLeftAtom,
   );
-
-  const scriptSelection = useAtomValue(scriptSelectionAtom);
-  const fontSize = useAtomValue(fontSizeAtom);
 
   const updateSelectedLocationInGlobalState = useCallback(
     async (location: { id: string; index: number; matches: string[] }) => {
@@ -96,7 +108,7 @@ export const TextSegment = ({
 
   const urlToSegment = createURLToSegment({
     segmentNumber: data.segmentNumber,
-    language: dbLanguage,
+    language: data.language,
   });
 
   // segnr also contains the file name - we need to strip it away
@@ -123,10 +135,10 @@ export const TextSegment = ({
         {data.segmentText.map(
           ({ text, highlightColor, matches, isActiveMatch }, i) => {
             const segmentKey = segmentNumber ? segmentNumber + i : undefined;
-            const textContent = enscriptText({
+            const textContent = enscriptSegment({
               text,
-              script: scriptSelection,
-              language: dbLanguage,
+              tibetanScript,
+              segmentLanguage: data.language,
             });
 
             // [hack/workaround]: in the right pane, we don't know the correct segment index
@@ -138,9 +150,10 @@ export const TextSegment = ({
                 activeSegmentIndex === i ||
                 activeSegmentIndex > data.segmentText.length);
 
-            const isSegmentPartHoveredOverInMiddleView = matchSets
-              ? matchSets[i]?.has(hoveredOverParallelId)
-              : false;
+            const isSegmentPartHoveredOverInMiddleView =
+              matchSets && hoveredOverParallelId
+                ? matchSets[i]?.has(hoveredOverParallelId)
+                : false;
 
             const isSelected = isSegmentSelected
               ? isSegmentPartSelected
@@ -152,7 +165,10 @@ export const TextSegment = ({
               isSegmentPartSelected &&
               !isActiveMatch &&
               styles["segment--part-selected"]
-            } ${isSegmentPartHoveredOverInMiddleView && styles["segment--parallel-hovered"]}`;
+            } ${
+              isSegmentPartHoveredOverInMiddleView &&
+              styles["segment--parallel-hovered"]
+            } ${isInitialActiveSegment && styles["segment--initial-active"]}`;
 
             if (matches.length === 0) {
               return (

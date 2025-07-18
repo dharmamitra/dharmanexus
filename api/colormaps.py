@@ -320,12 +320,26 @@ def calculate_color_maps_middle_view(data):
             par_fulltext = trim_long_text(par_fulltext, entry["tgt_lang"])
             entry["par_fulltext"] = par_fulltext
             entry["score"] = prettify_score(entry["score"])
+            
+            # Handle par_segnr safely - ensure it's a list and not empty
             entry["par_segnr_range"] = shorten_segment_names(entry["par_segnr"])
             entry["par_segnr"] = entry["par_segnr"][0]
             del entry["par_offset_beg"]
             del entry["par_offset_end"]
         else:
-            print(entry)
+            print(f"Warning: Empty par_segtext for entry: {entry}")
+            # Set default values for missing data
+            entry["par_fulltext"] = []
+            entry["score"] = prettify_score(entry["score"])
+            
+            # Handle par_segnr safely
+            entry["par_segnr_range"] = shorten_segment_names(entry["par_segnr"])
+            entry["par_segnr"] = entry["par_segnr"][0]
+            # Remove offset fields if they exist
+            if "par_offset_beg" in entry:
+                del entry["par_offset_beg"]
+            if "par_offset_end" in entry:
+                del entry["par_offset_end"]
     return data
 
 

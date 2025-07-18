@@ -2,7 +2,6 @@ import * as React from "react";
 import { useTranslation } from "next-i18next";
 import { isDbSourceBrowserDrawerOpenAtom } from "@atoms";
 import { useSettingsDrawer } from "@components/hooks/useSettingsDrawer";
-import { TextViewMatchesSwitch } from "@features/SidebarSuite/uiSettings/TextViewMatchesSwitch";
 import GradingOutlinedIcon from "@mui/icons-material/GradingOutlined";
 import TuneIcon from "@mui/icons-material/Tune";
 import { Box, Button, ButtonGroup, useMediaQuery } from "@mui/material";
@@ -21,7 +20,6 @@ export const DbFileButtons = () => {
 
   return (
     <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-      <TextViewMatchesSwitch />
       <ButtonGroup
         variant="outlined"
         orientation={isSm ? "horizontal" : "vertical"}

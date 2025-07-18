@@ -21,6 +21,7 @@ from .endpoints import (
     utils,
     links,
     download,
+    matches,
 )
 
 API_PREFIX = "/api-db" if os.environ["PROD"] == "1" else "/api-db"
@@ -71,22 +72,26 @@ async def startup():
     Configures the cache with custom key builder and JSON coder.
     """
     logger.info("Initializing FastAPI application...")
-    redis = aioredis.from_url(
-        "redis://redis:6379",
-        encoding="utf8",
-        decode_responses=False,
-        socket_timeout=300,
-        socket_connect_timeout=300,
-        retry_on_timeout=True,
-        health_check_interval=30,
-    )
-    FastAPICache.init(
-        backend=RedisBackend(redis),
-        prefix="dharmanexus-cache",
-        key_builder=make_cache_key_builder(),
-        coder=CustomJsonCoder(),
-    )
-    logger.info("Cache initialized")
+    try:
+        redis = aioredis.from_url(
+            "redis://redis:6379",
+            encoding="utf8",
+            decode_responses=False,
+            socket_timeout=300,
+            socket_connect_timeout=300,
+            retry_on_timeout=True,
+            health_check_interval=30,
+        )
+        FastAPICache.init(
+            backend=RedisBackend(redis),
+            prefix="dharmanexus-cache",
+            key_builder=make_cache_key_builder(),
+            coder=CustomJsonCoder(),
+        )
+        logger.info("Cache initialized")
+    except Exception as e:
+        logger.error(f"Error initializing cache: {e}")
+        raise
 
 
 APP.include_router(graph_view.router)
@@ -97,6 +102,7 @@ APP.include_router(numbers_view.router, prefix="/numbers-view")
 APP.include_router(links.router, prefix="/links")
 APP.include_router(utils.router, prefix="/utils")
 APP.include_router(menu.router)
+APP.include_router(matches.router)
 
 
 @APP.get("/")
