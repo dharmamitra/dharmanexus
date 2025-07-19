@@ -98,7 +98,7 @@ def trim_long_text(text, language="en"):
     # Use a creative unicode ellipsis: ⋯ (horizontal ellipsis)
     ellipsis = " ⋯ "
     available_length = max_length - len(ellipsis)
-    
+
     # Calculate how much text to show at beginning and end
     first_part_length = min(half_length, available_length // 2)
     last_part_length = available_length - first_part_length
@@ -175,7 +175,8 @@ def trim_segmented_text(segmented_text, language="en"):
     return first_part + [ellipsis_segment] + last_part
 
 
-def _process_parallel_coloring(entry, parallel_id, parallels_dict, current_colormap, current_matchmap):
+def _process_parallel_coloring(entry, parallel_id, parallels_dict,
+                               current_colormap, current_matchmap):
     """Helper function to process parallel coloring for a single parallel"""
     current_parallel = parallels_dict.get(parallel_id)
     if current_parallel is None:
@@ -184,43 +185,44 @@ def _process_parallel_coloring(entry, parallel_id, parallels_dict, current_color
     segtext_len = len(entry["segtext"])
     start = 0
     end = segtext_len
-    
+
     if current_parallel["root_segnr"][0] == entry["segnr"]:
         start = current_parallel["root_offset_beg"]
     if current_parallel["root_segnr"][-1] == entry["segnr"]:
         end = current_parallel["root_offset_end"]
-    
+
     # it is embarassing that we need to do this,
     # this should be dealt with at data-loader level
     end = min(end, segtext_len)
-    
+
     for item in range(start, end):
         current_colormap[item] += 1
         if parallel_id not in current_matchmap[item]:
             current_matchmap[item].append(parallel_id)
 
 
-def _process_active_match_coloring(entry, active_match, active_flag, current_colormap, current_active_map):
+def _process_active_match_coloring(entry, active_match, active_flag,
+                                   current_colormap, current_active_map):
     """Helper function to process active match coloring"""
     segtext_len = len(entry["segtext"])
     start = 0
     end = segtext_len
-    
+
     if active_match["par_segnr"][0] == entry["segnr"]:
         start = active_match["par_offset_beg"]
         active_flag = True
     if active_match["par_segnr"][-1] == entry["segnr"]:
         end = active_match["par_offset_end"]
-    
+
     end = min(end, segtext_len)
-    
+
     if active_flag:
         for item in range(start, end):
             current_colormap[item] += 1
             current_active_map[item] = True
         if active_match["par_segnr"][-1] == entry["segnr"]:
             active_flag = False
-    
+
     return active_flag
 
 
@@ -233,7 +235,7 @@ def calculate_color_maps_text_view(data, active_match=None):
     textleft = data["textleft"]
     parallels_dict = dict(zip(data["parallel_ids"], data["parallels"]))
     active_flag = False
-    
+
     for entry in textleft:
         # initialize with zeros
         segtext_len = len(entry["segtext"])
@@ -241,16 +243,18 @@ def calculate_color_maps_text_view(data, active_match=None):
         current_active_map = [False] * segtext_len
         current_matchmap = [[] for _ in range(segtext_len)]
         # this variable holds the ids of the parallels that are present at each character
-        
+
         # now add the color layer
         for parallel_id in entry["parallel_ids"]:
-            _process_parallel_coloring(entry, parallel_id, parallels_dict, current_colormap, current_matchmap)
-        
+            _process_parallel_coloring(entry, parallel_id, parallels_dict,
+                                     current_colormap, current_matchmap)
+
         # when an active match is present, we need to highlight the corresponding segment,
         # since we cannot be 100% sure that the right match is present in the database.
         if active_match:
-            active_flag = _process_active_match_coloring(entry, active_match, active_flag, current_colormap, current_active_map)
-        
+            active_flag = _process_active_match_coloring(
+                entry, active_match, active_flag, current_colormap, current_active_map
+            )
         entry["segtext"] = create_segmented_text(
             entry["segtext"], current_colormap, current_matchmap, current_active_map
         )
