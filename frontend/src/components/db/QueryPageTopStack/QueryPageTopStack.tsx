@@ -1,9 +1,9 @@
 import * as React from "react";
 import CurrentResultChips from "@components/db/CurrentResultChips";
 import { useViewMatches } from "@components/hooks/useViewMatches";
+import { RESULT_PAGE_TITLE_GROUP_ID } from "@constants/base";
 import { TextViewMatchesSwitch } from "@features/SidebarSuite/uiSettings/TextViewMatchesSwitch";
 import { Box, Stack, Typography } from "@mui/material";
-import { RESULT_PAGE_TITLE_GROUP_ID } from "@utils/constants";
 
 import { DbFileButtons } from "./DbFileButtons";
 import { QueryPageButtons } from "./QueryPageButtons";

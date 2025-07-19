@@ -16,7 +16,7 @@ import {
   handleTreeChange,
   isSearchMatch,
 } from "@components/db/SearchableDbSourceTree/utils";
-import { DbViewEnum } from "@utils/constants";
+import { DbViewEnum } from "@constants/view";
 import { useAtomValue, useSetAtom } from "jotai";
 
 import { DbSourceFilterTreeNode } from "./DbSourceFilterTreeNode";
