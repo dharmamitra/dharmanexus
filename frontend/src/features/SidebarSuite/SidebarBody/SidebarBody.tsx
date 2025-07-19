@@ -89,7 +89,7 @@ export function SidebarBody({
             }}
           >
             <ResetFiltersButton />
-            <MultiLingualSelector />
+            {currentView === DbViewEnum.TEXT && <MultiLingualSelector />}
             <ScoreFilter />
             <ParLengthFilter />
             <DbSourceFilter filterName="exclude_sources" />
