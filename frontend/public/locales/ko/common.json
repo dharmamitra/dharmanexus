@@ -1,0 +1,90 @@
+{
+  "global": {
+    "siteTitle": "DharmaNexus",
+    "language": "언어"
+  },
+  "header": {
+    "docs": "문서",
+    "database": "소스",
+    "search": "검색",
+    "toggleTheme": "테마 전환"
+  },
+  "language": {
+    "all": "모두",
+    "pa": "팔리어",
+    "zh": "중국어",
+    "sa": "산스크리트어",
+    "bo": "티베트어",
+    "undefined": ""
+  },
+  "footer": {
+    "about": "소개",
+    "introduction": "소개",
+    "history": "역사",
+    "guide": "가이드",
+    "community": "커뮤니티",
+    "institutions": "기관",
+    "people": "사람들",
+    "news": "뉴스",
+    "activities": "활동",
+    "publications": "출판물",
+    "events": "이벤트",
+    "projects": "프로젝트",
+    "presentations": "발표",
+    "contact": "연락처"
+  },
+  "db": {
+    "searchInputPlaceholder": "소스 텍스트 선택",
+    "length": "길이",
+    "score": "유사도",
+    "matches": "일치",
+    "clearSelectedSegment": "선택된 세그먼트 지우기",
+    "segmentMatches": "세그먼트 일치"
+  },
+  "news": {
+    "title": "뉴스",
+    "readMore": "더 보기",
+    "backToNews": "뉴스로 돌아가기"
+  },
+  "textBrowser": {
+    "mainPrompt": "{{ languageName }} 텍스트 탐색"
+  },
+  "prompts": {
+    "genericErrorTitle": "문제가 발생했습니다.",
+    "genericErrorDescription": "문제가 지속되면 문의해 주세요.",
+    "fetchError": "결과 데이터를 가져오는 중 오류가 발생했습니다",
+    "dbSrcMenuError": "데이터베이스 소스 메뉴를 가져오는 중 오류가 발생했습니다. 데이터베이스 언어가 유효하지 않습니다.",
+    "queryWarning": "결과를 표시할 수 없습니다. 필터를 사용하여 쿼리를 조정하세요.",
+    "noFile": "파일이 선택되지 않았습니다.",
+    "fileUndefined": "파일이 정의되지 않았습니다.",
+    "loading": "로드 중...",
+    "noResults": "결과를 찾을 수 없습니다.",
+    "showLess": "간략히 보기",
+    "showAll": "모두 보기 ({{count}})",
+    "openAll": "모두 열기",
+    "closeAll": "모두 닫기",
+    "close": "닫기"
+  },
+  "search": {
+    "pageTitle": "검색 결과",
+    "dialogTitle": "DharmaNexus 글로벌 검색",
+    "inputPlaceholder": "정확한 검색어를 입력하세요 (전체 단어만)",
+    "search": "텍스트 이름 또는 번호 입력",
+    "runSearch": "검색 실행",
+    "clearSearch": "검색어 지우기",
+    "toggleSearch": "검색 상자 전환",
+    "openSearch": "검색 상자 열기",
+    "closeSearch": "검색 상자 닫기",
+    "noResultsHeading": "결과를 찾을 수 없습니다",
+    "noResultsTip": "검색을 조정해 보세요. 정확한 검색어를 전체 단어로 사용하고, 적절한 문장 부호와 발음 구별 기호를 사용하면 도움이 될 수 있습니다."
+  },
+  "graph": {
+    "histogramDataTitle": "조회 텍스트와 일치하는 상위 파일의 분포:",
+    "histogramDataSubtitle": "분포 차트는 근사 일치의 누적 길이를 기반으로 조회 텍스트와 일치하는 상위 파일의 분포를 보여줍니다. 최대 50개의 히트 텍스트가 표시됩니다.",
+    "pieDataTitle": "현재 필터로 찾은 모든 일치 항목을 다양한 컬렉션과 하위 섹션에 걸쳐 분포.",
+    "pieDataSubtitle": "분포는 찾은 일치 항목의 길이로 가중치가 적용됩니다:",
+    "collection": "컬렉션",
+    "matchLengths": "일치 길이"
+  },
+  "toggleTheme": "테마 전환"
+} 

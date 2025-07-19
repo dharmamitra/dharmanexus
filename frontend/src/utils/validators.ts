@@ -1,3 +1,4 @@
+import { DbViewEnum, DEFAULT_DB_VIEW } from "@constants/view";
 import { SortMethod } from "@features/SidebarSuite/types";
 import {
   DEFAULT_PARAM_VALUES,
@@ -5,7 +6,6 @@ import {
 } from "@features/SidebarSuite/uiSettings/config";
 import { DbLanguage, dbLanguages } from "@utils/api/constants";
 import { APISchemas, CustomAPIError } from "@utils/api/types";
-import { DbViewEnum, DEFAULT_DB_VIEW } from "@utils/constants";
 
 export const isValidDbView = (view: unknown): view is DbViewEnum =>
   Object.values(DbViewEnum).some((item) => item === view);

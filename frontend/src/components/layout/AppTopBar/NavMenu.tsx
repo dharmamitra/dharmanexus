@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "next-i18next";
+import { DOCS_URL, SEARCH_URL } from "@constants/base";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Button, Link, useMediaQuery, useTheme } from "@mui/material";
@@ -7,7 +8,6 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { DOCS_URL, SEARCH_URL } from "@utils/constants";
 
 import { DbLanguageMenu } from "./DbLanguageMenu";
 

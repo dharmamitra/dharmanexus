@@ -1,6 +1,6 @@
 import { currentDbViewAtom } from "@atoms";
 import { useIncludeMatchesParam } from "@components/hooks/params";
-import { DbViewEnum } from "@utils/constants";
+import { DbViewEnum } from "@constants/view";
 import { useAtomValue } from "jotai";
 
 export const useViewMatches = () => {

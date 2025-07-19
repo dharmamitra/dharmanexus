@@ -1,14 +1,14 @@
-name: Build project
+name: Lint backend
 
-on: [ push ]
+on: [push]
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ 3.8 ]
+        python-version: [3.8]
 
     steps:
       - uses: actions/checkout@v3
@@ -22,5 +22,5 @@ jobs:
           python -m pip install xlsxwriter
           python -m pip install -r setup/requirements-dataloader.txt
           python -m pip install -r setup/requirements-fastapi.txt
-      - name: Lint with pylint
+      - name: Run pylint
         run: pylint ./api/*.py --disable=fixme,too-many-arguments,too-few-public-methods,duplicate-code --extension-pkg-whitelist=pydantic

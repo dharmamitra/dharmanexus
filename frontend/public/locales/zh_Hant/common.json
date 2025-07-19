@@ -1,0 +1,90 @@
+{
+  "global": {
+    "siteTitle": "DharmaNexus",
+    "language": "語言"
+  },
+  "header": {
+    "docs": "文件",
+    "database": "來源",
+    "search": "搜尋",
+    "toggleTheme": "切換主題"
+  },
+  "language": {
+    "all": "全部",
+    "pa": "巴利文",
+    "zh": "中文",
+    "sa": "梵文",
+    "bo": "藏文",
+    "undefined": ""
+  },
+  "footer": {
+    "about": "關於",
+    "introduction": "介紹",
+    "history": "歷史",
+    "guide": "指南",
+    "community": "社群",
+    "institutions": "機構",
+    "people": "人員",
+    "news": "新聞",
+    "activities": "活動",
+    "publications": "出版品",
+    "events": "活動",
+    "projects": "專案",
+    "presentations": "簡報",
+    "contact": "聯絡"
+  },
+  "db": {
+    "searchInputPlaceholder": "選擇來源文字",
+    "length": "長度",
+    "score": "相似度",
+    "matches": "匹配",
+    "clearSelectedSegment": "清除選定的段落",
+    "segmentMatches": "段落匹配"
+  },
+  "news": {
+    "title": "新聞",
+    "readMore": "閱讀更多",
+    "backToNews": "返回新聞"
+  },
+  "textBrowser": {
+    "mainPrompt": "瀏覽 {{ languageName }} 文字"
+  },
+  "prompts": {
+    "genericErrorTitle": "發生問題。",
+    "genericErrorDescription": "如果問題持續存在，請聯絡我們。",
+    "fetchError": "取得結果資料時發生錯誤",
+    "dbSrcMenuError": "取得資料庫來源選單時發生錯誤。資料庫語言無效。",
+    "queryWarning": "無法顯示結果。請使用篩選器調整您的查詢。",
+    "noFile": "未選擇檔案。",
+    "fileUndefined": "檔案未定義。",
+    "loading": "載入中...",
+    "noResults": "找不到結果。",
+    "showLess": "顯示較少",
+    "showAll": "顯示全部 ({{count}})",
+    "openAll": "全部開啟",
+    "closeAll": "全部關閉",
+    "close": "關閉"
+  },
+  "search": {
+    "pageTitle": "搜尋結果",
+    "dialogTitle": "DharmaNexus 全域搜尋",
+    "inputPlaceholder": "輸入確切的搜尋詞（僅限完整單字）",
+    "search": "輸入文字名稱或編號",
+    "runSearch": "執行搜尋",
+    "clearSearch": "清除搜尋詞",
+    "toggleSearch": "切換搜尋方塊",
+    "openSearch": "開啟搜尋方塊",
+    "closeSearch": "關閉搜尋方塊",
+    "noResultsHeading": "找不到結果",
+    "noResultsTip": "請嘗試調整您的搜尋。確保使用確切的搜尋詞，包含完整單字、正確的標點符號和相關的變音符號可能會有所幫助。"
+  },
+  "graph": {
+    "histogramDataTitle": "與查詢文字匹配的頂部檔案分佈:",
+    "histogramDataSubtitle": "分佈圖表顯示基於近似匹配累積長度與查詢文字匹配的頂部檔案分佈。最多顯示 50 個命中文字。",
+    "pieDataTitle": "使用當前篩選器找到的所有匹配在各種集合及其子區段中的分佈。",
+    "pieDataSubtitle": "分佈按找到的匹配長度加權:",
+    "collection": "集合",
+    "matchLengths": "匹配長度"
+  },
+  "toggleTheme": "切換主題"
+} 

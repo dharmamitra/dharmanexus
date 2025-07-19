@@ -1,10 +1,9 @@
 import type { GetStaticPaths } from "next";
 import type { UserConfig } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { dbLanguages } from "@utils/api/constants";
-
 // TODO: getTextFileMenuData function removed with api update dropping the relevant menu endpoints. This needs to be refactored for the "metadata" endpoint
-import { SUPPORTED_LOCALES } from "./constants";
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@constants/i18n";
+import { dbLanguages } from "@utils/api/constants";
 
 interface I18nProps {
   props: {
@@ -28,7 +27,7 @@ export const getI18NextStaticProps: (
 ) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? "en", [
+      ...(await serverSideTranslations(locale ?? DEFAULT_LOCALE, [
         "common",
         ...extraNamespaces,
       ])),
@@ -37,7 +36,7 @@ export const getI18NextStaticProps: (
 };
 
 const dbLanguagePaths = dbLanguages.flatMap((language) =>
-  Object.keys(SUPPORTED_LOCALES).map((locale) => ({
+  SUPPORTED_LOCALES.map((locale) => ({
     params: { language },
     locale,
   })),

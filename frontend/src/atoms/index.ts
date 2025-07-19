@@ -1,8 +1,8 @@
 import { NodeApi, TreeApi } from "react-arborist";
 import { DbSourceTreeNode } from "@components/db/SearchableDbSourceTree/types";
+import { DbViewEnum, DEFAULT_DB_VIEW } from "@constants/view";
 import type { TibetanScript } from "@features/SidebarSuite/types";
 import { DbSourceFiltersSelectedIds } from "@features/SidebarSuite/types";
-import { DbViewEnum, DEFAULT_DB_VIEW } from "@utils/constants";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 

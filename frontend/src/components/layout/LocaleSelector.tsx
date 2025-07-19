@@ -1,10 +1,10 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { SUPPORTED_LOCALES_MAP } from "@constants/i18n";
 import CheckIcon from "@mui/icons-material/Check";
 import LanguageIcon from "@mui/icons-material/Language";
 import { Button, Menu } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import { SUPPORTED_LOCALES } from "@utils/constants";
 import type { SupportedLocale } from "src/types/i18next";
 
 export default function LocaleSelector() {
@@ -55,23 +55,25 @@ export default function LocaleSelector() {
         }}
         onClose={handleClose}
       >
-        {Object.entries(SUPPORTED_LOCALES).map(([localeCode, localeName]) => {
-          return (
-            <MenuItem
-              key={localeCode}
-              value={localeCode}
-              lang={localeCode}
-              onClick={() =>
-                handleLanguageChange(localeCode as SupportedLocale)
-              }
-            >
-              {localeName}
-              {currentLocale === localeCode && (
-                <CheckIcon sx={{ ml: 2 }} color="primary" />
-              )}
-            </MenuItem>
-          );
-        })}
+        {Object.entries(SUPPORTED_LOCALES_MAP).map(
+          ([localeCode, localeName]) => {
+            return (
+              <MenuItem
+                key={localeCode}
+                value={localeCode}
+                lang={localeCode}
+                onClick={() =>
+                  handleLanguageChange(localeCode as SupportedLocale)
+                }
+              >
+                {localeName}
+                {currentLocale === localeCode && (
+                  <CheckIcon sx={{ ml: 2 }} color="primary" />
+                )}
+              </MenuItem>
+            );
+          },
+        )}
       </Menu>
     </div>
   );

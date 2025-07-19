@@ -1,5 +1,5 @@
+import type { DbViewEnum } from "@constants/view";
 import { DbLanguage } from "@utils/api/types";
-import type { DbViewEnum } from "@utils/constants";
 
 export const getTextPath = ({
   dbLanguage,

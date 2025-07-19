@@ -6,8 +6,8 @@
   "header": {
     "docs": "Dokumentation",
     "database": "Quellen",
-    "guide": "Anleitung",
-    "toggleTheme": "Theme wechseln"
+    "search": "Suche",
+    "toggleTheme": "Theme umschalten"
   },
   "language": {
     "all": "Alle",
@@ -21,7 +21,7 @@
     "about": "Über",
     "introduction": "Einführung",
     "history": "Geschichte",
-    "guide": "Richtlinien",
+    "guide": "Anleitung",
     "community": "Gemeinschaft",
     "institutions": "Institutionen",
     "people": "Personen",
@@ -36,7 +36,7 @@
   "db": {
     "searchInputPlaceholder": "Quelltext auswählen",
     "length": "Länge",
-    "score": "Punktzahl",
+    "score": "Ähnlichkeit",
     "matches": "Übereinstimmungen",
     "clearSelectedSegment": "Ausgewähltes Segment löschen",
     "segmentMatches": "Segment-Übereinstimmungen"
@@ -47,43 +47,44 @@
     "backToNews": "Zurück zu den Neuigkeiten"
   },
   "textBrowser": {
-    "label": "Quelltext-Browser"
+    "mainPrompt": "{{ languageName }} Texte durchsuchen"
   },
   "prompts": {
     "genericErrorTitle": "Etwas ist schiefgelaufen.",
     "genericErrorDescription": "Bitte kontaktieren Sie uns, wenn das Problem weiterhin besteht.",
-    "fetchError": "Error fetching result data",
-    "dbSrcMenuError": "Error fetching database source menu. Database language is invalid.",
-    "queryWarning": "Unable to display results. Please use the filters to adjust your query.",
-    "noFile": "No file selected.",
-    "fileUndefined": "File undefined.",
+    "fetchError": "Fehler beim Abrufen der Ergebnisdaten",
+    "dbSrcMenuError": "Fehler beim Abrufen des Datenbankquellenmenüs. Die Datenbanksprache ist ungültig.",
+    "queryWarning": "Ergebnisse können nicht angezeigt werden. Bitte verwenden Sie die Filter, um Ihre Abfrage anzupassen.",
+    "noFile": "Keine Datei ausgewählt.",
+    "fileUndefined": "Datei nicht definiert.",
     "loading": "Wird geladen...",
     "noResults": "Keine Ergebnisse gefunden.",
     "showLess": "Weniger anzeigen",
     "showAll": "Alle anzeigen ({{count}})",
     "openAll": "Alle öffnen",
     "closeAll": "Alle schließen",
-    "close": "Close"
+    "close": "Schließen"
   },
   "search": {
     "pageTitle": "Suchergebnisse",
-    "dialogTitle": "BudhhaNexus Global Search",
+    "dialogTitle": "DharmaNexus Globale Suche",
     "inputPlaceholder": "Geben Sie den genauen Suchbegriff ein (nur ganze Wörter)",
-    "search": "Suchen",
+    "search": "Textname oder Nummer eingeben",
     "runSearch": "Suche ausführen",
-    "toggleSearch": "Toggle search box",
     "clearSearch": "Suchbegriff löschen",
+    "toggleSearch": "Suchfeld umschalten",
     "openSearch": "Suchfeld öffnen",
     "closeSearch": "Suchfeld schließen",
-    "noResultsHeading": "keine Ergebnisse gefunden",
-    "noResultsTip": "Try adjusting your search. Making sure you use an exact search term with whole words, correct punctuation and diacretical marks where relevant may help."
+    "noResultsHeading": "Keine Ergebnisse gefunden",
+    "noResultsTip": "Versuchen Sie, Ihre Suche anzupassen. Stellen Sie sicher, dass Sie einen genauen Suchbegriff mit ganzen Wörtern, korrekter Zeichensetzung und diakritischen Zeichen verwenden, wo relevant."
   },
   "graph": {
-    "histogramDataTitle": "Verteilung der Top-Dateien, die Übereinstimmungen mit dem Anfragetext haben:",
-    "histogramDataSubtitle": "Das Verteilungsdiagramm zeigt die Verteilung der Top-Dateien, die Übereinstimmungen mit dem Anfragetext aufweisen, basierend auf der kumulierten Länge der ungefähren Übereinstimmungen. Es werden maximal 50 Treffertexte angezeigt.",
+    "histogramDataTitle": "Verteilung der Dateien, die die meisten Übereinstimmungen mit dem Abfragetext haben:",
+    "histogramDataSubtitle": "Das Verteilungsdiagramm zeigt die Verteilung der Dateien, die die meisten Übereinstimmungen mit dem Abfragetext aufweisen, basierend auf der kumulierten Länge der ungefähren Übereinstimmungen. Es werden maximal 50 Treffertexte angezeigt.",
     "pieDataTitle": "Verteilung aller mit den aktuellen Filtern gefundenen Übereinstimmungen auf die verschiedenen Sammlungen und ihre Unterabschnitte.",
     "pieDataSubtitle": "Die Verteilung ist nach der Länge der gefundenen Übereinstimmungen gewichtet:",
-    "collection": "Kollektion",
+    "collection": "Sammlung",
     "matchLengths": "Übereinstimmungslängen"
-  }
+  },
+  "toggleTheme": "Farbschema umschalten"
 }

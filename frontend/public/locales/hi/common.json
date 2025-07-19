@@ -1,0 +1,90 @@
+{
+  "global": {
+    "siteTitle": "DharmaNexus",
+    "language": "भाषा"
+  },
+  "header": {
+    "docs": "दस्तावेज़",
+    "database": "स्रोत",
+    "search": "खोज",
+    "toggleTheme": "थीम बदलें"
+  },
+  "language": {
+    "all": "सभी",
+    "pa": "पालि",
+    "zh": "चीनी",
+    "sa": "संस्कृत",
+    "bo": "तिब्बती",
+    "undefined": ""
+  },
+  "footer": {
+    "about": "के बारे में",
+    "introduction": "परिचय",
+    "history": "इतिहास",
+    "guide": "मार्गदर्शिका",
+    "community": "समुदाय",
+    "institutions": "संस्थान",
+    "people": "लोग",
+    "news": "समाचार",
+    "activities": "गतिविधियाँ",
+    "publications": "प्रकाशन",
+    "events": "कार्यक्रम",
+    "projects": "परियोजनाएँ",
+    "presentations": "प्रस्तुतियाँ",
+    "contact": "संपर्क"
+  },
+  "db": {
+    "searchInputPlaceholder": "स्रोत पाठ चुनें",
+    "length": "लंबाई",
+    "score": "स्कोर",
+    "matches": "मेल",
+    "clearSelectedSegment": "चयनित खंड साफ़ करें",
+    "segmentMatches": "खंड मेल"
+  },
+  "news": {
+    "title": "समाचार",
+    "readMore": "और पढ़ें",
+    "backToNews": "समाचार पर वापस जाएँ"
+  },
+  "textBrowser": {
+    "mainPrompt": "{{ languageName }} ग्रंथों को ब्राउज़ करें"
+  },
+  "prompts": {
+    "genericErrorTitle": "कुछ गलत हो गया।",
+    "genericErrorDescription": "यदि समस्या बनी रहती है तो कृपया हमसे संपर्क करें।",
+    "fetchError": "परिणाम डेटा प्राप्त करने में त्रुटि",
+    "dbSrcMenuError": "डेटाबेस स्रोत मेनू प्राप्त करने में त्रुटि। डेटाबेस भाषा अमान्य है।",
+    "queryWarning": "परिणाम प्रदर्शित नहीं कर सकते। कृपया अपने प्रश्न को समायोजित करने के लिए फ़िल्टर का उपयोग करें।",
+    "noFile": "कोई फ़ाइल चयनित नहीं।",
+    "fileUndefined": "फ़ाइल अपरिभाषित।",
+    "loading": "लोड हो रहा है...",
+    "noResults": "कोई परिणाम नहीं मिला।",
+    "showLess": "कम दिखाएँ",
+    "showAll": "सभी दिखाएँ ({{count}})",
+    "openAll": "सभी खोलें",
+    "closeAll": "सभी बंद करें",
+    "close": "बंद करें"
+  },
+  "search": {
+    "pageTitle": "खोज परिणाम",
+    "dialogTitle": "DharmaNexus वैश्विक खोज",
+    "inputPlaceholder": "सटीक खोज शब्द दर्ज करें (केवल पूरे शब्द)",
+    "search": "पाठ का नाम या संख्या दर्ज करें",
+    "runSearch": "खोज चलाएँ",
+    "clearSearch": "खोज शब्द साफ़ करें",
+    "toggleSearch": "खोज बॉक्स टॉगल करें",
+    "openSearch": "खोज बॉक्स खोलें",
+    "closeSearch": "खोज बॉक्स बंद करें",
+    "noResultsHeading": "कोई परिणाम नहीं मिला",
+    "noResultsTip": "अपनी खोज को समायोजित करने का प्रयास करें। सुनिश्चित करें कि आप सटीक खोज शब्द का उपयोग कर रहे हैं जिसमें पूरे शब्द, सही विराम चिह्न और जहां प्रासंगिक हो वहां विशेष चिह्न शामिल हैं।"
+  },
+  "graph": {
+    "histogramDataTitle": "पूछताछ पाठ के साथ मेल खाने वाले शीर्ष फ़ाइलों का वितरण:",
+    "histogramDataSubtitle": "वितरण चार्ट अनुमानित मेलों के संचित लंबाई के आधार पर पूछताछ पाठ के साथ मेल खाने वाले शीर्ष फ़ाइलों का वितरण प्रदर्शित करता है। अधिकतम 50 हिट पाठ दिखाए गए हैं।",
+    "pieDataTitle": "विभिन्न संग्रहों और उनके उपखंडों में वर्तमान फ़िल्टर के साथ पाए गए सभी मेलों का वितरण।",
+    "pieDataSubtitle": "वितरण पाए गए मेलों की लंबाई के अनुसार भारित है:",
+    "collection": "संग्रह",
+    "matchLengths": "मेल लंबाई"
+  },
+  "toggleTheme": "थीम बदलें"
+} 

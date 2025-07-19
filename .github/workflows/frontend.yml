@@ -1,9 +1,9 @@
-name: Build frontend project
+name: Validate frontend
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
     defaults:
       run:

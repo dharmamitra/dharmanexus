@@ -1,0 +1,90 @@
+{
+  "global": {
+    "siteTitle": "DharmaNexus",
+    "language": "言語"
+  },
+  "header": {
+    "docs": "ドキュメント",
+    "database": "ソース",
+    "search": "検索",
+    "toggleTheme": "テーマを切り替え"
+  },
+  "language": {
+    "all": "すべて",
+    "pa": "パーリ語",
+    "zh": "中国語",
+    "sa": "サンスクリット語",
+    "bo": "チベット語",
+    "undefined": ""
+  },
+  "footer": {
+    "about": "概要",
+    "introduction": "紹介",
+    "history": "歴史",
+    "guide": "ガイド",
+    "community": "コミュニティ",
+    "institutions": "機関",
+    "people": "人々",
+    "news": "ニュース",
+    "activities": "活動",
+    "publications": "出版物",
+    "events": "イベント",
+    "projects": "プロジェクト",
+    "presentations": "プレゼンテーション",
+    "contact": "お問い合わせ"
+  },
+  "db": {
+    "searchInputPlaceholder": "ソーステキストを選択",
+    "length": "長さ",
+    "score": "類似度",
+    "matches": "一致",
+    "clearSelectedSegment": "選択されたセグメントをクリア",
+    "segmentMatches": "セグメント一致"
+  },
+  "news": {
+    "title": "ニュース",
+    "readMore": "続きを読む",
+    "backToNews": "ニュースに戻る"
+  },
+  "textBrowser": {
+    "mainPrompt": "{{ languageName }}テキストを閲覧"
+  },
+  "prompts": {
+    "genericErrorTitle": "問題が発生しました。",
+    "genericErrorDescription": "問題が続く場合は、お問い合わせください。",
+    "fetchError": "結果データの取得中にエラーが発生しました",
+    "dbSrcMenuError": "データベースソースメニューの取得中にエラーが発生しました。データベース言語が無効です。",
+    "queryWarning": "結果を表示できません。フィルターを使用してクエリを調整してください。",
+    "noFile": "ファイルが選択されていません。",
+    "fileUndefined": "ファイルが未定義です。",
+    "loading": "読み込み中...",
+    "noResults": "結果が見つかりません。",
+    "showLess": "少なく表示",
+    "showAll": "すべて表示 ({{count}})",
+    "openAll": "すべて開く",
+    "closeAll": "すべて閉じる",
+    "close": "閉じる"
+  },
+  "search": {
+    "pageTitle": "検索結果",
+    "dialogTitle": "DharmaNexusグローバル検索",
+    "inputPlaceholder": "正確な検索語を入力してください（完全な単語のみ）",
+    "search": "テキスト名または番号を入力",
+    "runSearch": "検索を実行",
+    "clearSearch": "検索語をクリア",
+    "toggleSearch": "検索ボックスを切り替え",
+    "openSearch": "検索ボックスを開く",
+    "closeSearch": "検索ボックスを閉じる",
+    "noResultsHeading": "結果が見つかりません",
+    "noResultsTip": "検索を調整してみてください。正確な検索語を完全な単語で使用し、適切な句読点とダイアクリティカルマークを使用することで、役立つ場合があります。"
+  },
+  "graph": {
+    "histogramDataTitle": "照会テキストとの一致を持つ上位ファイルの分布:",
+    "histogramDataSubtitle": "分布チャートは、近似一致の累積長に基づいて照会テキストとの一致を持つ上位ファイルの分布を表示します。最大50のヒットテキストが表示されます。",
+    "pieDataTitle": "現在のフィルターで見つかったすべての一致を、さまざまなコレクションとそのサブセクションにわたって分布。",
+    "pieDataSubtitle": "分布は見つかった一致の長さで重み付けされています:",
+    "collection": "コレクション",
+    "matchLengths": "一致の長さ"
+  },
+  "toggleTheme": "テーマを切り替え"
+} 

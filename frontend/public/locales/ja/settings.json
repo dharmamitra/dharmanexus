@@ -1,0 +1,73 @@
+{
+  "generic": {
+    "selectLanguage": "言語を選択",
+    "noSelection": "選択なし",
+    "default": "デフォルト",
+    "resultsSubject": "DharmaNexus検索結果リンク",
+    "close": "閉じる"
+  },
+  "resultsHead": {
+    "matches": "一致: ",
+    "filters": "カスタムフィルター: {{value}}",
+    "options": "カスタムオプション: {{value}}",
+    "settings": "設定",
+    "settingsTip": "設定パネルを切り替え",
+    "reset": "フィルターをリセット",
+    "resetTip": "デフォルト設定を復元",
+    "textSelect": "テキストを変更",
+    "textSelectTip": "新しい照会テキストを選択",
+    "cappedMessage": "結果が{{max}}一致の最大値を超えました。"
+  },
+  "headings": {
+    "settings": "設定",
+    "filters": "フィルター",
+    "display": "表示設定",
+    "tools": "ツール",
+    "links": "リンク"
+  },
+  "optionsLabels": {
+    "script": "テキストスクリプトを選択",
+    "tibetanScript": "チベット文字",
+    "folioAsGoTo": "選択されたテキストセクションに移動",
+    "folioAsLimit": "選択されたテキストセクションからの一致を表示",
+    "folioShowAll": "全体テキスト",
+    "multiLingual": "一致テキストの言語",
+    "multiLingualError": "少なくとも1つの言語を選択する必要があります。デフォルト結果を表示します。",
+    "sort": {
+      "selector": "並べ替え方法",
+      "position": "デフォルト – 照会テキスト内の位置",
+      "quotedtext": "一致テキスト内の位置",
+      "length": "文字一致の長さ (<)",
+      "length2": "文字一致の長さ (>)"
+    },
+    "download_data": "結果をxlsxファイルとしてダウンロード",
+    "wylie": "ワイリー式",
+    "unicode": "ユニコード",
+    "copyResultInfo": "結果ページの詳細をコピー",
+    "emailResultInfo": "結果ページの詳細をメールで送信",
+    "showSegmentNumbers": "セグメント番号を表示",
+    "useMonochromaticSegmentColors": "モノクロームセグメント一致色を使用",
+    "showTextViewMatches": "他の{{lang}}テキストとの一致を表示",
+    "showMatches": "一致を表示",
+    "fontSize": "フォントサイズ"
+  },
+  "optionsPopperMsgs": {
+    "downloadStarted": "ダウンロード中...",
+    "downloadError": "おっと！何か問題が発生しました！",
+    "copied": "コピーしました！",
+    "emailResultInfo": "メールが開かれました"
+  },
+  "filtersLabels": {
+    "score": "類似度:",
+    "minMatch": "文字/音節一致の最小長:",
+    "exclude_sources": "除外:",
+    "include_sources": "含める:"
+  },
+  "dbViewLabels": {
+    "view": "表示",
+    "graph": "グラフ",
+    "numbers": "数値",
+    "table": "テーブル",
+    "text": "テキスト"
+  }
+} 

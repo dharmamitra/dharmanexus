@@ -90,7 +90,7 @@ async def startup():
         )
         logger.info("Cache initialized")
     except Exception as e:
-        logger.error(f"Error initializing cache: {e}")
+        logger.error("Error initializing cache: %s", e)
         raise
 
 

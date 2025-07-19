@@ -28,6 +28,9 @@
       ],
       "@mitra/*": [
         "src/mitra/*"
+      ],
+      "@constants/*": [
+        "src/constants/*"
       ]
     },
     "target": "es2017",

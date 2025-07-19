@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { currentDbViewAtom } from "@atoms";
 import { getAvailableDBViews } from "@components/hooks/useDbView";
+import { DEFAULT_DB_VIEW } from "@constants/view";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { dbLanguages } from "@utils/api/constants";
-import { DEFAULT_DB_VIEW } from "@utils/constants";
 import { getValidDbLanguage } from "@utils/validators";
 import { useAtom } from "jotai";
 import {
