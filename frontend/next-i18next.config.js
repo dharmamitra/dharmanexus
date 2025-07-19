@@ -23,7 +23,7 @@ module.exports = {
   debug: isDev,
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "de", "bo"],
+    locales: ["en", "de", "bo", "ja", "ko", "zh_Hant", "zh_Hans"],
   },
 
   initImmediate: false,
