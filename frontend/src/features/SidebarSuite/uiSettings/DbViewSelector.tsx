@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { currentDbViewAtom } from "@atoms";
 import { useAvailableDbViews } from "@components/hooks/useDbView";
+import { DbViewEnum } from "@constants/view";
 import { allUIComponentParamNames } from "@features/SidebarSuite/uiSettings/config";
 import {
   FormControl,
@@ -11,7 +12,6 @@ import {
   Select,
   type SelectChangeEvent,
 } from "@mui/material";
-import { DbViewEnum } from "@utils/constants";
 import { getValidDbView } from "@utils/validators";
 import { useAtom } from "jotai";
 

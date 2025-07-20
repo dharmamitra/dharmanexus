@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "next-i18next";
 import { useNullableDbRouterParams } from "@components/hooks/useDbRouterParams";
+import { RESULT_PAGE_TITLE_GROUP_ID } from "@constants/base";
 import {
   Popper,
   PopperMsgBox,
@@ -13,7 +14,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { RESULT_PAGE_TITLE_GROUP_ID } from "@utils/constants";
 
 export const CopyResultInfoButton = () => {
   const { t } = useTranslation("settings");

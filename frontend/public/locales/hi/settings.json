@@ -1,0 +1,73 @@
+{
+  "generic": {
+    "selectLanguage": "भाषा चुनें",
+    "noSelection": "कोई चयन नहीं",
+    "default": "डिफ़ॉल्ट",
+    "resultsSubject": "DharmaNexus खोज परिणाम लिंक",
+    "close": "बंद करें"
+  },
+  "resultsHead": {
+    "matches": "मेल: ",
+    "filters": "कस्टम फ़िल्टर: {{value}}",
+    "options": "कस्टम विकल्प: {{value}}",
+    "settings": "सेटिंग्स",
+    "settingsTip": "सेटिंग्स पैनल टॉगल करें",
+    "reset": "फ़िल्टर रीसेट करें",
+    "resetTip": "डिफ़ॉल्ट सेटिंग्स पुनर्स्थापित करें",
+    "textSelect": "पाठ बदलें",
+    "textSelectTip": "एक नया पूछताछ पाठ चुनें",
+    "cappedMessage": "परिणाम अधिकतम {{max}} मेलों से अधिक हो गए।"
+  },
+  "headings": {
+    "settings": "सेटिंग्स",
+    "filters": "मेल फ़िल्टर",
+    "display": "प्रदर्शन सेटिंग्स",
+    "tools": "उपयोगिताएँ",
+    "links": "लिंक"
+  },
+  "optionsLabels": {
+    "script": "पाठ लिपि चुनें",
+    "tibetanScript": "तिब्बती लिपि",
+    "folioAsGoTo": "चयनित पाठ खंड पर जाएँ",
+    "folioAsLimit": "चयनित पाठ खंड से मेल दिखाएँ",
+    "folioShowAll": "पूरा पाठ",
+    "multiLingual": "मेल पाठ भाषाएँ",
+    "multiLingualError": "कम से कम एक भाषा चुननी होगी। डिफ़ॉल्ट परिणाम दिखा रहे हैं।",
+    "sort": {
+      "selector": "क्रमबद्ध करने का तरीका",
+      "position": "डिफ़ॉल्ट – पूछताछ पाठ में स्थिति",
+      "quotedtext": "मेल पाठों में स्थिति",
+      "length": "अक्षर मेल की लंबाई (<)",
+      "length2": "अक्षर मेल की लंबाई (>)"
+    },
+    "download_data": "परिणाम xlsx फ़ाइल के रूप में डाउनलोड करें",
+    "wylie": "वायली",
+    "unicode": "यूनिकोड",
+    "copyResultInfo": "परिणाम पृष्ठ विवरण कॉपी करें",
+    "emailResultInfo": "परिणाम पृष्ठ विवरण ईमेल करें",
+    "showSegmentNumbers": "खंड संख्याएँ दिखाएँ",
+    "useMonochromaticSegmentColors": "एकरंगी खंड मेल रंगों का उपयोग करें",
+    "showTextViewMatches": "अन्य {{lang}} पाठों के साथ मेल दिखाएँ",
+    "showMatches": "मेल दिखाएँ",
+    "fontSize": "फ़ॉन्ट आकार"
+  },
+  "optionsPopperMsgs": {
+    "downloadStarted": "डाउनलोड हो रहा है...",
+    "downloadError": "उफ़! कुछ गलत हो गया!",
+    "copied": "कॉपी किया गया!",
+    "emailResultInfo": "ईमेल खोला गया"
+  },
+  "filtersLabels": {
+    "score": "समानता स्कोर:",
+    "minMatch": "न्यूनतम अक्षर/शब्दांश मेल लंबाई:",
+    "exclude_sources": "स्रोतों को बाहर करें:",
+    "include_sources": "केवल इन स्रोतों को शामिल करें:"
+  },
+  "dbViewLabels": {
+    "view": "दृश्य",
+    "graph": "ग्राफ़",
+    "numbers": "संख्याएँ",
+    "table": "तालिका",
+    "text": "पाठ"
+  }
+} 
