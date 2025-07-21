@@ -19,6 +19,20 @@ FOR seg_nr IN @segment_nrs
                 RETURN segment.original
         )
         
+        LET par_full_names = (
+            FOR file in files
+                FILTER file.filename == p.par_filename
+                RETURN {"display_name": file.displayName,
+                "text_name": file.textname}
+        )
+        
+        LET root_full_names = (
+            FOR file in files
+                FILTER file.filename == p.root_filename
+                RETURN {"display_name": file.displayName,
+                "text_name": file.textname}
+        )
+        
         RETURN {
             id: p._key,
             root_segnr: p.root_segnr,
@@ -30,6 +44,8 @@ FOR seg_nr IN @segment_nrs
             score: p.score * 100,
             par_length: p.par_length,
             root_text: root_segtext,
-            par_text: par_segtext
+            par_text: par_segtext,
+            par_full_names: par_full_names[0] || {},
+            root_full_names: root_full_names[0] || {}
         }
 """ 
