@@ -47,8 +47,9 @@
     "emailResultInfo": "결과 페이지 세부사항 이메일로 보내기",
     "showSegmentNumbers": "세그먼트 번호 표시",
     "useMonochromaticSegmentColors": "단색 세그먼트 일치 색상 사용",
+    "heatMapTheme": "Match heat map colors",
     "showTextViewMatches": "다른 {{lang}} 텍스트와의 일치 표시",
-    "showMatches": "Show match highlighting",
+    "showMatches": "Match highlighting",
     "fontSize": "글꼴 크기"
   },
   "optionsPopperMsgs": {
@@ -69,5 +70,10 @@
     "numbers": "숫자",
     "table": "테이블",
     "text": "텍스트"
+  },
+  "heatMapThemeOptions": {
+    "standard": "Standard",
+    "monochrome": "Monochrome",
+    "vivid": "Vivid"
   }
 }

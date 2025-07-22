@@ -2,6 +2,13 @@ import { ParsedTextViewParallels } from "@utils/api/endpoints/text-view/text-par
 import { DbLanguage } from "@utils/api/types";
 import chroma from "chroma-js";
 
+import {
+  STANDARD_MATCH_HEAT_THEME_DARK_MODE,
+  STANDARD_MATCH_HEAT_THEME_LIGHT_MODE,
+  VIVID_MATCH_HEAT_THEME_DARK_MODE,
+  VIVID_MATCH_HEAT_THEME_LIGHT_MODE,
+} from "./constants";
+
 export function getTextViewColorScale(
   data: ParsedTextViewParallels,
 ): chroma.Scale {
@@ -40,4 +47,21 @@ export const createURLToSegment = ({
   const [fileName] = segmentNumber.split(":");
 
   return `/db/${language}/${fileName}/text?active_segment=${segmentNumber}`;
+};
+
+export const getMatchHeatColors = (
+  heatMapTheme: string,
+  isDarkTheme: boolean,
+) => {
+  if (heatMapTheme === "standard") {
+    if (isDarkTheme) return STANDARD_MATCH_HEAT_THEME_DARK_MODE;
+    return STANDARD_MATCH_HEAT_THEME_LIGHT_MODE;
+  }
+
+  if (heatMapTheme === "vivid") {
+    if (isDarkTheme) return VIVID_MATCH_HEAT_THEME_DARK_MODE;
+    return VIVID_MATCH_HEAT_THEME_LIGHT_MODE;
+  }
+
+  return [];
 };

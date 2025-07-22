@@ -46,9 +46,10 @@
     "copyResultInfo": "Copy result page details",
     "emailResultInfo": "Email result page details",
     "showSegmentNumbers": "Show segment numbers",
+    "heatMapTheme": "Match heat map colors",
     "useMonochromaticSegmentColors": "Use monochromatic segment match colors",
     "showTextViewMatches": "Show matches with other {{lang}} texts",
-    "showMatches": "Show match highlighting",
+    "showMatches": "Match highlighting",
     "fontSize": "Font size"
   },
   "optionsPopperMsgs": {
@@ -69,5 +70,10 @@
     "numbers": "Numbers",
     "table": "Table",
     "text": "Text"
+  },
+  "heatMapThemeOptions": {
+    "standard": "Standard",
+    "monochrome": "Monochrome",
+    "vivid": "Vivid"
   }
 }

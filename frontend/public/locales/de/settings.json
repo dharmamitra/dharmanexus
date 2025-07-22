@@ -47,8 +47,9 @@
     "emailResultInfo": "Ergebnis-Details per E-Mail senden",
     "showSegmentNumbers": "Segmentnummern anzeigen",
     "useMonochromaticSegmentColors": "Monochrome Übereinstimmungsfarben verwenden",
+    "heatMapTheme": "Match heat map colors",
     "showTextViewMatches": "Übereinstimmungen mit anderen {{lang}} Texten anzeigen",
-    "showMatches": "Show match highlighting",
+    "showMatches": "Match highlighting",
     "fontSize": "Schriftgröße"
   },
   "optionsPopperMsgs": {
@@ -69,5 +70,10 @@
     "numbers": "Zahlen",
     "table": "Tabelle",
     "text": "Text"
+  },
+  "heatMapThemeOptions": {
+    "standard": "Standard",
+    "monochrome": "Monochrome",
+    "vivid": "Vivid"
   }
 }

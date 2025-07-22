@@ -47,8 +47,9 @@
     "emailResultInfo": "以电子邮件传送结果页面详细资料",
     "showSegmentNumbers": "显示段落编号",
     "useMonochromaticSegmentColors": "使用单色段落匹配颜色",
+    "heatMapTheme": "Match heat map colors",
     "showTextViewMatches": "显示与其他 {{lang}} 文字的匹配",
-    "showMatches": "Show match highlighting",
+    "showMatches": "Match highlighting",
     "fontSize": "字体大小"
   },
   "optionsPopperMsgs": {
@@ -69,5 +70,10 @@
     "numbers": "数字",
     "table": "表格",
     "text": "文字"
+  },
+  "heatMapThemeOptions": {
+    "standard": "Standard",
+    "monochrome": "Monochrome",
+    "vivid": "Vivid"
   }
 }
