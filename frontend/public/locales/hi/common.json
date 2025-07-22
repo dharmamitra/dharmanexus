@@ -18,20 +18,7 @@
     "undefined": ""
   },
   "footer": {
-    "about": "के बारे में",
-    "introduction": "परिचय",
-    "history": "इतिहास",
-    "guide": "मार्गदर्शिका",
-    "community": "समुदाय",
-    "institutions": "संस्थान",
-    "people": "लोग",
-    "news": "समाचार",
-    "activities": "गतिविधियाँ",
-    "publications": "प्रकाशन",
-    "events": "कार्यक्रम",
-    "projects": "परियोजनाएँ",
-    "presentations": "प्रस्तुतियाँ",
-    "contact": "संपर्क"
+    "credit": "<0>DharmaMitra</0> in collaboration with the <2>Tsadra Foundation</2>."
   },
   "db": {
     "searchInputPlaceholder": "स्रोत पाठ चुनें",
@@ -87,4 +74,4 @@
     "matchLengths": "मेल लंबाई"
   },
   "toggleTheme": "थीम बदलें"
-} 
+}

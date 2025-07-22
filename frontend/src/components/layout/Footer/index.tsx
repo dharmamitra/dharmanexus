@@ -1,8 +1,9 @@
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
+import Credit from "./Credit";
 import LogoBlock from "./LogoBlock";
-import Statements from "./Statements";
+import Socials from "./Socials";
 
 export function Footer() {
   const materialTheme = useTheme();
@@ -27,7 +28,8 @@ export function Footer() {
         }}
       >
         <LogoBlock />
-        <Statements />
+        <Credit />
+        <Socials />
       </Box>
     </Box>
   );

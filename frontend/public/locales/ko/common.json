@@ -18,20 +18,7 @@
     "undefined": ""
   },
   "footer": {
-    "about": "소개",
-    "introduction": "소개",
-    "history": "역사",
-    "guide": "가이드",
-    "community": "커뮤니티",
-    "institutions": "기관",
-    "people": "사람들",
-    "news": "뉴스",
-    "activities": "활동",
-    "publications": "출판물",
-    "events": "이벤트",
-    "projects": "프로젝트",
-    "presentations": "발표",
-    "contact": "연락처"
+    "credit": "<0>DharmaMitra</0> in collaboration with the <2>Tsadra Foundation</2>"
   },
   "db": {
     "searchInputPlaceholder": "소스 텍스트 선택",
@@ -87,4 +74,4 @@
     "matchLengths": "일치 길이"
   },
   "toggleTheme": "테마 전환"
-} 
+}

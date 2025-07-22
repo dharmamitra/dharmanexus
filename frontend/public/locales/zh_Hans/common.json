@@ -18,20 +18,7 @@
     "undefined": ""
   },
   "footer": {
-    "about": "关于",
-    "introduction": "介绍",
-    "history": "历史",
-    "guide": "指南",
-    "community": "社区",
-    "institutions": "机构",
-    "people": "人员",
-    "news": "新闻",
-    "activities": "活动",
-    "publications": "出版物",
-    "events": "活动",
-    "projects": "项目",
-    "presentations": "演示",
-    "contact": "联系"
+    "credit": "<0>DharmaMitra</0> in collaboration with the <2>Tsadra Foundation</2>"
   },
   "db": {
     "searchInputPlaceholder": "选择来源文字",
@@ -87,4 +74,4 @@
     "matchLengths": "匹配长度"
   },
   "toggleTheme": "切换主题"
-} 
+}
