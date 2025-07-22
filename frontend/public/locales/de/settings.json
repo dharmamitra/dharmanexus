@@ -48,7 +48,7 @@
     "showSegmentNumbers": "Segmentnummern anzeigen",
     "useMonochromaticSegmentColors": "Monochrome Übereinstimmungsfarben verwenden",
     "showTextViewMatches": "Übereinstimmungen mit anderen {{lang}} Texten anzeigen",
-    "showMatches": "Übereinstimmungen anzeigen",
+    "showMatches": "Show match highlighting",
     "fontSize": "Schriftgröße"
   },
   "optionsPopperMsgs": {

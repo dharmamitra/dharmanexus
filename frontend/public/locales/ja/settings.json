@@ -48,7 +48,7 @@
     "showSegmentNumbers": "セグメント番号を表示",
     "useMonochromaticSegmentColors": "モノクロームセグメント一致色を使用",
     "showTextViewMatches": "他の{{lang}}テキストとの一致を表示",
-    "showMatches": "一致を表示",
+    "showMatches": "Show match highlighting",
     "fontSize": "フォントサイズ"
   },
   "optionsPopperMsgs": {
@@ -70,4 +70,4 @@
     "table": "テーブル",
     "text": "テキスト"
   }
-} 
+}

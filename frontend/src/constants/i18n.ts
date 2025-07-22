@@ -12,7 +12,6 @@ export const SUPPORTED_LOCALES = [
   "zh_Hant",
   "zh_Hans",
   "bo",
-  "de",
 ] as const;
 
 export const DEFAULT_LOCALE = "en";
@@ -27,5 +26,4 @@ export const SUPPORTED_LOCALES_MAP: Record<SupportedLocale, string> = {
   zh_Hant: "हिन्दी",
   zh_Hans: "བོད་ཡིག",
   bo: "한국어",
-  de: "Deutsch",
 };

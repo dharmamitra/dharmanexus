@@ -48,7 +48,7 @@
     "showSegmentNumbers": "खंड संख्याएँ दिखाएँ",
     "useMonochromaticSegmentColors": "एकरंगी खंड मेल रंगों का उपयोग करें",
     "showTextViewMatches": "अन्य {{lang}} पाठों के साथ मेल दिखाएँ",
-    "showMatches": "मेल दिखाएँ",
+    "showMatches": "Show match highlighting",
     "fontSize": "फ़ॉन्ट आकार"
   },
   "optionsPopperMsgs": {
@@ -70,4 +70,4 @@
     "table": "तालिका",
     "text": "पाठ"
   }
-} 
+}

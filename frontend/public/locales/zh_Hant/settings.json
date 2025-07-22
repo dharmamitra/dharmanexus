@@ -48,7 +48,7 @@
     "showSegmentNumbers": "顯示段落編號",
     "useMonochromaticSegmentColors": "使用單色段落匹配顏色",
     "showTextViewMatches": "顯示與其他 {{lang}} 文字的匹配",
-    "showMatches": "顯示匹配",
+    "showMatches": "Show match highlighting",
     "fontSize": "字型大小"
   },
   "optionsPopperMsgs": {
@@ -70,4 +70,4 @@
     "table": "表格",
     "text": "文字"
   }
-} 
+}

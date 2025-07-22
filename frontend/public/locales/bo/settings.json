@@ -48,7 +48,7 @@
     "showSegmentNumbers": "ཆ་ཤས་ཨང་ཐོ་སྟོན།",
     "useMonochromaticSegmentColors": "ཆ་ཤས་མཚུངས་པ་ཁ་དོག་གཅིག་གྱུར་སྤྱད།",
     "showTextViewMatches": "གཞན་{{lang}}ཡིག་ཆ་དང་མཚུངས་པ་སྟོན།",
-    "showMatches": "མཚུངས་པ་སྟོན།",
+    "showMatches": "Show match highlighting",
     "fontSize": "ཡིག་ཆའི་ཆེ་ཆུང་།"
   },
   "optionsPopperMsgs": {

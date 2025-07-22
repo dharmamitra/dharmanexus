@@ -16,7 +16,6 @@ const SUPPORTED_LOCALES = [
   "zh_Hant",
   "zh_Hans",
   "bo",
-  "de"
 ];
 const DEFAULT_LOCALE = "en";
 const I18N_NAMESPACES = ["common", "settings", "home"];

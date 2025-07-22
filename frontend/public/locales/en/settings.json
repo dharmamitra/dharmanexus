@@ -48,7 +48,7 @@
     "showSegmentNumbers": "Show segment numbers",
     "useMonochromaticSegmentColors": "Use monochromatic segment match colors",
     "showTextViewMatches": "Show matches with other {{lang}} texts",
-    "showMatches": "Show matches",
+    "showMatches": "Show match highlighting",
     "fontSize": "Font size"
   },
   "optionsPopperMsgs": {
