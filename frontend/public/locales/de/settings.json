@@ -1,70 +1,70 @@
 {
   "generic": {
     "selectLanguage": "Sprache auswählen",
-    "noSelection": "Nichts ausgewählt",
+    "noSelection": "Keine Auswahl",
     "default": "Standard",
     "resultsSubject": "DharmaNexus Suchergebnisse-Link",
-    "close": "Close"
+    "close": "Schließen"
   },
   "resultsHead": {
-    "matches": "Übereinstimmungen:",
+    "matches": "Übereinstimmungen: ",
     "filters": "Benutzerdefinierte Filter: {{value}}",
     "options": "Benutzerdefinierte Optionen: {{value}}",
     "settings": "Einstellungen",
-    "settingsTip": "Einstellungsfeld umschalten",
-    "reset": "Zurücksetzen",
-    "resetTip": "Standardeinstellungen des Resorts",
+    "settingsTip": "Einstellungsbereich umschalten",
+    "reset": "Filter zurücksetzen",
+    "resetTip": "Standardeinstellungen wiederherstellen",
     "textSelect": "Text ändern",
-    "textSelectTip": "Wählen Sie einen neuen Anfragetext",
-    "cappedMessage": "Übereinstimmungen: {{max}} oder mehr."
+    "textSelectTip": "Einen neuen Abfragetext auswählen",
+    "cappedMessage": "Ergebnisse überschreiten das Maximum von {{max}} Übereinstimmungen."
   },
   "headings": {
-    "settings": "Settings",
-    "filters": "Match Filters",
-    "display": "Display Settings",
-    "tools": "Utilities",
+    "settings": "Einstellungen",
+    "filters": "Filter",
+    "display": "Anzeigeeinstellungen",
+    "tools": "Werkzeuge",
     "links": "Links"
   },
   "optionsLabels": {
     "script": "Textskript auswählen",
-    "tibetanScript": "Tibetan Script",
-    "folioAsGoTo": "Gehe zum ausgewählten Textabschnitt",
+    "tibetanScript": "Tibetische Schrift",
+    "folioAsGoTo": "Zum ausgewählten Textabschnitt gehen",
     "folioAsLimit": "Übereinstimmungen aus ausgewähltem Textabschnitt anzeigen",
-    "folioShowAll": "Hele tekst",
-    "multiLingual": "Textsprachen zuordnen",
-    "multiLingualError": "Es muss mindestens eine Sprache ausgewählt werden. Standardergebnisse werden angezeigt.",
+    "folioShowAll": "Gesamter Text",
+    "multiLingual": "Sprachen der Übereinstimmungen",
+    "multiLingualError": "Mindestens eine Sprache muss ausgewählt werden. Standardergebnisse werden angezeigt.",
     "sort": {
       "selector": "Sortiermethode",
-      "position": "Standard – Position im Anfragetext",
-      "quotedtext": "Position in passenden Texten",
-      "length": "Länge des übereinstimmenden Zeichens (<)",
-      "length2": "Länge des übereinstimmenden Zeichens (>)"
+      "position": "Standard – Position im Abfragetext",
+      "quotedtext": "Position in Übereinstimmungstexten",
+      "length": "Länge der Zeichenübereinstimmung (<)",
+      "length2": "Länge der Zeichenübereinstimmung (>)"
     },
+    "download_data": "Ergebnisse als xlsx-Datei herunterladen",
     "wylie": "Wylie",
     "unicode": "Unicode",
-    "download_data": "Ergebnisse als xlsx-Datei herunterladen",
-    "copyResultInfo": "Copy result page details",
-    "emailResultInfo": "Email result page details",
+    "copyResultInfo": "Ergebnis-Details kopieren",
+    "emailResultInfo": "Ergebnis-Details per E-Mail senden",
     "showSegmentNumbers": "Segmentnummern anzeigen",
-    "useMonochromaticSegmentColors": "Verwenden Sie monochromatische Farbkombinationen",
+    "useMonochromaticSegmentColors": "Monochrome Übereinstimmungsfarben verwenden",
     "showTextViewMatches": "Übereinstimmungen mit anderen {{lang}} Texten anzeigen",
     "showMatches": "Übereinstimmungen anzeigen",
-    "fontSize": "Font size"
+    "fontSize": "Schriftgröße"
   },
   "optionsPopperMsgs": {
-    "downloadStarted": "Downloading...",
+    "downloadStarted": "Download läuft...",
     "downloadError": "Hoppla! Etwas ist schief gelaufen!",
-    "copied": "Kopiert",
+    "copied": "Kopiert!",
     "emailResultInfo": "E-Mail geöffnet"
   },
   "filtersLabels": {
-    "score": "Ähnlichkeitsbewertung:",
-    "minMatch": "Mindestlänge der Zeichen-/Silbenübereinstimmungen",
-    "exclude_sources": "Quellen ausschließen:",
-    "include_sources": "Nur Quellen einschließen:"
+    "score": "Ähnlichkeit:",
+    "minMatch": "Mindestlänge der Übereinstimmungen in Zeichen/Silben:",
+    "exclude_sources": "Ausschließen:",
+    "include_sources": "Einschließen:"
   },
   "dbViewLabels": {
-    "view": "Sicht",
+    "view": "Ansicht",
     "graph": "Diagramm",
     "numbers": "Zahlen",
     "table": "Tabelle",

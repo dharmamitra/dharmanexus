@@ -1,0 +1,90 @@
+{
+  "global": {
+    "siteTitle": "DharmaNexus",
+    "language": "语言"
+  },
+  "header": {
+    "docs": "文档",
+    "database": "来源",
+    "search": "搜索",
+    "toggleTheme": "切换主题"
+  },
+  "language": {
+    "all": "全部",
+    "pa": "巴利文",
+    "zh": "中文",
+    "sa": "梵文",
+    "bo": "藏文",
+    "undefined": ""
+  },
+  "footer": {
+    "about": "关于",
+    "introduction": "介绍",
+    "history": "历史",
+    "guide": "指南",
+    "community": "社区",
+    "institutions": "机构",
+    "people": "人员",
+    "news": "新闻",
+    "activities": "活动",
+    "publications": "出版物",
+    "events": "活动",
+    "projects": "项目",
+    "presentations": "演示",
+    "contact": "联系"
+  },
+  "db": {
+    "searchInputPlaceholder": "选择来源文字",
+    "length": "长度",
+    "score": "相似度",
+    "matches": "匹配",
+    "clearSelectedSegment": "清除选定的段落",
+    "segmentMatches": "段落匹配"
+  },
+  "news": {
+    "title": "新闻",
+    "readMore": "阅读更多",
+    "backToNews": "返回新闻"
+  },
+  "textBrowser": {
+    "mainPrompt": "浏览 {{ languageName }} 文字"
+  },
+  "prompts": {
+    "genericErrorTitle": "发生问题。",
+    "genericErrorDescription": "如果问题持续存在，请联系我们。",
+    "fetchError": "获取结果数据时发生错误",
+    "dbSrcMenuError": "获取数据库来源菜单时发生错误。数据库语言无效。",
+    "queryWarning": "无法显示结果。请使用筛选器调整您的查询。",
+    "noFile": "未选择文件。",
+    "fileUndefined": "文件未定义。",
+    "loading": "加载中...",
+    "noResults": "找不到结果。",
+    "showLess": "显示较少",
+    "showAll": "显示全部 ({{count}})",
+    "openAll": "全部打开",
+    "closeAll": "全部关闭",
+    "close": "关闭"
+  },
+  "search": {
+    "pageTitle": "搜索结果",
+    "dialogTitle": "DharmaNexus 全局搜索",
+    "inputPlaceholder": "输入确切的搜索词（仅限完整单词）",
+    "search": "输入文字名称或编号",
+    "runSearch": "执行搜索",
+    "clearSearch": "清除搜索词",
+    "toggleSearch": "切换搜索框",
+    "openSearch": "打开搜索框",
+    "closeSearch": "关闭搜索框",
+    "noResultsHeading": "找不到结果",
+    "noResultsTip": "请尝试调整您的搜索。确保使用确切的搜索词，包含完整单词、正确的标点符号和相关的变音符号可能会有所帮助。"
+  },
+  "graph": {
+    "histogramDataTitle": "与查询文字匹配的顶部文件分布:",
+    "histogramDataSubtitle": "分布图表显示基于近似匹配累积长度与查询文字匹配的顶部文件分布。最多显示 50 个命中文字。",
+    "pieDataTitle": "使用当前筛选器找到的所有匹配在各种集合及其子区段中的分布。",
+    "pieDataSubtitle": "分布按找到的匹配长度加权:",
+    "collection": "集合",
+    "matchLengths": "匹配长度"
+  },
+  "toggleTheme": "切换主题"
+} 
