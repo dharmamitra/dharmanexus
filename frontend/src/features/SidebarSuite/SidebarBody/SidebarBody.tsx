@@ -1,6 +1,7 @@
 import { useTranslation } from "next-i18next";
 import { currentDbViewAtom } from "@atoms";
 import { useIncludeMatchesParam } from "@components/hooks/params";
+import { DbViewEnum } from "@constants/view";
 import { CollapsibleSection } from "@features/SidebarSuite/common/CollapsibleSection";
 import { DrawerHeader } from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
 import DbSourceFilter from "@features/SidebarSuite/uiSettings/DbSourceFilter";
@@ -17,7 +18,6 @@ import { TibetanScriptSelector } from "@features/SidebarSuite/uiSettings/TextScr
 import TextViewFolioNavigation from "@features/SidebarSuite/uiSettings/TextViewFolioNavigation";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Box, IconButton, Typography } from "@mui/material";
-import { DbViewEnum } from "@utils/constants";
 import { useAtomValue } from "jotai";
 
 import { UtilityOptionsSection } from "./UtilityOptionsSection/UtilityOptionsSection";

@@ -2,6 +2,7 @@ import { useTranslation } from "next-i18next";
 import { currentDbViewAtom } from "@atoms";
 import { useActiveSegmentParam } from "@components/hooks/params";
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
+import { DbViewEnum } from "@constants/view";
 import {
   CircularProgress,
   FormControl,
@@ -14,7 +15,6 @@ import {
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import { DbApi } from "@utils/api/dbApi";
-import { DbViewEnum } from "@utils/constants";
 import { useAtom } from "jotai";
 
 function SelectorFrame({
