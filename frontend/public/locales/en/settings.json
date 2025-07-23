@@ -28,7 +28,7 @@
   "optionsLabels": {
     "script": "Select text script",
     "tibetanScript": "Tibetan script",
-    "folioAsGoTo": "Go to folio",
+    "folioAsGoTo": "Go to folio / section",
     "folioAsLimit": "Show matches from selected text section",
     "folioShowAll": "Whole text",
     "multiLingual": "Match text Languages",
