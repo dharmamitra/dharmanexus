@@ -33,11 +33,10 @@ function SelectorFrame({
 }
 
 function Loading({ label }: { label: string }) {
-  const { t } = useTranslation("common");
   return (
     <Select
       labelId="text-view-folio-navigation-label"
-      value={t("prompts.loading")}
+      value="loading"
       inputProps={{
         id: "text-view-folio-navigation",
       }}
