@@ -30,7 +30,7 @@ function TextScriptOptionFrame<T extends Script>({
   label: string;
 }) {
   return (
-    <FormControl sx={{ width: 1, mt: 4, mb: 2 }}>
+    <FormControl sx={{ width: 1, mb: 2 }}>
       <InputLabel id="text-script-selection-label">{label}</InputLabel>
 
       <Select

@@ -18,20 +18,7 @@
     "undefined": ""
   },
   "footer": {
-    "about": "Über",
-    "introduction": "Einführung",
-    "history": "Geschichte",
-    "guide": "Anleitung",
-    "community": "Gemeinschaft",
-    "institutions": "Institutionen",
-    "people": "Personen",
-    "news": "Nachrichten",
-    "activities": "Aktivitäten",
-    "publications": "Veröffentlichungen",
-    "events": "Veranstaltungen",
-    "projects": "Projekte",
-    "presentations": "Präsentationen",
-    "contact": "Kontakt"
+    "credit": "<0>DharmaMitra</0> in Zusammenarbeit mit der <2>Tsadra Foundation</2>."
   },
   "db": {
     "searchInputPlaceholder": "Quelltext auswählen",

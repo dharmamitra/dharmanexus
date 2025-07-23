@@ -2,15 +2,18 @@ import React, { useCallback, useMemo } from "react";
 import Link from "next/link";
 import {
   activeSegmentMatchesAtom,
+  heatMapThemeAtom,
   hoveredOverParallelIdAtom,
   shouldShowSegmentNumbersAtom,
-  shouldUseMonochromaticSegmentColorsAtom,
   textViewIsMiddlePanePointingLeftAtom,
 } from "@atoms";
 import { sourceSans } from "@components/theme";
 import { TibetanScript } from "@features/SidebarSuite/types";
 import { enscriptSegment } from "@features/SidebarSuite/utils";
-import { createURLToSegment } from "@features/textView/utils";
+import {
+  createURLToSegment,
+  getMatchHeatColors,
+} from "@features/textView/utils";
 import {
   Box,
   Link as MuiLink,
@@ -22,10 +25,6 @@ import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-para
 import type { Scale } from "chroma-js";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
-import {
-  DARK_MODE_MATCH_HEAT_INVERTED_COLORS,
-  LIGHT_MODE_MATCH_HEAT_COLORS,
-} from "./constants";
 import styles from "./textSegment.module.scss";
 
 type TextSegmentProps = {
@@ -59,13 +58,8 @@ export const TextSegment = ({
   useMediaQuery(theme.breakpoints.up("sm"));
   const { mode } = useColorScheme();
   const isDarkTheme = mode === "dark";
-  const matchHeatColors = isDarkTheme
-    ? DARK_MODE_MATCH_HEAT_INVERTED_COLORS
-    : LIGHT_MODE_MATCH_HEAT_COLORS;
 
-  const shouldUseMonochromaticSegmentColors = useAtomValue(
-    shouldUseMonochromaticSegmentColorsAtom,
-  );
+  const heatMapTheme = useAtomValue(heatMapThemeAtom);
   const shouldShowSegmentNumbers = useAtomValue(shouldShowSegmentNumbersAtom);
   const hoveredOverParallelId = useAtomValue(hoveredOverParallelIdAtom);
   const setSelectedSegmentMatches = useSetAtom(activeSegmentMatchesAtom);
@@ -77,6 +71,8 @@ export const TextSegment = ({
   const [, setIsMiddlePanePointingLeft] = useAtom(
     textViewIsMiddlePanePointingLeftAtom,
   );
+
+  const matchHeatColors = getMatchHeatColors(heatMapTheme, isDarkTheme);
 
   const updateSelectedLocationInGlobalState = useCallback(
     async (location: { id: string; index: number; matches: string[] }) => {
@@ -182,11 +178,12 @@ export const TextSegment = ({
               );
             }
 
-            const color: string = shouldUseMonochromaticSegmentColors
-              ? colorScale(highlightColor).hex()
-              : (matchHeatColors[highlightColor] ??
-                matchHeatColors.at(-1) ??
-                "");
+            const color: string =
+              heatMapTheme === "monochrome"
+                ? colorScale(highlightColor).hex()
+                : (matchHeatColors[highlightColor] ??
+                  matchHeatColors.at(-1) ??
+                  "");
 
             return (
               // eslint-disable-next-line jsx-a11y/no-static-element-interactions

@@ -3,6 +3,7 @@ import { DbSourceTreeNode } from "@components/db/SearchableDbSourceTree/types";
 import { DbViewEnum, DEFAULT_DB_VIEW } from "@constants/view";
 import type { TibetanScript } from "@features/SidebarSuite/types";
 import { DbSourceFiltersSelectedIds } from "@features/SidebarSuite/types";
+import { MatchHeatMapTheme } from "@features/textView/constants";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
@@ -68,6 +69,10 @@ export const shouldShowSegmentNumbersAtom = atomWithStorage<boolean>(
 export const shouldUseMonochromaticSegmentColorsAtom = atomWithStorage<boolean>(
   "shouldUseMonochromaticSegmentColors",
   true,
+);
+export const heatMapThemeAtom = atomWithStorage<MatchHeatMapTheme>(
+  "heatMapTheme",
+  "standard",
 );
 
 export const fontSizeAtom = atomWithStorage<number>("fontSize", 18);

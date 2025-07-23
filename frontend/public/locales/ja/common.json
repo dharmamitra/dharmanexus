@@ -18,20 +18,7 @@
     "undefined": ""
   },
   "footer": {
-    "about": "概要",
-    "introduction": "紹介",
-    "history": "歴史",
-    "guide": "ガイド",
-    "community": "コミュニティ",
-    "institutions": "機関",
-    "people": "人々",
-    "news": "ニュース",
-    "activities": "活動",
-    "publications": "出版物",
-    "events": "イベント",
-    "projects": "プロジェクト",
-    "presentations": "プレゼンテーション",
-    "contact": "お問い合わせ"
+    "credit": "<0>DharmaMitra</0> in collaboration with the <2>Tsadra Foundation</2>."
   },
   "db": {
     "searchInputPlaceholder": "ソーステキストを選択",
@@ -87,4 +74,4 @@
     "matchLengths": "一致の長さ"
   },
   "toggleTheme": "テーマを切り替え"
-} 
+}

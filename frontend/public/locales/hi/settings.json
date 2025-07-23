@@ -47,8 +47,9 @@
     "emailResultInfo": "परिणाम पृष्ठ विवरण ईमेल करें",
     "showSegmentNumbers": "खंड संख्याएँ दिखाएँ",
     "useMonochromaticSegmentColors": "एकरंगी खंड मेल रंगों का उपयोग करें",
+    "heatMapTheme": "Match heat map colors",
     "showTextViewMatches": "अन्य {{lang}} पाठों के साथ मेल दिखाएँ",
-    "showMatches": "मेल दिखाएँ",
+    "showMatches": "Match highlighting",
     "fontSize": "फ़ॉन्ट आकार"
   },
   "optionsPopperMsgs": {
@@ -69,5 +70,10 @@
     "numbers": "संख्याएँ",
     "table": "तालिका",
     "text": "पाठ"
+  },
+  "heatMapThemeOptions": {
+    "standard": "Standard",
+    "monochrome": "Monochrome",
+    "vivid": "Vivid"
   }
-} 
+}
