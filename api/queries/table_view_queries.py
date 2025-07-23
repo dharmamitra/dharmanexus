@@ -8,13 +8,6 @@ FOR f IN parallels_sorted_file
     FOR current_parallel in f.@sortkey
         FOR p in parallels
             FILTER p.parallel_id == current_parallel
-            LET folios = (
-                FOR segmentnr IN p.root_segnr
-                    FOR segment IN segments
-                        FILTER segment.segmentnr == segmentnr
-                        RETURN segment.folio
-            )
-            FILTER LENGTH(@folio) == 0 OR @folio IN folios[*]
             FILTER p.score * 100 >= @score
             FILTER p.par_length >= @parlength
 
@@ -26,6 +19,16 @@ FOR f IN parallels_sorted_file
 
             FILTER LENGTH(@filter_include_collections) == 0 OR p.par_collection IN @filter_include_collections
             FILTER LENGTH(@filter_exclude_collections) == 0 OR p.par_collection NOT IN @filter_exclude_collections
+
+            // Optimized folio filtering - only process if folio filter is active
+            FILTER LENGTH(@folio) == 0 OR (
+                FOR segmentnr IN p.root_segnr
+                    FOR segment IN segments
+                        FILTER segment.segmentnr == segmentnr
+                        FILTER segment.folio == @folio
+                        LIMIT 1
+                        RETURN true
+            )[0] == true
 
             LET root_seg_text = (
                 FOR segnr IN p.root_segnr
@@ -79,13 +82,6 @@ FOR f IN parallels_sorted_file
     FOR current_parallel in f.@sortkey
         FOR p in parallels
             FILTER p.parallel_id == current_parallel
-            LET folios = (
-                FOR segnr IN p.root_segnr
-                    FOR segment IN segments
-                        FILTER segment.segmentnr == segnr
-                        RETURN segment.folio
-            )
-            FILTER LENGTH(@folio) == 0 OR @folio IN folios[*]
             FILTER p.score * 100 >= @score
             FILTER p.par_length >= @parlength
 
@@ -97,6 +93,16 @@ FOR f IN parallels_sorted_file
 
             FILTER LENGTH(@filter_include_collections) == 0 OR p.par_collection IN @filter_include_collections
             FILTER LENGTH(@filter_exclude_collections) == 0 OR p.par_collection NOT IN @filter_exclude_collections
+
+            // Optimized folio filtering - only process if folio filter is active
+            FILTER LENGTH(@folio) == 0 OR (
+                FOR segmentnr IN p.root_segnr
+                    FOR segment IN segments
+                        FILTER segment.segmentnr == segmentnr
+                        FILTER segment.folio == @folio
+                        LIMIT 1
+                        RETURN true
+            )[0] == true
 
             LET root_seg_text = (
                 FOR segnr IN p.root_segnr

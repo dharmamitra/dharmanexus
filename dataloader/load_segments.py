@@ -187,6 +187,10 @@ class LoadSegmentsBase:
             unique=False,
         )
         db.collection(COLLECTION_SEGMENTS).add_hash_index(
+            fields=["segmentnr", "folio"],
+            unique=False,
+        )
+        db.collection(COLLECTION_SEGMENTS).add_hash_index(
             fields=["segmentnr"],
             unique=False,
         )
