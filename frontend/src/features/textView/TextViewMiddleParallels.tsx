@@ -9,6 +9,7 @@ import { LoadingCard } from "@components/common/Loading";
 import {
   useActiveSegmentIndexParam,
   useActiveSegmentParam,
+  useFolioParam,
   useLeftPaneActiveMatchParam,
   useRightPaneActiveMatchParam,
   useRightPaneActiveSegmentParam,
@@ -46,11 +47,13 @@ export default function TextViewMiddleParallels() {
     useRightPaneActiveSegmentParam();
   const [, setLeftPaneActiveMatch] = useLeftPaneActiveMatchParam();
   const [, setRightPaneActiveMatch] = useRightPaneActiveMatchParam();
+  const [, setFolio] = useFolioParam();
 
   const handleClear = async () => {
     await Promise.all([
       setActiveSegmentId("none"),
       setActiveSegmentIndex(null),
+      setFolio(null),
     ]);
   };
 

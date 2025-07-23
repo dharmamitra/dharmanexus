@@ -6,7 +6,6 @@ import { CollapsibleSection } from "@features/SidebarSuite/common/CollapsibleSec
 import { DrawerHeader } from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
 import DbSourceFilter from "@features/SidebarSuite/uiSettings/DbSourceFilter";
 import { DbViewSelector } from "@features/SidebarSuite/uiSettings/DbViewSelector";
-import FolioOption from "@features/SidebarSuite/uiSettings/FolioOption";
 import { FontSizeSlider } from "@features/SidebarSuite/uiSettings/FontSizeSlider";
 import { HeatMapColorsSelector } from "@features/SidebarSuite/uiSettings/HeatMapColorsSelector";
 import MultiLingualSelector from "@features/SidebarSuite/uiSettings/MultiLingualSelector";
@@ -75,10 +74,10 @@ export function SidebarBody({
           defaultExpanded={true}
         >
           <ShowSegmentNumbersSwitch />
+          {currentView === DbViewEnum.TEXT ? <TextViewFolioNavigation /> : null}
           <HeatMapColorsSelector />
           <TibetanScriptSelector />
           <FontSizeSlider />
-          {currentView === DbViewEnum.TEXT && <TextViewFolioNavigation />}
         </CollapsibleSection>
 
         <CollapsibleSection title={t("headings.filters")}>
@@ -89,12 +88,11 @@ export function SidebarBody({
             }}
           >
             <ResetFiltersButton />
-            {currentView === DbViewEnum.TEXT && <MultiLingualSelector />}
+            {currentView === DbViewEnum.TEXT ? <MultiLingualSelector /> : null}
             <ScoreFilter />
             <ParLengthFilter />
             <DbSourceFilter filterName="exclude_sources" />
             <DbSourceFilter filterName="include_sources" />
-            {currentView !== DbViewEnum.TEXT && <FolioOption />}
           </Box>
         </CollapsibleSection>
 

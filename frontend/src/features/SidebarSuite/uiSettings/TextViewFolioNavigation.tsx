@@ -1,8 +1,7 @@
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { currentDbViewAtom } from "@atoms";
-import { useActiveSegmentParam } from "@components/hooks/params";
+import { useFolioParam } from "@components/hooks/params";
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
-import { DbViewEnum } from "@constants/view";
 import {
   CircularProgress,
   FormControl,
@@ -15,7 +14,6 @@ import {
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import { DbApi } from "@utils/api/dbApi";
-import { useAtom } from "jotai";
 
 function SelectorFrame({
   children,
@@ -34,20 +32,18 @@ function SelectorFrame({
   );
 }
 
-function Loading({ showAll, label }: { showAll: string; label: string }) {
+function Loading({ label }: { label: string }) {
+  const { t } = useTranslation("common");
   return (
     <Select
       labelId="text-view-folio-navigation-label"
-      value={showAll}
+      value={t("prompts.loading")}
       inputProps={{
         id: "text-view-folio-navigation",
       }}
       input={<OutlinedInput label={label} />}
       displayEmpty
     >
-      <MenuItem value={showAll}>
-        <em>{showAll}</em>
-      </MenuItem>
       <MenuItem value="loading">
         <CircularProgress color="inherit" size={20} />
       </MenuItem>
@@ -58,25 +54,17 @@ function Loading({ showAll, label }: { showAll: string; label: string }) {
 export default function TextViewFolioNavigation() {
   const { t } = useTranslation("settings");
   const { fileName } = useDbPageRouterParams();
-  const [, setActiveSegment] = useActiveSegmentParam();
+  const router = useRouter();
+  const [folio] = useFolioParam();
 
   const { data, isLoading } = useQuery({
     queryKey: DbApi.FolioData.makeQueryKey(fileName),
     queryFn: () => DbApi.FolioData.call({ filename: fileName }),
   });
 
-  const showAll = t("optionsLabels.folioShowAll");
-
   const handleSelectChange = async (event: SelectChangeEvent) => {
     const { value } = event.target;
 
-    if (value === showAll) {
-      // Reset to no active segment
-      await setActiveSegment("none");
-      return;
-    }
-
-    // Get the active segment for the selected folio
     try {
       const activeSegment = await DbApi.ActiveSegmentForFolio.call({
         filename: fileName,
@@ -84,7 +72,14 @@ export default function TextViewFolioNavigation() {
       });
 
       if (activeSegment) {
-        await setActiveSegment(activeSegment);
+        await router.push({
+          pathname: router.pathname,
+          query: {
+            ...router.query,
+            folio: value,
+            active_segment: activeSegment,
+          },
+        });
       }
     } catch {
       // Silently handle error - user can try again
@@ -92,18 +87,14 @@ export default function TextViewFolioNavigation() {
   };
 
   const label = t("optionsLabels.folioAsGoTo");
-  const [currentView] = useAtom(currentDbViewAtom);
 
   if (isLoading) {
     return (
       <SelectorFrame label={label}>
-        <Loading showAll={showAll} label={label} />
+        <Loading label={label} />
       </SelectorFrame>
     );
   }
-
-  const isDisabled =
-    currentView === DbViewEnum.TABLE || currentView === DbViewEnum.NUMBERS;
 
   return (
     <SelectorFrame label={label}>
@@ -113,18 +104,13 @@ export default function TextViewFolioNavigation() {
           id: "text-view-folio-navigation",
         }}
         input={<OutlinedInput label={label} />}
-        value={showAll}
-        disabled={isDisabled}
-        displayEmpty
+        value={folio ?? ""}
         onChange={handleSelectChange}
       >
-        <MenuItem value={showAll}>
-          <em>{showAll}</em>
-        </MenuItem>
-        {data?.map((folio: string) => {
+        {data?.map((folioItem: string) => {
           return (
-            <MenuItem key={folio} value={folio}>
-              {folio}
+            <MenuItem key={folioItem} value={folioItem}>
+              {folioItem}
             </MenuItem>
           );
         })}

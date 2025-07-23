@@ -213,7 +213,7 @@ def calculate_color_maps_text_view(data, active_match=None):
                     current_matchmap,
                 )
         if active_match:
-            active_flag = _apply_active_match_to_maps(
+            _apply_active_match_to_maps(
                 active_match,
                 entry["segnr"],
                 segtext_len,

@@ -49,7 +49,7 @@
     "useMonochromaticSegmentColors": "Monochrome Übereinstimmungsfarben verwenden",
     "heatMapTheme": "Match heat map colors",
     "showTextViewMatches": "Übereinstimmungen mit anderen {{lang}} Texten anzeigen",
-    "showMatches": "Match highlighting",
+    "showMatches": "Match heat map",
     "fontSize": "Schriftgröße"
   },
   "optionsPopperMsgs": {

@@ -119,8 +119,6 @@ export const TextSegment = ({
       >
         <Link href={urlToSegment} passHref legacyBehavior>
           <MuiLink
-            target="_blank"
-            rel="noopener noreferrer"
             data-segmentnumber={segmentNumber}
             className={styles.segmentNumber__link}
           />

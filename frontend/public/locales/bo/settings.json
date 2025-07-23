@@ -49,7 +49,7 @@
     "useMonochromaticSegmentColors": "ཆ་ཤས་མཚུངས་པ་ཁ་དོག་གཅིག་གྱུར་སྤྱད།",
     "heatMapTheme": "Match heat map colors",
     "showTextViewMatches": "གཞན་{{lang}}ཡིག་ཆ་དང་མཚུངས་པ་སྟོན།",
-    "showMatches": "Match highlighting",
+    "showMatches": "Match heat map",
     "fontSize": "ཡིག་ཆའི་ཆེ་ཆུང་།"
   },
   "optionsPopperMsgs": {

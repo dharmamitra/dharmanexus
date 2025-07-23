@@ -49,7 +49,7 @@
     "useMonochromaticSegmentColors": "एकरंगी खंड मेल रंगों का उपयोग करें",
     "heatMapTheme": "Match heat map colors",
     "showTextViewMatches": "अन्य {{lang}} पाठों के साथ मेल दिखाएँ",
-    "showMatches": "Match highlighting",
+    "showMatches": "Match heat map",
     "fontSize": "फ़ॉन्ट आकार"
   },
   "optionsPopperMsgs": {

@@ -21,14 +21,14 @@
   "headings": {
     "settings": "Settings",
     "filters": "Match Filters",
-    "display": "Display Settings",
+    "display": "Display",
     "tools": "Utilities",
     "links": "Links"
   },
   "optionsLabels": {
     "script": "Select text script",
     "tibetanScript": "Tibetan script",
-    "folioAsGoTo": "Go to selected text section",
+    "folioAsGoTo": "Go to folio / sutta",
     "folioAsLimit": "Show matches from selected text section",
     "folioShowAll": "Whole text",
     "multiLingual": "Match text Languages",
@@ -49,7 +49,7 @@
     "heatMapTheme": "Match heat map colors",
     "useMonochromaticSegmentColors": "Use monochromatic segment match colors",
     "showTextViewMatches": "Show matches with other {{lang}} texts",
-    "showMatches": "Match highlighting",
+    "showMatches": "Match heat map",
     "fontSize": "Font size"
   },
   "optionsPopperMsgs": {

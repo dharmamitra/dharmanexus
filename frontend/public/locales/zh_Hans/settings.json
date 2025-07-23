@@ -49,7 +49,7 @@
     "useMonochromaticSegmentColors": "使用单色段落匹配颜色",
     "heatMapTheme": "Match heat map colors",
     "showTextViewMatches": "显示与其他 {{lang}} 文字的匹配",
-    "showMatches": "Match highlighting",
+    "showMatches": "Match heat map",
     "fontSize": "字体大小"
   },
   "optionsPopperMsgs": {
