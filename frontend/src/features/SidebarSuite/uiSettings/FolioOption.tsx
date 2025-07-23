@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import { currentDbViewAtom } from "@atoms";
 import { useFolioParam } from "@components/hooks/params";
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import {
@@ -13,6 +14,8 @@ import {
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import { DbApi } from "@utils/api/dbApi";
+import { DbViewEnum } from "@utils/constants";
+import { useAtom } from "jotai";
 
 function SelectorFrame({
   children,
@@ -72,6 +75,7 @@ export default function FolioOption() {
   };
 
   const label = t("optionsLabels.folioAsLimit");
+  const [currentView] = useAtom(currentDbViewAtom);
 
   if (isLoading) {
     return (
@@ -80,6 +84,9 @@ export default function FolioOption() {
       </SelectorFrame>
     );
   }
+
+  const isDisabled =
+    currentView === DbViewEnum.TABLE || currentView === DbViewEnum.NUMBERS;
 
   return (
     <SelectorFrame label={label}>
@@ -90,6 +97,7 @@ export default function FolioOption() {
         }}
         input={<OutlinedInput label={label} />}
         value={folioParam ?? showAll}
+        disabled={isDisabled}
         displayEmpty
         onChange={handleSelectChange}
       >

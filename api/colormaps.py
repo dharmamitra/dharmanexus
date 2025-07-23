@@ -78,31 +78,25 @@ def abbreviate(text):
 
 def trim_long_text(text, language="en"):
     """Trims long text to show beginning and end with ellipsis in the middle.
-    
     Args:
         text: The text to trim (can be plain text or segmented text)
         language: Language code to determine max length (zh=100, others=1000)
-    
     Returns:
         Trimmed text with ellipsis in the middle
     """
     # Check if text is segmented (list of dicts) or plain text
     if isinstance(text, list):
         return trim_segmented_text(text, language)
-
     max_length = 100 if language == "zh" else 1000
     half_length = 500 if language == "zh" else 500
-
     if len(text) <= max_length:
         return text
     # Use a creative unicode ellipsis: ⋯ (horizontal ellipsis)
     ellipsis = " ⋯ "
     available_length = max_length - len(ellipsis)
-
     # Calculate how much text to show at beginning and end
     first_part_length = min(half_length, available_length // 2)
     last_part_length = available_length - first_part_length
-
     first_part = text[:first_part_length]
     last_part = text[-last_part_length:]
     return first_part + ellipsis + last_part
@@ -110,27 +104,21 @@ def trim_long_text(text, language="en"):
 
 def trim_segmented_text(segmented_text, language="en"):
     """Trims segmented text while preserving color information.
-    
     Args:
         segmented_text: List of dicts with 'text' and 'highlightColor' keys
         language: Language code to determine max length (zh=100, others=1000)
-    
     Returns:
         Trimmed segmented text with ellipsis in the middle
     """
     max_length = 100 if language == "zh" else 1000
     half_length = 500 if language == "zh" else 500
-
     # Calculate total text length
     total_length = sum(len(segment["text"]) for segment in segmented_text)
-
     if total_length <= max_length:
         return segmented_text
-
     # Use a creative unicode ellipsis: ⋯ (horizontal ellipsis)
     ellipsis = " ⋯ "
     available_length = max_length - len(ellipsis)
-
     # Calculate how much text to show at beginning and end
     first_part_length = min(half_length, available_length // 2)
     last_part_length = available_length - first_part_length
@@ -151,7 +139,6 @@ def trim_segmented_text(segmented_text, language="en"):
                 "highlightColor": segment["highlightColor"]
             })
             break
-
     # Build last part
     last_part = []
     current_length = 0
@@ -169,99 +156,75 @@ def trim_segmented_text(segmented_text, language="en"):
                 "highlightColor": segment["highlightColor"]
             })
             break
-
     # Create ellipsis segment with neutral color (assuming 0 is neutral)
     ellipsis_segment = {"text": ellipsis, "highlightColor": 0}
     return first_part + [ellipsis_segment] + last_part
 
 
-def _process_parallel_coloring(entry, parallel_id, parallels_dict,
-                               current_colormap, current_matchmap):
-    """Helper function to process parallel coloring for a single parallel"""
-    current_parallel = parallels_dict.get(parallel_id)
-    if current_parallel is None:
-        return
-
-    segtext_len = len(entry["segtext"])
+def _apply_parallel_to_maps(parallel, segnr, segtext_len, colormap, matchmap):
     start = 0
     end = segtext_len
-
-    if current_parallel["root_segnr"][0] == entry["segnr"]:
-        start = current_parallel["root_offset_beg"]
-    if current_parallel["root_segnr"][-1] == entry["segnr"]:
-        end = current_parallel["root_offset_end"]
-
-    # it is embarassing that we need to do this,
-    # this should be dealt with at data-loader level
+    if parallel["root_segnr"][0] == segnr:
+        start = parallel["root_offset_beg"]
+    if parallel["root_segnr"][-1] == segnr:
+        end = parallel["root_offset_end"]
     end = min(end, segtext_len)
+    for i in range(start, end):
+        colormap[i] += 1
+        if parallel["id"] not in matchmap[i]:
+            matchmap[i].append(parallel["id"])
 
-    for item in range(start, end):
-        current_colormap[item] += 1
-        if parallel_id not in current_matchmap[item]:
-            current_matchmap[item].append(parallel_id)
 
-
-def _process_active_match_coloring(entry, active_match, active_flag,
-                                   current_colormap, current_active_map):
-    """Helper function to process active match coloring"""
-    segtext_len = len(entry["segtext"])
-    start = 0
-    end = segtext_len
-
-    if active_match["par_segnr"][0] == entry["segnr"]:
+def _apply_active_match_to_maps(active_match, segnr, segtext_len, colormap, active_map):
+    start, end = 0, segtext_len
+    active_flag = False
+    if active_match["par_segnr"][0] == segnr:
         start = active_match["par_offset_beg"]
         active_flag = True
-    if active_match["par_segnr"][-1] == entry["segnr"]:
+    if active_match["par_segnr"][-1] == segnr:
         end = active_match["par_offset_end"]
-
     end = min(end, segtext_len)
-
     if active_flag:
-        for item in range(start, end):
-            current_colormap[item] += 1
-            current_active_map[item] = True
-        if active_match["par_segnr"][-1] == entry["segnr"]:
-            active_flag = False
-
-    return active_flag
+        for i in range(start, end):
+            colormap[i] += 1
+            active_map[i] = True
+    return active_flag and active_match["par_segnr"][-1] != segnr
 
 
 def calculate_color_maps_text_view(data, active_match=None):
     """calculates the color maps for the text view"""
-    # Safety check for missing or invalid data structure
     if not data or "textleft" not in data or "parallel_ids" not in data or "parallels" not in data:
         return []
-
     textleft = data["textleft"]
-    parallels_dict = dict(zip(data["parallel_ids"], data["parallels"]))
-    active_flag = False
+    parallels_dict = {p["id"]: p for p in data["parallels"]}
 
     for entry in textleft:
-        # initialize with zeros
         segtext_len = len(entry["segtext"])
         current_colormap = [0] * segtext_len
         current_active_map = [False] * segtext_len
         current_matchmap = [[] for _ in range(segtext_len)]
-        # this variable holds the ids of the parallels that are present at each character
-
-        # now add the color layer
         for parallel_id in entry["parallel_ids"]:
-            _process_parallel_coloring(entry, parallel_id, parallels_dict,
-                                     current_colormap, current_matchmap)
-
-        # when an active match is present, we need to highlight the corresponding segment,
-        # since we cannot be 100% sure that the right match is present in the database.
+            if parallel_id in parallels_dict:
+                _apply_parallel_to_maps(
+                    parallels_dict[parallel_id],
+                    entry["segnr"],
+                    segtext_len,
+                    current_colormap,
+                    current_matchmap,
+                )
         if active_match:
-            active_flag = _process_active_match_coloring(
-                entry, active_match, active_flag, current_colormap, current_active_map
+            active_flag = _apply_active_match_to_maps(
+                active_match,
+                entry["segnr"],
+                segtext_len,
+                current_colormap,
+                current_active_map,
             )
         entry["segtext"] = create_segmented_text(
             entry["segtext"], current_colormap, current_matchmap, current_active_map
         )
-
     for entry in textleft:
         del entry["parallel_ids"]
-
     return textleft
 
 
@@ -343,7 +306,6 @@ def calculate_color_maps_middle_view(data):
             par_fulltext = trim_long_text(par_fulltext, entry["tgt_lang"])
             entry["par_fulltext"] = par_fulltext
             entry["score"] = prettify_score(entry["score"])
-
             # Handle par_segnr safely - ensure it's a list and not empty
             entry["par_segnr_range"] = shorten_segment_names(entry["par_segnr"])
             entry["par_segnr"] = entry["par_segnr"][0]
@@ -354,7 +316,6 @@ def calculate_color_maps_middle_view(data):
             # Set default values for missing data
             entry["par_fulltext"] = []
             entry["score"] = prettify_score(entry["score"])
-
             # Handle par_segnr safely
             entry["par_segnr_range"] = shorten_segment_names(entry["par_segnr"])
             entry["par_segnr"] = entry["par_segnr"][0]
