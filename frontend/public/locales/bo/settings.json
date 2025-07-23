@@ -47,8 +47,9 @@
     "emailResultInfo": "གྲུབ་འབྲས་ཤོག་ངོས་གློག་འཕྲིན་བཏང་།",
     "showSegmentNumbers": "ཆ་ཤས་ཨང་ཐོ་སྟོན།",
     "useMonochromaticSegmentColors": "ཆ་ཤས་མཚུངས་པ་ཁ་དོག་གཅིག་གྱུར་སྤྱད།",
+    "heatMapTheme": "Match heat map colors",
     "showTextViewMatches": "གཞན་{{lang}}ཡིག་ཆ་དང་མཚུངས་པ་སྟོན།",
-    "showMatches": "མཚུངས་པ་སྟོན།",
+    "showMatches": "Match highlighting",
     "fontSize": "ཡིག་ཆའི་ཆེ་ཆུང་།"
   },
   "optionsPopperMsgs": {
@@ -69,5 +70,10 @@
     "numbers": "ཨང་གྲངས།",
     "table": "རེའུ་མིག",
     "text": "ཡིག་ཆ།"
+  },
+  "heatMapThemeOptions": {
+    "standard": "Standard",
+    "monochrome": "Monochrome",
+    "vivid": "Vivid"
   }
 }

@@ -47,8 +47,9 @@
     "emailResultInfo": "結果ページの詳細をメールで送信",
     "showSegmentNumbers": "セグメント番号を表示",
     "useMonochromaticSegmentColors": "モノクロームセグメント一致色を使用",
+    "heatMapTheme": "Match heat map colors",
     "showTextViewMatches": "他の{{lang}}テキストとの一致を表示",
-    "showMatches": "一致を表示",
+    "showMatches": "Match highlighting",
     "fontSize": "フォントサイズ"
   },
   "optionsPopperMsgs": {
@@ -69,5 +70,10 @@
     "numbers": "数値",
     "table": "テーブル",
     "text": "テキスト"
+  },
+  "heatMapThemeOptions": {
+    "standard": "Standard",
+    "monochrome": "Monochrome",
+    "vivid": "Vivid"
   }
-} 
+}

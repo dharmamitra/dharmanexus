@@ -7,7 +7,7 @@ import DbSourceFilter from "@features/SidebarSuite/uiSettings/DbSourceFilter";
 import { DbViewSelector } from "@features/SidebarSuite/uiSettings/DbViewSelector";
 import FolioOption from "@features/SidebarSuite/uiSettings/FolioOption";
 import { FontSizeSlider } from "@features/SidebarSuite/uiSettings/FontSizeSlider";
-import { MonochromaticHighlightSwitch } from "@features/SidebarSuite/uiSettings/MonochromaticHighlightSwitch";
+import { HeatMapColorsSelector } from "@features/SidebarSuite/uiSettings/HeatMapColorsSelector";
 import MultiLingualSelector from "@features/SidebarSuite/uiSettings/MultiLingualSelector";
 import ParLengthFilter from "@features/SidebarSuite/uiSettings/ParLengthFilter";
 import { ResetFiltersButton } from "@features/SidebarSuite/uiSettings/ResetFiltersButton";
@@ -75,7 +75,7 @@ export function SidebarBody({
           defaultExpanded={true}
         >
           <ShowSegmentNumbersSwitch />
-          <MonochromaticHighlightSwitch />
+          <HeatMapColorsSelector />
           <TibetanScriptSelector />
           <FontSizeSlider />
           {currentView === DbViewEnum.TEXT && <TextViewFolioNavigation />}
