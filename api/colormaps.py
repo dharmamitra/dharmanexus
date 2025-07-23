@@ -197,7 +197,7 @@ def calculate_color_maps_text_view(data, active_match=None):
         return []
     textleft = data["textleft"]
     parallels_dict = {p["id"]: p for p in data["parallels"]}
-
+    # active_flag = False
     for entry in textleft:
         segtext_len = len(entry["segtext"])
         current_colormap = [0] * segtext_len
@@ -212,14 +212,14 @@ def calculate_color_maps_text_view(data, active_match=None):
                     current_colormap,
                     current_matchmap,
                 )
-        if active_match:
-            active_flag = _apply_active_match_to_maps(
-                active_match,
-                entry["segnr"],
-                segtext_len,
-                current_colormap,
-                current_active_map,
-            )
+        #if active_match:
+        #    active_flag = _apply_active_match_to_maps(
+        #        active_match,
+        #        entry["segnr"],
+        #        segtext_len,
+        #        current_colormap,
+        #        current_active_map,
+        #    )
         entry["segtext"] = create_segmented_text(
             entry["segtext"], current_colormap, current_matchmap, current_active_map
         )
