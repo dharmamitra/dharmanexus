@@ -13,6 +13,9 @@ import {
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import { DbApi } from "@utils/api/dbApi";
+import { useAtom } from "jotai";
+import { currentDbViewAtom } from "@atoms";
+import { DbViewEnum } from "@utils/constants";
 
 function SelectorFrame({
   children,
@@ -72,6 +75,7 @@ export default function FolioOption() {
   };
 
   const label = t("optionsLabels.folioAsLimit");
+  const [currentView] = useAtom(currentDbViewAtom);
 
   if (isLoading) {
     return (
@@ -80,6 +84,9 @@ export default function FolioOption() {
       </SelectorFrame>
     );
   }
+
+  const isDisabled =
+    currentView === DbViewEnum.TABLE || currentView === DbViewEnum.NUMBERS;
 
   return (
     <SelectorFrame label={label}>
@@ -92,6 +99,7 @@ export default function FolioOption() {
         value={folioParam ?? showAll}
         displayEmpty
         onChange={handleSelectChange}
+        disabled={isDisabled}
       >
         <MenuItem value={showAll}>
           <em>{showAll}</em>
