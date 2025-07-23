@@ -197,7 +197,6 @@ def calculate_color_maps_text_view(data, active_match=None):
         return []
     textleft = data["textleft"]
     parallels_dict = {p["id"]: p for p in data["parallels"]}
-    active_flag = False
 
     for entry in textleft:
         segtext_len = len(entry["segtext"])

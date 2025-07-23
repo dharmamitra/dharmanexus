@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import { currentDbViewAtom } from "@atoms";
 import { useFolioParam } from "@components/hooks/params";
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import {
@@ -13,9 +14,8 @@ import {
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import { DbApi } from "@utils/api/dbApi";
-import { useAtom } from "jotai";
-import { currentDbViewAtom } from "@atoms";
 import { DbViewEnum } from "@utils/constants";
+import { useAtom } from "jotai";
 
 function SelectorFrame({
   children,
@@ -97,9 +97,9 @@ export default function FolioOption() {
         }}
         input={<OutlinedInput label={label} />}
         value={folioParam ?? showAll}
+        disabled={isDisabled}
         displayEmpty
         onChange={handleSelectChange}
-        disabled={isDisabled}
       >
         <MenuItem value={showAll}>
           <em>{showAll}</em>
