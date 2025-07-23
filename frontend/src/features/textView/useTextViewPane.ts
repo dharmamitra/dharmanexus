@@ -50,9 +50,19 @@ export function useTextViewPane({
   const [rightPaneActiveMatchId, setRightPaneActiveMatchId] =
     useRightPaneActiveMatchParam();
 
-  const [fileNameFromActiveSegment] = activeSegment.split(":");
+  const [fileNameFromActiveSegment, segment] = activeSegment.split(":");
 
-  const fileName = fileNameFromActiveSegment ?? fileNameUrlParam;
+  let processedFileName = fileNameFromActiveSegment;
+
+  if (
+    fileNameFromActiveSegment?.includes("ZH_") &&
+    segment &&
+    /_\d{3}$/.test(fileNameFromActiveSegment)
+  ) {
+    processedFileName = fileNameFromActiveSegment.replace(/_\d{3}$/, "");
+  }
+
+  const fileName = processedFileName ?? fileNameUrlParam;
   const previousFileName = useRef(fileName);
 
   const initialPageParam =
@@ -116,7 +126,7 @@ export function useTextViewPane({
         filename:
           fileNameFromActiveSegment === "none"
             ? fileNameUrlParam
-            : (fileNameFromActiveSegment ?? ""),
+            : (processedFileName ?? ""),
         active_segment: activeSegmentParam,
         active_match_id: activeMatchIdParam,
         filters: requestFilters,
