@@ -1,17 +1,16 @@
 import { useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
 import { currentDbViewAtom } from "@atoms";
+import {
+  DbViewEnum,
+  DEFAULT_DB_VIEW,
+  UNAVAILABLE_VIEWS,
+} from "@constants/view";
 import { DbLanguage } from "@utils/api/types";
-import { DbViewEnum, DEFAULT_DB_VIEW } from "@utils/constants";
 import { getValidDbView } from "@utils/validators";
 import { useSetAtom } from "jotai";
 
 import { useDbPageRouterParams } from "./useDbRouterParams";
-
-export const UNAVAILABLE_VIEWS: Partial<Record<DbLanguage, DbViewEnum[]>> = {
-  sa: [DbViewEnum.NUMBERS],
-  bo: [DbViewEnum.NUMBERS],
-};
 
 export const getAvailableDBViews = (language: DbLanguage) => {
   const allViews = Object.values(DbViewEnum);

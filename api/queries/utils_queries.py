@@ -39,7 +39,7 @@ FOR p IN parallels
 
     FILTER p.score * 100 >= @score
     FILTER p.par_length >= @parlength
-    LIMIT 1000
+    LIMIT 12000
     COLLECT WITH COUNT INTO length
     RETURN length
 """

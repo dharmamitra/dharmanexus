@@ -3,6 +3,24 @@ const HttpBackend = require("i18next-http-backend/cjs");
 const ChainedBackend = require("i18next-chained-backend").default;
 const LocalStorageBackend = require("i18next-localstorage-backend").default;
 
+/**
+ * ¡¡¡ NOTE !!!
+ * i18n constants are duplicated for Node.js compatibility
+ * These must match exactly with src/constants/i18n.ts
+ */
+const SUPPORTED_LOCALES = [
+  "en",
+  "ja",
+  "ko",
+  "hi",
+  "zh_Hant",
+  "zh_Hans",
+  "bo",
+  "de"
+];
+const DEFAULT_LOCALE = "en";
+const I18N_NAMESPACES = ["common", "settings", "home"];
+
 const isBrowser = typeof window !== "undefined";
 const isDev = process.env.NODE_ENV === "development";
 
@@ -22,8 +40,8 @@ module.exports = {
 
   debug: isDev,
   i18n: {
-    defaultLocale: "en",
-    locales: ["en", "de", "bo"],
+    defaultLocale: DEFAULT_LOCALE,
+    locales: [...SUPPORTED_LOCALES],
   },
 
   initImmediate: false,
@@ -36,7 +54,7 @@ module.exports = {
 
   reloadOnPrerender: isDev,
 
-  ns: ["common", "settings", "home"],
+  ns: [...I18N_NAMESPACES],
   partialBundledLanguages: isBrowser,
   use: isBrowser ? [ChainedBackend] : [],
 };

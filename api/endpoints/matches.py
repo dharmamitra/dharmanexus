@@ -4,6 +4,7 @@ from typing import List, Any
 from ..queries import matches_queries
 from .endpoint_utils import execute_query
 from ..cache_config import cached_endpoint, CACHE_TIMES
+from .models.general_models import FullNames
 
 router = APIRouter()
 
@@ -24,6 +25,8 @@ class Match(BaseModel):
     par_length: int
     root_text: str
     par_text: str
+    par_full_names: FullNames
+    root_full_names: FullNames
 
 
 class MatchesOutput(BaseModel):
@@ -112,6 +115,8 @@ async def get_matches(input: MatchesInput) -> Any:
             par_length=match_data["par_length"],
             root_text=root_text_cropped,
             par_text=par_text_cropped,
+            par_full_names=match_data["par_full_names"],
+            root_full_names=match_data["root_full_names"],
         )
         matches.append(match)
 

@@ -1,7 +1,9 @@
 # DharmaNexus
-Main repository for the [DharmaNexus](dharmanexus.org) project.  
+Main repository for the [DharmaNexus](https://dharmanexus.org) project.  
 
 General introduction and documentation for end users is available [here](https://dharmamitra.github.io/dharmamitra-guides/dharmanexus/)!
+
+Dharmanexus is built on and proudly honours the work of the preceeding project [BuddhaNexus](https://github.com/BuddhaNexus/buddhanexus). Both projects share GPL-licensed code.  
 
 Includes:
 - API (using [fastapi](https://fastapi.tiangolo.com/))

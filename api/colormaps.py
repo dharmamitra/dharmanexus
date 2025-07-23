@@ -198,6 +198,7 @@ def calculate_color_maps_text_view(data, active_match=None):
     textleft = data["textleft"]
     parallels_dict = {p["id"]: p for p in data["parallels"]}
     active_flag = False
+
     for entry in textleft:
         segtext_len = len(entry["segtext"])
         current_colormap = [0] * segtext_len
@@ -325,5 +326,3 @@ def calculate_color_maps_middle_view(data):
             if "par_offset_end" in entry:
                 del entry["par_offset_end"]
     return data
-
-

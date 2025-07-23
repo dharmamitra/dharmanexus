@@ -1,0 +1,73 @@
+{
+  "generic": {
+    "selectLanguage": "选择语言",
+    "noSelection": "未选择",
+    "default": "预设",
+    "resultsSubject": "DharmaNexus 搜索结果链接",
+    "close": "关闭"
+  },
+  "resultsHead": {
+    "matches": "匹配: ",
+    "filters": "自定义筛选器: {{value}}",
+    "options": "自定义选项: {{value}}",
+    "settings": "设置",
+    "settingsTip": "切换设置面板",
+    "reset": "重置筛选器",
+    "resetTip": "恢复预设设置",
+    "textSelect": "变更文字",
+    "textSelectTip": "选择新的查询文字",
+    "cappedMessage": "结果超过 {{max}} 个匹配的最大值。"
+  },
+  "headings": {
+    "settings": "设置",
+    "filters": "筛选器",
+    "display": "显示设置",
+    "tools": "工具",
+    "links": "链接"
+  },
+  "optionsLabels": {
+    "script": "选择文字脚本",
+    "tibetanScript": "藏文",
+    "folioAsGoTo": "前往选定的文字区段",
+    "folioAsLimit": "显示选定文字区段的匹配",
+    "folioShowAll": "完整文字",
+    "multiLingual": "匹配文字语言",
+    "multiLingualError": "至少需要选择一种语言。显示预设结果。",
+    "sort": {
+      "selector": "排序方式",
+      "position": "预设 – 查询文字中的位置",
+      "quotedtext": "匹配文字中的位置",
+      "length": "字符匹配长度 (<)",
+      "length2": "字符匹配长度 (>)"
+    },
+    "download_data": "将结果下载为 xlsx 文件",
+    "wylie": "威利转写",
+    "unicode": "统一码",
+    "copyResultInfo": "复制结果页面详细资料",
+    "emailResultInfo": "以电子邮件传送结果页面详细资料",
+    "showSegmentNumbers": "显示段落编号",
+    "useMonochromaticSegmentColors": "使用单色段落匹配颜色",
+    "showTextViewMatches": "显示与其他 {{lang}} 文字的匹配",
+    "showMatches": "显示匹配",
+    "fontSize": "字体大小"
+  },
+  "optionsPopperMsgs": {
+    "downloadStarted": "下载中...",
+    "downloadError": "哎呀！发生问题了！",
+    "copied": "已复制！",
+    "emailResultInfo": "电子邮件已开启"
+  },
+  "filtersLabels": {
+    "score": "相似度:",
+    "minMatch": "字符/音节匹配最小长度:",
+    "exclude_sources": "排除:",
+    "include_sources": "包含:"
+  },
+  "dbViewLabels": {
+    "view": "视图",
+    "graph": "图表",
+    "numbers": "数字",
+    "table": "表格",
+    "text": "文字"
+  }
+} 
