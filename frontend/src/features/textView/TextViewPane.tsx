@@ -62,6 +62,19 @@ export const TextViewPane = ({
   const wasDataJustAppended: RefObject<boolean> = useRef(false);
   const [initialSegmentId] = useState(initialActiveSegment ?? activeSegmentId);
   const isInitialLoad = useRef(true);
+  const previousActiveSegmentId = useRef(activeSegmentId);
+  const isFolioNavigation = useRef(false);
+
+  // For left pane: use activeSegmentId if it has changed from initial, otherwise use initialSegmentId
+  // This allows folio navigation to work while preventing middle pane interactions from reloading
+  let effectiveActiveSegment: string;
+  if (isRightPane) {
+    effectiveActiveSegment = activeSegmentId;
+  } else if (activeSegmentId === initialSegmentId) {
+    effectiveActiveSegment = initialSegmentId;
+  } else {
+    effectiveActiveSegment = activeSegmentId;
+  }
 
   const {
     // [TODO] add error handling
@@ -78,7 +91,7 @@ export const TextViewPane = ({
     clearActiveMatch,
     initialActiveSegment: initialActiveSegmentFromHook,
   } = useTextViewPane({
-    activeSegment: isRightPane ? activeSegmentId : initialSegmentId,
+    activeSegment: effectiveActiveSegment,
     isRightPane,
   });
 
@@ -108,7 +121,9 @@ export const TextViewPane = ({
     // We want to scroll in two cases:
     // 1. On the initial load of the component when a segment is active.
     // 2. In the right pane, any time the active segment changes.
-    const shouldScroll = isRightPane || isInitialLoad.current;
+    // 3. In the left pane, when the active segment changes due to folio navigation (not segment clicks)
+    const shouldScroll =
+      isRightPane || isInitialLoad.current || isFolioNavigation.current;
 
     // We can only scroll once the data has finished loading.
     if (shouldScroll && !isLoading) {
@@ -120,8 +135,34 @@ export const TextViewPane = ({
         // We've completed the initial scroll, so we disable it for subsequent renders.
         isInitialLoad.current = false;
       }
+
+      // Reset the folio navigation flag after scrolling
+      if (isFolioNavigation.current) {
+        isFolioNavigation.current = false;
+      }
     }
-  }, [isRightPane, isLoading, scrollToActiveSegment]);
+
+    // Update the previous active segment ID
+    previousActiveSegmentId.current = activeSegmentId;
+  }, [
+    isRightPane,
+    isLoading,
+    scrollToActiveSegment,
+    activeSegmentId,
+    initialSegmentId,
+  ]);
+
+  // Listen for folio navigation changes
+  useEffect(() => {
+    // Detect if this is folio navigation (activeSegmentId changed from initialSegmentId)
+    if (
+      !isRightPane &&
+      activeSegmentId !== initialSegmentId &&
+      activeSegmentId !== previousActiveSegmentId.current
+    ) {
+      isFolioNavigation.current = true;
+    }
+  }, [activeSegmentId, initialSegmentId, isRightPane]);
 
   const handleStartReached = useCallback(async () => {
     wasDataJustAppended.current = true;

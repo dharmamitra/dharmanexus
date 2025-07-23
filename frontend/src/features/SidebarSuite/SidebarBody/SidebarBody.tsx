@@ -1,5 +1,7 @@
 import { useTranslation } from "next-i18next";
+import { currentDbViewAtom } from "@atoms";
 import { useIncludeMatchesParam } from "@components/hooks/params";
+import { DbViewEnum } from "@constants/view";
 import { CollapsibleSection } from "@features/SidebarSuite/common/CollapsibleSection";
 import { DrawerHeader } from "@features/SidebarSuite/common/MuiStyledSidebarComponents";
 import DbSourceFilter from "@features/SidebarSuite/uiSettings/DbSourceFilter";
@@ -13,8 +15,10 @@ import { ResetFiltersButton } from "@features/SidebarSuite/uiSettings/ResetFilte
 import ScoreFilter from "@features/SidebarSuite/uiSettings/ScoreFilter";
 import { ShowSegmentNumbersSwitch } from "@features/SidebarSuite/uiSettings/ShowSegmentNumbersSwitch";
 import { TibetanScriptSelector } from "@features/SidebarSuite/uiSettings/TextScriptSelectors";
+import TextViewFolioNavigation from "@features/SidebarSuite/uiSettings/TextViewFolioNavigation";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Box, IconButton, Typography } from "@mui/material";
+import { useAtomValue } from "jotai";
 
 import { UtilityOptionsSection } from "./UtilityOptionsSection/UtilityOptionsSection";
 
@@ -51,6 +55,7 @@ export function SidebarBody({
 }) {
   const [includeMatches] = useIncludeMatchesParam();
   const { t } = useTranslation("settings");
+  const currentView = useAtomValue(currentDbViewAtom);
 
   return (
     <>
@@ -73,6 +78,7 @@ export function SidebarBody({
           <HeatMapColorsSelector />
           <TibetanScriptSelector />
           <FontSizeSlider />
+          {currentView === DbViewEnum.TEXT && <TextViewFolioNavigation />}
         </CollapsibleSection>
 
         <CollapsibleSection title={t("headings.filters")}>
@@ -83,12 +89,12 @@ export function SidebarBody({
             }}
           >
             <ResetFiltersButton />
-            <MultiLingualSelector />
+            {currentView === DbViewEnum.TEXT && <MultiLingualSelector />}
             <ScoreFilter />
             <ParLengthFilter />
             <DbSourceFilter filterName="exclude_sources" />
             <DbSourceFilter filterName="include_sources" />
-            <FolioOption />
+            {currentView !== DbViewEnum.TEXT && <FolioOption />}
           </Box>
         </CollapsibleSection>
 

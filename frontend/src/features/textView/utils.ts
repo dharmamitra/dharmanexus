@@ -5,8 +5,7 @@ import chroma from "chroma-js";
 import {
   STANDARD_MATCH_HEAT_THEME_DARK_MODE,
   STANDARD_MATCH_HEAT_THEME_LIGHT_MODE,
-  VIVID_MATCH_HEAT_THEME_DARK_MODE,
-  VIVID_MATCH_HEAT_THEME_LIGHT_MODE,
+  VIVID_MATCH_HEAT_THEME,
 } from "./constants";
 
 export function getTextViewColorScale(
@@ -59,8 +58,7 @@ export const getMatchHeatColors = (
   }
 
   if (heatMapTheme === "vivid") {
-    if (isDarkTheme) return VIVID_MATCH_HEAT_THEME_DARK_MODE;
-    return VIVID_MATCH_HEAT_THEME_LIGHT_MODE;
+    return VIVID_MATCH_HEAT_THEME;
   }
 
   return [];
