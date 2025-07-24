@@ -5,10 +5,13 @@ import React, {
   useLayoutEffect,
   useMemo,
   useRef,
-  useState,
 } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
-import { fontSizeAtom, tibetanScriptSelectionAtom } from "@atoms";
+import {
+  fontSizeAtom,
+  isFolioTextViewNavigationAtom,
+  tibetanScriptSelectionAtom,
+} from "@atoms";
 import {
   EmptyPlaceholder,
   ListLoadingIndicator,
@@ -34,7 +37,6 @@ export interface TextViewPaneProps {
   setActiveSegmentId: (id: string) => Promise<URLSearchParams>;
   activeSegmentIndex: number;
   setActiveSegmentIndex: (index: number) => Promise<URLSearchParams>;
-  initialActiveSegment?: string;
 }
 
 const debounceEdgeReachedFunction =
@@ -54,27 +56,13 @@ export const TextViewPane = ({
   setActiveSegmentId,
   activeSegmentIndex,
   setActiveSegmentIndex,
-  initialActiveSegment,
 }: TextViewPaneProps) => {
-  const tibetanScript = useAtomValue(tibetanScriptSelectionAtom);
-  const fontSize = useAtomValue(fontSizeAtom);
   const virtuosoRef = useRef<VirtuosoHandle>(null);
   const wasDataJustAppended: RefObject<boolean> = useRef(false);
-  const [initialSegmentId] = useState(initialActiveSegment ?? activeSegmentId);
-  const isInitialLoad = useRef(true);
-  const previousActiveSegmentId = useRef(activeSegmentId);
-  const isFolioNavigation = useRef(false);
 
-  // For left pane: use activeSegmentId if it has changed from initial, otherwise use initialSegmentId
-  // This allows folio navigation to work while preventing middle pane interactions from reloading
-  let effectiveActiveSegment: string;
-  if (isRightPane) {
-    effectiveActiveSegment = activeSegmentId;
-  } else if (activeSegmentId === initialSegmentId) {
-    effectiveActiveSegment = initialSegmentId;
-  } else {
-    effectiveActiveSegment = activeSegmentId;
-  }
+  const tibetanScript = useAtomValue(tibetanScriptSelectionAtom);
+  const fontSize = useAtomValue(fontSizeAtom);
+  const isFolioTextViewNavigation = useAtomValue(isFolioTextViewNavigationAtom);
 
   const {
     // [TODO] add error handling
@@ -89,9 +77,8 @@ export const TextViewPane = ({
     handleFetchingNextPage,
     isLoading,
     clearActiveMatch,
-    initialActiveSegment: initialActiveSegmentFromHook,
   } = useTextViewPane({
-    activeSegment: effectiveActiveSegment,
+    activeSegment: activeSegmentId,
     isRightPane,
   });
 
@@ -114,55 +101,20 @@ export const TextViewPane = ({
       activeSegmentId,
     );
     if (index === -1) return;
-    virtuosoRef.current?.scrollToIndex({ index, align: "center" });
+    virtuosoRef.current?.scrollToIndex({
+      index,
+      align: "start",
+      behavior: "auto",
+      offset: -34,
+    });
   }, [activeSegmentId, isLoading]);
 
   useEffect(() => {
-    // We want to scroll in two cases:
-    // 1. On the initial load of the component when a segment is active.
-    // 2. In the right pane, any time the active segment changes.
-    // 3. In the left pane, when the active segment changes due to folio navigation (not segment clicks)
-    const shouldScroll =
-      isRightPane || isInitialLoad.current || isFolioNavigation.current;
+    scrollToActiveSegment();
 
-    // We can only scroll once the data has finished loading.
-    if (shouldScroll && !isLoading) {
-      scrollToActiveSegment();
-      // [workaround/hack] - it doesn't always consistently scroll to the activeSegment, even with this hack, but it helps
-      setTimeout(() => scrollToActiveSegment(), 1000);
-
-      if (isInitialLoad.current) {
-        // We've completed the initial scroll, so we disable it for subsequent renders.
-        isInitialLoad.current = false;
-      }
-
-      // Reset the folio navigation flag after scrolling
-      if (isFolioNavigation.current) {
-        isFolioNavigation.current = false;
-      }
-    }
-
-    // Update the previous active segment ID
-    previousActiveSegmentId.current = activeSegmentId;
-  }, [
-    isRightPane,
-    isLoading,
-    scrollToActiveSegment,
-    activeSegmentId,
-    initialSegmentId,
-  ]);
-
-  // Listen for folio navigation changes
-  useEffect(() => {
-    // Detect if this is folio navigation (activeSegmentId changed from initialSegmentId)
-    if (
-      !isRightPane &&
-      activeSegmentId !== initialSegmentId &&
-      activeSegmentId !== previousActiveSegmentId.current
-    ) {
-      isFolioNavigation.current = true;
-    }
-  }, [activeSegmentId, initialSegmentId, isRightPane]);
+    // [workaround/hack] - it doesn't always consistently scroll to the activeSegment, even with this hack, but it helps
+    setTimeout(() => scrollToActiveSegment(), 1000);
+  }, [scrollToActiveSegment]);
 
   const handleStartReached = useCallback(async () => {
     wasDataJustAppended.current = true;
@@ -189,7 +141,7 @@ export const TextViewPane = ({
         setActiveSegmentIndex={setActiveSegmentIndex}
         clearActiveMatch={clearActiveMatch}
         isRightPane={isRightPane}
-        initialActiveSegment={initialActiveSegmentFromHook}
+        isFolioTextViewNavigation={isFolioTextViewNavigation}
         tibetanScript={tibetanScript}
         fontSize={fontSize}
       />
@@ -202,9 +154,9 @@ export const TextViewPane = ({
       isRightPane,
       setActiveSegmentId,
       setActiveSegmentIndex,
-      initialActiveSegmentFromHook,
       tibetanScript,
       fontSize,
+      isFolioTextViewNavigation,
     ],
   );
 

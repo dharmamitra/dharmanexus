@@ -29,16 +29,12 @@
   }
 
 
-  &--parallel-hovered {
+  &--parallel-hovered,
+  &--active {
     background: var(--mui-palette-grey-700) !important;
     color: var(--mui-palette-common-white) !important;
     ;
   }
-}
-
-.segment--initial-active {
-  background: var(--mui-palette-grey-700) !important;
-  color: var(--mui-palette-common-white) !important;
 }
 
 .segmentNumber {

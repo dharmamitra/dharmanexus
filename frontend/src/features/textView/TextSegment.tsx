@@ -4,6 +4,7 @@ import {
   activeSegmentMatchesAtom,
   heatMapThemeAtom,
   hoveredOverParallelIdAtom,
+  isFolioTextViewNavigationAtom,
   shouldShowSegmentNumbersAtom,
   textViewIsMiddlePanePointingLeftAtom,
 } from "@atoms";
@@ -11,6 +12,7 @@ import { sourceSans } from "@components/theme";
 import { TibetanScript } from "@features/SidebarSuite/types";
 import { enscriptSegment } from "@features/SidebarSuite/utils";
 import {
+  buildSegmentClassName,
   createURLToSegment,
   getMatchHeatColors,
 } from "@features/textView/utils";
@@ -23,7 +25,7 @@ import {
 import { useTheme } from "@mui/material/styles";
 import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-parallels";
 import type { Scale } from "chroma-js";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 
 import styles from "./textSegment.module.scss";
 
@@ -36,7 +38,7 @@ type TextSegmentProps = {
   setActiveSegmentId: (id: string) => Promise<URLSearchParams>;
   setActiveSegmentIndex: (index: number) => Promise<URLSearchParams>;
   clearActiveMatch: () => Promise<void>;
-  initialActiveSegment?: string;
+  isFolioTextViewNavigation: boolean;
   tibetanScript: TibetanScript;
   fontSize: number;
 };
@@ -50,7 +52,7 @@ export const TextSegment = ({
   setActiveSegmentId,
   setActiveSegmentIndex,
   clearActiveMatch,
-  initialActiveSegment,
+  isFolioTextViewNavigation,
   tibetanScript,
   fontSize,
 }: TextSegmentProps) => {
@@ -64,12 +66,13 @@ export const TextSegment = ({
   const hoveredOverParallelId = useAtomValue(hoveredOverParallelIdAtom);
   const setSelectedSegmentMatches = useSetAtom(activeSegmentMatchesAtom);
   const isSegmentSelected = activeSegmentId === data?.segmentNumber;
-  const isInitialActiveSegment =
-    initialActiveSegment === data?.segmentNumber &&
-    activeSegmentId === initialActiveSegment;
 
-  const [, setIsMiddlePanePointingLeft] = useAtom(
+  const setIsMiddlePanePointingLeft = useSetAtom(
     textViewIsMiddlePanePointingLeftAtom,
+  );
+
+  const setIsFolioTextViewNavigation = useSetAtom(
+    isFolioTextViewNavigationAtom,
   );
 
   const matchHeatColors = getMatchHeatColors(heatMapTheme, isDarkTheme);
@@ -77,6 +80,7 @@ export const TextSegment = ({
   const updateSelectedLocationInGlobalState = useCallback(
     async (location: { id: string; index: number; matches: string[] }) => {
       setIsMiddlePanePointingLeft(isRightPane);
+      setIsFolioTextViewNavigation(false);
       setSelectedSegmentMatches(location.matches);
       await Promise.all([
         setActiveSegmentId(location.id),
@@ -91,6 +95,7 @@ export const TextSegment = ({
       setActiveSegmentIndex,
       setIsMiddlePanePointingLeft,
       setSelectedSegmentMatches,
+      setIsFolioTextViewNavigation,
     ],
   );
 
@@ -146,23 +151,24 @@ export const TextSegment = ({
 
             const isSegmentPartHoveredOverInMiddleView =
               matchSets && hoveredOverParallelId
-                ? matchSets[i]?.has(hoveredOverParallelId)
+                ? (matchSets[i]?.has(hoveredOverParallelId) ?? false)
                 : false;
 
             const isSelected = isSegmentSelected
               ? isSegmentPartSelected
               : isActiveMatch;
 
-            const segmentClassName = `${styles.segment} ${
-              isDarkTheme && styles["segment--dark"]
-            } ${isSelected && styles["segment--selected"]} ${
-              isSegmentPartSelected &&
-              !isActiveMatch &&
-              styles["segment--part-selected"]
-            } ${
-              isSegmentPartHoveredOverInMiddleView &&
-              styles["segment--parallel-hovered"]
-            } ${isInitialActiveSegment && styles["segment--initial-active"]}`;
+            const segmentClassName = buildSegmentClassName({
+              styles,
+              isDarkTheme,
+              isSelected,
+              isSegmentPartSelected,
+              isActiveMatch,
+              isSegmentPartHoveredOverInMiddleView,
+              isSegmentSelected,
+              isFolioTextViewNavigation,
+              isRightPane,
+            });
 
             if (matches.length === 0) {
               return (

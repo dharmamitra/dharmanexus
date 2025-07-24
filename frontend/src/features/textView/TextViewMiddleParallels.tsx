@@ -3,6 +3,7 @@ import { useTranslation } from "next-i18next";
 import {
   activeSegmentMatchesAtom,
   hoveredOverParallelIdAtom,
+  isFolioTextViewNavigationAtom,
   textViewIsMiddlePanePointingLeftAtom,
 } from "@atoms";
 import { LoadingCard } from "@components/common/Loading";
@@ -55,6 +56,15 @@ export default function TextViewMiddleParallels() {
   const [, setLeftPaneActiveMatch] = useLeftPaneActiveMatchParam();
   const [, setRightPaneActiveMatch] = useRightPaneActiveMatchParam();
   const [, setFolio] = useFolioParam();
+  const isFolioTextViewNavigation = useAtomValue(isFolioTextViewNavigationAtom);
+
+  const activeMiddleSegmentId = React.useRef(activeSegmentId);
+
+  React.useEffect(() => {
+    if (!isFolioTextViewNavigation) {
+      activeMiddleSegmentId.current = activeSegmentId;
+    }
+  }, [isFolioTextViewNavigation, activeSegmentId]);
 
   const handleClear = async () => {
     await Promise.all([
@@ -169,7 +179,7 @@ export default function TextViewMiddleParallels() {
               />
             </Stack>
             <Typography pl={1} pt={0.25} mb={0} variant="body2">
-              {activeSegmentId}
+              {activeMiddleSegmentId.current}
             </Typography>
           </>
         }

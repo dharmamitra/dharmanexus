@@ -63,3 +63,53 @@ export const getMatchHeatColors = (
 
   return [];
 };
+
+export const buildSegmentClassName = ({
+  styles,
+  isDarkTheme,
+  isSelected,
+  isSegmentPartSelected,
+  isActiveMatch,
+  isSegmentPartHoveredOverInMiddleView,
+  isSegmentSelected,
+  isFolioTextViewNavigation,
+  isRightPane,
+}: {
+  styles: Record<string, string>;
+  isDarkTheme: boolean;
+  isSelected: boolean;
+  isSegmentPartSelected: boolean;
+  isActiveMatch?: boolean;
+  isSegmentPartHoveredOverInMiddleView: boolean;
+  isSegmentSelected: boolean;
+  isFolioTextViewNavigation: boolean;
+  isRightPane: boolean;
+}) => {
+  const classNames = [styles.segment];
+
+  if (isDarkTheme && styles["segment--dark"])
+    classNames.push(styles["segment--dark"]);
+  if (isSelected && styles["segment--selected"])
+    classNames.push(styles["segment--selected"]);
+  if (
+    isSegmentPartSelected &&
+    !isActiveMatch &&
+    styles["segment--part-selected"]
+  )
+    classNames.push(styles["segment--part-selected"]);
+  if (
+    isSegmentPartHoveredOverInMiddleView &&
+    styles["segment--parallel-hovered"]
+  )
+    classNames.push(styles["segment--parallel-hovered"]);
+  if (
+    isSegmentSelected &&
+    isFolioTextViewNavigation &&
+    styles["segment--active"]
+  )
+    classNames.push(styles["segment--active"]);
+  if (isSegmentSelected && isRightPane && styles["segment--active"])
+    classNames.push(styles["segment--active"]);
+
+  return classNames.join(" ");
+};

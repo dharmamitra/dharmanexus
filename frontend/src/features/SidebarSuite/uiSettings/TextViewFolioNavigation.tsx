@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { activeSegmentMatchesAtom } from "@atoms";
+import { isFolioTextViewNavigationAtom } from "@atoms";
 import { useFolioParam } from "@components/hooks/params";
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import {
@@ -57,7 +57,10 @@ export default function TextViewFolioNavigation() {
   const { fileName } = useDbPageRouterParams();
   const router = useRouter();
   const [folio] = useFolioParam();
-  const setActiveSegmentMatches = useSetAtom(activeSegmentMatchesAtom);
+
+  const setIsFolioTextViewNavigation = useSetAtom(
+    isFolioTextViewNavigationAtom,
+  );
 
   const { data, isLoading } = useQuery({
     queryKey: DbApi.FolioData.makeQueryKey(fileName),
@@ -74,7 +77,7 @@ export default function TextViewFolioNavigation() {
       });
 
       if (activeSegment) {
-        setActiveSegmentMatches([]);
+        setIsFolioTextViewNavigation(true);
         await router.push({
           pathname: router.pathname,
           query: {
