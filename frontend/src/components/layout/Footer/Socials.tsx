@@ -8,7 +8,7 @@ import { Box, IconButton, SxProps } from "@mui/material";
 const URLS = {
   email: "mailto:dharmamitra.project@gmail.com",
   github: "https://github.com/dharmamitra",
-  youtube: "https://www.youtube.com/@dharmamitra-y2z",
+  youtube: "https://www.youtube.com/@dharmamitra_ucb",
   x: "https://x.com/dharmamitra_ucb",
   facebook:
     "https://www.facebook.com/people/Dharmamitra-Project/61578013388240/",
