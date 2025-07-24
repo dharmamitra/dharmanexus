@@ -83,10 +83,8 @@ export const TextSegment = ({
   );
 
   const matchSets = useMemo(() => {
-    // optimisation - don't run the map function if there are no active segments (middle view is closed)
-    if (activeSegmentId === "none") return undefined;
     return data?.segmentText.map((textChunk) => new Set(textChunk.matches));
-  }, [activeSegmentId, data?.segmentText]);
+  }, [data?.segmentText]);
 
   if (!data) return null;
 
