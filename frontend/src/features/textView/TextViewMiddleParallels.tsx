@@ -166,9 +166,6 @@ export default function TextViewMiddleParallels({ onClose }: Props) {
                 fontSize="inherit"
               />
             </Stack>
-            <Typography pl={1} pt={0.25} mb={0} variant="body2">
-              {activeMiddleSegmentId.current}
-            </Typography>
           </>
         }
       />
