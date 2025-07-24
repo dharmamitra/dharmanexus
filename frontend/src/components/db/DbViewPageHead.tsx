@@ -39,7 +39,7 @@ export const DbViewPageHead = () => {
         title={`DharmaNexus | ${displayId} :: ${title} ${startCase(dbView)} View`}
       />
 
-      <QueryPageTopStack title={title} subtitle={displayId} />
+      <QueryPageTopStack title={title} subtitle={displayId} dbView={dbView} />
     </>
   );
 };

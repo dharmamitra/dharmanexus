@@ -96,12 +96,19 @@ export default function GraphPage() {
           flexDirection: "column",
         }}
       >
-        <Typography variant="h4" sx={{ my: 2 }}>
-          {t("graph.pieDataTitle")}
-        </Typography>
-        <Typography variant="subtitle1">
-          {t("graph.pieDataSubtitle")}
-        </Typography>
+        <Box sx={{ maxWidth: "900px" }}>
+          <Typography
+            variant="h6"
+            lineHeight={1.25}
+            component="h2"
+            sx={{ my: 1 }}
+          >
+            {t("graph.pieDataTitle")}
+          </Typography>
+          <Typography variant="subtitle1">
+            {t("graph.pieDataSubtitle")}
+          </Typography>
+        </Box>
 
         <Box sx={{ maxWidth: "900px" }}>
           <GraphContainer>
@@ -109,12 +116,19 @@ export default function GraphPage() {
           </GraphContainer>
         </Box>
 
-        <Typography variant="h4" sx={{ my: 2 }}>
-          {t("graph.histogramDataTitle")}
-        </Typography>
-        <Typography variant="subtitle1">
-          {t("graph.histogramDataSubtitle")}
-        </Typography>
+        <Box sx={{ maxWidth: "900px", mt: 3 }}>
+          <Typography
+            variant="h6"
+            lineHeight={1.25}
+            component="h2"
+            sx={{ my: 1 }}
+          >
+            {t("graph.histogramDataTitle")}
+          </Typography>
+          <Typography variant="subtitle1">
+            {t("graph.histogramDataSubtitle")}
+          </Typography>
+        </Box>
 
         <GraphContainer
           sx={{

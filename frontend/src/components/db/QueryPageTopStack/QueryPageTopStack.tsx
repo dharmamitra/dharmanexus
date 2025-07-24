@@ -2,6 +2,7 @@ import * as React from "react";
 import CurrentResultChips from "@components/db/CurrentResultChips";
 import { useViewMatches } from "@components/hooks/useViewMatches";
 import { RESULT_PAGE_TITLE_GROUP_ID } from "@constants/base";
+import { DbViewEnum } from "@constants/view";
 import { TextViewMatchesSwitch } from "@features/SidebarSuite/uiSettings/TextViewMatchesSwitch";
 import { Box, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -11,9 +12,11 @@ import { DbFileButtons } from "./DbFileButtons";
 export const QueryPageTopStack = ({
   title,
   subtitle,
+  dbView,
 }: {
   title: string;
   subtitle?: string;
+  dbView: DbViewEnum;
 }) => {
   const matchOptions = useViewMatches();
 
@@ -55,7 +58,9 @@ export const QueryPageTopStack = ({
 
       <Stack
         direction="row"
-        justifyContent="space-between"
+        justifyContent={
+          dbView === DbViewEnum.TEXT ? "space-between" : "flex-end"
+        }
         alignItems="center"
         spacing={{ xs: 0, md: 2 }}
         mb={1}
