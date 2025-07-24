@@ -87,3 +87,5 @@ export const activeSegmentMatchesAtom = atom<string[]>([]);
 export const hoveredOverParallelIdAtom = atom<string | null>(null);
 
 export const isMiddlePaneMovingAtom = atom(false);
+
+export const isFolioTextViewNavigationAtom = atom(false);

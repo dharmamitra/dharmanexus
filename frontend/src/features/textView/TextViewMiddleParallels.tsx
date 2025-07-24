@@ -3,19 +3,28 @@ import { useTranslation } from "next-i18next";
 import {
   activeSegmentMatchesAtom,
   hoveredOverParallelIdAtom,
+  isFolioTextViewNavigationAtom,
   textViewIsMiddlePanePointingLeftAtom,
 } from "@atoms";
 import { LoadingCard } from "@components/common/Loading";
 import {
   useActiveSegmentIndexParam,
   useActiveSegmentParam,
+  useFolioParam,
   useLeftPaneActiveMatchParam,
   useRightPaneActiveMatchParam,
   useRightPaneActiveSegmentParam,
 } from "@components/hooks/params";
 import { ParallelSegment } from "@features/tableView/ParallelSegment";
 import { ArrowForward, Numbers } from "@mui/icons-material";
-import { Box, CardContent, CardHeader, Chip, Stack } from "@mui/material";
+import {
+  Box,
+  CardContent,
+  CardHeader,
+  Chip,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { DbApi } from "@utils/api/dbApi";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -46,11 +55,22 @@ export default function TextViewMiddleParallels() {
     useRightPaneActiveSegmentParam();
   const [, setLeftPaneActiveMatch] = useLeftPaneActiveMatchParam();
   const [, setRightPaneActiveMatch] = useRightPaneActiveMatchParam();
+  const [, setFolio] = useFolioParam();
+  const isFolioTextViewNavigation = useAtomValue(isFolioTextViewNavigationAtom);
+
+  const activeMiddleSegmentId = React.useRef(activeSegmentId);
+
+  React.useEffect(() => {
+    if (!isFolioTextViewNavigation) {
+      activeMiddleSegmentId.current = activeSegmentId;
+    }
+  }, [isFolioTextViewNavigation, activeSegmentId]);
 
   const handleClear = async () => {
     await Promise.all([
       setActiveSegmentId("none"),
       setActiveSegmentIndex(null),
+      setFolio(null),
     ]);
   };
 
@@ -142,21 +162,26 @@ export default function TextViewMiddleParallels() {
         }}
         action={<CloseTextViewPaneButton handlePress={handleClear} />}
         title={
-          <Stack direction="row" spacing={1}>
-            <Chip
-              label={`${activeSegmentMatches.length} ${t("db.segmentMatches")}`}
-              variant="outlined"
-              size="small"
-              icon={<Numbers fontSize="inherit" />}
-            />
-            <ArrowForward
-              sx={{
-                transition: "transform 250ms ease-out",
-                transform: `rotate(${isMiddlePanePointingLeft ? "180deg" : "0deg"})`,
-              }}
-              fontSize="inherit"
-            />
-          </Stack>
+          <>
+            <Stack direction="row" spacing={1}>
+              <Chip
+                label={`${activeSegmentMatches.length} ${t("db.segmentMatches")}`}
+                variant="outlined"
+                size="small"
+                icon={<Numbers fontSize="inherit" />}
+              />
+              <ArrowForward
+                sx={{
+                  transition: "transform 250ms ease-out",
+                  transform: `rotate(${isMiddlePanePointingLeft ? "180deg" : "0deg"})`,
+                }}
+                fontSize="inherit"
+              />
+            </Stack>
+            <Typography pl={1} pt={0.25} mb={0} variant="body2">
+              {activeMiddleSegmentId.current}
+            </Typography>
+          </>
         }
       />
 

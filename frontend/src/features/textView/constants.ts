@@ -3,7 +3,7 @@
 // original codes: https://github.com/search?q=repo%3ABuddhaNexus/buddhanexus-frontend%20SEGMENT_COLORS&type=code
 
 export const STANDARD_MATCH_HEAT_THEME_LIGHT_MODE = [
-  "#00224E", // 1 match - deeper navy (WCAG AA)
+  "#00224E", // 1 match
   "#004C7A",
   "#00724B",
   "#485C00",
@@ -12,7 +12,7 @@ export const STANDARD_MATCH_HEAT_THEME_LIGHT_MODE = [
   "#B0481C",
   "#C62800",
   "#D51E00",
-  "#E9152C", // most matches
+  "#E9152C", // 10 or more matches
 ] as const;
 
 // colours are "counter-filtered" to adjust for css dark mode filters
@@ -22,40 +22,27 @@ export const STANDARD_MATCH_HEAT_THEME_LIGHT_MODE = [
 // contrast checkers will not recognize the css invert and give a false
 // fail on the a11y test.
 export const STANDARD_MATCH_HEAT_THEME_DARK_MODE = [
-  "#4f2742", // 1 match
-  "#53323c",
-  "#564c36",
-  "#50652e",
-  "#3e7426",
-  "#2b7e1e",
-  "#1b8714",
-  "#0e900a",
-  "#009904",
-  "#00a200", // most matches
+  "#42222b", // 1 match
+  "#4f2742",
+  "#2a3f59",
+  "#22514a",
+  "#3e682b",
+  "#2c6a28",
+  "#327b1e",
+  "#438a12",
+  "#808410",
+  "#849703", // 10 or more matches
 ] as const;
 
-// Stark match highlighting is not WCAG compliant
-export const VIVID_MATCH_HEAT_THEME_LIGHT_MODE = [
+// Vivid theme is not WCAG AA compliant
+export const VIVID_MATCH_HEAT_THEME = [
   "#0cc0e8", // 1 match
   "#0039ff",
   "#610ce8",
   "#aa00ff",
   "#dc0ce8",
   "#ff0093",
-  "#e80c0c",
-  "#e85650",
-  "#f2611a",
-  "#ff8300", // 10 or more matches
-] as const;
-
-export const VIVID_MATCH_HEAT_THEME_DARK_MODE = [
-  "#0cc0e8", // 1 match
-  "#0039ff",
-  "#610ce8",
-  "#aa00ff",
-  "#dc0ce8",
-  "#ff0093",
-  "#e80c0c",
+  "#f32b72",
   "#e85650",
   "#f2611a",
   "#ff8300", // 10 or more matches

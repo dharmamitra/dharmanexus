@@ -1,4 +1,6 @@
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import { isFolioTextViewNavigationAtom } from "@atoms";
 import { useFolioParam } from "@components/hooks/params";
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import {
@@ -13,6 +15,7 @@ import {
 import Box from "@mui/material/Box";
 import { useQuery } from "@tanstack/react-query";
 import { DbApi } from "@utils/api/dbApi";
+import { useSetAtom } from "jotai";
 
 function SelectorFrame({
   children,
@@ -24,27 +27,24 @@ function SelectorFrame({
   return (
     <Box sx={{ width: 1, my: 2 }}>
       <FormControl sx={{ width: 1 }} title={label}>
-        <InputLabel id="folio-option-selector-label">{label}</InputLabel>
+        <InputLabel id="text-view-folio-navigation-label">{label}</InputLabel>
         {children}
       </FormControl>
     </Box>
   );
 }
 
-function Loading({ showAll, label }: { showAll: string; label: string }) {
+function Loading({ label }: { label: string }) {
   return (
     <Select
-      labelId="folio-option-selector-label"
-      value={showAll}
+      labelId="text-view-folio-navigation-label"
+      value="loading"
       inputProps={{
-        id: "folio-option-selector",
+        id: "text-view-folio-navigation",
       }}
       input={<OutlinedInput label={label} />}
       displayEmpty
     >
-      <MenuItem value={showAll}>
-        <em>{showAll}</em>
-      </MenuItem>
       <MenuItem value="loading">
         <CircularProgress color="inherit" size={20} />
       </MenuItem>
@@ -52,31 +52,52 @@ function Loading({ showAll, label }: { showAll: string; label: string }) {
   );
 }
 
-// TODO: add handling for functionality change for different views (jump to / only show)
-export default function FolioOption() {
+export default function TextViewFolioNavigation() {
   const { t } = useTranslation("settings");
   const { fileName } = useDbPageRouterParams();
+  const router = useRouter();
+  const [folio] = useFolioParam();
+
+  const setIsFolioTextViewNavigation = useSetAtom(
+    isFolioTextViewNavigationAtom,
+  );
 
   const { data, isLoading } = useQuery({
     queryKey: DbApi.FolioData.makeQueryKey(fileName),
     queryFn: () => DbApi.FolioData.call({ filename: fileName }),
   });
 
-  const [folioParam, setFolioParam] = useFolioParam();
-
-  const showAll = t("optionsLabels.folioShowAll");
-
   const handleSelectChange = async (event: SelectChangeEvent) => {
     const { value } = event.target;
-    await setFolioParam(value === showAll ? null : value);
+
+    try {
+      const activeSegment = await DbApi.ActiveSegmentForFolio.call({
+        filename: fileName,
+        folio: value,
+      });
+
+      if (activeSegment) {
+        setIsFolioTextViewNavigation(true);
+        await router.push({
+          pathname: router.pathname,
+          query: {
+            ...router.query,
+            folio: value,
+            active_segment: activeSegment,
+          },
+        });
+      }
+    } catch {
+      // Silently handle error - user can try again
+    }
   };
 
-  const label = t("optionsLabels.folioAsLimit");
+  const label = t("optionsLabels.folioAsGoTo");
 
   if (isLoading) {
     return (
       <SelectorFrame label={label}>
-        <Loading showAll={showAll} label={label} />
+        <Loading label={label} />
       </SelectorFrame>
     );
   }
@@ -84,22 +105,18 @@ export default function FolioOption() {
   return (
     <SelectorFrame label={label}>
       <Select
-        labelId="folio-option-selector-label"
+        labelId="text-view-folio-navigation-label"
         inputProps={{
-          id: "folio-option-selector",
+          id: "text-view-folio-navigation",
         }}
         input={<OutlinedInput label={label} />}
-        value={folioParam ?? showAll}
-        displayEmpty
+        value={folio ?? ""}
         onChange={handleSelectChange}
       >
-        <MenuItem value={showAll}>
-          <em>{showAll}</em>
-        </MenuItem>
-        {data?.map((folio) => {
+        {data?.map((folioItem: string) => {
           return (
-            <MenuItem key={folio} value={folio}>
-              {folio}
+            <MenuItem key={folioItem} value={folioItem}>
+              {folioItem}
             </MenuItem>
           );
         })}

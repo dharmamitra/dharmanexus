@@ -65,7 +65,14 @@ export const TextViewRightPane = () => {
               </>
             }
           >
-            <Typography variant="h6">{activeSegmentId}</Typography>
+            <div>
+              <Typography variant="h6" lineHeight={1.3}>
+                {activeSegmentId}
+              </Typography>
+              <Typography variant="body2" sx={{ maxWidth: 330 }} noWrap>
+                {rightPaneFileName}
+              </Typography>
+            </div>
           </Tooltip>
         }
       />

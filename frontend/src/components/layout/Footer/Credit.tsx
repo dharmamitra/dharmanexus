@@ -16,8 +16,8 @@ export default function Credit() {
             rel="noopener noreferrer"
           >
             DharmaMitra
-          </Link>{" "}
-          i18n content{" "}
+          </Link>
+          {" in collaboration with the "}
           <Link
             href="https://tsadra.org/"
             target="_blank"

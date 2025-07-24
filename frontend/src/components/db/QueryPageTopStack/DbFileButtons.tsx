@@ -4,26 +4,31 @@ import { isDbSourceBrowserDrawerOpenAtom } from "@atoms";
 import { useSettingsDrawer } from "@components/hooks/useSettingsDrawer";
 import GradingOutlinedIcon from "@mui/icons-material/GradingOutlined";
 import TuneIcon from "@mui/icons-material/Tune";
-import { Box, Button, ButtonGroup, useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Box, Button, ButtonGroup } from "@mui/material";
 import { useSetAtom } from "jotai";
 
-export const DbFileButtons = () => {
+export const DbFileButtons = ({
+  isSmallScreen,
+}: {
+  isSmallScreen: boolean;
+}) => {
   const { t } = useTranslation("settings");
-
-  const theme = useTheme();
-  const isSm = useMediaQuery(theme.breakpoints.up("sm"));
-  const isMd = useMediaQuery(theme.breakpoints.up("md"));
 
   const setIsSourceTreeOpen = useSetAtom(isDbSourceBrowserDrawerOpenAtom);
   const { setIsSettingsOpen } = useSettingsDrawer();
 
   return (
-    <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-      <ButtonGroup
-        variant="outlined"
-        orientation={isSm ? "horizontal" : "vertical"}
-      >
+    <Box
+      sx={{
+        display: "flex",
+        gap: 2,
+        justifyContent: "flex-end",
+        alignItems: "center",
+        minWidth: "220px",
+        pb: 1,
+      }}
+    >
+      <ButtonGroup variant="outlined" orientation="horizontal">
         <Button
           variant="outlined"
           data-testid="db-results-text-select-modal-button"
@@ -32,7 +37,7 @@ export const DbFileButtons = () => {
           sx={{
             lineHeight: 1.2,
           }}
-          startIcon={isMd && <GradingOutlinedIcon />}
+          startIcon={isSmallScreen ? null : <GradingOutlinedIcon />}
           onClick={() => setIsSourceTreeOpen(true)}
         >
           {t(`resultsHead.textSelect`)}
@@ -46,7 +51,7 @@ export const DbFileButtons = () => {
           sx={{
             lineHeight: 1.2,
           }}
-          startIcon={isMd && <TuneIcon />}
+          startIcon={isSmallScreen ? null : <TuneIcon />}
           onClick={() => setIsSettingsOpen((prev) => !prev)}
         >
           {t(`resultsHead.settings`)}
