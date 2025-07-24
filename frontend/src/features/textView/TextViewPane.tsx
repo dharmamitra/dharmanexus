@@ -34,9 +34,7 @@ import debounce from "lodash/debounce";
 export interface TextViewPaneProps {
   isRightPane: boolean;
   activeSegmentId: string;
-  setActiveSegmentId: (id: string) => Promise<URLSearchParams>;
   activeSegmentIndex: number;
-  setActiveSegmentIndex: (index: number) => Promise<URLSearchParams>;
 }
 
 const debounceEdgeReachedFunction =
@@ -53,9 +51,7 @@ const debounceEdgeReachedFunction =
 export const TextViewPane = ({
   isRightPane,
   activeSegmentId,
-  setActiveSegmentId,
   activeSegmentIndex,
-  setActiveSegmentIndex,
 }: TextViewPaneProps) => {
   const virtuosoRef = useRef<VirtuosoHandle>(null);
   const wasDataJustAppended: RefObject<boolean> = useRef(false);
@@ -76,7 +72,6 @@ export const TextViewPane = ({
     handleFetchingPreviousPage,
     handleFetchingNextPage,
     isLoading,
-    clearActiveMatch,
   } = useTextViewPane({
     activeSegment: activeSegmentId,
     isRightPane,
@@ -136,10 +131,7 @@ export const TextViewPane = ({
         data={dataSegment}
         colorScale={colorScale}
         activeSegmentId={activeSegmentId}
-        setActiveSegmentId={setActiveSegmentId}
         activeSegmentIndex={activeSegmentIndex}
-        setActiveSegmentIndex={setActiveSegmentIndex}
-        clearActiveMatch={clearActiveMatch}
         isRightPane={isRightPane}
         isFolioTextViewNavigation={isFolioTextViewNavigation}
         tibetanScript={tibetanScript}
@@ -149,11 +141,8 @@ export const TextViewPane = ({
     [
       activeSegmentId,
       activeSegmentIndex,
-      clearActiveMatch,
       colorScale,
       isRightPane,
-      setActiveSegmentId,
-      setActiveSegmentIndex,
       tibetanScript,
       fontSize,
       isFolioTextViewNavigation,

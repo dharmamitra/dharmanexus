@@ -79,8 +79,6 @@ export const TextViewRightPane = () => {
 
       <TextViewPane
         activeSegmentId={activeSegmentId}
-        setActiveSegmentIndex={setActiveSegmentIndex}
-        setActiveSegmentId={setActiveSegmentId}
         activeSegmentIndex={activeSegmentIndex}
         isRightPane={true}
       />

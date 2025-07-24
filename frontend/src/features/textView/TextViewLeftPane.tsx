@@ -5,16 +5,13 @@ import {
 import { TextViewPane } from "@features/textView/TextViewPane";
 
 export const TextViewLeftPane = () => {
-  const [activeSegmentId, setActiveSegmentId] = useActiveSegmentParam();
-  const [activeSegmentIndex, setActiveSegmentIndex] =
-    useActiveSegmentIndexParam();
+  const [activeSegmentId] = useActiveSegmentParam();
+  const [activeSegmentIndex] = useActiveSegmentIndexParam();
 
   return (
     <TextViewPane
       activeSegmentId={activeSegmentId}
-      setActiveSegmentId={setActiveSegmentId}
       activeSegmentIndex={activeSegmentIndex}
-      setActiveSegmentIndex={setActiveSegmentIndex}
       isRightPane={false}
     />
   );
