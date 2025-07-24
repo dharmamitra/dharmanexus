@@ -13,6 +13,8 @@ export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
  * GENERAL
  */
 
+export const middlePaneOpenAtom = atom(false);
+
 export const currentDbViewAtom = atomWithStorage<DbViewEnum>(
   "db-view",
   DEFAULT_DB_VIEW,

@@ -4,7 +4,7 @@ import {
   activeSegmentMatchesAtom,
   heatMapThemeAtom,
   hoveredOverParallelIdAtom,
-  isFolioTextViewNavigationAtom,
+  middlePaneOpenAtom,
   shouldShowSegmentNumbersAtom,
   textViewIsMiddlePanePointingLeftAtom,
 } from "@atoms";
@@ -35,9 +35,6 @@ type TextSegmentProps = {
   colorScale: Scale;
   activeSegmentId: string;
   activeSegmentIndex: number;
-  setActiveSegmentId: (id: string) => Promise<URLSearchParams>;
-  setActiveSegmentIndex: (index: number) => Promise<URLSearchParams>;
-  clearActiveMatch: () => Promise<void>;
   isFolioTextViewNavigation: boolean;
   tibetanScript: TibetanScript;
   fontSize: number;
@@ -49,9 +46,6 @@ export const TextSegment = ({
   colorScale,
   activeSegmentId,
   activeSegmentIndex,
-  setActiveSegmentId,
-  setActiveSegmentIndex,
-  clearActiveMatch,
   isFolioTextViewNavigation,
   tibetanScript,
   fontSize,
@@ -65,37 +59,26 @@ export const TextSegment = ({
   const shouldShowSegmentNumbers = useAtomValue(shouldShowSegmentNumbersAtom);
   const hoveredOverParallelId = useAtomValue(hoveredOverParallelIdAtom);
   const setSelectedSegmentMatches = useSetAtom(activeSegmentMatchesAtom);
+  const setMiddlePaneOpen = useSetAtom(middlePaneOpenAtom);
   const isSegmentSelected = activeSegmentId === data?.segmentNumber;
 
   const setIsMiddlePanePointingLeft = useSetAtom(
     textViewIsMiddlePanePointingLeftAtom,
   );
 
-  const setIsFolioTextViewNavigation = useSetAtom(
-    isFolioTextViewNavigationAtom,
-  );
-
   const matchHeatColors = getMatchHeatColors(heatMapTheme, isDarkTheme);
 
-  const updateSelectedLocationInGlobalState = useCallback(
-    async (location: { id: string; index: number; matches: string[] }) => {
+  const handleSegmentClick = useCallback(
+    (matches: string[]) => {
       setIsMiddlePanePointingLeft(isRightPane);
-      setIsFolioTextViewNavigation(false);
-      setSelectedSegmentMatches(location.matches);
-      await Promise.all([
-        setActiveSegmentId(location.id),
-        setActiveSegmentIndex(location.index),
-        clearActiveMatch(),
-      ]);
+      setSelectedSegmentMatches(matches);
+      setMiddlePaneOpen(true);
     },
     [
-      clearActiveMatch,
       isRightPane,
-      setActiveSegmentId,
-      setActiveSegmentIndex,
       setIsMiddlePanePointingLeft,
       setSelectedSegmentMatches,
-      setIsFolioTextViewNavigation,
+      setMiddlePaneOpen,
     ],
   );
 
@@ -201,22 +184,14 @@ export const TextSegment = ({
                   color,
                   fontSize: `${fontSize}px`,
                 }}
-                onClick={async () => {
-                  await updateSelectedLocationInGlobalState({
-                    id: data.segmentNumber,
-                    matches,
-                    index: i,
-                  });
+                onClick={() => {
+                  handleSegmentClick(matches);
                 }}
-                onKeyDown={async (event) => {
+                onKeyDown={(event) => {
                   // allow selecting the segments by pressing space or enter
                   if (event.key !== " " && event.key !== "Enter") return;
                   event.preventDefault();
-                  await updateSelectedLocationInGlobalState({
-                    id: data.segmentNumber,
-                    matches,
-                    index: i,
-                  });
+                  handleSegmentClick(matches);
                 }}
               >
                 {textContent}
