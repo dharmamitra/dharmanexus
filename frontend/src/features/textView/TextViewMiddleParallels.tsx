@@ -14,14 +14,7 @@ import {
 } from "@components/hooks/params";
 import { ParallelSegment } from "@features/tableView/ParallelSegment";
 import { ArrowForward, Numbers } from "@mui/icons-material";
-import {
-  Box,
-  CardContent,
-  CardHeader,
-  Chip,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, CardContent, CardHeader, Chip, Stack } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { DbApi } from "@utils/api/dbApi";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -150,23 +143,21 @@ export default function TextViewMiddleParallels({ onClose }: Props) {
         }}
         action={<CloseTextViewPaneButton handlePress={onClose} />}
         title={
-          <>
-            <Stack direction="row" spacing={1}>
-              <Chip
-                label={`${activeSegmentMatches.length} ${t("db.segmentMatches")}`}
-                variant="outlined"
-                size="small"
-                icon={<Numbers fontSize="inherit" />}
-              />
-              <ArrowForward
-                sx={{
-                  transition: "transform 250ms ease-out",
-                  transform: `rotate(${isMiddlePanePointingLeft ? "180deg" : "0deg"})`,
-                }}
-                fontSize="inherit"
-              />
-            </Stack>
-          </>
+          <Stack direction="row" spacing={1}>
+            <Chip
+              label={`${activeSegmentMatches.length} ${t("db.segmentMatches")}`}
+              variant="outlined"
+              size="small"
+              icon={<Numbers fontSize="inherit" />}
+            />
+            <ArrowForward
+              sx={{
+                transition: "transform 250ms ease-out",
+                transform: `rotate(${isMiddlePanePointingLeft ? "180deg" : "0deg"})`,
+              }}
+              fontSize="inherit"
+            />
+          </Stack>
         }
       />
 
