@@ -49,7 +49,8 @@
     "useMonochromaticSegmentColors": "モノクロームセグメント一致色を使用",
     "heatMapTheme": "Match heat map colors",
     "showTextViewMatches": "他の{{lang}}テキストとの一致を表示",
-    "showMatches": "Match heat map",
+    "showMatches": "一致を表示",
+    "showMatchesDisabled": "Matches are not supported on this screen size. Please try a bigger screen.",
     "fontSize": "フォントサイズ"
   },
   "optionsPopperMsgs": {

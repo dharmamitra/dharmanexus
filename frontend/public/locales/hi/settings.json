@@ -49,7 +49,8 @@
     "useMonochromaticSegmentColors": "एकरंगी खंड मेल रंगों का उपयोग करें",
     "heatMapTheme": "Match heat map colors",
     "showTextViewMatches": "अन्य {{lang}} पाठों के साथ मेल दिखाएँ",
-    "showMatches": "Match heat map",
+    "showMatches": "मेल दिखाएँ",
+    "showMatchesDisabled": "Matches are not supported on this screen size. Please try a bigger screen.",
     "fontSize": "फ़ॉन्ट आकार"
   },
   "optionsPopperMsgs": {

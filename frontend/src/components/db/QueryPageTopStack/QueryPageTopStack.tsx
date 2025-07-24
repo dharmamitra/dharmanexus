@@ -3,10 +3,10 @@ import CurrentResultChips from "@components/db/CurrentResultChips";
 import { useViewMatches } from "@components/hooks/useViewMatches";
 import { RESULT_PAGE_TITLE_GROUP_ID } from "@constants/base";
 import { TextViewMatchesSwitch } from "@features/SidebarSuite/uiSettings/TextViewMatchesSwitch";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 import { DbFileButtons } from "./DbFileButtons";
-import { QueryPageButtons } from "./QueryPageButtons";
 
 export const QueryPageTopStack = ({
   title,
@@ -17,51 +17,59 @@ export const QueryPageTopStack = ({
 }) => {
   const matchOptions = useViewMatches();
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("lg"));
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
+
   return (
-    <Stack
-      direction={{ xs: "column", md: "row" }}
-      justifyContent="space-between"
-      alignItems={{ xs: "left" }}
-      spacing={{ xs: 0, md: 2 }}
-      mt={2}
-      pb={1}
-    >
-      <Box
-        component="hgroup"
-        id={RESULT_PAGE_TITLE_GROUP_ID}
-        style={{ maxWidth: "880px" }}
+    <>
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        justifyContent="space-between"
+        alignItems={{ xs: "left", sm: "flex-start" }}
+        spacing={{ xs: 0, sm: 2 }}
+        mt={1}
       >
-        <Typography variant="h5" component="h1" fontWeight={400}>
-          {title}
-        </Typography>
-        {subtitle ? (
-          <Typography
-            variant="subtitle2"
-            component="p"
-            mb={1}
-            color="text.secondary"
-          >
-            {subtitle}
+        <Box
+          component="hgroup"
+          id={RESULT_PAGE_TITLE_GROUP_ID}
+          style={{ maxWidth: "880px" }}
+        >
+          <Typography variant="h5" component="h1" fontWeight={400}>
+            {title}
           </Typography>
-        ) : null}
-        <TextViewMatchesSwitch
-          isRendered={matchOptions.matchesSwitchVisible}
-          {...matchOptions}
-        />
-      </Box>
+          {subtitle ? (
+            <Typography
+              variant="subtitle2"
+              component="p"
+              mb={1}
+              color="text.secondary"
+            >
+              {subtitle}
+            </Typography>
+          ) : null}
+        </Box>
+
+        {isMdUp ? <DbFileButtons isSmallScreen={isSmallScreen} /> : null}
+      </Stack>
 
       <Stack
-        direction={{ xs: "row-reverse", md: "column" }}
-        justifyContent={{ xs: "flex-end", sm: "space-between" }}
-        alignItems={{ xs: "center", md: "flex-end" }}
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
         spacing={{ xs: 0, md: 2 }}
+        mb={1}
       >
-        <QueryPageButtons>
-          <DbFileButtons />
-        </QueryPageButtons>
+        <TextViewMatchesSwitch
+          isRendered={matchOptions.matchesSwitchVisible}
+          isSmallScreen={isSmallScreen}
+          {...matchOptions}
+        />
+
+        {isMdUp ? null : <DbFileButtons isSmallScreen={isSmallScreen} />}
 
         <CurrentResultChips isRendered={matchOptions.matchesVisible} />
       </Stack>
-    </Stack>
+    </>
   );
 };
