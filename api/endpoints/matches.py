@@ -1,12 +1,19 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request, Depends
 from pydantic import BaseModel
 from typing import List, Any
 from ..queries import matches_queries
 from .endpoint_utils import execute_query
 from ..cache_config import cached_endpoint, CACHE_TIMES
 from .models.general_models import FullNames
+from shared.geoip_utils import get_geoip_data
+import logging
+import json
+from datetime import datetime
+import os
 
 router = APIRouter()
+
+logger = logging.getLogger(__name__)
 
 
 class MatchesInput(BaseModel):
@@ -41,7 +48,28 @@ def crop_text(text_list: List[str], offset_beg: int, offset_end: int) -> str:
     return full_text[offset_beg:offset_end]
 
 
-@router.post("/matches/", response_model=MatchesOutput)
+async def log_matches_request(request: Request, input: MatchesInput):
+    try:
+        os.makedirs("/logs", exist_ok=True)
+        ip_address = request.client.host
+        geoip_data = get_geoip_data(ip_address)
+
+        log_data = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "ip_address": ip_address,
+            "geoip": geoip_data,
+            "request": input.dict(),
+        }
+
+        with open("/logs/matches_requests.ndjson", "a") as f:
+            json.dump(log_data, f)
+            f.write("\n")
+
+    except Exception as e:
+        logger.error(f"Error logging matches request: {e}", exc_info=True)
+
+
+@router.post("/matches/", response_model=MatchesOutput, dependencies=[Depends(log_matches_request)])
 @cached_endpoint(expire=CACHE_TIMES["LONG"])
 async def get_matches(input: MatchesInput) -> Any:
     """

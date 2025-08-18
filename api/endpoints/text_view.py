@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request, Depends
 from ..queries import text_view_queries
 from ..colormaps import calculate_color_maps_text_view, calculate_color_maps_middle_view
 from .endpoint_utils import execute_query
@@ -12,11 +12,60 @@ from .models.text_view_models import (
     TextViewMiddleOutput,
 )
 from ..cache_config import cached_endpoint, CACHE_TIMES
+from shared.geoip_utils import get_geoip_data
+import logging
+import json
+from datetime import datetime
+import os
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
 
-@router.post("/middle/", response_model=TextViewMiddleOutput)
+async def log_text_parallels_request(request: Request, input: TextParallelsInput):
+    try:
+        os.makedirs("/logs", exist_ok=True)
+        ip_address = request.client.host
+        geoip_data = get_geoip_data(ip_address)
+
+        log_data = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "ip_address": ip_address,
+            "geoip": geoip_data,
+            "request": input.dict(),
+        }
+
+        with open("/logs/text_parallels_requests.ndjson", "a") as f:
+            json.dump(log_data, f)
+            f.write("\n")
+
+    except Exception as e:
+        logger.error(f"Error logging text-parallels request: {e}", exc_info=True)
+
+
+async def log_middle_view_request(request: Request, input: TextViewMiddleInput):
+    try:
+        os.makedirs("/logs", exist_ok=True)
+        ip_address = request.client.host
+        geoip_data = get_geoip_data(ip_address)
+
+        log_data = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "ip_address": ip_address,
+            "geoip": geoip_data,
+            "request": input.dict(),
+        }
+
+        with open("/logs/middle_view_requests.ndjson", "a") as f:
+            json.dump(log_data, f)
+            f.write("\n")
+
+    except Exception as e:
+        logger.error(f"Error logging middle-view request: {e}", exc_info=True)
+
+
+@router.post("/middle/", response_model=TextViewMiddleOutput, dependencies=[Depends(log_middle_view_request)])
 @cached_endpoint(expire=CACHE_TIMES["LONG"])
 async def get_parallels_for_middle(input: TextViewMiddleInput) -> Any:
     """
@@ -34,7 +83,11 @@ async def get_parallels_for_middle(input: TextViewMiddleInput) -> Any:
     return result
 
 
-@router.post("/text-parallels/", response_model=TextViewLeftOutput)
+@router.post(
+    "/text-parallels/",
+    response_model=TextViewLeftOutput,
+    dependencies=[Depends(log_text_parallels_request)],
+)
 @cached_endpoint(expire=CACHE_TIMES["LONG"])
 async def get_file_text_segments_and_parallels(input: TextParallelsInput) -> Any:
     """

@@ -21,8 +21,8 @@ export const QueryPageTopStack = ({
   const matchOptions = useViewMatches();
 
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("lg"));
-  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (
     <>
@@ -53,7 +53,7 @@ export const QueryPageTopStack = ({
           ) : null}
         </Box>
 
-        {isMdUp ? <DbFileButtons isSmallScreen={isSmallScreen} /> : null}
+        {isSmUp ? <DbFileButtons isSmallScreen={isSmallScreen} /> : null}
       </Stack>
 
       <Stack
@@ -71,7 +71,7 @@ export const QueryPageTopStack = ({
           {...matchOptions}
         />
 
-        {isMdUp ? null : <DbFileButtons isSmallScreen={isSmallScreen} />}
+        {isSmUp ? null : <DbFileButtons isSmallScreen={isSmallScreen} />}
 
         <CurrentResultChips isRendered={matchOptions.matchesVisible} />
       </Stack>

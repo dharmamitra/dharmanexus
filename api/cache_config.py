@@ -12,6 +12,7 @@ import json
 import logging
 from functools import wraps
 from typing import Any
+import asyncio
 
 from fastapi_cache.coder import JsonCoder
 from redis import asyncio as aioredis
@@ -26,6 +27,28 @@ CACHE_TIMES = {
     "MEDIUM": 604800,  # 1 week
     "LONG": 2592000,  # 30 days
 }
+
+redis_client = None
+redis_lock = asyncio.Lock()
+
+
+async def get_redis_client():
+    """Initializes and returns a single Redis client instance, creating it if necessary."""
+    global redis_client
+    if redis_client is None:
+        async with redis_lock:
+            # Check again inside the lock to ensure it was not created while waiting.
+            if redis_client is None:
+                logger.info("Initializing shared Redis client.")
+                redis_client = aioredis.from_url(
+                    "redis://redis:6379",
+                    encoding="utf8",
+                    decode_responses=True,
+                    socket_timeout=300,
+                    socket_connect_timeout=300,
+                    retry_on_timeout=True,
+                )
+    return redis_client
 
 
 class CustomJsonCoder(JsonCoder):
@@ -127,14 +150,7 @@ def cached_endpoint(expire: int = CACHE_TIMES["MEDIUM"]):
             logger.info("Attempting to retrieve from cache: %s", cache_key)
 
             try:
-                redis = await aioredis.from_url(
-                    "redis://redis:6379",
-                    encoding="utf8",
-                    decode_responses=True,
-                    socket_timeout=300,
-                    socket_connect_timeout=300,
-                    retry_on_timeout=True,
-                )
+                redis = await get_redis_client()
 
                 exists = await redis.exists(cache_key)
                 logger.info("Cache key exists: %s", exists)

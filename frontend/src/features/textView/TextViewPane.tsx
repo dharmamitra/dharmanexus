@@ -105,6 +105,7 @@ export const TextViewPane = ({
   }, [activeSegmentId, isLoading]);
 
   useEffect(() => {
+    if (wasDataJustAppended.current) return;
     scrollToActiveSegment();
 
     // [workaround/hack] - it doesn't always consistently scroll to the activeSegment, even with this hack, but it helps

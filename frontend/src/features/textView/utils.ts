@@ -89,6 +89,14 @@ export const buildSegmentClassName = ({
 
   if (isDarkTheme && styles["segment--dark"])
     classNames.push(styles["segment--dark"]);
+
+  if (
+    isSegmentPartHoveredOverInMiddleView &&
+    styles["segment--parallel-hovered"]
+  ) {
+    classNames.push(styles["segment--parallel-hovered"]);
+  }
+
   if (isSelected && styles["segment--selected"])
     classNames.push(styles["segment--selected"]);
   if (
