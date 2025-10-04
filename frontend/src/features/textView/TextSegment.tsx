@@ -27,7 +27,7 @@ import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-para
 import type { Scale } from "chroma-js";
 import { useAtomValue, useSetAtom } from "jotai";
 
-import styles from "./textSegment.module.scss";
+import styles from "./textSegment.module.css";
 
 type TextSegmentProps = {
   isRightPane: boolean;
