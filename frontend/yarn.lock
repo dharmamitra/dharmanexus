@@ -3619,7 +3619,7 @@ __metadata:
     "@types/lodash": "npm:^4.17.20"
     "@types/mdx": "npm:^2.0.13"
     "@types/node": "npm:22.10.7"
-    "@types/react": "npm:19.2.0"
+    "@types/react": "npm:19.2.2"
     "@types/react-dom": "npm:19.2.0"
     "@types/react-window": "npm:^1.8.8"
     "@typescript-eslint/eslint-plugin": "npm:^7.18.0"
@@ -3651,7 +3651,7 @@ __metadata:
     next-i18next: "npm:^15.4.2"
     next-mdx-remote: "npm:^4.4.1"
     next-seo: "npm:^6.8.0"
-    nuqs: "npm:^2.7.0"
+    nuqs: "npm:^2.7.1"
     openapi-fetch: "npm:^0.14.1"
     openapi-typescript: "npm:^7.9.1"
     prettier: "npm:^3.6.2"
@@ -9475,9 +9475,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuqs@npm:^2.7.0":
-  version: 2.7.0
-  resolution: "nuqs@npm:2.7.0"
+"nuqs@npm:^2.7.1":
+  version: 2.7.1
+  resolution: "nuqs@npm:2.7.1"
   dependencies:
     "@standard-schema/spec": "npm:1.0.0"
   peerDependencies:
@@ -9498,7 +9498,7 @@ __metadata:
       optional: true
     react-router-dom:
       optional: true
-  checksum: 10c0/24c04563c580fa3af28760109a4de9cbd65fc3ede65b03c6912d2535b0ce497806d9c32b7cb8efe44ca3e847c14719a13f134f41426489ff2bb9117b4b4cdda4
+  checksum: 10c0/dbc7affc1a4cf19dc4d4dd327baa4ac6d1e998dd6303a44d916316433cf71e1c2d2e1ff1b3808c4729a78a8b9b89b65b78814cda003621768ce8f695527b8a82
   languageName: node
   linkType: hard
 
