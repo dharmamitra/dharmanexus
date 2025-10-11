@@ -5,6 +5,9 @@
       "@public/*": [
         "public/*"
       ],
+      "@theme/*": [
+        "src/theme/*"
+      ],
       "@components/*": [
         "src/components/*"
       ],

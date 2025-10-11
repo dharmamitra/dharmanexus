@@ -1,20 +1,17 @@
-import { DesignTokenParams } from "@components/theme";
 import { grey } from "@mui/material/colors";
-// eslint-disable-next-line no-restricted-imports
-import type { CssVarsThemeOptions } from "@mui/material/styles/experimental_extendTheme";
-
+import { DesignTokenParams } from "@theme/theme";
 import {
   commonPaletteColors,
   DB_LANGUAGE_COLORS_DARK,
   DB_LANGUAGE_COLORS_LIGHT,
-} from "./base";
+} from "src/theme/base";
 
 const defaultPrimary = "#052c60";
 const defaultPrimaryBg = "#f0ebde";
 
 export const getKumarajivaDesignTokens = ({
   dbLanguage,
-}: DesignTokenParams): CssVarsThemeOptions => ({
+}: DesignTokenParams) => ({
   colorSchemes: {
     light: {
       palette: {

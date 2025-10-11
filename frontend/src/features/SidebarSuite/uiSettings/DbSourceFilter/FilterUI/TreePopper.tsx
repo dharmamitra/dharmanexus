@@ -3,11 +3,8 @@ import useDimensions from "react-cool-dimensions";
 import { SearchableDbSourceTree } from "@components/db/SearchableDbSourceTree";
 import { DbSourceTreeType } from "@components/db/SearchableDbSourceTree/types";
 import { DbSourceFilterUISetting } from "@features/SidebarSuite/types";
-// TODO: click away listener temporarily disabled during upgrade process
-// once the project has moved to mui v7 this should be imported
-// from @mui/material. See https://mui.com/material-ui/api/click-away-listener/
-// import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import { Box, Popper } from "@mui/material";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 type DbSourceFilterTreePopperProps = {
   popperId: string | undefined;
@@ -21,7 +18,7 @@ const DbSourceFilterTreePopper = ({
   popperId,
   open,
   anchorEl,
-  // handleClose,
+  handleClose,
   filterSettingName,
 }: DbSourceFilterTreePopperProps) => {
   const { observe, height, width } = useDimensions();
@@ -42,25 +39,25 @@ const DbSourceFilterTreePopper = ({
         bgcolor: "background.paper",
       }}
     >
-      {/* <ClickAwayListener onClickAway={handleClose}> */}
-      <Box
-        ref={observe}
-        sx={{
-          p: 1,
-          minHeight: 400,
-          width: "100%",
-        }}
-      >
-        <SearchableDbSourceTree
-          type={DbSourceTreeType.FILTER_SELECTOR}
-          filterSettingName={filterSettingName}
-          parentHeight={height}
-          parentWidth={width}
-          hasHeading={false}
-          padding={0}
-        />
-      </Box>
-      {/* </ClickAwayListener> */}
+      <ClickAwayListener onClickAway={handleClose}>
+        <Box
+          ref={observe}
+          sx={{
+            p: 1,
+            minHeight: 400,
+            width: "100%",
+          }}
+        >
+          <SearchableDbSourceTree
+            type={DbSourceTreeType.FILTER_SELECTOR}
+            filterSettingName={filterSettingName}
+            parentHeight={height}
+            parentWidth={width}
+            hasHeading={false}
+            padding={0}
+          />
+        </Box>
+      </ClickAwayListener>
     </Popper>
   );
 };

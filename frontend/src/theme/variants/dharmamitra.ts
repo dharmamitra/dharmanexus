@@ -1,10 +1,7 @@
 import { grey } from "@mui/material/colors";
-// eslint-disable-next-line no-restricted-imports
-import type { CssVarsThemeOptions } from "@mui/material/styles/experimental_extendTheme";
+import { commonPaletteColors } from "src/theme/base";
 
-import { commonPaletteColors } from "./base";
-
-export const getDharmamitraDesignTokens = (): CssVarsThemeOptions => ({
+export const getDharmamitraDesignTokens = () => ({
   colorSchemes: {
     light: {
       palette: {

@@ -1,7 +1,7 @@
-import { DesignTokenParams, sourceSans, sourceSerif } from "@components/theme";
 import { grey } from "@mui/material/colors";
+import type { Theme } from "@mui/material/styles";
+import { DesignTokenParams, sourceSans, sourceSerif } from "@theme/theme";
 // eslint-disable-next-line no-restricted-imports
-import type { CssVarsThemeOptions } from "@mui/material/styles/experimental_extendTheme";
 import { DbLanguage } from "@utils/api/types";
 
 export const DB_LANGUAGE_COLORS_LIGHT: Record<DbLanguage, string> = {
@@ -30,9 +30,7 @@ export const commonPaletteColors = {
 
 const defaultPrimary = "#29262d";
 
-export const getBaseDesignTokens = ({
-  dbLanguage,
-}: DesignTokenParams): CssVarsThemeOptions => ({
+export const getBaseDesignTokens = ({ dbLanguage }: DesignTokenParams) => ({
   colorSchemes: {
     light: {
       palette: {
@@ -121,7 +119,6 @@ export const getBaseDesignTokens = ({
       },
     },
   },
-
   typography: {
     button: { fontFamily: sourceSans.style.fontFamily },
     h1: {
@@ -147,7 +144,7 @@ export const getBaseDesignTokens = ({
     MuiTypography: {
       variants: [
         {
-          props: { variant: "body3" },
+          props: { variant: "body3" as const },
           style: {
             fontSize: "1.1rem",
           },
@@ -166,7 +163,7 @@ export const getBaseDesignTokens = ({
     },
     MuiInputLabel: {
       styleOverrides: {
-        root: ({ theme }) => ({
+        root: ({ theme }: { theme: Theme }) => ({
           ...(theme.palette.mode === "dark"
             ? {
                 color: "white",
