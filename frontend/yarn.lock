@@ -2036,10 +2036,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chroma-js@npm:^2.4.5":
-  version: 2.4.5
-  resolution: "@types/chroma-js@npm:2.4.5"
-  checksum: 10c0/2860bb40e29bc034464324c53291164d5a665edb6a3f7adff80ef968fe468f3484435a9b7a3735874e979bfd189d026989d9aa6743cb8a7ca0d99b64555904b3
+"@types/chroma-js@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@types/chroma-js@npm:3.1.1"
+  checksum: 10c0/2b2d2eb44fd6e7103696c890c04a84c55441e9fea2f3913949bb377ec7249fe8a95e8117108b6e837422dbb23dee8180ad6907a29a8ae6d9443e7423cd0b2f6a
   languageName: node
   linkType: hard
 
@@ -3137,7 +3137,7 @@ __metadata:
     "@tanstack/react-query": "npm:^5.90.2"
     "@tanstack/react-query-devtools": "npm:^5.90.2"
     "@tanstack/react-table": "npm:^8.21.3"
-    "@types/chroma-js": "npm:^2.4.5"
+    "@types/chroma-js": "npm:^3.1.1"
     "@types/lodash": "npm:^4.17.20"
     "@types/mdx": "npm:^2.0.13"
     "@types/node": "npm:22.10.7"
@@ -3147,7 +3147,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.18.0"
     add: "npm:^2.0.6"
     allotment: "npm:^1.20.4"
-    chroma-js: "npm:^2.6.0"
+    chroma-js: "npm:^3.1.2"
     csstype: "npm:^3.1.3"
     eslint: "npm:8.57.1"
     eslint-config-next: "npm:15.5.4"
@@ -3395,10 +3395,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chroma-js@npm:^2.6.0":
-  version: 2.6.0
-  resolution: "chroma-js@npm:2.6.0"
-  checksum: 10c0/6e17f43246f9b3eba8a9db67f5ee9a2d0ef1360077211887da09ec1f0934bb98a358eefaf021003c0bd47cbab540f573a373f362d6b2ba04d0e80ab7677e1640
+"chroma-js@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "chroma-js@npm:3.1.2"
+  checksum: 10c0/145ce9aea91dac81c6158082675084778e8c83e6959032e37fd4ba9b01db9f5c29c520453ec4bab7e87689f12756fcc63821e3c6b866e083ea41d341c7b2bf71
   languageName: node
   linkType: hard
 
