@@ -1,5 +1,4 @@
 import { grey } from "@mui/material/colors";
-import type { Theme } from "@mui/material/styles";
 import { DesignTokenParams, sourceSans, sourceSerif } from "@theme/theme";
 // eslint-disable-next-line no-restricted-imports
 import { DbLanguage } from "@utils/api/types";
@@ -107,7 +106,7 @@ export const getBaseDesignTokens = ({ dbLanguage }: DesignTokenParams) => ({
             : defaultPrimary,
           accent: grey[900],
           active: defaultPrimary,
-          selected: "#262329",
+          selected: "#50525d",
           inverted: grey[100],
         },
         text: {
@@ -159,19 +158,6 @@ export const getBaseDesignTokens = ({ dbLanguage }: DesignTokenParams) => ({
             fontSize: "1.1rem",
           },
         },
-      },
-    },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: ({ theme }: { theme: Theme }) => ({
-          ...(theme.palette.mode === "dark"
-            ? {
-                color: "white",
-              }
-            : {
-                color: theme.palette.grey[900],
-              }),
-        }),
       },
     },
   },

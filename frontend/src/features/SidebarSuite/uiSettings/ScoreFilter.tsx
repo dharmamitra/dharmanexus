@@ -65,6 +65,7 @@ export default function ScoreFilter() {
       <TextField
         sx={{ width: 1, my: 1 }}
         value={scoreValue}
+        // TODO: migrate to https://base-ui.com/react/components/number-field
         type="number"
         inputProps={{
           step: 1,

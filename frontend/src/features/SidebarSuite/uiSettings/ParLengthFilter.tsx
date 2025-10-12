@@ -72,6 +72,7 @@ export default function ParLengthFilter() {
       <TextField
         sx={{ width: 1, my: 1 }}
         value={parLengthValue}
+        // TODO: migrate to https://base-ui.com/react/components/number-field
         type="number"
         inputProps={{
           min: minValue,
