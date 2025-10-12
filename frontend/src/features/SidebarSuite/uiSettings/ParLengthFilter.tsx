@@ -1,10 +1,15 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import { useTranslation } from "next-i18next";
+import { NumberField } from "@base-ui-components/react/number-field";
 import { useParLengthParam } from "@components/hooks/params";
 import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { MIN_PAR_LENGTH_VALUES } from "@features/SidebarSuite/uiSettings/config";
-import { Box, FormLabel, Slider, TextField } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { Box, FormLabel, Slider } from "@mui/material";
 import debounce from "lodash/debounce";
+
+import styles from "./number-field.module.css";
 
 function valueToString(value: number) {
   return `${value}`;
@@ -27,6 +32,8 @@ export default function ParLengthFilter() {
   const { t } = useTranslation("settings");
 
   const { dbLanguage } = useDbPageRouterParams();
+
+  const id = useId();
 
   const [parLengthParam, setParLengthParam] = useParLengthParam();
   const [parLengthValue, setparLengthValue] = useState(parLengthParam);
@@ -69,19 +76,25 @@ export default function ParLengthFilter() {
         {t("filtersLabels.minMatch")}
       </FormLabel>
 
-      <TextField
-        sx={{ width: 1, my: 1 }}
+      <NumberField.Root
+        id={id}
         value={parLengthValue}
-        // TODO: migrate to https://base-ui.com/react/components/number-field
-        type="number"
-        inputProps={{
-          min: minValue,
-          max: 4000,
-          type: "number",
-          "aria-labelledby": "min-match-input-label",
-        }}
-        onChange={(e) => handleChange(Number(e.target.value))}
-      />
+        min={minValue}
+        max={4000}
+        className={styles.Field}
+        onValueChange={(value) => handleChange(Number(value))}
+      >
+        <NumberField.Group className={styles.Group}>
+          <NumberField.Decrement className={styles.Decrement}>
+            <RemoveIcon />
+          </NumberField.Decrement>
+          <NumberField.Input className={styles.Input} />
+          <NumberField.Increment className={styles.Increment}>
+            <AddIcon />
+          </NumberField.Increment>
+        </NumberField.Group>
+      </NumberField.Root>
+
       <Box sx={{ ml: 1, width: "96%" }}>
         <Slider
           value={parLengthValue}

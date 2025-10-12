@@ -1,8 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import { useTranslation } from "next-i18next";
+import { NumberField } from "@base-ui-components/react/number-field";
 import { useScoreParam } from "@components/hooks/params";
-import { Box, FormLabel, Slider, TextField } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { Box, FormLabel, Slider } from "@mui/material";
 import debounce from "lodash/debounce";
+
+import styles from "./number-field.module.css";
 
 function valueToString(value: number) {
   return `${value}`;
@@ -22,6 +27,8 @@ function normalizeValue(value: number | null | undefined) {
 
 export default function ScoreFilter() {
   const { t } = useTranslation("settings");
+
+  const id = useId();
 
   const [scoreParam, setScoreParam] = useScoreParam();
   const [scoreValue, setScoreValue] = useState(scoreParam);
@@ -44,10 +51,6 @@ export default function ScoreFilter() {
     [setScoreValue, setDebouncedScoreParam],
   );
 
-  const handleBlur = () => {
-    setScoreValue(normalizeValue(scoreValue));
-  };
-
   const marks = [
     {
       value: 0,
@@ -62,21 +65,24 @@ export default function ScoreFilter() {
   return (
     <Box sx={{ width: 1 }}>
       <FormLabel id="score-input-label">{t("filtersLabels.score")}</FormLabel>
-      <TextField
-        sx={{ width: 1, my: 1 }}
+      <NumberField.Root
+        id={id}
         value={scoreValue}
-        // TODO: migrate to https://base-ui.com/react/components/number-field
-        type="number"
-        inputProps={{
-          step: 1,
-          min: 0,
-          max: 100,
-          type: "number",
-          "aria-labelledby": "score-input-label",
-        }}
-        onBlur={handleBlur}
-        onChange={(e) => handleChange(Number(e.target.value))}
-      />
+        min={0}
+        max={100}
+        className={styles.Field}
+        onValueChange={(value) => handleChange(Number(value))}
+      >
+        <NumberField.Group className={styles.Group}>
+          <NumberField.Decrement className={styles.Decrement}>
+            <RemoveIcon />
+          </NumberField.Decrement>
+          <NumberField.Input className={styles.Input} />
+          <NumberField.Increment className={styles.Increment}>
+            <AddIcon />
+          </NumberField.Increment>
+        </NumberField.Group>
+      </NumberField.Root>
       <Box sx={{ ml: 1, width: "96%" }}>
         <Slider
           value={scoreValue}
