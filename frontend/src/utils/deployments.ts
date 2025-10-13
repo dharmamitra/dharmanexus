@@ -1,4 +1,5 @@
-import { SUPPORTED_DEPLOYMENTS } from "@mitra/constants";
+import { SUPPORTED_DEPLOYMENTS } from "src/constants/base";
+import { Deployment } from "src/types/index";
 
 const isValidDeployment = (deployment: unknown): deployment is Deployment =>
   SUPPORTED_DEPLOYMENTS.some((item) => item === deployment);

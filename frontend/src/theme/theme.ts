@@ -1,9 +1,9 @@
 import { Noto_Serif, Source_Sans_3 } from "next/font/google";
-import { getDeployment } from "@mitra/utils";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { getDharmamitraDesignTokens } from "@theme/variants/dharmamitra";
 import { getKumarajivaDesignTokens } from "@theme/variants/kumarajiva";
 import { DbLanguage } from "@utils/api/types";
+import { getDeployment } from "@utils/deployments";
 import { merge } from "lodash";
 import { getBaseDesignTokens } from "src/theme/base";
 

@@ -4,9 +4,7 @@ import { useRouter } from "next/router";
 import type { LinkProps } from "@mui/material/Link";
 import MUILink from "@mui/material/Link";
 
-interface Props extends LinkProps {}
-
-export const Link: FC<PropsWithChildren<Props>> = ({
+export const Link: FC<PropsWithChildren<LinkProps>> = ({
   href,
   children,
   ...rest

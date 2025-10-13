@@ -19,6 +19,7 @@ import {
 import type { Theme } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
 import { DbLanguage, dbLanguages } from "@utils/api/constants";
+import { isValidDbLanguage } from "@utils/validators";
 
 function getStyles(
   name: DbLanguage,
@@ -41,12 +42,17 @@ const MultiLingualSelector = () => {
     ...dbLanguages,
   ]);
 
-  const handleChange = async (event: any) => {
+  const handleChange = async (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | (Event & { target: { value: DbLanguage[]; name: string } }),
+  ) => {
     // TODO: confirm desired handling.
     const {
       target: { value },
     } = event;
-    setParamValue(value);
+
+    setParamValue(typeof value === "string" ? [] : value);
 
     if (value.length === 0) {
       return;

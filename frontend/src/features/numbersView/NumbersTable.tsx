@@ -94,6 +94,7 @@ export default function NumbersTable({
               ...stickyStyles,
               zIndex: 1,
               backgroundColor: "inherit",
+              // TODO: convert to MUI value
               borderRight: "1px solid #e0e0e0",
             }),
           };
@@ -112,7 +113,6 @@ export default function NumbersTable({
     const shouldLoadMore = index >= rows.length - 1 && hasNextPage;
 
     if (shouldLoadMore && !isFetching) {
-      // eslint-disable-next-line no-void
       void loadMoreItems();
       return (
         <>

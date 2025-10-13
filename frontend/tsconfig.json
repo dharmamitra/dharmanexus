@@ -17,9 +17,6 @@
       "@utils/*": [
         "src/utils/*"
       ],
-      "@types/*": [
-        "src/types/*"
-      ],
       "@atoms": [
         "src/atoms/index.ts"
       ],
@@ -28,9 +25,6 @@
       ],
       "@api": [
         "src/utils/api/client.ts"
-      ],
-      "@mitra/*": [
-        "src/mitra/*"
       ],
       "@constants/*": [
         "src/constants/*"

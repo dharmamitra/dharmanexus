@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { getBasePath } from "@mitra/utils";
 import { Box, Link } from "@mui/material";
 import { useColorScheme } from "@mui/material/styles";
+import { getBasePath } from "@utils/deployments";
 import { setLogoModeFilter } from "@utils/helpers";
 
 const dharmamitraLogo = {

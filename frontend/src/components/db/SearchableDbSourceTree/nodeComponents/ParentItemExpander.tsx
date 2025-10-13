@@ -1,4 +1,3 @@
-import React from "react";
 import { NodeApi } from "react-arborist";
 import { DbSourceTreeNodeDataType as NodeType } from "@components/db/SearchableDbSourceTree/types";
 import { Chip, Typography } from "@mui/material";

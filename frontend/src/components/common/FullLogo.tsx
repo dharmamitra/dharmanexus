@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { getBasePath } from "@mitra/utils";
 import Box from "@mui/material/Box";
 import { useColorScheme } from "@mui/material/styles";
+import { getBasePath } from "@utils/deployments";
 import { setLogoModeFilter } from "@utils/helpers";
+import { Deployment } from "src/types/index";
 
 const logoPaths: Record<Deployment, string> = {
   dharmamitra: `${getBasePath()}/assets/logos/dn-logo-full.png`,

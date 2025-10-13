@@ -1,4 +1,3 @@
-import React from "react";
 import { NodeApi } from "react-arborist";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 

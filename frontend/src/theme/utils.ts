@@ -6,7 +6,7 @@ import type { Theme } from "@mui/material/styles";
  */
 export function selectedBg(theme: Theme): string {
   return (
-    (theme as any)?.vars?.palette?.background?.selected ??
+    theme?.vars?.palette?.background?.selected ??
     theme.palette.background.selected
   );
 }

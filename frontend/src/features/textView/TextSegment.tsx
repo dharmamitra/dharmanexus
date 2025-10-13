@@ -165,10 +165,8 @@ export const TextSegment = ({
                   "");
 
             return (
-              // eslint-disable-next-line jsx-a11y/no-static-element-interactions
               <span
                 key={segmentKey}
-                // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
                 tabIndex={0}
                 className={`${segmentClassName} ${styles.segment__button}`}
                 style={{

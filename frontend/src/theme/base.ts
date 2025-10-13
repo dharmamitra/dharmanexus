@@ -1,7 +1,6 @@
 import { grey } from "@mui/material/colors";
 import { DesignTokenParams, sourceSans, sourceSerif } from "@theme/theme";
-// eslint-disable-next-line no-restricted-imports
-import { DbLanguage } from "@utils/api/types";
+import type { DbLanguage } from "@utils/api/types";
 
 export const DB_LANGUAGE_COLORS_LIGHT: Record<DbLanguage, string> = {
   zh: "#4F2B56",
