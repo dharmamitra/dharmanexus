@@ -1,5 +1,4 @@
 import React from "react";
-import { TableComponents } from "react-virtuoso";
 import { Link } from "@components/common/Link";
 import { createURLToSegment } from "@features/textView/utils";
 import {
@@ -14,7 +13,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import type { CellContext, ColumnDef } from "@tanstack/react-table";
+import type { CellContext } from "@tanstack/react-table";
 import type {
   APIGetResponse,
   APIPostResponse,
@@ -22,13 +21,15 @@ import type {
 } from "@utils/api/types";
 import { DbLanguage } from "@utils/api/types";
 
-import type { NumbersSegment } from "./NumbersTable";
+export type NumbersRow = {
+  segment: string;
+} & Record<string, APISchemas["Parallel"][]>;
 
 export const createTableRows = (
   rowData: APIPostResponse<"/numbers-view/numbers/">,
 ) =>
   rowData.map((item) => {
-    const row: any = { segment: item.segmentnr };
+    const row: NumbersRow = { segment: item.segmentnr } as NumbersRow;
 
     item.parallels.forEach((parallel) => {
       // TODO: - clear undefined check onee Pali data is updated to BE.
@@ -51,86 +52,86 @@ interface CreateTableColumnProps {
 export const createTableColumns = ({
   categories,
   language,
-}: CreateTableColumnProps): ColumnDef<NumbersSegment>[] => [
-  {
-    accessorKey: "segment",
-    header: () => (
-      <div
-        style={{
-          // sets width for whole column
-          minWidth: "150px",
-        }}
-      >
-        <Typography textTransform="uppercase">segment</Typography>
-      </div>
-    ),
-    cell: (info) => {
-      const segmentnr = info.getValue<string>();
-      return (
-        <Typography sx={{ fontWeight: 500, lineHeight: 1.25 }}>
-          <Link
-            href={createURLToSegment({ segmentNumber: segmentnr, language })}
-          >
-            {segmentnr}
-          </Link>
-        </Typography>
-      );
+}: CreateTableColumnProps) => [
+    {
+      accessorKey: "segment",
+      header: () => (
+        <div
+          style={{
+            // sets width for whole column
+            minWidth: "150px",
+          }}
+        >
+          <Typography textTransform="uppercase">segment</Typography>
+        </div>
+      ),
+      cell: (info: CellContext<NumbersRow, unknown>) => {
+        const segmentnr = info.getValue<string>();
+        return (
+          <Typography sx={{ fontWeight: 500, lineHeight: 1.25 }}>
+            <Link
+              href={createURLToSegment({ segmentNumber: segmentnr, language })}
+            >
+              {segmentnr}
+            </Link>
+          </Typography>
+        );
+      },
     },
-  },
-  ...categories.map((header) => ({
-    accessorKey: header.id,
-    header: () => (
-      <div
-        style={{
-          width: "200px",
-          paddingLeft: "6px",
-        }}
-      >
-        <Typography textTransform="uppercase">{header.id}</Typography>
-      </div>
-    ),
-    cell: (info: CellContext<NumbersSegment, unknown>) => {
-      const parallels = info?.getValue<APISchemas["Parallel"][]>() || [];
-      return (
+    ...categories.map((header) => ({
+      accessorKey: header.id,
+      header: () => (
         <div
           style={{
             width: "200px",
-            paddingLeft: "1rem",
+            paddingLeft: "6px",
           }}
         >
-          {parallels.map((parallel, i) => {
-            const { displayName, segmentnr } = parallel || {};
-
-            const segmentNumber = segmentnr.split("–")[0] ?? segmentnr;
-
-            const urlToSegment = createURLToSegment({
-              segmentNumber,
-              language,
-            });
-
-            return (
-              <Tooltip
-                key={[info.cell.id, segmentnr, i].join("-")}
-                title={displayName}
-                PopperProps={{
-                  disablePortal: true,
-                }}
-                placement="top"
-                enterDelay={1200}
-              >
-                <Typography sx={{ lineHeight: 1.25 }}>
-                  <Link href={urlToSegment} color="text.primary">
-                    {segmentnr}
-                  </Link>
-                </Typography>
-              </Tooltip>
-            );
-          })}
+          <Typography textTransform="uppercase">{header.id}</Typography>
         </div>
-      );
-    },
-  })),
-];
+      ),
+      cell: (info: CellContext<NumbersRow, unknown>) => {
+        const parallels = info?.getValue<APISchemas["Parallel"][]>() || [];
+        return (
+          <div
+            style={{
+              width: "200px",
+              paddingLeft: "1rem",
+            }}
+          >
+            {parallels.map((parallel, i) => {
+              const { displayName, segmentnr } = parallel || {};
+
+              const segmentNumber = segmentnr.split("–")[0] ?? segmentnr;
+
+              const urlToSegment = createURLToSegment({
+                segmentNumber,
+                language,
+              });
+
+              return (
+                <Tooltip
+                  key={[info.cell.id, segmentnr, i].join("-")}
+                  title={displayName}
+                  PopperProps={{
+                    disablePortal: true,
+                  }}
+                  placement="top"
+                  enterDelay={1200}
+                >
+                  <Typography sx={{ lineHeight: 1.25 }}>
+                    <Link href={urlToSegment} color="text.primary">
+                      {segmentnr}
+                    </Link>
+                  </Typography>
+                </Tooltip>
+              );
+            })}
+          </div>
+        );
+      },
+    })),
+  ];
 
 const ScrollerRef = React.forwardRef<HTMLDivElement>(
   function ScrollerRef(props, ref) {
@@ -149,9 +150,9 @@ const TableBodyRef = React.forwardRef<HTMLTableSectionElement>(
   },
 );
 
-export const getVirtuosoTableComponents = (): TableComponents => ({
+export const getVirtuosoTableComponents = () => ({
   Scroller: ScrollerRef,
-  Table: (props) => (
+  Table: (props: React.ComponentProps<typeof Table>) => (
     <Table
       {...props}
       size="small"
@@ -166,7 +167,7 @@ export const getVirtuosoTableComponents = (): TableComponents => ({
   TableHead: TableHeadRef,
   TableRow,
   TableBody: TableBodyRef,
-  ScrollSeekPlaceholder: ({ height }) => (
+  ScrollSeekPlaceholder: ({ height }: { height: number }) => (
     <TableRow
       sx={{
         height,

@@ -1,11 +1,16 @@
 import { NodeApi } from "react-arborist";
+import type { DbSourceTreeNode } from "@components/db/SearchableDbSourceTree/types";
 import { DbSourceTreeNodeDataType as NodeType } from "@components/db/SearchableDbSourceTree/types";
 import { Chip, Typography } from "@mui/material";
 
 import { SourceTypeIcon } from "./SourceTypeIcon";
 import { RowBox } from "./styledComponents";
 
-export function ParentItemExpander({ node }: { node: NodeApi<any> }) {
+export function ParentItemExpander({
+  node,
+}: {
+  node: NodeApi<DbSourceTreeNode>;
+}) {
   const { dataType, name, displayId, id } = node.data;
 
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { TableComponents, TableVirtuoso } from "react-virtuoso";
+import { TableVirtuoso } from "react-virtuoso";
 import { Box, Skeleton, TableCell, TableRow } from "@mui/material";
 import {
   FetchNextPageOptions,
@@ -18,6 +18,7 @@ import type { NumbersViewData } from "@utils/api/endpoints/numbers-view/numbers"
 import type { APIGetResponse, APIPostResponse } from "@utils/api/types";
 import { DbLanguage } from "@utils/api/types";
 
+import type { NumbersRow } from "./numbersViewTableContent";
 import {
   createTableColumns,
   createTableRows,
@@ -59,7 +60,7 @@ export default function NumbersTable({
 
   const rowData = React.useMemo(() => createTableRows(data), [data]);
 
-  const columns = React.useMemo<ColumnDef<NumbersSegment>[]>(
+  const columns = React.useMemo<ColumnDef<NumbersRow>[]>(
     () =>
       createTableColumns({
         categories,
@@ -68,7 +69,7 @@ export default function NumbersTable({
     [categories, language],
   );
 
-  const table = useReactTable({
+  const table = useReactTable<NumbersRow>({
     data: rowData,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -77,10 +78,7 @@ export default function NumbersTable({
 
   const { rows } = table.getRowModel();
 
-  const components = React.useMemo(
-    () => getVirtuosoTableComponents() as TableComponents<any>,
-    [],
-  );
+  const components = React.useMemo(() => getVirtuosoTableComponents(), []);
 
   const FixedHeaderContent = React.memo(() => {
     return table.getHeaderGroups().map((headerGroup) => (
@@ -126,7 +124,7 @@ export default function NumbersTable({
     }
     ItemContent.displayName = "ItemContent";
 
-    const row = rows[index] as Row<any>;
+    const row = rows[index] as Row<NumbersRow>;
 
     return (
       <>
