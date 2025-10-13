@@ -1,4 +1,5 @@
-const { i18n } = require("./next-i18next.config");
+const { i18n: i18nRaw } = require("./next-i18next.config");
+const { fallbackLng, ...i18n } = i18nRaw;
 const path = require('path')
 
 const NODE_ENV = process.env.NODE_ENV;
