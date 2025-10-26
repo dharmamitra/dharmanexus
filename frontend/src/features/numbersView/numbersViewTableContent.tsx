@@ -53,85 +53,85 @@ export const createTableColumns = ({
   categories,
   language,
 }: CreateTableColumnProps) => [
-    {
-      accessorKey: "segment",
-      header: () => (
-        <div
-          style={{
-            // sets width for whole column
-            minWidth: "150px",
-          }}
-        >
-          <Typography textTransform="uppercase">segment</Typography>
-        </div>
-      ),
-      cell: (info: CellContext<NumbersRow, unknown>) => {
-        const segmentnr = info.getValue<string>();
-        return (
-          <Typography sx={{ fontWeight: 500, lineHeight: 1.25 }}>
-            <Link
-              href={createURLToSegment({ segmentNumber: segmentnr, language })}
-            >
-              {segmentnr}
-            </Link>
-          </Typography>
-        );
-      },
+  {
+    accessorKey: "segment",
+    header: () => (
+      <div
+        style={{
+          // sets width for whole column
+          minWidth: "150px",
+        }}
+      >
+        <Typography textTransform="uppercase">segment</Typography>
+      </div>
+    ),
+    cell: (info: CellContext<NumbersRow, unknown>) => {
+      const segmentnr = info.getValue<string>();
+      return (
+        <Typography sx={{ fontWeight: 500, lineHeight: 1.25 }}>
+          <Link
+            href={createURLToSegment({ segmentNumber: segmentnr, language })}
+          >
+            {segmentnr}
+          </Link>
+        </Typography>
+      );
     },
-    ...categories.map((header) => ({
-      accessorKey: header.id,
-      header: () => (
+  },
+  ...categories.map((header) => ({
+    accessorKey: header.id,
+    header: () => (
+      <div
+        style={{
+          width: "200px",
+          paddingLeft: "6px",
+        }}
+      >
+        <Typography textTransform="uppercase">{header.id}</Typography>
+      </div>
+    ),
+    cell: (info: CellContext<NumbersRow, unknown>) => {
+      const parallels = info?.getValue<APISchemas["Parallel"][]>() || [];
+      return (
         <div
           style={{
             width: "200px",
-            paddingLeft: "6px",
+            paddingLeft: "1rem",
           }}
         >
-          <Typography textTransform="uppercase">{header.id}</Typography>
+          {parallels.map((parallel, i) => {
+            const { displayName, segmentnr } = parallel || {};
+
+            const segmentNumber = segmentnr.split("–")[0] ?? segmentnr;
+
+            const urlToSegment = createURLToSegment({
+              segmentNumber,
+              language,
+            });
+
+            return (
+              <Tooltip
+                key={[info.cell.id, segmentnr, i].join("-")}
+                title={displayName}
+                PopperProps={{
+                  disablePortal: true,
+                }}
+                placement="top"
+                enterDelay={1200}
+              >
+                <Typography sx={{ lineHeight: 1.25 }}>
+                  <Link href={urlToSegment} color="text.primary">
+                    {segmentnr}
+                  </Link>
+                </Typography>
+              </Tooltip>
+            );
+          })}
         </div>
-      ),
-      cell: (info: CellContext<NumbersRow, unknown>) => {
-        const parallels = info?.getValue<APISchemas["Parallel"][]>() || [];
-        return (
-          <div
-            style={{
-              width: "200px",
-              paddingLeft: "1rem",
-            }}
-          >
-            {parallels.map((parallel, i) => {
-              const { displayName, segmentnr } = parallel || {};
-
-              const segmentNumber = segmentnr.split("–")[0] ?? segmentnr;
-
-              const urlToSegment = createURLToSegment({
-                segmentNumber,
-                language,
-              });
-
-              return (
-                <Tooltip
-                  key={[info.cell.id, segmentnr, i].join("-")}
-                  title={displayName}
-                  PopperProps={{
-                    disablePortal: true,
-                  }}
-                  placement="top"
-                  enterDelay={1200}
-                >
-                  <Typography sx={{ lineHeight: 1.25 }}>
-                    <Link href={urlToSegment} color="text.primary">
-                      {segmentnr}
-                    </Link>
-                  </Typography>
-                </Tooltip>
-              );
-            })}
-          </div>
-        );
-      },
-    })),
-  ];
+      );
+    },
+  })),
+];
 
 const ScrollerRef = React.forwardRef<HTMLDivElement>(
   function ScrollerRef(props, ref) {

@@ -9,7 +9,7 @@
     "build": "next build",
     "build:compile": "next build --experimental-build-mode compile && mkdir -p .next/standalone/.next && cp -r .next/static .next/standalone/.next/",
     "start": "node .next/standalone/server.js",
-    "lint": "eslint -c eslint.config.mjs . --fix",
+    "lint": "eslint . --fix",
     "test:ts": "tsc --noEmit",
     "postinstall": "husky",
     "api:ts": "openapi-typescript && eslint ./src/codegen/api/*.ts --fix",
@@ -99,9 +99,9 @@
   },
   "lint-staged": {
     "**/*.(ts|tsx)": [
-      "eslint -c eslint.config.mjs --cache --fix"
+      "eslint --cache --fix"
     ],
-    "*.js": "eslint -c eslint.config.mjs --cache"
+    "*.js": "eslint --cache"
   },
   "resolutions": {
     "@babel/runtime": "^7.24.6",
