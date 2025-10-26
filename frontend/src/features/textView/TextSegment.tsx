@@ -167,6 +167,7 @@ export const TextSegment = ({
             return (
               <span
                 key={segmentKey}
+                role="button"
                 tabIndex={0}
                 className={`${segmentClassName} ${styles.segment__button}`}
                 style={{

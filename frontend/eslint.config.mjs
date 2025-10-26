@@ -81,6 +81,11 @@ export default [
       ...reactHooksPlugin.configs.recommended.rules,
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
+      // ...eslintPluginUnicorn.configs.recommended.rules, TODO: enable
+      ...jsxA11y.configs.recommended.rules,
+      // React Compiler isn't used in this project at the moment, so this rule is disabled for now. 
+      // https://react.dev/reference/eslint-plugin-react-hooks/lints/incompatible-library
+      'react-hooks/incompatible-library': 'off',
       '@next/next/no-img-element': 'error',
       "prettier/prettier": "error",
       "simple-import-sort/imports": [

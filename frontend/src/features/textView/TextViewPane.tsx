@@ -37,17 +37,6 @@ export interface TextViewPaneProps {
   activeSegmentIndex: number;
 }
 
-const debounceEdgeReachedFunction =
-  (callback: () => Promise<void>) => async (isReached: boolean) => {
-    if (!isReached) return;
-    const debouncedEdgeReachedFunction = debounce(
-      async () => await callback(),
-      1000,
-      { leading: true },
-    );
-    await debouncedEdgeReachedFunction();
-  };
-
 export const TextViewPane = ({
   isRightPane,
   activeSegmentId,
@@ -112,19 +101,47 @@ export const TextViewPane = ({
     setTimeout(() => scrollToActiveSegment(), 1000);
   }, [scrollToActiveSegment]);
 
-  const handleStartReached = useCallback(async () => {
-    wasDataJustAppended.current = true;
-    await handleFetchingPreviousPage();
-    // fixes issue with scrolling to segment automatically on endless scrolling
-    setTimeout(() => (wasDataJustAppended.current = false));
-  }, [handleFetchingPreviousPage]);
+  // We create debounced versions of the fetch functions (which don't touch refs)
+  // and handle ref logic in the wrapper callbacks to satisfy react-hooks/refs lint rule.
+  const debouncedFetchPrevious = useMemo(
+    () => debounce(handleFetchingPreviousPage, 1000, { leading: true }),
+    [handleFetchingPreviousPage],
+  );
 
-  const handleBottomReached = useCallback(async () => {
-    wasDataJustAppended.current = true;
-    await handleFetchingNextPage();
-    // fixes issue with scrolling to segment automatically on endless scrolling
-    setTimeout(() => (wasDataJustAppended.current = false));
-  }, [handleFetchingNextPage]);
+  const debouncedFetchNext = useMemo(
+    () => debounce(handleFetchingNextPage, 1000, { leading: true }),
+    [handleFetchingNextPage],
+  );
+
+  const atTopStateChange = useCallback(
+    (isReached: boolean) => {
+      if (!isReached) return;
+      wasDataJustAppended.current = true;
+      debouncedFetchPrevious();
+      // fixes issue with scrolling to segment automatically on endless scrolling
+      setTimeout(() => (wasDataJustAppended.current = false));
+    },
+    [debouncedFetchPrevious],
+  );
+
+  const atBottomStateChange = useCallback(
+    (isReached: boolean) => {
+      if (!isReached) return;
+      wasDataJustAppended.current = true;
+      debouncedFetchNext();
+      // fixes issue with scrolling to segment automatically on endless scrolling
+      setTimeout(() => (wasDataJustAppended.current = false));
+    },
+    [debouncedFetchNext],
+  );
+
+  // Cleanup debounced callbacks on unmount to prevent stray invocations after the component is removed.
+  useEffect(() => {
+    return () => {
+      debouncedFetchPrevious.cancel();
+      debouncedFetchNext.cancel();
+    };
+  }, [debouncedFetchPrevious, debouncedFetchNext]);
 
   const itemContent = useCallback(
     (index: number, dataSegment: ParsedTextViewParallel) => (
@@ -167,8 +184,8 @@ export const TextViewPane = ({
           }}
           itemContent={itemContent}
           data={allParallels}
-          atTopStateChange={debounceEdgeReachedFunction(handleStartReached)}
-          atBottomStateChange={debounceEdgeReachedFunction(handleBottomReached)}
+          atTopStateChange={atTopStateChange}
+          atBottomStateChange={atBottomStateChange}
         />
       </Box>
     </Card>
