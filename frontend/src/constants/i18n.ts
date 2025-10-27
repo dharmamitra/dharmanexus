@@ -21,9 +21,9 @@ export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
 export const SUPPORTED_LOCALES_MAP: Record<SupportedLocale, string> = {
   en: "English",
   ja: "日本語",
-  ko: "繁體中文",
-  hi: "简体中文",
-  zh_Hant: "हिन्दी",
-  zh_Hans: "བོད་ཡིག",
-  bo: "한국어",
+  ko: "한국어",
+  hi: "हिन्दी",
+  zh_Hant: "繁體中文",
+  zh_Hans: "简体中文",
+  bo: "བོད་སྐད།",
 };
