@@ -33,14 +33,14 @@ redis_lock = asyncio.Lock()
 
 async def get_redis_client():
     """Initializes and returns a single Redis client instance, creating it if necessary."""
-    client = getattr(get_redis_client, "_client", None)
+    client = getattr(get_redis_client, "client", None)
     if client is None:
         async with redis_lock:
             # Check again inside the lock to ensure it was not created while waiting.
-            client = getattr(get_redis_client, "_client", None)
+            client = getattr(get_redis_client, "client", None)
             if client is None:
                 logger.info("Initializing shared Redis client.")
-                get_redis_client._client = aioredis.from_url(
+                get_redis_client.client = aioredis.from_url(
                     "redis://redis:6379",
                     encoding="utf8",
                     decode_responses=True,
@@ -48,7 +48,7 @@ async def get_redis_client():
                     socket_connect_timeout=300,
                     retry_on_timeout=True,
                 )
-                client = get_redis_client._client
+                client = get_redis_client.client
     return client
 
 

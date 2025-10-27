@@ -324,4 +324,3 @@ def calculate_color_maps_middle_view(data):
             if "par_offset_end" in entry:
                 del entry["par_offset_end"]
     return data
-
