@@ -3,7 +3,6 @@ This file holds the functions for creating the colormaps.
 """
 
 from .utils import shorten_segment_names, prettify_score
-import pprint
 
 
 def create_segmented_text(text, colormap, matchmap, active_map):

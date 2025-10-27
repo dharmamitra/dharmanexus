@@ -28,19 +28,19 @@ CACHE_TIMES = {
     "LONG": 2592000,  # 30 days
 }
 
-redis_client = None
 redis_lock = asyncio.Lock()
 
 
 async def get_redis_client():
     """Initializes and returns a single Redis client instance, creating it if necessary."""
-    global redis_client
-    if redis_client is None:
+    client = getattr(get_redis_client, "_client", None)
+    if client is None:
         async with redis_lock:
             # Check again inside the lock to ensure it was not created while waiting.
-            if redis_client is None:
+            client = getattr(get_redis_client, "_client", None)
+            if client is None:
                 logger.info("Initializing shared Redis client.")
-                redis_client = aioredis.from_url(
+                get_redis_client._client = aioredis.from_url(
                     "redis://redis:6379",
                     encoding="utf8",
                     decode_responses=True,
@@ -48,7 +48,8 @@ async def get_redis_client():
                     socket_connect_timeout=300,
                     retry_on_timeout=True,
                 )
-    return redis_client
+                client = get_redis_client._client
+    return client
 
 
 class CustomJsonCoder(JsonCoder):
