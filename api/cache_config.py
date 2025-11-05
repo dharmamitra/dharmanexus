@@ -41,14 +41,9 @@ async def get_redis_client():
             client = getattr(get_redis_client, "client", None)
             if client is None:
                 logger.info("Initializing shared Redis client.")
-<<<<<<< HEAD
                 redis_host = os.environ.get("REDIS_HOST", "localhost")
                 redis_client = aioredis.from_url(
                     f"redis://{redis_host}:6379",
-=======
-                get_redis_client.client = aioredis.from_url(
-                    "redis://redis:6379",
->>>>>>> main
                     encoding="utf8",
                     decode_responses=True,
                     socket_timeout=300,
