@@ -36,8 +36,6 @@ COPY public ./public
 COPY next.config.js .
 COPY tsconfig.json .
 COPY next-i18next.config.js .
-COPY .eslintrc.js .
-COPY .eslintignore .
 COPY globalStyles.css .
 COPY next-seo.config.js .
 
