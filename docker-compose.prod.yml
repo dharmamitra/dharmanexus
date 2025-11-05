@@ -1,25 +1,55 @@
 services:
+  arangodb:
+    image: arangodb:3.12.3
+    container_name: "arangodb"
+    env_file:
+      - .env
+    entrypoint: /entrypoint.sh
+    command: --query.optimizer-rules "-splice-subqueries"
+    volumes:
+      - dbdata:/var/lib/arangodb3
+    ports:
+      - "8529:8529"
+    restart: always
+
+  redis:
+    image: redis:latest
+    container_name: "redis"
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./api/redis.conf:/usr/local/etc/redis/redis.conf
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    restart: always
+
   fastapi:
-    command: uvicorn --host 127.0.0.1 api.main:APP
-    network_mode: host
+    command: uvicorn --host 0.0.0.0 api.main:APP
     environment:
       - PROD=1
-      - BIND_ADDR=127.0.0.1
+      - BIND_ADDR=0.0.0.0
       - PORT=8000
-      - REDIS_HOST=localhost
-      - ARANGO_HOST_API=localhost
+      - REDIS_HOST=redis
+      - ARANGO_HOST_API=arangodb
+    ports:
+      - "8000:8000"
+    depends_on:
+      - arangodb
+      - redis
 
   frontend:
     container_name: frontend
-    network_mode: host
     environment:
-      HOSTNAME: "127.0.0.1"
+      HOSTNAME: "0.0.0.0"
     build:
       context: frontend
       dockerfile: prod.Dockerfile
       args:
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    ports:
+      - "3000:3000"
     restart: always
 
 volumes:
   dbdata:
+  redis_data:

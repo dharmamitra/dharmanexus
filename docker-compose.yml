@@ -3,7 +3,6 @@ services:
     image: arangodb:3.12.3
     #platform: linux/arm64/v8
     #platform: linux/amd64 # Use this instead if you want to use it on Intel macs or Linux
-    network_mode: host
     container_name: "arangodb"
     env_file:
       - .env
@@ -11,6 +10,8 @@ services:
     command: --query.optimizer-rules "-splice-subqueries"
     volumes:
       - dbdata:/var/lib/arangodb3
+    ports:
+      - "8529:8529"
     restart: always
 
   dataloader:
@@ -20,7 +21,6 @@ services:
       platforms:
         - linux/amd64
         - linux/arm64/v8
-    network_mode: host
     container_name: "dataloader"
     volumes:
       - .:/opt/buddhanexus
@@ -32,17 +32,21 @@ services:
         target: /data/matches/
     env_file:
       - .env
+    environment:
+      - ARANGO_HOST=arangodb
     depends_on:
       - arangodb
     restart: always
 
   redis:
     image: redis:latest
-    network_mode: host
+    container_name: "redis"
     command: redis-server /usr/local/etc/redis/redis.conf
     volumes:
       - ./api/redis.conf:/usr/local/etc/redis/redis.conf
       - redis_data:/data
+    ports:
+      - "6379:6379"
     restart: always
 
   fastapi:
@@ -52,7 +56,6 @@ services:
       platforms:
         - linux/amd64
         - linux/arm64/v8
-    network_mode: host
     container_name: "fastapi"
     volumes:
       - .:/opt/buddhanexus
@@ -64,11 +67,13 @@ services:
       - .env
     environment:
       - PROD=0
-      - BIND_ADDR=127.0.0.1
+      - BIND_ADDR=0.0.0.0
       - PORT=8000
-      - REDIS_HOST=localhost
-      - ARANGO_HOST_API=localhost
-    command: uvicorn --host 127.0.0.1 api.main:APP --reload
+      - REDIS_HOST=redis
+      - ARANGO_HOST_API=arangodb
+    ports:
+      - "8000:8000"
+    command: uvicorn --host 0.0.0.0 api.main:APP --reload
     restart: always
     depends_on:
       - arangodb
@@ -81,7 +86,6 @@ services:
       platforms:
         - linux/amd64
         - linux/arm64/v8
-    network_mode: host
     container_name: "tests"
     volumes:
       - .:/opt/buddhanexus
@@ -93,13 +97,16 @@ services:
     environment:
       - PROD=0
       - PYTHONPATH=/opt/buddhanexus
+      - REDIS_HOST=redis
+      - ARANGO_HOST_API=arangodb
+      - ARANGO_HOST=arangodb
     command: pytest -v
     depends_on:
       - arangodb
+      - redis
 
   frontend:
     container_name: frontend
-    network_mode: host
     build:
       context: frontend
       dockerfile: dev.Dockerfile
@@ -108,7 +115,7 @@ services:
     environment:
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
       NEXT_PUBLIC_DEPLOYMENT: ${NEXT_PUBLIC_DEPLOYMENT}
-      HOST: "127.0.0.1"
+      HOST: "0.0.0.0"
 
     # Set environment variables based on the .env file
     env_file:
@@ -116,6 +123,8 @@ services:
     volumes:
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
+    ports:
+      - "3000:3000"
     restart: always
 
 volumes:
