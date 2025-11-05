@@ -36,6 +36,8 @@ services:
         target: /data/matches/
     env_file:
       - .env
+    environment:
+      - ARANGO_HOST=arangodb
     links:
       - "arangodb"
     depends_on:
@@ -76,6 +78,8 @@ services:
       - .env
     environment:
       - PROD=0
+      - REDIS_HOST=redis
+      - ARANGO_HOST_API=arangodb
     command: uvicorn --host 0.0.0.0 api.main:APP --reload
     restart: always
     depends_on:
@@ -102,9 +106,13 @@ services:
     environment:
       - PROD=0
       - PYTHONPATH=/opt/buddhanexus
+      - REDIS_HOST=redis
+      - ARANGO_HOST_API=arangodb
+      - ARANGO_HOST=arangodb
     command: pytest -v
     depends_on:
       - arangodb
+      - redis
     networks:
       - app-network
 
