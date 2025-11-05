@@ -5,10 +5,13 @@ import React, {
   useLayoutEffect,
   useMemo,
   useRef,
-  useState,
 } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
-import { fontSizeAtom, tibetanScriptSelectionAtom } from "@atoms";
+import {
+  fontSizeAtom,
+  isFolioTextViewNavigationAtom,
+  tibetanScriptSelectionAtom,
+} from "@atoms";
 import {
   EmptyPlaceholder,
   ListLoadingIndicator,
@@ -31,37 +34,20 @@ import debounce from "lodash/debounce";
 export interface TextViewPaneProps {
   isRightPane: boolean;
   activeSegmentId: string;
-  setActiveSegmentId: (id: string) => Promise<URLSearchParams>;
   activeSegmentIndex: number;
-  setActiveSegmentIndex: (index: number) => Promise<URLSearchParams>;
-  initialActiveSegment?: string;
 }
-
-const debounceEdgeReachedFunction =
-  (callback: () => Promise<void>) => async (isReached: boolean) => {
-    if (!isReached) return;
-    const debouncedEdgeReachedFunction = debounce(
-      async () => await callback(),
-      1000,
-      { leading: true },
-    );
-    await debouncedEdgeReachedFunction();
-  };
 
 export const TextViewPane = ({
   isRightPane,
   activeSegmentId,
-  setActiveSegmentId,
   activeSegmentIndex,
-  setActiveSegmentIndex,
-  initialActiveSegment,
 }: TextViewPaneProps) => {
-  const tibetanScript = useAtomValue(tibetanScriptSelectionAtom);
-  const fontSize = useAtomValue(fontSizeAtom);
   const virtuosoRef = useRef<VirtuosoHandle>(null);
   const wasDataJustAppended: RefObject<boolean> = useRef(false);
-  const [initialSegmentId] = useState(initialActiveSegment ?? activeSegmentId);
-  const isInitialLoad = useRef(true);
+
+  const tibetanScript = useAtomValue(tibetanScriptSelectionAtom);
+  const fontSize = useAtomValue(fontSizeAtom);
+  const isFolioTextViewNavigation = useAtomValue(isFolioTextViewNavigationAtom);
 
   const {
     // [TODO] add error handling
@@ -75,10 +61,8 @@ export const TextViewPane = ({
     handleFetchingPreviousPage,
     handleFetchingNextPage,
     isLoading,
-    clearActiveMatch,
-    initialActiveSegment: initialActiveSegmentFromHook,
   } = useTextViewPane({
-    activeSegment: isRightPane ? activeSegmentId : initialSegmentId,
+    activeSegment: activeSegmentId,
     isRightPane,
   });
 
@@ -101,41 +85,63 @@ export const TextViewPane = ({
       activeSegmentId,
     );
     if (index === -1) return;
-    virtuosoRef.current?.scrollToIndex({ index, align: "center" });
+    virtuosoRef.current?.scrollToIndex({
+      index,
+      align: "start",
+      behavior: "auto",
+      offset: -34,
+    });
   }, [activeSegmentId, isLoading]);
 
   useEffect(() => {
-    // We want to scroll in two cases:
-    // 1. On the initial load of the component when a segment is active.
-    // 2. In the right pane, any time the active segment changes.
-    const shouldScroll = isRightPane || isInitialLoad.current;
+    if (wasDataJustAppended.current) return;
+    scrollToActiveSegment();
 
-    // We can only scroll once the data has finished loading.
-    if (shouldScroll && !isLoading) {
-      scrollToActiveSegment();
-      // [workaround/hack] - it doesn't always consistently scroll to the activeSegment, even with this hack, but it helps
-      setTimeout(() => scrollToActiveSegment(), 1000);
+    // [workaround/hack] - it doesn't always consistently scroll to the activeSegment, even with this hack, but it helps
+    setTimeout(() => scrollToActiveSegment(), 1000);
+  }, [scrollToActiveSegment]);
 
-      if (isInitialLoad.current) {
-        // We've completed the initial scroll, so we disable it for subsequent renders.
-        isInitialLoad.current = false;
-      }
-    }
-  }, [isRightPane, isLoading, scrollToActiveSegment]);
+  // We create debounced versions of the fetch functions (which don't touch refs)
+  // and handle ref logic in the wrapper callbacks to satisfy react-hooks/refs lint rule.
+  const debouncedFetchPrevious = useMemo(
+    () => debounce(handleFetchingPreviousPage, 1000, { leading: true }),
+    [handleFetchingPreviousPage],
+  );
 
-  const handleStartReached = useCallback(async () => {
-    wasDataJustAppended.current = true;
-    await handleFetchingPreviousPage();
-    // fixes issue with scrolling to segment automatically on endless scrolling
-    setTimeout(() => (wasDataJustAppended.current = false));
-  }, [handleFetchingPreviousPage]);
+  const debouncedFetchNext = useMemo(
+    () => debounce(handleFetchingNextPage, 1000, { leading: true }),
+    [handleFetchingNextPage],
+  );
 
-  const handleBottomReached = useCallback(async () => {
-    wasDataJustAppended.current = true;
-    await handleFetchingNextPage();
-    // fixes issue with scrolling to segment automatically on endless scrolling
-    setTimeout(() => (wasDataJustAppended.current = false));
-  }, [handleFetchingNextPage]);
+  const atTopStateChange = useCallback(
+    (isReached: boolean) => {
+      if (!isReached) return;
+      wasDataJustAppended.current = true;
+      debouncedFetchPrevious();
+      // fixes issue with scrolling to segment automatically on endless scrolling
+      setTimeout(() => (wasDataJustAppended.current = false));
+    },
+    [debouncedFetchPrevious],
+  );
+
+  const atBottomStateChange = useCallback(
+    (isReached: boolean) => {
+      if (!isReached) return;
+      wasDataJustAppended.current = true;
+      debouncedFetchNext();
+      // fixes issue with scrolling to segment automatically on endless scrolling
+      setTimeout(() => (wasDataJustAppended.current = false));
+    },
+    [debouncedFetchNext],
+  );
+
+  // Cleanup debounced callbacks on unmount to prevent stray invocations after the component is removed.
+  useEffect(() => {
+    return () => {
+      debouncedFetchPrevious.cancel();
+      debouncedFetchNext.cancel();
+    };
+  }, [debouncedFetchPrevious, debouncedFetchNext]);
 
   const itemContent = useCallback(
     (index: number, dataSegment: ParsedTextViewParallel) => (
@@ -143,12 +149,9 @@ export const TextViewPane = ({
         data={dataSegment}
         colorScale={colorScale}
         activeSegmentId={activeSegmentId}
-        setActiveSegmentId={setActiveSegmentId}
         activeSegmentIndex={activeSegmentIndex}
-        setActiveSegmentIndex={setActiveSegmentIndex}
-        clearActiveMatch={clearActiveMatch}
         isRightPane={isRightPane}
-        initialActiveSegment={initialActiveSegmentFromHook}
+        isFolioTextViewNavigation={isFolioTextViewNavigation}
         tibetanScript={tibetanScript}
         fontSize={fontSize}
       />
@@ -156,14 +159,11 @@ export const TextViewPane = ({
     [
       activeSegmentId,
       activeSegmentIndex,
-      clearActiveMatch,
       colorScale,
       isRightPane,
-      setActiveSegmentId,
-      setActiveSegmentIndex,
-      initialActiveSegmentFromHook,
       tibetanScript,
       fontSize,
+      isFolioTextViewNavigation,
     ],
   );
 
@@ -184,8 +184,8 @@ export const TextViewPane = ({
           }}
           itemContent={itemContent}
           data={allParallels}
-          atTopStateChange={debounceEdgeReachedFunction(handleStartReached)}
-          atBottomStateChange={debounceEdgeReachedFunction(handleBottomReached)}
+          atTopStateChange={atTopStateChange}
+          atBottomStateChange={atBottomStateChange}
         />
       </Box>
     </Card>

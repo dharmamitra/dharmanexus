@@ -5,13 +5,10 @@ import chroma from "chroma-js";
 import {
   STANDARD_MATCH_HEAT_THEME_DARK_MODE,
   STANDARD_MATCH_HEAT_THEME_LIGHT_MODE,
-  VIVID_MATCH_HEAT_THEME_DARK_MODE,
-  VIVID_MATCH_HEAT_THEME_LIGHT_MODE,
+  VIVID_MATCH_HEAT_THEME,
 } from "./constants";
 
-export function getTextViewColorScale(
-  data: ParsedTextViewParallels,
-): chroma.Scale {
+export function getTextViewColorScale(data: ParsedTextViewParallels) {
   const colors = data.map((item) => item.segmentText[0]?.highlightColor ?? 0);
   const [minColor, maxColor] = [Math.min(...colors), Math.max(...colors)];
 
@@ -59,9 +56,66 @@ export const getMatchHeatColors = (
   }
 
   if (heatMapTheme === "vivid") {
-    if (isDarkTheme) return VIVID_MATCH_HEAT_THEME_DARK_MODE;
-    return VIVID_MATCH_HEAT_THEME_LIGHT_MODE;
+    return VIVID_MATCH_HEAT_THEME;
   }
 
   return [];
+};
+
+export const buildSegmentClassName = ({
+  styles,
+  isDarkTheme,
+  isSelected,
+  isSegmentPartSelected,
+  isActiveMatch,
+  isSegmentPartHoveredOverInMiddleView,
+  isSegmentSelected,
+  isFolioTextViewNavigation,
+  isRightPane,
+}: {
+  styles: Record<string, string>;
+  isDarkTheme: boolean;
+  isSelected: boolean;
+  isSegmentPartSelected: boolean;
+  isActiveMatch?: boolean;
+  isSegmentPartHoveredOverInMiddleView: boolean;
+  isSegmentSelected: boolean;
+  isFolioTextViewNavigation: boolean;
+  isRightPane: boolean;
+}) => {
+  const classNames = [styles.segment];
+
+  if (isDarkTheme && styles["segment--dark"])
+    classNames.push(styles["segment--dark"]);
+
+  if (
+    isSegmentPartHoveredOverInMiddleView &&
+    styles["segment--parallel-hovered"]
+  ) {
+    classNames.push(styles["segment--parallel-hovered"]);
+  }
+
+  if (isSelected && styles["segment--selected"])
+    classNames.push(styles["segment--selected"]);
+  if (
+    isSegmentPartSelected &&
+    !isActiveMatch &&
+    styles["segment--part-selected"]
+  )
+    classNames.push(styles["segment--part-selected"]);
+  if (
+    isSegmentPartHoveredOverInMiddleView &&
+    styles["segment--parallel-hovered"]
+  )
+    classNames.push(styles["segment--parallel-hovered"]);
+  if (
+    isSegmentSelected &&
+    isFolioTextViewNavigation &&
+    styles["segment--active"]
+  )
+    classNames.push(styles["segment--active"]);
+  if (isSegmentSelected && isRightPane && styles["segment--active"])
+    classNames.push(styles["segment--active"]);
+
+  return classNames.join(" ");
 };

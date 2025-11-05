@@ -1,11 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import { Link } from "@components/common/Link";
-import { MITRA_URL } from "@mitra/constants";
-import { getBasePath } from "@mitra/utils";
 import { Box, Link as MuiLink, useTheme } from "@mui/material";
 import imgMitraLogo from "@public/assets/logos/dm-logo-flat.png";
+import { getBasePath } from "@utils/deployments";
 import { setLogoModeFilter } from "@utils/helpers";
+import { MITRA_URL } from "src/constants/base";
+import { Deployment } from "src/types/index";
 
 const logoWidePaths: Record<Deployment, string> = {
   dharmamitra: "/assets/logos/dn-logo-title.png",

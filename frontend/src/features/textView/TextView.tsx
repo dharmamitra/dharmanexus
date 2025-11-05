@@ -1,30 +1,27 @@
 import "allotment/dist/style.css";
 
 import React, { useEffect, useRef } from "react";
-import { activeSegmentMatchesAtom } from "@atoms";
-import {
-  useActiveSegmentParam,
-  useRightPaneActiveSegmentParam,
-} from "@components/hooks/params";
+import { activeSegmentMatchesAtom, middlePaneOpenAtom } from "@atoms";
+import { useRightPaneActiveSegmentParam } from "@components/hooks/params";
 import { DEFAULT_PARAM_VALUES } from "@features/SidebarSuite/uiSettings/config";
 import { TextViewLeftPane } from "@features/textView/TextViewLeftPane";
 import { TextViewRightPane } from "@features/textView/TextViewRightPane";
 import { Paper } from "@mui/material";
 import { Allotment, AllotmentHandle, LayoutPriority } from "allotment";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 
 import TextViewMiddleParallels from "./TextViewMiddleParallels";
 
 // todo: check other elements in segmentText
 export const TextView = () => {
-  const [activeSegmentId] = useActiveSegmentParam();
   const [rightPaneActiveSegmentId] = useRightPaneActiveSegmentParam();
   const activeSegmentMatches = useAtomValue(activeSegmentMatchesAtom);
+  const [isMiddlePaneOpen, setIsMiddlePaneOpen] = useAtom(middlePaneOpenAtom);
 
   const allotmentRef = useRef<AllotmentHandle>(null);
 
   const shouldShowMiddlePane =
-    activeSegmentId !== "none" && activeSegmentMatches.length > 0;
+    isMiddlePaneOpen && activeSegmentMatches.length > 0;
 
   const shouldShowRightPane =
     rightPaneActiveSegmentId !== DEFAULT_PARAM_VALUES.active_segment;
@@ -49,7 +46,7 @@ export const TextView = () => {
 
         {/* Middle pane - parallels for selected segment */}
         <Allotment.Pane visible={shouldShowMiddlePane}>
-          <TextViewMiddleParallels />
+          <TextViewMiddleParallels onClose={() => setIsMiddlePaneOpen(false)} />
         </Allotment.Pane>
 
         {/* Right Pane - shown after a parallel is selected in middle pane */}

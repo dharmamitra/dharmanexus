@@ -7,11 +7,14 @@ import { MatchHeatMapTheme } from "@features/textView/constants";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
 
 /**
  * GENERAL
  */
+
+export const middlePaneOpenAtom = atom(false);
 
 export const currentDbViewAtom = atomWithStorage<DbViewEnum>(
   "db-view",
@@ -87,3 +90,5 @@ export const activeSegmentMatchesAtom = atom<string[]>([]);
 export const hoveredOverParallelIdAtom = atom<string | null>(null);
 
 export const isMiddlePaneMovingAtom = atom(false);
+
+export const isFolioTextViewNavigationAtom = atom(false);

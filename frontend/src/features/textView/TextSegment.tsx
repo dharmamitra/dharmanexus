@@ -1,31 +1,28 @@
 import React, { useCallback, useMemo } from "react";
-import Link from "next/link";
 import {
   activeSegmentMatchesAtom,
   heatMapThemeAtom,
   hoveredOverParallelIdAtom,
+  middlePaneOpenAtom,
   shouldShowSegmentNumbersAtom,
   textViewIsMiddlePanePointingLeftAtom,
 } from "@atoms";
-import { sourceSans } from "@components/theme";
+import { Link } from "@components/common/Link";
 import { TibetanScript } from "@features/SidebarSuite/types";
 import { enscriptSegment } from "@features/SidebarSuite/utils";
 import {
+  buildSegmentClassName,
   createURLToSegment,
   getMatchHeatColors,
 } from "@features/textView/utils";
-import {
-  Box,
-  Link as MuiLink,
-  useColorScheme,
-  useMediaQuery,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Box, useMediaQuery } from "@mui/material";
+import { useColorScheme, useTheme } from "@mui/material/styles";
+import { sourceSans } from "@theme/theme";
 import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-parallels";
 import type { Scale } from "chroma-js";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 
-import styles from "./textSegment.module.scss";
+import styles from "./textSegment.module.css";
 
 type TextSegmentProps = {
   isRightPane: boolean;
@@ -33,10 +30,7 @@ type TextSegmentProps = {
   colorScale: Scale;
   activeSegmentId: string;
   activeSegmentIndex: number;
-  setActiveSegmentId: (id: string) => Promise<URLSearchParams>;
-  setActiveSegmentIndex: (index: number) => Promise<URLSearchParams>;
-  clearActiveMatch: () => Promise<void>;
-  initialActiveSegment?: string;
+  isFolioTextViewNavigation: boolean;
   tibetanScript: TibetanScript;
   fontSize: number;
 };
@@ -47,10 +41,7 @@ export const TextSegment = ({
   colorScale,
   activeSegmentId,
   activeSegmentIndex,
-  setActiveSegmentId,
-  setActiveSegmentIndex,
-  clearActiveMatch,
-  initialActiveSegment,
+  isFolioTextViewNavigation,
   tibetanScript,
   fontSize,
 }: TextSegmentProps) => {
@@ -63,42 +54,32 @@ export const TextSegment = ({
   const shouldShowSegmentNumbers = useAtomValue(shouldShowSegmentNumbersAtom);
   const hoveredOverParallelId = useAtomValue(hoveredOverParallelIdAtom);
   const setSelectedSegmentMatches = useSetAtom(activeSegmentMatchesAtom);
+  const setMiddlePaneOpen = useSetAtom(middlePaneOpenAtom);
   const isSegmentSelected = activeSegmentId === data?.segmentNumber;
-  const isInitialActiveSegment =
-    initialActiveSegment === data?.segmentNumber &&
-    activeSegmentId === initialActiveSegment;
 
-  const [, setIsMiddlePanePointingLeft] = useAtom(
+  const setIsMiddlePanePointingLeft = useSetAtom(
     textViewIsMiddlePanePointingLeftAtom,
   );
 
   const matchHeatColors = getMatchHeatColors(heatMapTheme, isDarkTheme);
 
-  const updateSelectedLocationInGlobalState = useCallback(
-    async (location: { id: string; index: number; matches: string[] }) => {
+  const handleSegmentClick = useCallback(
+    (matches: string[]) => {
       setIsMiddlePanePointingLeft(isRightPane);
-      setSelectedSegmentMatches(location.matches);
-      await Promise.all([
-        setActiveSegmentId(location.id),
-        setActiveSegmentIndex(location.index),
-        clearActiveMatch(),
-      ]);
+      setSelectedSegmentMatches(matches);
+      setMiddlePaneOpen(true);
     },
     [
-      clearActiveMatch,
       isRightPane,
-      setActiveSegmentId,
-      setActiveSegmentIndex,
       setIsMiddlePanePointingLeft,
       setSelectedSegmentMatches,
+      setMiddlePaneOpen,
     ],
   );
 
   const matchSets = useMemo(() => {
-    // optimisation - don't run the map function if there are no active segments (middle view is closed)
-    if (activeSegmentId === "none") return undefined;
     return data?.segmentText.map((textChunk) => new Set(textChunk.matches));
-  }, [activeSegmentId, data?.segmentText]);
+  }, [data?.segmentText]);
 
   if (!data) return null;
 
@@ -117,14 +98,11 @@ export const TextSegment = ({
           isSegmentSelected && styles["segmentNumber--selected"]
         } ${!shouldShowSegmentNumbers && styles["segmentNumber--hidden"]}`}
       >
-        <Link href={urlToSegment} passHref legacyBehavior>
-          <MuiLink
-            target="_blank"
-            rel="noopener noreferrer"
-            data-segmentnumber={segmentNumber}
-            className={styles.segmentNumber__link}
-          />
-        </Link>
+        <Link
+          href={urlToSegment}
+          data-segmentnumber={segmentNumber}
+          className={styles.segmentNumber__link}
+        />
       </Box>
 
       <span>
@@ -148,23 +126,24 @@ export const TextSegment = ({
 
             const isSegmentPartHoveredOverInMiddleView =
               matchSets && hoveredOverParallelId
-                ? matchSets[i]?.has(hoveredOverParallelId)
+                ? (matchSets[i]?.has(hoveredOverParallelId) ?? false)
                 : false;
 
             const isSelected = isSegmentSelected
               ? isSegmentPartSelected
               : isActiveMatch;
 
-            const segmentClassName = `${styles.segment} ${
-              isDarkTheme && styles["segment--dark"]
-            } ${isSelected && styles["segment--selected"]} ${
-              isSegmentPartSelected &&
-              !isActiveMatch &&
-              styles["segment--part-selected"]
-            } ${
-              isSegmentPartHoveredOverInMiddleView &&
-              styles["segment--parallel-hovered"]
-            } ${isInitialActiveSegment && styles["segment--initial-active"]}`;
+            const segmentClassName = buildSegmentClassName({
+              styles,
+              isDarkTheme,
+              isSelected,
+              isSegmentPartSelected,
+              isActiveMatch,
+              isSegmentPartHoveredOverInMiddleView,
+              isSegmentSelected,
+              isFolioTextViewNavigation,
+              isRightPane,
+            });
 
             if (matches.length === 0) {
               return (
@@ -186,10 +165,9 @@ export const TextSegment = ({
                   "");
 
             return (
-              // eslint-disable-next-line jsx-a11y/no-static-element-interactions
               <span
                 key={segmentKey}
-                // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+                role="button"
                 tabIndex={0}
                 className={`${segmentClassName} ${styles.segment__button}`}
                 style={{
@@ -197,22 +175,14 @@ export const TextSegment = ({
                   color,
                   fontSize: `${fontSize}px`,
                 }}
-                onClick={async () => {
-                  await updateSelectedLocationInGlobalState({
-                    id: data.segmentNumber,
-                    matches,
-                    index: i,
-                  });
+                onClick={() => {
+                  handleSegmentClick(matches);
                 }}
-                onKeyDown={async (event) => {
+                onKeyDown={(event) => {
                   // allow selecting the segments by pressing space or enter
                   if (event.key !== " " && event.key !== "Enter") return;
                   event.preventDefault();
-                  await updateSelectedLocationInGlobalState({
-                    id: data.segmentNumber,
-                    matches,
-                    index: i,
-                  });
+                  handleSegmentClick(matches);
                 }}
               >
                 {textContent}

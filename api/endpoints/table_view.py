@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request, Depends
 from typing import Any
 from ..colormaps import calculate_color_maps_table_view
 from ..utils import get_sort_key
@@ -7,11 +7,38 @@ from ..queries import table_view_queries
 from .models.general_models import GeneralInput
 from .models.table_view_models import *
 from ..cache_config import cached_endpoint, CACHE_TIMES
+from shared.geoip_utils import get_geoip_data
+import logging
+import json
+from datetime import datetime
+import os
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 
-@router.post("/table/", response_model=TableViewOutput)
+async def log_table_view_request(request: Request, input: GeneralInput):
+    try:
+        os.makedirs("/logs", exist_ok=True)
+        ip_address = request.client.host
+        geoip_data = get_geoip_data(ip_address)
+
+        log_data = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "ip_address": ip_address,
+            "geoip": geoip_data,
+            "request": input.dict(),
+        }
+
+        with open("/logs/table_view_requests.ndjson", "a") as f:
+            json.dump(log_data, f)
+            f.write("\n")
+
+    except Exception as e:
+        logger.error(f"Error logging table view request: {e}", exc_info=True)
+
+
+@router.post("/table/", response_model=TableViewOutput, dependencies=[Depends(log_table_view_request)])
 @cached_endpoint(expire=CACHE_TIMES["LONG"])
 async def get_table_view(input: GeneralInput) -> Any:
     """

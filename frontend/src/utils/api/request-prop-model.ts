@@ -1,6 +1,7 @@
 import { AllAPIRequestProps } from "@utils/api/types";
 
 // `_allAPIRequestPropModel` is an `at a glance` ref that catches any prop model changes pulled from the API
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _allAPIRequestPropModel: AllAPIRequestProps = {
   language: "",

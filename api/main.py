@@ -10,8 +10,7 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
-from redis import asyncio as aioredis
-from .cache_config import make_cache_key_builder, CustomJsonCoder
+from .cache_config import make_cache_key_builder, CustomJsonCoder, get_redis_client
 from .endpoints import (
     table_view,
     text_view,
@@ -73,15 +72,7 @@ async def startup():
     """
     logger.info("Initializing FastAPI application...")
     try:
-        redis = aioredis.from_url(
-            "redis://redis:6379",
-            encoding="utf8",
-            decode_responses=False,
-            socket_timeout=300,
-            socket_connect_timeout=300,
-            retry_on_timeout=True,
-            health_check_interval=30,
-        )
+        redis = await get_redis_client()
         FastAPICache.init(
             backend=RedisBackend(redis),
             prefix="dharmanexus-cache",

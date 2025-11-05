@@ -7,7 +7,6 @@ import {
 } from "@atoms";
 import { LoadingCard } from "@components/common/Loading";
 import {
-  useActiveSegmentIndexParam,
   useActiveSegmentParam,
   useLeftPaneActiveMatchParam,
   useRightPaneActiveMatchParam,
@@ -21,9 +20,12 @@ import { DbApi } from "@utils/api/dbApi";
 import { useAtomValue, useSetAtom } from "jotai";
 
 import { CloseTextViewPaneButton } from "./CloseTextViewPaneButton";
-import styles from "./textViewMiddleParallels.module.scss";
 
-export default function TextViewMiddleParallels() {
+type Props = {
+  onClose: () => void;
+};
+
+export default function TextViewMiddleParallels({ onClose }: Props) {
   const { t } = useTranslation();
 
   const activeSegmentMatches = useAtomValue(activeSegmentMatchesAtom);
@@ -41,18 +43,16 @@ export default function TextViewMiddleParallels() {
   });
 
   const [activeSegmentId, setActiveSegmentId] = useActiveSegmentParam();
-  const [, setActiveSegmentIndex] = useActiveSegmentIndexParam();
   const [rightPaneActiveSegmentId, setRightPaneActiveSegmentId] =
     useRightPaneActiveSegmentParam();
   const [, setLeftPaneActiveMatch] = useLeftPaneActiveMatchParam();
   const [, setRightPaneActiveMatch] = useRightPaneActiveMatchParam();
 
-  const handleClear = async () => {
-    await Promise.all([
-      setActiveSegmentId("none"),
-      setActiveSegmentIndex(null),
-    ]);
-  };
+  const activeMiddleSegmentId = React.useRef(activeSegmentId);
+
+  React.useEffect(() => {
+    activeMiddleSegmentId.current = activeSegmentId;
+  }, [activeSegmentId]);
 
   const openTextPane = useCallback(
     async (id: string, textSegmentNumber: string) => {
@@ -128,7 +128,7 @@ export default function TextViewMiddleParallels() {
   );
 
   return (
-    <Box className={styles.container}>
+    <Box sx={{ height: "100%", overflow: "auto" }}>
       <CardHeader
         data-testid="middle-view-header"
         sx={{
@@ -140,7 +140,7 @@ export default function TextViewMiddleParallels() {
           zIndex: 2,
           width: "100%",
         }}
-        action={<CloseTextViewPaneButton handlePress={handleClear} />}
+        action={<CloseTextViewPaneButton handlePress={onClose} />}
         title={
           <Stack direction="row" spacing={1}>
             <Chip
@@ -160,7 +160,7 @@ export default function TextViewMiddleParallels() {
         }
       />
 
-      <CardContent className={styles.cardContent}>
+      <CardContent>
         {isLoading
           ? Array.from({ length: 3 }).map((_, index) => (
               <LoadingCard key={index} />

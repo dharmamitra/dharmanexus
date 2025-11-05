@@ -85,9 +85,13 @@ LET parallels = (
 
         // Get segment texts in a single subquery
         LET par_segtext = (
-            FOR segment IN segments
-                FILTER segment.segmentnr IN p.par_segnr
-                RETURN segment.original
+            FOR seg_nr IN p.par_segnr
+                LET segment = FIRST(
+                    FOR s IN segments
+                        FILTER s.segmentnr == seg_nr
+                        RETURN s
+                )
+                RETURN segment ? segment.original : null
         )
 
         // Get file display name in a single subquery

@@ -1,0 +1,79 @@
+/* src: https://base-ui.com/react/components/number-field */
+
+.Field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.Group {
+    display: flex;
+}
+
+.Input {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    border-top: 1px solid var(--separator-border);
+    border-bottom: 1px solid var(--separator-border);
+    border-left: none;
+    border-right: none;
+    width: 6rem;
+    height: 2.5rem;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: normal;
+    background-color: transparent;
+    color: var(--mui-palette-text-primary);
+
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+
+    &:focus {
+        z-index: 1;
+        outline: 2px solid var(--mui-palette-primary-main);
+        outline-offset: -1px;
+    }
+}
+
+.Decrement,
+.Increment {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    border: 1px solid var(--separator-border);
+    border-radius: var(--mui-shape-borderRadius);
+    background-color: var(--mui-palette-background-grey);
+    background-clip: padding-box;
+    color: var(--mui-palette-text-primary);
+    user-select: none;
+
+    @media (hover: hover) {
+        &:hover {
+            background-color: var(--mui-palette-action-hover);
+        }
+    }
+
+    &:active {
+        background-color: var(--mui-palette-action-active);
+    }
+}
+
+.Decrement {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.Increment {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}

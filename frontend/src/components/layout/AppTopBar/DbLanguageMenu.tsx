@@ -35,7 +35,7 @@ export const DbLanguageMenu = ({ type, isMobile }: DbLanguageMenuProps) => {
     variant: "popover",
     popupId: `${type}Menu`,
   });
-  const { t } = useTranslation();
+  const { t, ready } = useTranslation();
   const router = useRouter();
   const [currentView, setCurrentView] = useAtom(currentDbViewAtom);
 
@@ -62,7 +62,7 @@ export const DbLanguageMenu = ({ type, isMobile }: DbLanguageMenuProps) => {
           sx: { p: 0, "&:hover": { backgroundColor: "transparent" } },
         })}
       >
-        {t(`header.${type}`)}
+        {ready ? t(`header.${type}`) : <span>&nbsp;</span>}
       </Button>
 
       <Menu {...menuProps} {...(isMobile && mobileOffsetProps)}>
