@@ -50,7 +50,8 @@ async def get_redis_client():
                     socket_connect_timeout=300,
                     retry_on_timeout=True,
                 )
-                client = get_redis_client.client
+                get_redis_client.client = redis_client
+                client = redis_client
     return client
 
 
