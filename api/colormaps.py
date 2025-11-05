@@ -288,16 +288,19 @@ def calculate_color_maps_middle_view(data):
     if not data:
         return []
     for entry in data:
+        par_segtext_cleaned = [
+            segment for segment in entry["par_segtext"] if segment is not None
+        ]
         # it is _not_ nice that we need to test for the length of these elements;
         # it should be dealt with at data-loader level...
-        if len(entry["par_segtext"]) > 0:
+        if len(par_segtext_cleaned) > 0:
             join_element_par = ""
             if not entry["tgt_lang"] == "zh":
                 join_element_par = " "
-            par_fulltext = join_element_par.join(entry["par_segtext"])
+            par_fulltext = join_element_par.join(par_segtext_cleaned)
             par_colormap = [0] * len(par_fulltext)
             par_end = len(par_fulltext) - (
-                len(entry["par_segtext"][-1]) - entry["par_offset_end"]
+                len(par_segtext_cleaned[-1]) - entry["par_offset_end"]
             )
             par_end = min(par_end, len(par_fulltext))
             par_start = entry["par_offset_beg"]

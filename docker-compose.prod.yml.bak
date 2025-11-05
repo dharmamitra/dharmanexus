@@ -1,25 +1,19 @@
 services:
   fastapi:
-    command: uvicorn --host 127.0.0.1 api.main:APP
-    network_mode: host
+    command: uvicorn --host 0.0.0.0 api.main:APP
     environment:
       - PROD=1
-      - BIND_ADDR=127.0.0.1
-      - PORT=8000
-      - REDIS_HOST=localhost
-      - ARANGO_HOST_API=localhost
 
   frontend:
     container_name: frontend
-    network_mode: host
-    environment:
-      HOSTNAME: "127.0.0.1"
     build:
       context: frontend
       dockerfile: prod.Dockerfile
       args:
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     restart: always
+    ports:
+      - "3000:3000"
 
 volumes:
   dbdata:
