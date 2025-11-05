@@ -8,6 +8,7 @@ import { dbLanguages } from "@utils/api/constants";
 interface I18nProps {
   props: {
     _nextI18Next?: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       initialI18nStore: any;
       initialLocale: string;
       ns: string[];

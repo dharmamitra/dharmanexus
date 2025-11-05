@@ -41,6 +41,7 @@ module.exports = {
   i18n: {
     defaultLocale: DEFAULT_LOCALE,
     locales: [...SUPPORTED_LOCALES],
+    fallbackLng: DEFAULT_LOCALE,
   },
 
   initImmediate: false,

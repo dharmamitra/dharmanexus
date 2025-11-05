@@ -2,14 +2,14 @@ import React from "react";
 import type { DocumentContext, DocumentProps } from "next/document";
 import { Head, Html, Main, NextScript } from "next/document";
 import i18nextConfig from "next-i18next.config";
-import { getBasePath } from "@mitra/utils";
+import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
 // https://mui.com/material-ui/integrations/nextjs/#pages-router
 import {
   documentGetInitialProps,
   DocumentHeadTags,
   DocumentHeadTagsProps,
-} from "@mui/material-nextjs/v14-pagesRouter";
-import InitColorSchemeScript from "@mui/system/InitColorSchemeScript";
+} from "@mui/material-nextjs/v15-pagesRouter";
+import { getBasePath } from "@utils/deployments";
 
 const makePublicPath = (path: string) => {
   return getBasePath() + path;
@@ -19,7 +19,6 @@ export default function MyDocument(
   props: DocumentProps & DocumentHeadTagsProps,
 ) {
   const currentLocale =
-    // eslint-disable-next-line react/destructuring-assignment
     props.__NEXT_DATA__.locale ?? i18nextConfig.i18n.defaultLocale;
 
   return (
@@ -28,7 +27,6 @@ export default function MyDocument(
         <meta charSet="utf-8" />
         <DocumentHeadTags {...props} />
         <script
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html: `window.__webpack_nonce__ = '${process.env.nonce}'`,
           }}

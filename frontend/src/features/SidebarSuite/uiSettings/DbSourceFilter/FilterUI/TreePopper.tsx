@@ -3,8 +3,8 @@ import useDimensions from "react-cool-dimensions";
 import { SearchableDbSourceTree } from "@components/db/SearchableDbSourceTree";
 import { DbSourceTreeType } from "@components/db/SearchableDbSourceTree/types";
 import { DbSourceFilterUISetting } from "@features/SidebarSuite/types";
-import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import { Box, Popper } from "@mui/material";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 type DbSourceFilterTreePopperProps = {
   popperId: string | undefined;

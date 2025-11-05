@@ -1,8 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { getBasePath } from "@mitra/utils";
-import { Box, useColorScheme, useTheme } from "@mui/material";
+import Box from "@mui/material/Box";
+import { useColorScheme } from "@mui/material/styles";
+import { getBasePath } from "@utils/deployments";
 import { setLogoModeFilter } from "@utils/helpers";
+import { Deployment } from "src/types/index";
 
 const logoPaths: Record<Deployment, string> = {
   dharmamitra: `${getBasePath()}/assets/logos/dn-logo-full.png`,
@@ -25,7 +27,6 @@ export const logoSpacing = {
 } as const;
 
 export const FullLogo = () => {
-  const materialTheme = useTheme();
   const { mode } = useColorScheme();
   const { width, height } = logoDimensions.dharmamitra;
 
@@ -35,8 +36,9 @@ export const FullLogo = () => {
         ...logoSpacing,
         display: "grid",
         placeItems: "center",
-        backgroundColor: materialTheme.palette.background.header,
-        borderBottom: `1px solid ${materialTheme.palette.divider}`,
+        backgroundColor: "background.header",
+        borderBottom: "1px solid",
+        borderBottomColor: "divider",
         borderRadiusTopLeft: 1,
         borderRadiusTopRight: 1,
       }}

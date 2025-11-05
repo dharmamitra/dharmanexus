@@ -1,12 +1,12 @@
-import React from "react";
 import { NodeApi } from "react-arborist";
+import type { DbSourceTreeNode } from "@components/db/SearchableDbSourceTree/types";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 export function ExpanderArrow({
   node,
   mr = 1,
 }: {
-  node: NodeApi<any>;
+  node: NodeApi<DbSourceTreeNode>;
   mr?: number;
 }) {
   if (!node.isInternal) return null;

@@ -73,15 +73,9 @@ export default function NumbersPage() {
 
   const allFetchedPages = React.useMemo(() => {
     const { pages = [] } = data ?? {};
-
-    let nextPage = true;
-    const flatData = pages.flatMap((page) => {
-      const { data: pageData = [], hasNextPage } = page ?? {};
-      nextPage = Boolean(hasNextPage);
-      return pageData;
-    });
-
-    return { data: flatData ?? {}, hasNextPage: nextPage };
+    const flatData = pages.flatMap((page) => page?.data ?? []);
+    const hasNextPage = Boolean(pages.at(-1)?.hasNextPage);
+    return { data: flatData ?? {}, hasNextPage };
   }, [data]);
 
   const isError = isHeadersError || isTableContentError;

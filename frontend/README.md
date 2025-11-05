@@ -82,13 +82,17 @@ This is **source of truth** for BE<>FE communication. It exports `APISchemas`, `
 
 ### `mdx` pages
 
-NOTE: the project has removed all md pages. If any need to be added again `src/pages/[slug].tsx` last present in `4580e9f7` needs to be restored and the comments for the content dir in the dockerfiles should be uncommented.
+⚠️ NOTE: the project has removed all MDX pages. Documentation has been preserved for reference. 
 
-- Pages for each supported locale are created in `content/pages` (or a dedicated content directory for nested routes eg. `news`). See: [MDX page i18n](#mdx-page-i18n-draft) for more.
+If MDX pages need to be added again `src/pages/[slug].tsx` last present in `4580e9f7` needs to be restored (the referrence model last present in `39fdb82d` can also be reviewed). The comments for the content dir in the dockerfiles should be uncommented.
+
+- Pages for each supported locale are created in `content/pages` (or a dedicated content directory for nested routes eg. `news`). See: [MDX page i18n](#mdx-page-i18n-legacy) for more.
 
 Note: the project uses the term `locale` to refer to the user's language and the term `language` to refer to database languages (Pali, Sanskrit, Chinese and Tibetan).
 
-## MDX page i18n (Draft)
+## MDX page i18n (Legacy)
+
+⚠️ NOTE: the project has removed all MDX pages. Documentation has been preserved for reference. 
 
 Static pages built from mdx files are held in `/content/`. Each page has a dedicated directory containing localized mdx files for supported locals:
 

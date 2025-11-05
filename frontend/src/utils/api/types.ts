@@ -11,7 +11,6 @@ import type { components, operations, paths } from "src/codegen/api/nexus";
  * ************************** ¡¡¡ **************************
  */
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type HasPostMethod<T> = T extends { post: any } ? true : false;
 
 type FilterPostEndpoints<T> = {
