@@ -13,6 +13,7 @@ import logging
 from functools import wraps
 from typing import Any
 import asyncio
+import os
 
 from fastapi_cache.coder import JsonCoder
 from redis import asyncio as aioredis
@@ -40,8 +41,9 @@ async def get_redis_client():
             client = getattr(get_redis_client, "client", None)
             if client is None:
                 logger.info("Initializing shared Redis client.")
-                get_redis_client.client = aioredis.from_url(
-                    "redis://redis:6379",
+                redis_host = os.environ.get("REDIS_HOST", "localhost")
+                redis_client = aioredis.from_url(
+                    f"redis://{redis_host}:6379",
                     encoding="utf8",
                     decode_responses=True,
                     socket_timeout=300,
