@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import { lighten, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
+import { selectedBg, selectedHoverBg } from "@theme/utils";
 
 export const NodeBox = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isSelected",
@@ -10,11 +11,11 @@ export const NodeBox = styled(Box, {
   alignItems: "center",
   fontSize: 16,
   ...(isSelected && {
-    backgroundColor: theme.palette.background.selected,
+    backgroundColor: selectedBg(theme),
     fontWeight: 500,
   }),
   "&:hover": {
-    backgroundColor: lighten(theme.palette.background.selected, 0.2),
+    backgroundColor: selectedHoverBg({ theme }),
     fontWeight: 500,
   },
 }));

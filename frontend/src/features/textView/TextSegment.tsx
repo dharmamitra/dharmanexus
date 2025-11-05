@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from "react";
-import Link from "next/link";
 import {
   activeSegmentMatchesAtom,
   heatMapThemeAtom,
@@ -8,7 +7,7 @@ import {
   shouldShowSegmentNumbersAtom,
   textViewIsMiddlePanePointingLeftAtom,
 } from "@atoms";
-import { sourceSans } from "@components/theme";
+import { Link } from "@components/common/Link";
 import { TibetanScript } from "@features/SidebarSuite/types";
 import { enscriptSegment } from "@features/SidebarSuite/utils";
 import {
@@ -16,18 +15,14 @@ import {
   createURLToSegment,
   getMatchHeatColors,
 } from "@features/textView/utils";
-import {
-  Box,
-  Link as MuiLink,
-  useColorScheme,
-  useMediaQuery,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Box, useMediaQuery } from "@mui/material";
+import { useColorScheme, useTheme } from "@mui/material/styles";
+import { sourceSans } from "@theme/theme";
 import { ParsedTextViewParallel } from "@utils/api/endpoints/text-view/text-parallels";
 import type { Scale } from "chroma-js";
 import { useAtomValue, useSetAtom } from "jotai";
 
-import styles from "./textSegment.module.scss";
+import styles from "./textSegment.module.css";
 
 type TextSegmentProps = {
   isRightPane: boolean;
@@ -103,12 +98,11 @@ export const TextSegment = ({
           isSegmentSelected && styles["segmentNumber--selected"]
         } ${!shouldShowSegmentNumbers && styles["segmentNumber--hidden"]}`}
       >
-        <Link href={urlToSegment} passHref legacyBehavior>
-          <MuiLink
-            data-segmentnumber={segmentNumber}
-            className={styles.segmentNumber__link}
-          />
-        </Link>
+        <Link
+          href={urlToSegment}
+          data-segmentnumber={segmentNumber}
+          className={styles.segmentNumber__link}
+        />
       </Box>
 
       <span>
@@ -171,10 +165,9 @@ export const TextSegment = ({
                   "");
 
             return (
-              // eslint-disable-next-line jsx-a11y/no-static-element-interactions
               <span
                 key={segmentKey}
-                // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+                role="button"
                 tabIndex={0}
                 className={`${segmentClassName} ${styles.segment__button}`}
                 style={{

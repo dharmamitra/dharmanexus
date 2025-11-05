@@ -8,9 +8,7 @@ import {
   VIVID_MATCH_HEAT_THEME,
 } from "./constants";
 
-export function getTextViewColorScale(
-  data: ParsedTextViewParallels,
-): chroma.Scale {
+export function getTextViewColorScale(data: ParsedTextViewParallels) {
   const colors = data.map((item) => item.segmentText[0]?.highlightColor ?? 0);
   const [minColor, maxColor] = [Math.min(...colors), Math.max(...colors)];
 

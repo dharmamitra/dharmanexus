@@ -3,7 +3,6 @@ This file holds the functions for creating the colormaps.
 """
 
 from .utils import shorten_segment_names, prettify_score
-import pprint
 
 
 def create_segmented_text(text, colormap, matchmap, active_map):
@@ -328,4 +327,3 @@ def calculate_color_maps_middle_view(data):
             if "par_offset_end" in entry:
                 del entry["par_offset_end"]
     return data
-

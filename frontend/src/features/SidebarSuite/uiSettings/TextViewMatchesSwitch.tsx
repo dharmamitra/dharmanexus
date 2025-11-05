@@ -41,7 +41,7 @@ export const TextViewMatchesSwitchComponent = ({
       setIncludeMatches(false);
       setActiveSegmentMatches([]);
       setRightPaneActiveSegmentId(DEFAULT_PARAM_VALUES.active_segment).catch(
-        () => {},
+        () => undefined,
       );
     }
   }, [

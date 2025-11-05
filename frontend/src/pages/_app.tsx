@@ -7,17 +7,19 @@ import { appWithTranslation } from "next-i18next";
 import nextI18NextConfig from "next-i18next.config";
 import { DefaultSeo } from "next-seo";
 import SEO from "next-seo.config";
+import { useNullableDbRouterParams } from "@components/hooks/useDbRouterParams";
 import { AppTopBar } from "@components/layout/AppTopBar";
 import CssBaseline from "@mui/material/CssBaseline";
-import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
+import { ThemeProvider } from "@mui/material/styles";
+import { AppCacheProvider } from "@mui/material-nextjs/v15-pagesRouter";
 import {
   HydrationBoundary,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { getDeploymentTheme } from "@theme/theme";
 import { queryCacheTimeDefaults } from "@utils/api/apiQueryUtils";
-import { ThemeProvider } from "@utils/ThemeProvider";
 import { NuqsAdapter } from "nuqs/adapters/next/pages";
 
 function MyApp(props: AppProps) {
@@ -30,6 +32,8 @@ function MyApp(props: AppProps) {
         },
       }),
   );
+
+  const { dbLanguage } = useNullableDbRouterParams();
 
   return (
     <AppCacheProvider {...props}>
@@ -44,7 +48,7 @@ function MyApp(props: AppProps) {
               />
             </Head>
 
-            <ThemeProvider>
+            <ThemeProvider theme={getDeploymentTheme({ dbLanguage })}>
               <CssBaseline />
               <AppTopBar />
               <Component {...pageProps} />

@@ -9,7 +9,8 @@ import { useDbPageRouterParams } from "@components/hooks/useDbRouterParams";
 import { useSetDbViewFromPath } from "@components/hooks/useDbView";
 import { DEFAULT_PARAM_VALUES } from "@features/SidebarSuite/uiSettings/config";
 import { PaginationState } from "@features/textView/utils";
-import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
+import type { InfiniteData } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { DbApi } from "@utils/api/dbApi";
 import { ParsedTextViewParallels } from "@utils/api/endpoints/text-view/text-parallels";
 
@@ -53,6 +54,7 @@ export function useTextViewPane({
 
   let processedFileName = fileNameFromActiveSegment;
 
+  // TODO: This looks like a hack. We should confirm if there is an issue with elsewhere that prevents consistent file name handling.
   if (
     fileNameFromActiveSegment?.includes("ZH_") &&
     segment &&
@@ -62,7 +64,6 @@ export function useTextViewPane({
   }
 
   const fileName = processedFileName ?? fileNameUrlParam;
-  const previousFileName = useRef(fileName);
 
   const initialPageParam =
     activeSegment === DEFAULT_PARAM_VALUES.active_segment ? 0 : undefined;
@@ -86,12 +87,22 @@ export function useTextViewPane({
     isError,
     error,
     isLoading,
-    isFetchedAfterMount,
-  } = useInfiniteQuery({
+  } = useInfiniteQuery<
+    Awaited<ReturnType<typeof DbApi.TextView.call>>,
+    Error,
+    InfiniteData<Awaited<ReturnType<typeof DbApi.TextView.call>>>,
+    ReturnType<typeof DbApi.TextView.makeQueryKey>,
+    number | undefined
+  >({
     enabled: Boolean(fileName),
-    // when within the same file, keep previous data. Otherwise, discard it when user switches to new file.
-    placeholderData:
-      fileName === previousFileName.current ? keepPreviousData : undefined,
+    placeholderData: (previousData, previousQuery) => {
+      if (!previousQuery) return undefined;
+      // Compare filenames without using refs during render. This keeps data only if viewing the same file.
+      const prevParams = previousQuery.queryKey[1];
+      const prevFileName =
+        typeof prevParams === "object" && prevParams?.filename;
+      return prevFileName === fileName ? previousData : undefined;
+    },
     initialPageParam,
     queryKey: DbApi.TextView.makeQueryKey({
       ...requestBodyBase,
@@ -149,12 +160,6 @@ export function useTextViewPane({
     },
   });
 
-  useEffect(() => {
-    if (isFetchedAfterMount) {
-      previousFileName.current = fileName;
-    }
-  }, [fileName, isFetchedAfterMount]);
-
   useEffect(
     function handleApiResponse() {
       if (!data?.pages[0]) {
@@ -197,7 +202,7 @@ export function useTextViewPane({
 
   const allParallels = useMemo(
     () => (data?.pages ? data.pages.flatMap((page) => page.data.items) : []),
-    [data?.pages],
+    [data],
   );
 
   const clearActiveMatch = useCallback(async () => {

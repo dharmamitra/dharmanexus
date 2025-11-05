@@ -7,6 +7,7 @@ import { MatchHeatMapTheme } from "@features/textView/constants";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
 
 /**

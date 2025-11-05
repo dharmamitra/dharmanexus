@@ -7,7 +7,7 @@ import {
 } from "@components/db/SearchableDbSourceTree/types";
 import { getTreeBreadcrumbs } from "@components/db/SearchableDbSourceTree/utils";
 import { Box, Button, Typography } from "@mui/material";
-import { lighten } from "@mui/material/styles";
+import { selectedBg, selectedHoverBg } from "@theme/utils";
 import { useAtom } from "jotai";
 import { SourceTypeIcon } from "src/components/db/SearchableDbSourceTree/nodeComponents/SourceTypeIcon";
 
@@ -75,9 +75,9 @@ const TreeBreadcrumbs = ({ type }: { type: DbSourceTreeType }) => {
                 paddingInline: "0.5rem 1.25rem",
               }),
               color: theme.palette.text.primary,
-              background: theme.palette.background.selected,
+              backgroundColor: selectedBg(theme),
               "&:hover": {
-                background: lighten(theme.palette.background.selected, 0.2),
+                backgroundColor: selectedHoverBg({ theme }),
               },
             })}
             onClick={() => handleBreadcrumbClick({ node, setBreadcrumbs })}

@@ -20,7 +20,6 @@ import { DbApi } from "@utils/api/dbApi";
 import { useAtomValue, useSetAtom } from "jotai";
 
 import { CloseTextViewPaneButton } from "./CloseTextViewPaneButton";
-import styles from "./textViewMiddleParallels.module.scss";
 
 type Props = {
   onClose: () => void;
@@ -129,7 +128,7 @@ export default function TextViewMiddleParallels({ onClose }: Props) {
   );
 
   return (
-    <Box className={styles.container}>
+    <Box sx={{ height: "100%", overflow: "auto" }}>
       <CardHeader
         data-testid="middle-view-header"
         sx={{
@@ -161,7 +160,7 @@ export default function TextViewMiddleParallels({ onClose }: Props) {
         }
       />
 
-      <CardContent className={styles.cardContent}>
+      <CardContent>
         {isLoading
           ? Array.from({ length: 3 }).map((_, index) => (
               <LoadingCard key={index} />

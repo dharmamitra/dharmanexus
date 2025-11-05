@@ -123,12 +123,14 @@ const SearchableDbSourceTreeContent = memo<
         <FormControl variant="outlined" fullWidth>
           <TextField
             label={t("search.search")}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              },
             }}
             onChange={handleSearchChange}
           />

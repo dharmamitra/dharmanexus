@@ -41,12 +41,17 @@ const MultiLingualSelector = () => {
     ...dbLanguages,
   ]);
 
-  const handleChange = async (event: any) => {
+  const handleChange = async (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | (Event & { target: { value: DbLanguage[]; name: string } }),
+  ) => {
     // TODO: confirm desired handling.
     const {
       target: { value },
     } = event;
-    setParamValue(value);
+
+    setParamValue(typeof value === "string" ? [] : value);
 
     if (value.length === 0) {
       return;
@@ -62,7 +67,7 @@ const MultiLingualSelector = () => {
     });
   };
 
-  const anchorRef = React.useRef<HTMLDivElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);
   const selectorLabel = t("optionsLabels.multiLingual");
   const getRenderValue = (selected: DbLanguage[]) => {
     return selected.length > 0 ? (
@@ -75,7 +80,7 @@ const MultiLingualSelector = () => {
   };
 
   return (
-    <Box ref={anchorRef} sx={{ width: 1, mt: 1, mb: 2 }}>
+    <Box ref={setAnchorEl} sx={{ width: 1, mt: 1, mb: 2 }}>
       <FormControl sx={{ width: 1 }} error={paramValue.length === 0}>
         <FormLabel sx={{ mb: 1 }} id="multi-lingual-selector-label">
           {selectorLabel}
@@ -107,7 +112,7 @@ const MultiLingualSelector = () => {
         <Popper
           id="multi-lingual-selector-helper-text"
           open={paramValue.length === 0}
-          anchorEl={anchorRef.current}
+          anchorEl={anchorEl}
           placement="top"
           sx={{ maxWidth: 320 }}
           modifiers={[

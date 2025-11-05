@@ -1,6 +1,6 @@
-const { i18n } = require("./next-i18next.config");
-
-const nextMDX = require("@next/mdx");
+const { i18n: i18nRaw } = require("./next-i18next.config");
+const { fallbackLng, ...i18n } = i18nRaw;
+const path = require('path')
 
 const NODE_ENV = process.env.NODE_ENV;
 const SKIP_LINT = process.env.SKIP_LINT;
@@ -12,6 +12,7 @@ const nextConfig = {
   reactStrictMode: true,
   compiler: { emotion: true },
   output: "standalone",
+  outputFileTracingRoot: path.resolve(__dirname),
   eslint: {
     ignoreDuringBuilds: SKIP_LINT === "true",
   },
@@ -52,13 +53,8 @@ const nextConfig = {
   },
 };
 
-const withMDX = nextMDX({
-  extension: /\.mdx?$/,
-  options: { providerImportSource: "@mdx-js/react" },
-});
-
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-module.exports = withBundleAnalyzer(withMDX(nextConfig));
+module.exports = withBundleAnalyzer(nextConfig);
