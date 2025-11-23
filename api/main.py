@@ -103,3 +103,12 @@ def root() -> object:
     :return: The response (json object)
     """
     return {"message": "Visit /docs to view the documentation"}
+
+
+@APP.get("/health")
+def health() -> object:
+    """
+    Health check endpoint for Docker health checks
+    :return: Simple health status
+    """
+    return {"status": "healthy"}

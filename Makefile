@@ -18,7 +18,7 @@ run-prod-no-logs:
 	@$(COMPOSEPROD) up -d $(SERVICES)
 
 stop:
-	docker down
+	$(COMPOSE) down
 
 # Display recent logs from all docker containers.
 show-logs:
