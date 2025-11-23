@@ -3,6 +3,7 @@ services:
     command: uvicorn --host 0.0.0.0 api.main:APP
     environment:
       - PROD=1
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
 
   frontend:
     container_name: frontend

@@ -93,6 +93,7 @@ services:
       - PROD=0
       - REDIS_HOST=redis
       - ARANGO_HOST_API=arangodb
+      - ALLOWED_ORIGINS=*
     command: uvicorn --host 0.0.0.0 api.main:APP --reload
     restart: always
     depends_on:

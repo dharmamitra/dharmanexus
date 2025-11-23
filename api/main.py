@@ -25,9 +25,6 @@ from .endpoints import (
 
 API_PREFIX = "/api-db" if os.environ["PROD"] == "1" else "/api-db"
 APP = FastAPI(title="DharmaNexus Backend", version="0.2.1", openapi_prefix=API_PREFIX)
-APP.add_middleware(
-    CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]
-)
 
 
 class CacheControlMiddleware(BaseHTTPMiddleware):
@@ -44,9 +41,18 @@ class CacheControlMiddleware(BaseHTTPMiddleware):
 
 
 APP.add_middleware(CacheControlMiddleware)
+
+# Configure CORS from environment variable
+ALLOWED_ORIGINS_STR = os.environ.get("ALLOWED_ORIGINS", "*")
+# Parse comma-separated origins, or use wildcard if "*"
+ALLOWED_ORIGINS = (
+    ["*"] if ALLOWED_ORIGINS_STR == "*" else [origin.strip() for origin in ALLOWED_ORIGINS_STR.split(",")]
+)
+
 APP.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*", "Cache-Control"],
     expose_headers=["Cache-Control"],
