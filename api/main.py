@@ -46,7 +46,9 @@ APP.add_middleware(CacheControlMiddleware)
 ALLOWED_ORIGINS_STR = os.environ.get("ALLOWED_ORIGINS", "*")
 # Parse comma-separated origins, or use wildcard if "*"
 ALLOWED_ORIGINS = (
-    ["*"] if ALLOWED_ORIGINS_STR == "*" else [origin.strip() for origin in ALLOWED_ORIGINS_STR.split(",")]
+    ["*"]
+    if ALLOWED_ORIGINS_STR == "*"
+    else [origin.strip() for origin in ALLOWED_ORIGINS_STR.split(",")]
 )
 
 APP.add_middleware(
