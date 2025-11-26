@@ -58,7 +58,7 @@ async def log_matches_request(request: Request, input: MatchesInput):
             "timestamp": datetime.utcnow().isoformat(),
             "ip_address": ip_address,
             "geoip": geoip_data,
-            "request": input.dict(),
+            "request": input.model_dump(),
         }
 
         with open("/logs/matches_requests.ndjson", "a") as f:
@@ -149,5 +149,5 @@ async def get_matches(input: MatchesInput) -> Any:
         matches.append(match)
 
     # Convert Match objects to dictionaries for JSON serialization
-    matches_dict = [match.dict() for match in matches]
+    matches_dict = [match.model_dump() for match in matches]
     return {"matches": matches_dict} 

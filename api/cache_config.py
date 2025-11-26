@@ -88,7 +88,7 @@ class CustomJsonCoder(JsonCoder):
         logger.info("Starting encode of type: %s", type(value))
         try:
             if isinstance(value, MenudataOutput):
-                value = value.dict()
+                value = value.model_dump()
             json_str = json.dumps(value)
             return json_str.encode("utf-8")
         except Exception as e:

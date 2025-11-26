@@ -25,16 +25,16 @@ class Filters(BaseModel):
 
     par_length: int = 0
     score: int = 0
-    languages: Optional[List[Languages]]
+    languages: Optional[List[Languages]] = None
 
-    include_files: Optional[List[str]]
-    exclude_files: Optional[List[str]]
+    include_files: Optional[List[str]] = None
+    exclude_files: Optional[List[str]] = None
 
-    include_categories: Optional[List[str]]
-    exclude_categories: Optional[List[str]]
+    include_categories: Optional[List[str]] = None
+    exclude_categories: Optional[List[str]] = None
 
-    include_collections: Optional[List[str]]
-    exclude_collections: Optional[List[str]]
+    include_collections: Optional[List[str]] = None
+    exclude_collections: Optional[List[str]] = None
 
 
 class GeneralInput(BaseModel):

@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, RootModel
 from typing import List, Union, Optional
 
 
@@ -9,7 +9,7 @@ class GraphFilters(BaseModel):
 
     par_length: int = 0
     score: int = 0
-    include_collections: Optional[List[str]]
+    include_collections: Optional[List[str]] = None
 
 
 class GraphInput(BaseModel):
@@ -22,5 +22,5 @@ class GraphData(BaseModel):
     histogramgraphdata: List[List[Union[str, int]]] = None
 
 
-class GraphViewOutput(BaseModel):
-    __root__: GraphData
+class GraphViewOutput(RootModel[GraphData]):
+    pass
