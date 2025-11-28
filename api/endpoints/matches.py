@@ -75,7 +75,7 @@ async def get_matches(input: MatchesInput) -> Any:
     """
     :return: List of matches for a list of segment numbers
     """
-    query_result = execute_query(
+    query_result = await execute_query(
         matches_queries.QUERY_MATCHES,
         bind_vars={"segment_nrs": input.segment_nrs},
     )

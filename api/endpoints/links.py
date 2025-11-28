@@ -15,7 +15,7 @@ async def get_external_links(filename: str = Query(...)) -> Any:
     """
     Returns the external links for a given filename or segmentnr.
     """
-    query_links = execute_query(
+    query_links = await execute_query(
         utils_queries.QUERY_LINK, bind_vars={"filename": filename}, raw_results=True
     )
     return get_links(filename, query_links)

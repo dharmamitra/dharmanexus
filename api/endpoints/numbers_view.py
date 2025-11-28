@@ -48,7 +48,7 @@ async def get_numbers_view(input: GeneralInput) -> Any:
     Endpoint for numbers view.
     """
 
-    query_result = execute_query(
+    query_result = await execute_query(
         numbers_view_queries.QUERY_NUMBERS_VIEW,
         bind_vars={
             "filename": input.filename,
@@ -79,7 +79,7 @@ async def get_categories_for_numbers_view(
     Endpoint that returns list of categories for the given language
     """
     language = get_language_from_filename(filename)
-    query_result = execute_query(
+    query_result = await execute_query(
         numbers_view_queries.QUERY_CATEGORIES_PER_LANGUAGE,
         bind_vars={"language": language},
     )

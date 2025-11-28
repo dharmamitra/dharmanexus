@@ -15,7 +15,7 @@ async def get_counts_for_file(input: CountMatchesInput) -> Any:
     Returns number of filtered parallels
     """
 
-    query_graph_result = execute_query(
+    query_graph_result = await execute_query(
         utils_queries.QUERY_COUNT_MATCHES,
         bind_vars={
             "filename": input.filename,
@@ -48,7 +48,7 @@ async def get_folios_for_file(
     Returns number of folios (TIB) / facsimiles (CHN) /
     suttas/PTS nrs/segments (PLI) / segments (SKT)
     """
-    query_result = execute_query(
+    query_result = await execute_query(
         utils_queries.QUERY_FOLIOS,
         bind_vars={"filename": filename},
     )
@@ -60,12 +60,12 @@ async def get_folios_for_file(
     return {"folios": query_result.result[0]}
 
 
-def get_displayname(segmentnr):
+async def get_displayname(segmentnr):
     """
     Downloads the displaynames for the worksheet
     """
     filename = segmentnr.split(":")[0]
-    query_result = execute_query(
+    query_result = await execute_query(
         utils_queries.QUERY_DISPLAYNAME,
         bind_vars={"filename": filename},
     )
@@ -87,7 +87,7 @@ async def get_displayname_for_segmentnr(
     """
     Returns the displayname for a given segmentnr or filename
     """
-    return {"displayname": get_displayname(segmentnr)}
+    return {"displayname": await get_displayname(segmentnr)}
 
 
 @router.get("/active-segment-for-folio/", response_model=ActiveSegmentOutput)
@@ -104,7 +104,7 @@ async def get_active_segment_for_folio(
     Returns the active segment for a given folio
     """
 
-    query_result = execute_query(
+    query_result = await execute_query(
         utils_queries.QUERY_SEGMENT_FOR_FOLIO,
         bind_vars={"folio": folio, "filename": filename},
     )
