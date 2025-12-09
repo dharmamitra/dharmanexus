@@ -33,7 +33,7 @@ async def log_text_parallels_request(request: Request, input: TextParallelsInput
             "timestamp": datetime.utcnow().isoformat(),
             "ip_address": ip_address,
             "geoip": geoip_data,
-            "request": input.dict(),
+            "request": input.model_dump(),
         }
 
         with open("/logs/text_parallels_requests.ndjson", "a") as f:
@@ -54,7 +54,7 @@ async def log_middle_view_request(request: Request, input: TextViewMiddleInput):
             "timestamp": datetime.utcnow().isoformat(),
             "ip_address": ip_address,
             "geoip": geoip_data,
-            "request": input.dict(),
+            "request": input.model_dump(),
         }
 
         with open("/logs/middle_view_requests.ndjson", "a") as f:

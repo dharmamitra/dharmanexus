@@ -27,7 +27,7 @@ async def log_table_view_request(request: Request, input: GeneralInput):
             "timestamp": datetime.utcnow().isoformat(),
             "ip_address": ip_address,
             "geoip": geoip_data,
-            "request": input.dict(),
+            "request": input.model_dump(),
         }
 
         with open("/logs/table_view_requests.ndjson", "a") as f:

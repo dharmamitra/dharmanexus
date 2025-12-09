@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, RootModel
 from typing import List
 from .general_models import FullNames, FullText
 
@@ -17,5 +17,5 @@ class Segment(BaseModel):
     par_fulltext: List[FullText]
 
 
-class TableViewOutput(BaseModel):
-    __root__: List[Segment]
+class TableViewOutput(RootModel[List[Segment]]):
+    pass
