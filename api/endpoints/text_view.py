@@ -71,7 +71,7 @@ async def get_parallels_for_middle(input: TextViewMiddleInput) -> Any:
     """
     :return: List of parallels for text view (middle)
     """
-    query_result = execute_query(
+    query_result = await execute_query(
         text_view_queries.QUERY_PARALLELS_FOR_MIDDLE_TEXT,
         bind_vars={"parallel_ids": input.parallel_ids},
     )
@@ -103,7 +103,7 @@ async def get_file_text_segments_and_parallels(input: TextParallelsInput) -> Any
         filename = get_filename_from_segmentnr(input.active_segment)
     # active_match_id bypasses page, filename and active_segement in order to highlight the active match in the text view
     if input.active_match_id:
-        query_result = execute_query(
+        query_result = await execute_query(
             text_view_queries.QUERY_GET_MATCH_BY_ID,
             bind_vars={"active_match_id": input.active_match_id},
         )
@@ -112,12 +112,13 @@ async def get_file_text_segments_and_parallels(input: TextParallelsInput) -> Any
         active_match = query_result.result[0]
         page = get_page_for_segment(active_match["par_segnr"][0])
         filename = get_filename_from_segmentnr(active_match["par_segnr"][0])
-    number_of_total_pages = execute_query(
+    number_of_total_pages_result = await execute_query(
         text_view_queries.QUERY_GET_NUMBER_OF_PAGES,
         bind_vars={
             "filename": filename,
         },
-    ).result
+    )
+    number_of_total_pages = number_of_total_pages_result.result
     # Handle case where file is not found or has no segment_pages
     if not number_of_total_pages:
         return {"page": page, "total_pages": 0, "items": []}
@@ -138,7 +139,7 @@ async def get_file_text_segments_and_parallels(input: TextParallelsInput) -> Any
         "filter_exclude_categories": input.filters.exclude_categories,
         "filter_exclude_collections": input.filters.exclude_collections,
     }
-    text_segments_query_result = execute_query(
+    text_segments_query_result = await execute_query(
         text_view_queries.QUERY_TEXT_AND_PARALLELS,
         bind_vars=current_bind_vars,
     )

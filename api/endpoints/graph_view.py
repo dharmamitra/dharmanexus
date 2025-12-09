@@ -56,7 +56,7 @@ async def get_graph_for_file(input: GraphInput) -> Any:
     Please display a message asking the user to use the filters to reduce the dataset size.
     """
 
-    query_graph_result = execute_query(
+    query_graph_result = await execute_query(
         graph_view_queries.QUERY_GRAPH_VIEW,
         bind_vars={
             "filename": input.filename,

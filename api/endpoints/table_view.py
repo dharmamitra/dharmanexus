@@ -65,7 +65,7 @@ async def get_table_view(input: GeneralInput) -> Any:
     """
     print("FILENAME", input.filename)
     print("SORTKEY", get_sort_key(input.sort_method))
-    query_result = execute_query(
+    query_result = await execute_query(
         
         table_view_queries.QUERY_TABLE_VIEW,
         bind_vars={

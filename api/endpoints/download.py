@@ -48,7 +48,7 @@ async def get_table_download(input: DownloadInput) -> Any:
     language = get_language_from_filename(input.filename)
 
     if input.download_data == "table":
-        query_result = execute_query(
+        query_result = await execute_query(
             table_view_queries.QUERY_TABLE_DOWNLOAD,
             bind_vars={
                 "filename": input.filename,
@@ -79,7 +79,7 @@ async def get_table_download(input: DownloadInput) -> Any:
         )
 
     else:
-        query_result = execute_query(
+        query_result = await execute_query(
             numbers_view_queries.QUERY_NUMBERS_DOWNLOAD,
             bind_vars={
                 "filename": input.filename,
@@ -95,7 +95,7 @@ async def get_table_download(input: DownloadInput) -> Any:
             },
         )
 
-        categories_result = execute_query(
+        categories_result = await execute_query(
             numbers_view_queries.QUERY_CATEGORIES_PER_LANGUAGE,
             bind_vars={"language": language},
         )
