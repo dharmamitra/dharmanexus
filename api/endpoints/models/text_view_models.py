@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, RootModel
 from typing import List, Union, Optional
 from .general_models import Filters, FullText
 
@@ -7,7 +7,7 @@ class TextParallelsInput(BaseModel):
     filename: str
     folio: str = ""
     active_segment: Optional[str] = "none"
-    filters: Optional[Filters]
+    filters: Optional[Filters] = None
     active_match_id: Optional[str] = None
     page: int = 0
     include_matches: bool = True 
@@ -52,8 +52,8 @@ class Segment(BaseModel):
     filename: str
     score: int
     length: int
-    par_fulltext: Optional[List[FullText]]
+    par_fulltext: Optional[List[FullText]] = None
 
 
-class TextViewMiddleOutput(BaseModel):
-    __root__: List[Segment]
+class TextViewMiddleOutput(RootModel[List[Segment]]):
+    pass

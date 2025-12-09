@@ -17,6 +17,12 @@ services:
     networks:
       - app-network
     restart: always
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://root:${ARANGO_ROOT_PASSWORD}@127.0.0.1:8529/_api/version"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   dataloader:
     build:
@@ -41,9 +47,10 @@ services:
     links:
       - "arangodb"
     depends_on:
-      - arangodb
+      arangodb:
+        condition: service_healthy
     networks:
-      - app-network      
+      - app-network
     restart: always
 
   redis:
@@ -57,6 +64,12 @@ services:
     networks:
       - app-network
     restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
 
   fastapi:
     build:
@@ -80,13 +93,22 @@ services:
       - PROD=0
       - REDIS_HOST=redis
       - ARANGO_HOST_API=arangodb
+      - ALLOWED_ORIGINS=*
     command: uvicorn --host 0.0.0.0 api.main:APP --reload
     restart: always
     depends_on:
-      - arangodb
-      - redis
+      arangodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api-db/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   tests:
     build:
@@ -111,8 +133,10 @@ services:
       - ARANGO_HOST=arangodb
     command: pytest -v
     depends_on:
-      - arangodb
-      - redis
+      arangodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     networks:
       - app-network
 
@@ -136,6 +160,17 @@ services:
     restart: always
     ports:
       - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      fastapi:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget --no-verbose --tries=1 -O /dev/null http://127.0.0.1:3000 2>&1 | grep -q 'HTTP' && exit 0 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
 volumes:
   dbdata:

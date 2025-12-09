@@ -16,5 +16,5 @@ setup(
         "pyarango>=1.3.3",
         "uvicorn>=0.11.7"
     ],
-    python_requires=">=3.7",
+    python_requires=">=3.13",
 )

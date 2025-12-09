@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, RootModel
 from typing import List
 
 
@@ -14,8 +14,8 @@ class Segment(BaseModel):
     parallels: List[Parallel]
 
 
-class NumbersViewOutput(BaseModel):
-    __root__: List[Segment]
+class NumbersViewOutput(RootModel[List[Segment]]):
+    pass
 
 
 class MenuItem(BaseModel):
@@ -23,5 +23,5 @@ class MenuItem(BaseModel):
     displayName: str
 
 
-class MenuOutput(BaseModel):
-    __root__: List[MenuItem]
+class MenuOutput(RootModel[List[MenuItem]]):
+    pass

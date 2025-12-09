@@ -5,7 +5,7 @@ from .general_models import Filters
 
 class CountMatchesInput(BaseModel):
     filename: str
-    filters: Optional[Filters]
+    filters: Optional[Filters] = None
 
 
 class CountMatchesOutput(BaseModel):
